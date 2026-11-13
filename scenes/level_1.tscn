@@ -1,911 +1,908 @@
-[gd_scene load_steps=28 format=4 uid="uid://cdmir1cqpmm24"]
+[gd_scene load_steps=27 format=4 uid="uid://cdmir1cqpmm24"]
 
-[ext_resource type="Script" path="res://scripts/level_1.gd" id="1_mmfjm"]
-[ext_resource type="PackedScene" path="res://scenes/props/jam_dinding.tscn" id="2_k8ld0"]
-[ext_resource type="Script" path="res://scripts/prop.gd" id="3_mbb35"]
-[ext_resource type="PackedScene" path="res://scenes/props/layar_proyektor.tscn" id="4_iw4em"]
-[ext_resource type="PackedScene" path="res://scenes/props/meja_rapat.tscn" id="5_hnsmf"]
-[ext_resource type="PackedScene" path="res://scenes/props/kursi_depan.tscn" id="6_nossa"]
-[ext_resource type="PackedScene" path="res://scenes/props/kursi_belakang.tscn" id="7_hjqri"]
-[ext_resource type="PackedScene" path="res://scenes/props/kursi_kanan.tscn" id="8_hg84p"]
-[ext_resource type="PackedScene" path="res://scenes/props/kursi_kiri.tscn" id="9_1aans"]
-[ext_resource type="PackedScene" path="res://scenes/props/laptop.tscn" id="10_q0ron"]
-[ext_resource type="PackedScene" path="res://scenes/props/tumpukan_kertas.tscn" id="11_tdlki"]
-[ext_resource type="PackedScene" path="res://scenes/props/flipchart.tscn" id="12_v8pws"]
-[ext_resource type="PackedScene" path="res://scenes/props/papan_tulis.tscn" id="13_rscm6"]
-[ext_resource type="PackedScene" path="res://scenes/props/meja.tscn" id="14_wom8k"]
-[ext_resource type="PackedScene" path="res://scenes/props/komputer.tscn" id="15_wa552"]
-[ext_resource type="PackedScene" path="res://scenes/props/lampu_meja.tscn" id="16_v0i6o"]
-[ext_resource type="PackedScene" path="res://scenes/props/mug.tscn" id="17_bamb7"]
-[ext_resource type="PackedScene" path="res://scenes/props/dispenser.tscn" id="18_8jqp6"]
-[ext_resource type="PackedScene" path="res://scenes/props/tanaman.tscn" id="19_jscgt"]
-[ext_resource type="PackedScene" path="res://scenes/props/tempat_sampah.tscn" id="20_0bysi"]
-[ext_resource type="PackedScene" path="res://scenes/props/sofa.tscn" id="21_y0ove"]
-[ext_resource type="PackedScene" path="res://scenes/props/rak_buku.tscn" id="22_awarj"]
-[ext_resource type="PackedScene" path="res://scenes/props/lemari.tscn" id="23_uuj1x"]
-[ext_resource type="PackedScene" path="res://scenes/props/tanaman_tinggi.tscn" id="24_3x5jj"]
-[ext_resource type="Texture2D" path="res://assets/office_assets/main/Office_Pixel_Art_Free_v1.0/Props/Seating/office_chair/office_chair_front.png" id="25_75ls7"]
-[ext_resource type="Script" path="res://scripts/network.gd" id="26_gwsl1"]
-[ext_resource type="TileSet" path="res://office_tileset.tres" id="27_lkded"]
+[ext_resource type="Script" path="res://scripts/level_1.gd" id="1_s7g0b"]
+[ext_resource type="PackedScene" path="res://scenes/props/jam_dinding.tscn" id="2_mmfjm"]
+[ext_resource type="Script" path="res://scripts/prop.gd" id="3_k8ld0"]
+[ext_resource type="PackedScene" path="res://scenes/props/layar_proyektor.tscn" id="4_mbb35"]
+[ext_resource type="PackedScene" path="res://scenes/props/meja_rapat.tscn" id="5_iw4em"]
+[ext_resource type="PackedScene" path="res://scenes/props/kursi_depan.tscn" id="6_hnsmf"]
+[ext_resource type="PackedScene" path="res://scenes/props/kursi_belakang.tscn" id="7_nossa"]
+[ext_resource type="PackedScene" path="res://scenes/props/kursi_kanan.tscn" id="8_hjqri"]
+[ext_resource type="PackedScene" path="res://scenes/props/kursi_kiri.tscn" id="9_hg84p"]
+[ext_resource type="PackedScene" path="res://scenes/props/laptop.tscn" id="10_1aans"]
+[ext_resource type="PackedScene" path="res://scenes/props/tumpukan_kertas.tscn" id="11_q0ron"]
+[ext_resource type="PackedScene" path="res://scenes/props/flipchart.tscn" id="12_tdlki"]
+[ext_resource type="PackedScene" path="res://scenes/props/papan_tulis.tscn" id="13_v8pws"]
+[ext_resource type="PackedScene" path="res://scenes/props/meja.tscn" id="14_rscm6"]
+[ext_resource type="PackedScene" path="res://scenes/props/komputer.tscn" id="15_wom8k"]
+[ext_resource type="PackedScene" path="res://scenes/props/lampu_meja.tscn" id="16_wa552"]
+[ext_resource type="PackedScene" path="res://scenes/props/mug.tscn" id="17_v0i6o"]
+[ext_resource type="PackedScene" path="res://scenes/props/dispenser.tscn" id="18_bamb7"]
+[ext_resource type="PackedScene" path="res://scenes/props/tanaman.tscn" id="19_8jqp6"]
+[ext_resource type="PackedScene" path="res://scenes/props/tempat_sampah.tscn" id="20_jscgt"]
+[ext_resource type="PackedScene" path="res://scenes/props/sofa.tscn" id="21_0bysi"]
+[ext_resource type="PackedScene" path="res://scenes/props/rak_buku.tscn" id="22_y0ove"]
+[ext_resource type="PackedScene" path="res://scenes/props/lemari.tscn" id="23_awarj"]
+[ext_resource type="PackedScene" path="res://scenes/props/tanaman_tinggi.tscn" id="24_uuj1x"]
+[ext_resource type="Script" path="res://scripts/network.gd" id="25_3x5jj"]
+[ext_resource type="TileSet" path="res://office_tileset.tres" id="26_75ls7"]
 
-[node name="Level1" type="Node2D" unique_id=879972243]
-script = ExtResource("1_mmfjm")
+[node name="Level1" type="Node2D" unique_id=1411597359]
+script = ExtResource("1_s7g0b")
 
-[node name="YSort" type="Node2D" parent="." unique_id=1794025337]
+[node name="YSort" type="Node2D" parent="." unique_id=1522887547]
 y_sort_enabled = true
 
-[node name="Jam_Dinding_01" type="Node2D" parent="YSort" unique_id=867761613 instance=ExtResource("2_k8ld0")]
+[node name="Jam_Dinding_01" type="Node2D" parent="YSort" unique_id=905817117 instance=ExtResource("2_mmfjm")]
 position = Vector2(752, 40)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Layar_Proyektor_01" type="Node2D" parent="YSort" unique_id=982586370 instance=ExtResource("4_iw4em")]
+[node name="Layar_Proyektor_01" type="Node2D" parent="YSort" unique_id=227284913 instance=ExtResource("4_mbb35")]
 position = Vector2(752, 40)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_Rapat_01" type="Node2D" parent="YSort" unique_id=885998948 instance=ExtResource("5_hnsmf")]
+[node name="Meja_Rapat_01" type="Node2D" parent="YSort" unique_id=291759834 instance=ExtResource("5_iw4em")]
 position = Vector2(752, 160)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_01" type="Node2D" parent="YSort" unique_id=1002504767 instance=ExtResource("6_nossa")]
+[node name="Kursi_01" type="Node2D" parent="YSort" unique_id=1828891982 instance=ExtResource("6_hnsmf")]
 position = Vector2(700, 90)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Kursi_02" type="Node2D" parent="YSort" unique_id=1188288075 instance=ExtResource("6_nossa")]
+[node name="Kursi_02" type="Node2D" parent="YSort" unique_id=1069620556 instance=ExtResource("6_hnsmf")]
 position = Vector2(752, 90)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Kursi_03" type="Node2D" parent="YSort" unique_id=731466150 instance=ExtResource("6_nossa")]
+[node name="Kursi_03" type="Node2D" parent="YSort" unique_id=1911410129 instance=ExtResource("6_hnsmf")]
 position = Vector2(804, 90)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Kursi_04" type="Node2D" parent="YSort" unique_id=360005803 instance=ExtResource("7_hjqri")]
+[node name="Kursi_04" type="Node2D" parent="YSort" unique_id=1200792167 instance=ExtResource("7_nossa")]
 position = Vector2(700, 210)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Kursi_05" type="Node2D" parent="YSort" unique_id=387196779 instance=ExtResource("7_hjqri")]
+[node name="Kursi_05" type="Node2D" parent="YSort" unique_id=1575125828 instance=ExtResource("7_nossa")]
 position = Vector2(752, 210)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Kursi_06" type="Node2D" parent="YSort" unique_id=1027908881 instance=ExtResource("7_hjqri")]
+[node name="Kursi_06" type="Node2D" parent="YSort" unique_id=1355408582 instance=ExtResource("7_nossa")]
 position = Vector2(804, 210)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Kursi_07" type="Node2D" parent="YSort" unique_id=1099353025 instance=ExtResource("8_hg84p")]
+[node name="Kursi_07" type="Node2D" parent="YSort" unique_id=391046707 instance=ExtResource("8_hjqri")]
 position = Vector2(640, 160)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Kursi_08" type="Node2D" parent="YSort" unique_id=770786921 instance=ExtResource("9_1aans")]
+[node name="Kursi_08" type="Node2D" parent="YSort" unique_id=1749144872 instance=ExtResource("9_hg84p")]
 position = Vector2(864, 160)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Laptop_01" type="Node2D" parent="YSort" unique_id=267925931 instance=ExtResource("10_q0ron")]
+[node name="Laptop_01" type="Node2D" parent="YSort" unique_id=2140369984 instance=ExtResource("10_1aans")]
 position = Vector2(730, 140)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tumpukan_Kertas_01" type="Node2D" parent="YSort" unique_id=2101167379 instance=ExtResource("11_tdlki")]
+[node name="Tumpukan_Kertas_01" type="Node2D" parent="YSort" unique_id=444781870 instance=ExtResource("11_q0ron")]
 position = Vector2(780, 145)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Flipchart_01" type="Node2D" parent="YSort" unique_id=1518465993 instance=ExtResource("12_v8pws")]
+[node name="Flipchart_01" type="Node2D" parent="YSort" unique_id=621996738 instance=ExtResource("12_tdlki")]
 position = Vector2(620, 220)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Papan_Tulis_01" type="Node2D" parent="YSort" unique_id=100826821 instance=ExtResource("13_rscm6")]
+[node name="Papan_Tulis_01" type="Node2D" parent="YSort" unique_id=13364786 instance=ExtResource("13_v8pws")]
 position = Vector2(860, 80)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_01" type="Node2D" parent="YSort" unique_id=769190868 instance=ExtResource("14_wom8k")]
+[node name="Meja_01" type="Node2D" parent="YSort" unique_id=1535690119 instance=ExtResource("14_rscm6")]
 position = Vector2(320, 320)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_09" type="Node2D" parent="YSort" unique_id=99229268 instance=ExtResource("7_hjqri")]
+[node name="Kursi_09" type="Node2D" parent="YSort" unique_id=377661914 instance=ExtResource("7_nossa")]
 position = Vector2(320, 390)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_01" type="Node2D" parent="YSort" unique_id=1902176669 instance=ExtResource("15_wa552")]
+[node name="Komputer_01" type="Node2D" parent="YSort" unique_id=263460697 instance=ExtResource("15_wom8k")]
 position = Vector2(305, 302)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lampu_Meja_01" type="Node2D" parent="YSort" unique_id=1006655523 instance=ExtResource("16_v0i6o")]
+[node name="Lampu_Meja_01" type="Node2D" parent="YSort" unique_id=1187567793 instance=ExtResource("16_wa552")]
 position = Vector2(345, 304)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_02" type="Node2D" parent="YSort" unique_id=1992112460 instance=ExtResource("14_wom8k")]
+[node name="Meja_02" type="Node2D" parent="YSort" unique_id=188448130 instance=ExtResource("14_rscm6")]
 position = Vector2(420, 320)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_10" type="Node2D" parent="YSort" unique_id=66243809 instance=ExtResource("7_hjqri")]
+[node name="Kursi_10" type="Node2D" parent="YSort" unique_id=1234968877 instance=ExtResource("7_nossa")]
 position = Vector2(420, 390)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Laptop_02" type="Node2D" parent="YSort" unique_id=1116013896 instance=ExtResource("10_q0ron")]
+[node name="Laptop_02" type="Node2D" parent="YSort" unique_id=1365340670 instance=ExtResource("10_1aans")]
 position = Vector2(415, 302)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Mug_01" type="Node2D" parent="YSort" unique_id=223598959 instance=ExtResource("17_bamb7")]
+[node name="Mug_01" type="Node2D" parent="YSort" unique_id=335158664 instance=ExtResource("17_v0i6o")]
 position = Vector2(440, 306)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_03" type="Node2D" parent="YSort" unique_id=1444103986 instance=ExtResource("14_wom8k")]
+[node name="Meja_03" type="Node2D" parent="YSort" unique_id=1126395861 instance=ExtResource("14_rscm6")]
 position = Vector2(320, 520)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_11" type="Node2D" parent="YSort" unique_id=676826447 instance=ExtResource("7_hjqri")]
+[node name="Kursi_11" type="Node2D" parent="YSort" unique_id=431021546 instance=ExtResource("7_nossa")]
 position = Vector2(320, 590)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_02" type="Node2D" parent="YSort" unique_id=1109138074 instance=ExtResource("15_wa552")]
+[node name="Komputer_02" type="Node2D" parent="YSort" unique_id=1438943871 instance=ExtResource("15_wom8k")]
 position = Vector2(305, 502)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tumpukan_Kertas_02" type="Node2D" parent="YSort" unique_id=846907490 instance=ExtResource("11_tdlki")]
+[node name="Tumpukan_Kertas_02" type="Node2D" parent="YSort" unique_id=1716177772 instance=ExtResource("11_q0ron")]
 position = Vector2(345, 504)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_04" type="Node2D" parent="YSort" unique_id=1348602985 instance=ExtResource("14_wom8k")]
+[node name="Meja_04" type="Node2D" parent="YSort" unique_id=1578826302 instance=ExtResource("14_rscm6")]
 position = Vector2(420, 520)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_12" type="Node2D" parent="YSort" unique_id=1790147244 instance=ExtResource("7_hjqri")]
+[node name="Kursi_12" type="Node2D" parent="YSort" unique_id=1717676159 instance=ExtResource("7_nossa")]
 position = Vector2(420, 590)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Laptop_03" type="Node2D" parent="YSort" unique_id=602195228 instance=ExtResource("10_q0ron")]
+[node name="Laptop_03" type="Node2D" parent="YSort" unique_id=189040221 instance=ExtResource("10_1aans")]
 position = Vector2(415, 502)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lampu_Meja_02" type="Node2D" parent="YSort" unique_id=1865194856 instance=ExtResource("16_v0i6o")]
+[node name="Lampu_Meja_02" type="Node2D" parent="YSort" unique_id=688352891 instance=ExtResource("16_wa552")]
 position = Vector2(440, 504)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_05" type="Node2D" parent="YSort" unique_id=1182192615 instance=ExtResource("14_wom8k")]
+[node name="Meja_05" type="Node2D" parent="YSort" unique_id=533255789 instance=ExtResource("14_rscm6")]
 position = Vector2(1150, 320)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_13" type="Node2D" parent="YSort" unique_id=544127187 instance=ExtResource("7_hjqri")]
+[node name="Kursi_13" type="Node2D" parent="YSort" unique_id=495553739 instance=ExtResource("7_nossa")]
 position = Vector2(1150, 390)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_03" type="Node2D" parent="YSort" unique_id=854664512 instance=ExtResource("15_wa552")]
+[node name="Komputer_03" type="Node2D" parent="YSort" unique_id=130283988 instance=ExtResource("15_wom8k")]
 position = Vector2(1135, 302)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Mug_02" type="Node2D" parent="YSort" unique_id=2129930832 instance=ExtResource("17_bamb7")]
+[node name="Mug_02" type="Node2D" parent="YSort" unique_id=2120399851 instance=ExtResource("17_v0i6o")]
 position = Vector2(1175, 306)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_06" type="Node2D" parent="YSort" unique_id=1194861310 instance=ExtResource("14_wom8k")]
+[node name="Meja_06" type="Node2D" parent="YSort" unique_id=261046809 instance=ExtResource("14_rscm6")]
 position = Vector2(1250, 320)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_14" type="Node2D" parent="YSort" unique_id=744375485 instance=ExtResource("7_hjqri")]
+[node name="Kursi_14" type="Node2D" parent="YSort" unique_id=481096183 instance=ExtResource("7_nossa")]
 position = Vector2(1250, 390)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Laptop_04" type="Node2D" parent="YSort" unique_id=630965676 instance=ExtResource("10_q0ron")]
+[node name="Laptop_04" type="Node2D" parent="YSort" unique_id=185368175 instance=ExtResource("10_1aans")]
 position = Vector2(1245, 302)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tumpukan_Kertas_03" type="Node2D" parent="YSort" unique_id=1903399402 instance=ExtResource("11_tdlki")]
+[node name="Tumpukan_Kertas_03" type="Node2D" parent="YSort" unique_id=184031916 instance=ExtResource("11_q0ron")]
 position = Vector2(1270, 304)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_07" type="Node2D" parent="YSort" unique_id=2127942742 instance=ExtResource("14_wom8k")]
+[node name="Meja_07" type="Node2D" parent="YSort" unique_id=1143031020 instance=ExtResource("14_rscm6")]
 position = Vector2(1150, 520)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_15" type="Node2D" parent="YSort" unique_id=235106793 instance=ExtResource("7_hjqri")]
+[node name="Kursi_15" type="Node2D" parent="YSort" unique_id=1112524539 instance=ExtResource("7_nossa")]
 position = Vector2(1150, 590)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_04" type="Node2D" parent="YSort" unique_id=1123165876 instance=ExtResource("15_wa552")]
+[node name="Komputer_04" type="Node2D" parent="YSort" unique_id=1910200261 instance=ExtResource("15_wom8k")]
 position = Vector2(1135, 502)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lampu_Meja_03" type="Node2D" parent="YSort" unique_id=1335322590 instance=ExtResource("16_v0i6o")]
+[node name="Lampu_Meja_03" type="Node2D" parent="YSort" unique_id=1756316746 instance=ExtResource("16_wa552")]
 position = Vector2(1175, 504)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_08" type="Node2D" parent="YSort" unique_id=647464068 instance=ExtResource("14_wom8k")]
+[node name="Meja_08" type="Node2D" parent="YSort" unique_id=941664206 instance=ExtResource("14_rscm6")]
 position = Vector2(1250, 520)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_16" type="Node2D" parent="YSort" unique_id=1798100684 instance=ExtResource("7_hjqri")]
+[node name="Kursi_16" type="Node2D" parent="YSort" unique_id=1336319711 instance=ExtResource("7_nossa")]
 position = Vector2(1250, 590)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Laptop_05" type="Node2D" parent="YSort" unique_id=1671101002 instance=ExtResource("10_q0ron")]
+[node name="Laptop_05" type="Node2D" parent="YSort" unique_id=837534504 instance=ExtResource("10_1aans")]
 position = Vector2(1245, 502)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Mug_03" type="Node2D" parent="YSort" unique_id=2118878672 instance=ExtResource("17_bamb7")]
+[node name="Mug_03" type="Node2D" parent="YSort" unique_id=1492475882 instance=ExtResource("17_v0i6o")]
 position = Vector2(1270, 506)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_09" type="Node2D" parent="YSort" unique_id=1448836740 instance=ExtResource("14_wom8k")]
+[node name="Meja_09" type="Node2D" parent="YSort" unique_id=1101854450 instance=ExtResource("14_rscm6")]
 position = Vector2(560, 560)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_17" type="Node2D" parent="YSort" unique_id=1767621143 instance=ExtResource("7_hjqri")]
+[node name="Kursi_17" type="Node2D" parent="YSort" unique_id=33738564 instance=ExtResource("7_nossa")]
 position = Vector2(560, 630)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_05" type="Node2D" parent="YSort" unique_id=2099800758 instance=ExtResource("15_wa552")]
+[node name="Komputer_05" type="Node2D" parent="YSort" unique_id=1521810355 instance=ExtResource("15_wom8k")]
 position = Vector2(545, 542)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_10" type="Node2D" parent="YSort" unique_id=987042735 instance=ExtResource("14_wom8k")]
+[node name="Meja_10" type="Node2D" parent="YSort" unique_id=2143703513 instance=ExtResource("14_rscm6")]
 position = Vector2(660, 560)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_18" type="Node2D" parent="YSort" unique_id=483816062 instance=ExtResource("7_hjqri")]
+[node name="Kursi_18" type="Node2D" parent="YSort" unique_id=2086377350 instance=ExtResource("7_nossa")]
 position = Vector2(660, 630)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Laptop_06" type="Node2D" parent="YSort" unique_id=863784356 instance=ExtResource("10_q0ron")]
+[node name="Laptop_06" type="Node2D" parent="YSort" unique_id=1206282468 instance=ExtResource("10_1aans")]
 position = Vector2(655, 542)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_11" type="Node2D" parent="YSort" unique_id=1593620820 instance=ExtResource("14_wom8k")]
+[node name="Meja_11" type="Node2D" parent="YSort" unique_id=105113339 instance=ExtResource("14_rscm6")]
 position = Vector2(800, 260)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_19" type="Node2D" parent="YSort" unique_id=748671039 instance=ExtResource("7_hjqri")]
+[node name="Kursi_19" type="Node2D" parent="YSort" unique_id=1277020868 instance=ExtResource("7_nossa")]
 position = Vector2(800, 330)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_06" type="Node2D" parent="YSort" unique_id=1333453638 instance=ExtResource("15_wa552")]
+[node name="Komputer_06" type="Node2D" parent="YSort" unique_id=616848064 instance=ExtResource("15_wom8k")]
 position = Vector2(785, 242)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_12" type="Node2D" parent="YSort" unique_id=1160502037 instance=ExtResource("14_wom8k")]
+[node name="Meja_12" type="Node2D" parent="YSort" unique_id=916432607 instance=ExtResource("14_rscm6")]
 position = Vector2(900, 260)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_20" type="Node2D" parent="YSort" unique_id=1206613095 instance=ExtResource("7_hjqri")]
+[node name="Kursi_20" type="Node2D" parent="YSort" unique_id=1754608975 instance=ExtResource("7_nossa")]
 position = Vector2(900, 330)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Laptop_07" type="Node2D" parent="YSort" unique_id=914110424 instance=ExtResource("10_q0ron")]
+[node name="Laptop_07" type="Node2D" parent="YSort" unique_id=1839319850 instance=ExtResource("10_1aans")]
 position = Vector2(895, 242)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_13" type="Node2D" parent="YSort" unique_id=902125436 instance=ExtResource("14_wom8k")]
+[node name="Meja_13" type="Node2D" parent="YSort" unique_id=542607844 instance=ExtResource("14_rscm6")]
 position = Vector2(320, 140)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_21" type="Node2D" parent="YSort" unique_id=1152605899 instance=ExtResource("7_hjqri")]
+[node name="Kursi_21" type="Node2D" parent="YSort" unique_id=1024240396 instance=ExtResource("7_nossa")]
 position = Vector2(320, 210)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Dispenser_01" type="Node2D" parent="YSort" unique_id=1678120372 instance=ExtResource("18_8jqp6")]
+[node name="Dispenser_01" type="Node2D" parent="YSort" unique_id=1617399418 instance=ExtResource("18_bamb7")]
 position = Vector2(400, 200)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_01" type="Node2D" parent="YSort" unique_id=1929705191 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_01" type="Node2D" parent="YSort" unique_id=1236560629 instance=ExtResource("19_8jqp6")]
 position = Vector2(240, 200)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tempat_Sampah_01" type="Node2D" parent="YSort" unique_id=104335949 instance=ExtResource("20_0bysi")]
+[node name="Tempat_Sampah_01" type="Node2D" parent="YSort" unique_id=1536644606 instance=ExtResource("20_jscgt")]
 position = Vector2(400, 100)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Sofa_01" type="Node2D" parent="YSort" unique_id=75774962 instance=ExtResource("21_y0ove")]
+[node name="Sofa_01" type="Node2D" parent="YSort" unique_id=55814219 instance=ExtResource("21_0bysi")]
 position = Vector2(500, 160)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_02" type="Node2D" parent="YSort" unique_id=1337645774 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_02" type="Node2D" parent="YSort" unique_id=1719911442 instance=ExtResource("19_8jqp6")]
 position = Vector2(430, 200)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Kursi_22" type="Node2D" parent="YSort" unique_id=605033102 instance=ExtResource("6_nossa")]
+[node name="Kursi_22" type="Node2D" parent="YSort" unique_id=2136516683 instance=ExtResource("6_hnsmf")]
 position = Vector2(580, 200)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Rak_Buku_01" type="Node2D" parent="YSort" unique_id=121985929 instance=ExtResource("22_awarj")]
+[node name="Rak_Buku_01" type="Node2D" parent="YSort" unique_id=463925625 instance=ExtResource("22_y0ove")]
 position = Vector2(590, 80)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_14" type="Node2D" parent="YSort" unique_id=1234412415 instance=ExtResource("14_wom8k")]
+[node name="Meja_14" type="Node2D" parent="YSort" unique_id=1952559035 instance=ExtResource("14_rscm6")]
 position = Vector2(940, 110)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_23" type="Node2D" parent="YSort" unique_id=69101487 instance=ExtResource("7_hjqri")]
+[node name="Kursi_23" type="Node2D" parent="YSort" unique_id=494782850 instance=ExtResource("7_nossa")]
 position = Vector2(940, 180)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Laptop_08" type="Node2D" parent="YSort" unique_id=1537284170 instance=ExtResource("10_q0ron")]
+[node name="Laptop_08" type="Node2D" parent="YSort" unique_id=1618104164 instance=ExtResource("10_1aans")]
 position = Vector2(935, 92)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_03" type="Node2D" parent="YSort" unique_id=1972544341 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_03" type="Node2D" parent="YSort" unique_id=1719356908 instance=ExtResource("19_8jqp6")]
 position = Vector2(1100, 200)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Rak_Buku_02" type="Node2D" parent="YSort" unique_id=1327783536 instance=ExtResource("22_awarj")]
+[node name="Rak_Buku_02" type="Node2D" parent="YSort" unique_id=899396040 instance=ExtResource("22_y0ove")]
 position = Vector2(900, 80)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_15" type="Node2D" parent="YSort" unique_id=86065961 instance=ExtResource("14_wom8k")]
+[node name="Meja_15" type="Node2D" parent="YSort" unique_id=1444514244 instance=ExtResource("14_rscm6")]
 position = Vector2(1200, 140)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_24" type="Node2D" parent="YSort" unique_id=2009258095 instance=ExtResource("7_hjqri")]
+[node name="Kursi_24" type="Node2D" parent="YSort" unique_id=1411191379 instance=ExtResource("7_nossa")]
 position = Vector2(1200, 210)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_07" type="Node2D" parent="YSort" unique_id=624715544 instance=ExtResource("15_wa552")]
+[node name="Komputer_07" type="Node2D" parent="YSort" unique_id=723396288 instance=ExtResource("15_wom8k")]
 position = Vector2(1185, 122)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_01" type="Node2D" parent="YSort" unique_id=82033858 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_01" type="Node2D" parent="YSort" unique_id=766227093 instance=ExtResource("23_awarj")]
 position = Vector2(1240, 88)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_02" type="Node2D" parent="YSort" unique_id=1534272443 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_02" type="Node2D" parent="YSort" unique_id=1028675064 instance=ExtResource("23_awarj")]
 position = Vector2(1280, 88)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_04" type="Node2D" parent="YSort" unique_id=1841164635 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_04" type="Node2D" parent="YSort" unique_id=1040717652 instance=ExtResource("19_8jqp6")]
 position = Vector2(1330, 200)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_03" type="Node2D" parent="YSort" unique_id=299722602 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_03" type="Node2D" parent="YSort" unique_id=1098438383 instance=ExtResource("23_awarj")]
 position = Vector2(80, 100)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Lemari_04" type="Node2D" parent="YSort" unique_id=823876366 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_04" type="Node2D" parent="YSort" unique_id=788994535 instance=ExtResource("23_awarj")]
 position = Vector2(120, 100)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Lemari_05" type="Node2D" parent="YSort" unique_id=1590953743 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_05" type="Node2D" parent="YSort" unique_id=1423043065 instance=ExtResource("23_awarj")]
 position = Vector2(160, 100)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_06" type="Node2D" parent="YSort" unique_id=1228842647 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_06" type="Node2D" parent="YSort" unique_id=906940912 instance=ExtResource("23_awarj")]
 position = Vector2(80, 180)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Lemari_07" type="Node2D" parent="YSort" unique_id=329201574 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_07" type="Node2D" parent="YSort" unique_id=2113244272 instance=ExtResource("23_awarj")]
 position = Vector2(120, 180)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_05" type="Node2D" parent="YSort" unique_id=1566066242 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_05" type="Node2D" parent="YSort" unique_id=799167150 instance=ExtResource("19_8jqp6")]
 position = Vector2(200, 260)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tempat_Sampah_02" type="Node2D" parent="YSort" unique_id=1820499570 instance=ExtResource("20_0bysi")]
+[node name="Tempat_Sampah_02" type="Node2D" parent="YSort" unique_id=149111783 instance=ExtResource("20_jscgt")]
 position = Vector2(60, 260)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_06" type="Node2D" parent="YSort" unique_id=534109991 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_06" type="Node2D" parent="YSort" unique_id=1372222620 instance=ExtResource("19_8jqp6")]
 position = Vector2(60, 320)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_07" type="Node2D" parent="YSort" unique_id=202027128 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_07" type="Node2D" parent="YSort" unique_id=618635922 instance=ExtResource("19_8jqp6")]
 position = Vector2(200, 440)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tempat_Sampah_03" type="Node2D" parent="YSort" unique_id=1741921095 instance=ExtResource("20_0bysi")]
+[node name="Tempat_Sampah_03" type="Node2D" parent="YSort" unique_id=210448400 instance=ExtResource("20_jscgt")]
 position = Vector2(180, 440)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_08" type="Node2D" parent="YSort" unique_id=2125672829 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_08" type="Node2D" parent="YSort" unique_id=1235684220 instance=ExtResource("23_awarj")]
 position = Vector2(80, 520)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Lemari_09" type="Node2D" parent="YSort" unique_id=1800359512 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_09" type="Node2D" parent="YSort" unique_id=1815208616 instance=ExtResource("23_awarj")]
 position = Vector2(120, 520)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Lemari_10" type="Node2D" parent="YSort" unique_id=1125584612 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_10" type="Node2D" parent="YSort" unique_id=691788773 instance=ExtResource("23_awarj")]
 position = Vector2(160, 520)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_11" type="Node2D" parent="YSort" unique_id=666988403 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_11" type="Node2D" parent="YSort" unique_id=782598388 instance=ExtResource("23_awarj")]
 position = Vector2(80, 600)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Lemari_12" type="Node2D" parent="YSort" unique_id=478844606 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_12" type="Node2D" parent="YSort" unique_id=1153211367 instance=ExtResource("23_awarj")]
 position = Vector2(120, 600)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tumpukan_Kertas_04" type="Node2D" parent="YSort" unique_id=1761177653 instance=ExtResource("11_tdlki")]
+[node name="Tumpukan_Kertas_04" type="Node2D" parent="YSort" unique_id=1820187301 instance=ExtResource("11_q0ron")]
 position = Vector2(180, 560)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tumpukan_Kertas_05" type="Node2D" parent="YSort" unique_id=2010003223 instance=ExtResource("11_tdlki")]
+[node name="Tumpukan_Kertas_05" type="Node2D" parent="YSort" unique_id=1213316862 instance=ExtResource("11_q0ron")]
 position = Vector2(190, 580)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_08" type="Node2D" parent="YSort" unique_id=224379201 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_08" type="Node2D" parent="YSort" unique_id=778046452 instance=ExtResource("19_8jqp6")]
 position = Vector2(200, 640)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_16" type="Node2D" parent="YSort" unique_id=2081374268 instance=ExtResource("14_wom8k")]
+[node name="Meja_16" type="Node2D" parent="YSort" unique_id=2110592249 instance=ExtResource("14_rscm6")]
 position = Vector2(320, 760)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_25" type="Node2D" parent="YSort" unique_id=528444318 instance=ExtResource("7_hjqri")]
+[node name="Kursi_25" type="Node2D" parent="YSort" unique_id=1572403457 instance=ExtResource("7_nossa")]
 position = Vector2(320, 830)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_08" type="Node2D" parent="YSort" unique_id=849371667 instance=ExtResource("15_wa552")]
+[node name="Komputer_08" type="Node2D" parent="YSort" unique_id=1671705553 instance=ExtResource("15_wom8k")]
 position = Vector2(305, 742)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Kursi_26" type="Node2D" parent="YSort" unique_id=3837953 instance=ExtResource("6_nossa")]
+[node name="Kursi_26" type="Node2D" parent="YSort" unique_id=442450671 instance=ExtResource("6_hnsmf")]
 position = Vector2(400, 700)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Papan_Tulis_02" type="Node2D" parent="YSort" unique_id=20287540 instance=ExtResource("13_rscm6")]
+[node name="Papan_Tulis_02" type="Node2D" parent="YSort" unique_id=152141587 instance=ExtResource("13_v8pws")]
 position = Vector2(420, 700)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_09" type="Node2D" parent="YSort" unique_id=163937866 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_09" type="Node2D" parent="YSort" unique_id=220398085 instance=ExtResource("19_8jqp6")]
 position = Vector2(240, 840)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_13" type="Node2D" parent="YSort" unique_id=868905791 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_13" type="Node2D" parent="YSort" unique_id=12446991 instance=ExtResource("23_awarj")]
 position = Vector2(500, 700)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Lemari_14" type="Node2D" parent="YSort" unique_id=24877620 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_14" type="Node2D" parent="YSort" unique_id=768979033 instance=ExtResource("23_awarj")]
 position = Vector2(540, 700)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_15" type="Node2D" parent="YSort" unique_id=1946624163 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_15" type="Node2D" parent="YSort" unique_id=375558418 instance=ExtResource("23_awarj")]
 position = Vector2(580, 700)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Lemari_16" type="Node2D" parent="YSort" unique_id=1336515504 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_16" type="Node2D" parent="YSort" unique_id=559846667 instance=ExtResource("23_awarj")]
 position = Vector2(620, 700)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_17" type="Node2D" parent="YSort" unique_id=1275000108 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_17" type="Node2D" parent="YSort" unique_id=431207796 instance=ExtResource("23_awarj")]
 position = Vector2(500, 820)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_18" type="Node2D" parent="YSort" unique_id=991592293 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_18" type="Node2D" parent="YSort" unique_id=1103123272 instance=ExtResource("23_awarj")]
 position = Vector2(540, 820)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_17" type="Node2D" parent="YSort" unique_id=992377222 instance=ExtResource("14_wom8k")]
+[node name="Meja_17" type="Node2D" parent="YSort" unique_id=229274901 instance=ExtResource("14_rscm6")]
 position = Vector2(720, 720)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_27" type="Node2D" parent="YSort" unique_id=1348911134 instance=ExtResource("7_hjqri")]
+[node name="Kursi_27" type="Node2D" parent="YSort" unique_id=2040353247 instance=ExtResource("7_nossa")]
 position = Vector2(720, 790)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_09" type="Node2D" parent="YSort" unique_id=802668490 instance=ExtResource("15_wa552")]
+[node name="Komputer_09" type="Node2D" parent="YSort" unique_id=91903302 instance=ExtResource("15_wom8k")]
 position = Vector2(705, 702)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Sofa_02" type="Node2D" parent="YSort" unique_id=854133275 instance=ExtResource("21_y0ove")]
+[node name="Sofa_02" type="Node2D" parent="YSort" unique_id=856930689 instance=ExtResource("21_0bysi")]
 position = Vector2(880, 800)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_10" type="Node2D" parent="YSort" unique_id=1480268041 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_10" type="Node2D" parent="YSort" unique_id=1343646719 instance=ExtResource("19_8jqp6")]
 position = Vector2(690, 840)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_11" type="Node2D" parent="YSort" unique_id=1048812011 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_11" type="Node2D" parent="YSort" unique_id=40873521 instance=ExtResource("19_8jqp6")]
 position = Vector2(910, 700)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_18" type="Node2D" parent="YSort" unique_id=632806035 instance=ExtResource("14_wom8k")]
+[node name="Meja_18" type="Node2D" parent="YSort" unique_id=68964800 instance=ExtResource("14_rscm6")]
 position = Vector2(1000, 760)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_28" type="Node2D" parent="YSort" unique_id=300173682 instance=ExtResource("7_hjqri")]
+[node name="Kursi_28" type="Node2D" parent="YSort" unique_id=1965429891 instance=ExtResource("7_nossa")]
 position = Vector2(1000, 830)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_10" type="Node2D" parent="YSort" unique_id=1983929069 instance=ExtResource("15_wa552")]
+[node name="Komputer_10" type="Node2D" parent="YSort" unique_id=1429072219 instance=ExtResource("15_wom8k")]
 position = Vector2(985, 742)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_12" type="Node2D" parent="YSort" unique_id=1949716175 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_12" type="Node2D" parent="YSort" unique_id=64759519 instance=ExtResource("19_8jqp6")]
 position = Vector2(1300, 700)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_13" type="Node2D" parent="YSort" unique_id=519531535 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_13" type="Node2D" parent="YSort" unique_id=1293625356 instance=ExtResource("19_8jqp6")]
 position = Vector2(1300, 840)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Rak_Buku_03" type="Node2D" parent="YSort" unique_id=323641026 instance=ExtResource("22_awarj")]
+[node name="Rak_Buku_03" type="Node2D" parent="YSort" unique_id=169347778 instance=ExtResource("22_y0ove")]
 position = Vector2(950, 700)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_11" type="Node2D" parent="YSort" unique_id=1469943525 instance=ExtResource("15_wa552")]
+[node name="Komputer_11" type="Node2D" parent="YSort" unique_id=127853524 instance=ExtResource("15_wom8k")]
 position = Vector2(700, 340)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_12" type="Node2D" parent="YSort" unique_id=2146639567 instance=ExtResource("15_wa552")]
+[node name="Komputer_12" type="Node2D" parent="YSort" unique_id=747751295 instance=ExtResource("15_wom8k")]
 position = Vector2(760, 340)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_19" type="Node2D" parent="YSort" unique_id=2135151028 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_19" type="Node2D" parent="YSort" unique_id=1899745505 instance=ExtResource("23_awarj")]
 position = Vector2(660, 310)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_20" type="Node2D" parent="YSort" unique_id=1227028334 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_20" type="Node2D" parent="YSort" unique_id=1431281566 instance=ExtResource("23_awarj")]
 position = Vector2(800, 310)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_21" type="Node2D" parent="YSort" unique_id=962491949 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_21" type="Node2D" parent="YSort" unique_id=1238412122 instance=ExtResource("23_awarj")]
 position = Vector2(880, 350)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tumpukan_Kertas_06" type="Node2D" parent="YSort" unique_id=1873607227 instance=ExtResource("11_tdlki")]
+[node name="Tumpukan_Kertas_06" type="Node2D" parent="YSort" unique_id=501764628 instance=ExtResource("11_q0ron")]
 position = Vector2(900, 400)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_14" type="Node2D" parent="YSort" unique_id=418400849 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_14" type="Node2D" parent="YSort" unique_id=1786770256 instance=ExtResource("19_8jqp6")]
 position = Vector2(970, 450)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tempat_Sampah_04" type="Node2D" parent="YSort" unique_id=1104628849 instance=ExtResource("20_0bysi")]
+[node name="Tempat_Sampah_04" type="Node2D" parent="YSort" unique_id=66411977 instance=ExtResource("20_jscgt")]
 position = Vector2(850, 450)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Meja_19" type="Node2D" parent="YSort" unique_id=565930710 instance=ExtResource("14_wom8k")]
+[node name="Meja_19" type="Node2D" parent="YSort" unique_id=1962242975 instance=ExtResource("14_rscm6")]
 position = Vector2(1060, 350)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 is_hide_spot = true
 
-[node name="Kursi_29" type="Node2D" parent="YSort" unique_id=1900258515 instance=ExtResource("7_hjqri")]
+[node name="Kursi_29" type="Node2D" parent="YSort" unique_id=1117351645 instance=ExtResource("7_nossa")]
 position = Vector2(1060, 420)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Komputer_13" type="Node2D" parent="YSort" unique_id=604132334 instance=ExtResource("15_wa552")]
+[node name="Komputer_13" type="Node2D" parent="YSort" unique_id=2140917622 instance=ExtResource("15_wom8k")]
 position = Vector2(1045, 332)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Lemari_22" type="Node2D" parent="YSort" unique_id=1436072445 instance=ExtResource("23_uuj1x")]
+[node name="Lemari_22" type="Node2D" parent="YSort" unique_id=166639456 instance=ExtResource("23_awarj")]
 position = Vector2(1120, 320)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_15" type="Node2D" parent="YSort" unique_id=1864815451 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_15" type="Node2D" parent="YSort" unique_id=885835813 instance=ExtResource("19_8jqp6")]
 position = Vector2(1160, 450)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_16" type="Node2D" parent="YSort" unique_id=1802861896 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_16" type="Node2D" parent="YSort" unique_id=446581641 instance=ExtResource("19_8jqp6")]
 position = Vector2(70, 100)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_Tinggi_01" type="Node2D" parent="YSort" unique_id=805066334 instance=ExtResource("24_3x5jj")]
+[node name="Tanaman_Tinggi_01" type="Node2D" parent="YSort" unique_id=186300006 instance=ExtResource("24_uuj1x")]
 position = Vector2(1450, 100)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_17" type="Node2D" parent="YSort" unique_id=77876068 instance=ExtResource("19_jscgt")]
+[node name="Tanaman_17" type="Node2D" parent="YSort" unique_id=869071821 instance=ExtResource("19_8jqp6")]
 position = Vector2(70, 860)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tanaman_Tinggi_02" type="Node2D" parent="YSort" unique_id=1407081586 instance=ExtResource("24_3x5jj")]
+[node name="Tanaman_Tinggi_02" type="Node2D" parent="YSort" unique_id=960488483 instance=ExtResource("24_uuj1x")]
 position = Vector2(1450, 860)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tempat_Sampah_05" type="Node2D" parent="YSort" unique_id=2098083507 instance=ExtResource("20_0bysi")]
+[node name="Tempat_Sampah_05" type="Node2D" parent="YSort" unique_id=596115729 instance=ExtResource("20_jscgt")]
 position = Vector2(1400, 620)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Tempat_Sampah_06" type="Node2D" parent="YSort" unique_id=1638036318 instance=ExtResource("20_0bysi")]
+[node name="Tempat_Sampah_06" type="Node2D" parent="YSort" unique_id=150096646 instance=ExtResource("20_jscgt")]
 position = Vector2(1400, 300)
-script = ExtResource("3_mbb35")
+script = ExtResource("3_k8ld0")
 
-[node name="Kursi_Terbalik" type="Node2D" parent="YSort" unique_id=1204778464]
+[node name="Kursi_Terbalik" type="Node2D" parent="YSort" unique_id=194012169 instance=ExtResource("6_hnsmf")]
 position = Vector2(1200, 500)
 rotation = 1.5707964
+script = ExtResource("3_k8ld0")
 
-[node name="@Sprite2D@2" type="Sprite2D" parent="YSort/Kursi_Terbalik" unique_id=283846644]
-texture = ExtResource("25_75ls7")
-
-[node name="Sel" type="Node2D" parent="YSort" unique_id=749623886]
+[node name="Sel" type="Node2D" parent="YSort" unique_id=1029593407]
 position = Vector2(1080, 140)
 
-[node name="Jeruji_01" type="Polygon2D" parent="YSort/Sel" unique_id=1802009873]
+[node name="Jeruji_01" type="Polygon2D" parent="YSort/Sel" unique_id=412250289]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(-32, -24, -28, -24, -28, 24, -32, 24)
 
-[node name="Jeruji_02" type="Polygon2D" parent="YSort/Sel" unique_id=887743152]
+[node name="Jeruji_02" type="Polygon2D" parent="YSort/Sel" unique_id=1291926306]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(-17, -24, -13, -24, -13, 24, -17, 24)
 
-[node name="Jeruji_03" type="Polygon2D" parent="YSort/Sel" unique_id=149069104]
+[node name="Jeruji_03" type="Polygon2D" parent="YSort/Sel" unique_id=1476802512]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(-2, -24, 2, -24, 2, 24, -2, 24)
 
-[node name="Jeruji_04" type="Polygon2D" parent="YSort/Sel" unique_id=995984365]
+[node name="Jeruji_04" type="Polygon2D" parent="YSort/Sel" unique_id=1004645169]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(13, -24, 17, -24, 17, 24, 13, 24)
 
-[node name="Jeruji_05" type="Polygon2D" parent="YSort/Sel" unique_id=711490256]
+[node name="Jeruji_05" type="Polygon2D" parent="YSort/Sel" unique_id=1324253149]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(28, -24, 32, -24, 32, 24, 28, 24)
 
-[node name="Jeruji_Atas" type="Polygon2D" parent="YSort/Sel" unique_id=1459785686]
+[node name="Jeruji_Atas" type="Polygon2D" parent="YSort/Sel" unique_id=1112164812]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(-32, -26, 32, -26, 32, -22, -32, -22)
 
-[node name="Jeruji_Bawah" type="Polygon2D" parent="YSort/Sel" unique_id=1675478761]
+[node name="Jeruji_Bawah" type="Polygon2D" parent="YSort/Sel" unique_id=518970389]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(-32, 22, 32, 22, 32, 26, -32, 26)
 
-[node name="Spawner" type="MultiplayerSpawner" parent="." unique_id=601750563]
+[node name="Spawner" type="MultiplayerSpawner" parent="." unique_id=781312742]
 spawn_path = NodePath("../YSort")
 
-[node name="Network" type="Node" parent="." unique_id=179199688]
-script = ExtResource("26_gwsl1")
+[node name="Network" type="Node" parent="." unique_id=1505247352]
+script = ExtResource("25_3x5jj")
 
-[node name="FloorLayer" type="TileMapLayer" parent="." unique_id=1663305691]
+[node name="FloorLayer" type="TileMapLayer" parent="." unique_id=372269623]
 z_index = -2
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAABAAAAAAABAAAAAAACAAAAAAABAAAAAAADAAAAAAABAAAAAAAEAAAAAAABAAAAAAAFAAAAAAABAAAAAAAGAAAAAAABAAAAAAAHAAAAAAABAAAAAAAIAAAAAAABAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAAABAAAAAAAMAAAAAAABAAAAAAANAAAAAAABAAAAAAAOAAAAAAABAAAAAAAPAAAAAAABAAAAAAAQAAAAAAABAAAAAAARAAAAAAABAAAAAAASAAAAAAABAAAAAAATAAAAAAABAAAAAAAUAAAAAAABAAAAAAAVAAAAAAABAAAAAAAWAAAAAAABAAAAAAAXAAAAAAABAAAAAAAYAAAAAAABAAAAAAAZAAAAAAABAAAAAAAaAAAAAAABAAAAAAAbAAAAAAABAAAAAAAcAAAAAAABAAAAAAAdAAAAAAABAAAAAAAeAAAAAAABAAAAAAAfAAAAAAABAAAAAAAgAAAAAAABAAAAAAAhAAAAAAABAAAAAAAiAAAAAAABAAAAAAAjAAAAAAABAAAAAAAkAAAAAAABAAAAAAAlAAAAAAABAAAAAAAmAAAAAAABAAAAAAAnAAAAAAABAAAAAAAoAAAAAAABAAAAAAApAAAAAAABAAAAAAAqAAAAAAACAAAAAAArAAAAAAABAAAAAAAsAAAAAAABAAAAAAAtAAAAAAABAAAAAAAuAAAAAAABAAAAAAAvAAAAAAABAAAAAAAAAAEAAAABAAAAAAABAAEAAAABAAAAAAACAAEAAAABAAAAAAADAAEAAAABAAAAAAAEAAEAAAABAAAAAAAFAAEAAAABAAAAAAAGAAEAAAABAAAAAAAHAAEAAAABAAAAAAAIAAEAAAABAAAAAAAJAAEAAAABAAAAAAAKAAEAAAABAAAAAAALAAEAAAABAAAAAAAMAAEAAAABAAAAAAANAAEAAAABAAAAAAAOAAEAAAABAAAAAAAPAAEAAAABAAAAAAAQAAEAAAABAAAAAAARAAEAAAABAAAAAAASAAEAAAABAAAAAAATAAEAAAABAAAAAAAUAAEAAAABAAAAAAAVAAEAAAABAAAAAAAWAAEAAAABAAAAAAAXAAEAAAABAAAAAAAYAAEAAAABAAAAAAAZAAEAAAABAAAAAAAaAAEAAAABAAAAAAAbAAEAAAABAAAAAAAcAAEAAAABAAAAAAAdAAEAAAABAAAAAAAeAAEAAAABAAAAAAAfAAEAAAABAAAAAAAgAAEAAAABAAAAAAAhAAEAAAABAAAAAAAiAAEAAAABAAAAAAAjAAEAAAABAAAAAAAkAAEAAAABAAAAAAAlAAEAAAABAAAAAAAmAAEAAAABAAAAAAAnAAEAAAABAAAAAAAoAAEAAAABAAAAAAApAAEAAAABAAAAAAAqAAEAAAACAAAAAAArAAEAAAABAAAAAAAsAAEAAAABAAAAAAAtAAEAAAABAAAAAAAuAAEAAAABAAAAAAAvAAEAAAABAAAAAAAAAAIAAAABAAAAAAABAAIAAAABAAAAAAACAAIAAAABAAAAAAADAAIAAAABAAAAAAAEAAIAAAABAAAAAAAFAAIAAAABAAAAAAAGAAIAAAABAAAAAAAHAAIAAAABAAAAAAAIAAIAAAABAAAAAAAJAAIAAAABAAAAAAAKAAIAAAABAAAAAAALAAIAAAABAAAAAAAMAAIAAAABAAAAAAANAAIAAAABAAAAAAAOAAIAAAABAAAAAAAPAAIAAAABAAAAAAAQAAIAAAABAAAAAAARAAIAAAABAAAAAAASAAIAAAABAAAAAAATAAIAAAABAAAAAAAUAAIAAAABAAAAAAAVAAIAAAABAAAAAAAWAAIAAAABAAAAAAAXAAIAAAABAAAAAAAYAAIAAAABAAAAAAAZAAIAAAABAAAAAAAaAAIAAAABAAAAAAAbAAIAAAABAAAAAAAcAAIAAAAAAAAAAAAdAAIAAAAAAAAAAAAeAAIAAAAAAAAAAAAfAAIAAAAAAAAAAAAgAAIAAAAAAAAAAAAhAAIAAAAAAAAAAAAiAAIAAAAAAAAAAAAjAAIAAAABAAAAAAAkAAIAAAABAAAAAAAlAAIAAAABAAAAAAAmAAIAAAABAAAAAAAnAAIAAAABAAAAAAAoAAIAAAABAAAAAAApAAIAAAABAAAAAAAqAAIAAAACAAAAAAArAAIAAAABAAAAAAAsAAIAAAABAAAAAAAtAAIAAAABAAAAAAAuAAIAAAABAAAAAAAvAAIAAAABAAAAAAAAAAMAAAABAAAAAAABAAMAAAABAAAAAAACAAMAAAABAAAAAAADAAMAAAABAAAAAAAEAAMAAAABAAAAAAAFAAMAAAABAAAAAAAGAAMAAAABAAAAAAAHAAMAAAABAAAAAAAIAAMAAAABAAAAAAAJAAMAAAABAAAAAAAKAAMAAAABAAAAAAALAAMAAAABAAAAAAAMAAMAAAABAAAAAAANAAMAAAABAAAAAAAOAAMAAAABAAAAAAAPAAMAAAABAAAAAAAQAAMAAAABAAAAAAARAAMAAAABAAAAAAASAAMAAAABAAAAAAATAAMAAAABAAAAAAAUAAMAAAABAAAAAAAVAAMAAAABAAAAAAAWAAMAAAABAAAAAAAXAAMAAAABAAAAAAAYAAMAAAABAAAAAAAZAAMAAAABAAAAAAAaAAMAAAABAAAAAAAbAAMAAAABAAAAAAAcAAMAAAAAAAAAAAAdAAMAAAAAAAAAAAAeAAMAAAAAAAAAAAAfAAMAAAAAAAAAAAAgAAMAAAAAAAAAAAAhAAMAAAAAAAAAAAAiAAMAAAAAAAAAAAAjAAMAAAABAAAAAAAkAAMAAAABAAAAAAAlAAMAAAABAAAAAAAmAAMAAAABAAAAAAAnAAMAAAABAAAAAAAoAAMAAAABAAAAAAApAAMAAAABAAAAAAAqAAMAAAACAAAAAAArAAMAAAABAAAAAAAsAAMAAAABAAAAAAAtAAMAAAABAAAAAAAuAAMAAAABAAAAAAAvAAMAAAABAAAAAAAAAAQAAAABAAAAAAABAAQAAAABAAAAAAACAAQAAAABAAAAAAADAAQAAAABAAAAAAAEAAQAAAABAAAAAAAFAAQAAAABAAAAAAAGAAQAAAABAAAAAAAHAAQAAAABAAAAAAAIAAQAAAABAAAAAAAJAAQAAAABAAAAAAAKAAQAAAABAAAAAAALAAQAAAABAAAAAAAMAAQAAAABAAAAAAANAAQAAAABAAAAAAAOAAQAAAABAAAAAAAPAAQAAAABAAAAAAAQAAQAAAABAAAAAAARAAQAAAABAAAAAAASAAQAAAABAAAAAAATAAQAAAABAAAAAAAUAAQAAAABAAAAAAAVAAQAAAABAAAAAAAWAAQAAAABAAAAAAAXAAQAAAABAAAAAAAYAAQAAAABAAAAAAAZAAQAAAABAAAAAAAaAAQAAAABAAAAAAAbAAQAAAABAAAAAAAcAAQAAAAAAAAAAAAdAAQAAAAAAAAAAAAeAAQAAAAAAAAAAAAfAAQAAAAAAAAAAAAgAAQAAAAAAAAAAAAhAAQAAAAAAAAAAAAiAAQAAAAAAAAAAAAjAAQAAAABAAAAAAAkAAQAAAABAAAAAAAlAAQAAAABAAAAAAAmAAQAAAABAAAAAAAnAAQAAAABAAAAAAAoAAQAAAABAAAAAAApAAQAAAABAAAAAAAqAAQAAAACAAAAAAArAAQAAAABAAAAAAAsAAQAAAABAAAAAAAtAAQAAAABAAAAAAAuAAQAAAABAAAAAAAvAAQAAAABAAAAAAAAAAUAAAABAAAAAAABAAUAAAABAAAAAAACAAUAAAABAAAAAAADAAUAAAABAAAAAAAEAAUAAAABAAAAAAAFAAUAAAABAAAAAAAGAAUAAAABAAAAAAAHAAUAAAABAAAAAAAIAAUAAAABAAAAAAAJAAUAAAABAAAAAAAKAAUAAAABAAAAAAALAAUAAAABAAAAAAAMAAUAAAABAAAAAAANAAUAAAABAAAAAAAOAAUAAAABAAAAAAAPAAUAAAABAAAAAAAQAAUAAAABAAAAAAARAAUAAAABAAAAAAASAAUAAAABAAAAAAATAAUAAAABAAAAAAAUAAUAAAABAAAAAAAVAAUAAAABAAAAAAAWAAUAAAABAAAAAAAXAAUAAAABAAAAAAAYAAUAAAABAAAAAAAZAAUAAAABAAAAAAAaAAUAAAABAAAAAAAbAAUAAAABAAAAAAAcAAUAAAAAAAAAAAAdAAUAAAAAAAAAAAAeAAUAAAAAAAAAAAAfAAUAAAAAAAAAAAAgAAUAAAAAAAAAAAAhAAUAAAAAAAAAAAAiAAUAAAAAAAAAAAAjAAUAAAABAAAAAAAkAAUAAAABAAAAAAAlAAUAAAABAAAAAAAmAAUAAAABAAAAAAAnAAUAAAABAAAAAAAoAAUAAAABAAAAAAApAAUAAAABAAAAAAAqAAUAAAACAAAAAAArAAUAAAABAAAAAAAsAAUAAAABAAAAAAAtAAUAAAABAAAAAAAuAAUAAAABAAAAAAAvAAUAAAABAAAAAAAAAAYAAAABAAAAAAABAAYAAAABAAAAAAACAAYAAAABAAAAAAADAAYAAAABAAAAAAAEAAYAAAABAAAAAAAFAAYAAAABAAAAAAAGAAYAAAABAAAAAAAHAAYAAAABAAAAAAAIAAYAAAABAAAAAAAJAAYAAAABAAAAAAAKAAYAAAABAAAAAAALAAYAAAABAAAAAAAMAAYAAAABAAAAAAANAAYAAAABAAAAAAAOAAYAAAABAAAAAAAPAAYAAAABAAAAAAAQAAYAAAABAAAAAAARAAYAAAABAAAAAAASAAYAAAABAAAAAAATAAYAAAABAAAAAAAUAAYAAAABAAAAAAAVAAYAAAABAAAAAAAWAAYAAAABAAAAAAAXAAYAAAABAAAAAAAYAAYAAAABAAAAAAAZAAYAAAABAAAAAAAaAAYAAAABAAAAAAAbAAYAAAABAAAAAAAcAAYAAAAAAAAAAAAdAAYAAAAAAAAAAAAeAAYAAAAAAAAAAAAfAAYAAAAAAAAAAAAgAAYAAAAAAAAAAAAhAAYAAAAAAAAAAAAiAAYAAAAAAAAAAAAjAAYAAAABAAAAAAAkAAYAAAABAAAAAAAlAAYAAAABAAAAAAAmAAYAAAABAAAAAAAnAAYAAAABAAAAAAAoAAYAAAABAAAAAAApAAYAAAABAAAAAAAqAAYAAAACAAAAAAArAAYAAAABAAAAAAAsAAYAAAABAAAAAAAtAAYAAAABAAAAAAAuAAYAAAABAAAAAAAvAAYAAAABAAAAAAAAAAcAAAACAAAAAAABAAcAAAACAAAAAAACAAcAAAACAAAAAAADAAcAAAACAAAAAAAEAAcAAAACAAAAAAAFAAcAAAACAAAAAAAGAAcAAAACAAAAAAAHAAcAAAACAAAAAAAIAAcAAAACAAAAAAAJAAcAAAACAAAAAAAKAAcAAAACAAAAAAALAAcAAAACAAAAAAAMAAcAAAACAAAAAAANAAcAAAACAAAAAAAOAAcAAAACAAAAAAAPAAcAAAACAAAAAAAQAAcAAAACAAAAAAARAAcAAAACAAAAAAASAAcAAAACAAAAAAATAAcAAAACAAAAAAAUAAcAAAACAAAAAAAVAAcAAAACAAAAAAAWAAcAAAACAAAAAAAXAAcAAAACAAAAAAAYAAcAAAACAAAAAAAZAAcAAAACAAAAAAAaAAcAAAACAAAAAAAbAAcAAAACAAAAAAAcAAcAAAACAAAAAAAdAAcAAAACAAAAAAAeAAcAAAACAAAAAAAfAAcAAAACAAAAAAAgAAcAAAACAAAAAAAhAAcAAAACAAAAAAAiAAcAAAACAAAAAAAjAAcAAAACAAAAAAAkAAcAAAACAAAAAAAlAAcAAAACAAAAAAAmAAcAAAACAAAAAAAnAAcAAAACAAAAAAAoAAcAAAACAAAAAAApAAcAAAACAAAAAAAqAAcAAAACAAAAAAArAAcAAAACAAAAAAAsAAcAAAACAAAAAAAtAAcAAAACAAAAAAAuAAcAAAACAAAAAAAvAAcAAAACAAAAAAAAAAgAAAABAAAAAAABAAgAAAABAAAAAAACAAgAAAABAAAAAAADAAgAAAABAAAAAAAEAAgAAAABAAAAAAAFAAgAAAABAAAAAAAGAAgAAAABAAAAAAAHAAgAAAABAAAAAAAIAAgAAAABAAAAAAAJAAgAAAABAAAAAAAKAAgAAAABAAAAAAALAAgAAAABAAAAAAAMAAgAAAABAAAAAAANAAgAAAABAAAAAAAOAAgAAAABAAAAAAAPAAgAAAABAAAAAAAQAAgAAAABAAAAAAARAAgAAAABAAAAAAASAAgAAAABAAAAAAATAAgAAAABAAAAAAAUAAgAAAABAAAAAAAVAAgAAAABAAAAAAAWAAgAAAABAAAAAAAXAAgAAAABAAAAAAAYAAgAAAABAAAAAAAZAAgAAAABAAAAAAAaAAgAAAABAAAAAAAbAAgAAAABAAAAAAAcAAgAAAABAAAAAAAdAAgAAAABAAAAAAAeAAgAAAABAAAAAAAfAAgAAAABAAAAAAAgAAgAAAABAAAAAAAhAAgAAAABAAAAAAAiAAgAAAABAAAAAAAjAAgAAAABAAAAAAAkAAgAAAABAAAAAAAlAAgAAAABAAAAAAAmAAgAAAABAAAAAAAnAAgAAAABAAAAAAAoAAgAAAABAAAAAAApAAgAAAABAAAAAAAqAAgAAAACAAAAAAArAAgAAAABAAAAAAAsAAgAAAABAAAAAAAtAAgAAAABAAAAAAAuAAgAAAABAAAAAAAvAAgAAAABAAAAAAAAAAkAAAABAAAAAAABAAkAAAACAAAAAAACAAkAAAACAAAAAAADAAkAAAACAAAAAAAEAAkAAAACAAAAAAAFAAkAAAACAAAAAAAGAAkAAAACAAAAAAAHAAkAAAABAAAAAAAIAAkAAAABAAAAAAAJAAkAAAABAAAAAAAKAAkAAAABAAAAAAALAAkAAAABAAAAAAAMAAkAAAABAAAAAAANAAkAAAABAAAAAAAOAAkAAAABAAAAAAAPAAkAAAABAAAAAAAQAAkAAAABAAAAAAARAAkAAAABAAAAAAASAAkAAAABAAAAAAATAAkAAAABAAAAAAAUAAkAAAABAAAAAAAVAAkAAAABAAAAAAAWAAkAAAABAAAAAAAXAAkAAAABAAAAAAAYAAkAAAABAAAAAAAZAAkAAAABAAAAAAAaAAkAAAABAAAAAAAbAAkAAAABAAAAAAAcAAkAAAABAAAAAAAdAAkAAAABAAAAAAAeAAkAAAABAAAAAAAfAAkAAAABAAAAAAAgAAkAAAABAAAAAAAhAAkAAAABAAAAAAAiAAkAAAABAAAAAAAjAAkAAAABAAAAAAAkAAkAAAABAAAAAAAlAAkAAAABAAAAAAAmAAkAAAABAAAAAAAnAAkAAAABAAAAAAAoAAkAAAABAAAAAAApAAkAAAABAAAAAAAqAAkAAAACAAAAAAArAAkAAAABAAAAAAAsAAkAAAABAAAAAAAtAAkAAAABAAAAAAAuAAkAAAABAAAAAAAvAAkAAAABAAAAAAAAAAoAAAABAAAAAAABAAoAAAACAAAAAAACAAoAAAACAAAAAAADAAoAAAACAAAAAAAEAAoAAAACAAAAAAAFAAoAAAACAAAAAAAGAAoAAAACAAAAAAAHAAoAAAABAAAAAAAIAAoAAAABAAAAAAAJAAoAAAABAAAAAAAKAAoAAAABAAAAAAALAAoAAAABAAAAAAAMAAoAAAABAAAAAAANAAoAAAABAAAAAAAOAAoAAAABAAAAAAAPAAoAAAABAAAAAAAQAAoAAAABAAAAAAARAAoAAAABAAAAAAASAAoAAAABAAAAAAATAAoAAAABAAAAAAAUAAoAAAABAAAAAAAVAAoAAAABAAAAAAAWAAoAAAABAAAAAAAXAAoAAAABAAAAAAAYAAoAAAABAAAAAAAZAAoAAAABAAAAAAAaAAoAAAABAAAAAAAbAAoAAAABAAAAAAAcAAoAAAABAAAAAAAdAAoAAAABAAAAAAAeAAoAAAABAAAAAAAfAAoAAAABAAAAAAAgAAoAAAABAAAAAAAhAAoAAAABAAAAAAAiAAoAAAABAAAAAAAjAAoAAAABAAAAAAAkAAoAAAABAAAAAAAlAAoAAAABAAAAAAAmAAoAAAABAAAAAAAnAAoAAAABAAAAAAAoAAoAAAABAAAAAAApAAoAAAABAAAAAAAqAAoAAAACAAAAAAArAAoAAAABAAAAAAAsAAoAAAABAAAAAAAtAAoAAAABAAAAAAAuAAoAAAABAAAAAAAvAAoAAAABAAAAAAAAAAsAAAABAAAAAAABAAsAAAACAAAAAAACAAsAAAACAAAAAAADAAsAAAACAAAAAAAEAAsAAAACAAAAAAAFAAsAAAACAAAAAAAGAAsAAAACAAAAAAAHAAsAAAABAAAAAAAIAAsAAAABAAAAAAAJAAsAAAABAAAAAAAKAAsAAAABAAAAAAALAAsAAAABAAAAAAAMAAsAAAABAAAAAAANAAsAAAABAAAAAAAOAAsAAAABAAAAAAAPAAsAAAABAAAAAAAQAAsAAAABAAAAAAARAAsAAAABAAAAAAASAAsAAAABAAAAAAATAAsAAAABAAAAAAAUAAsAAAABAAAAAAAVAAsAAAABAAAAAAAWAAsAAAABAAAAAAAXAAsAAAABAAAAAAAYAAsAAAABAAAAAAAZAAsAAAABAAAAAAAaAAsAAAABAAAAAAAbAAsAAAABAAAAAAAcAAsAAAABAAAAAAAdAAsAAAABAAAAAAAeAAsAAAABAAAAAAAfAAsAAAABAAAAAAAgAAsAAAABAAAAAAAhAAsAAAABAAAAAAAiAAsAAAABAAAAAAAjAAsAAAABAAAAAAAkAAsAAAABAAAAAAAlAAsAAAABAAAAAAAmAAsAAAABAAAAAAAnAAsAAAABAAAAAAAoAAsAAAABAAAAAAApAAsAAAABAAAAAAAqAAsAAAACAAAAAAArAAsAAAABAAAAAAAsAAsAAAABAAAAAAAtAAsAAAABAAAAAAAuAAsAAAABAAAAAAAvAAsAAAABAAAAAAAAAAwAAAABAAAAAAABAAwAAAACAAAAAAACAAwAAAACAAAAAAADAAwAAAACAAAAAAAEAAwAAAACAAAAAAAFAAwAAAACAAAAAAAGAAwAAAACAAAAAAAHAAwAAAABAAAAAAAIAAwAAAABAAAAAAAJAAwAAAABAAAAAAAKAAwAAAABAAAAAAALAAwAAAABAAAAAAAMAAwAAAABAAAAAAANAAwAAAABAAAAAAAOAAwAAAABAAAAAAAPAAwAAAABAAAAAAAQAAwAAAABAAAAAAARAAwAAAABAAAAAAASAAwAAAABAAAAAAATAAwAAAABAAAAAAAUAAwAAAABAAAAAAAVAAwAAAABAAAAAAAWAAwAAAABAAAAAAAXAAwAAAABAAAAAAAYAAwAAAABAAAAAAAZAAwAAAABAAAAAAAaAAwAAAABAAAAAAAbAAwAAAABAAAAAAAcAAwAAAABAAAAAAAdAAwAAAABAAAAAAAeAAwAAAABAAAAAAAfAAwAAAABAAAAAAAgAAwAAAABAAAAAAAhAAwAAAABAAAAAAAiAAwAAAABAAAAAAAjAAwAAAABAAAAAAAkAAwAAAABAAAAAAAlAAwAAAABAAAAAAAmAAwAAAABAAAAAAAnAAwAAAABAAAAAAAoAAwAAAABAAAAAAApAAwAAAABAAAAAAAqAAwAAAACAAAAAAArAAwAAAABAAAAAAAsAAwAAAABAAAAAAAtAAwAAAABAAAAAAAuAAwAAAABAAAAAAAvAAwAAAABAAAAAAAAAA0AAAABAAAAAAABAA0AAAACAAAAAAACAA0AAAACAAAAAAADAA0AAAACAAAAAAAEAA0AAAACAAAAAAAFAA0AAAACAAAAAAAGAA0AAAACAAAAAAAHAA0AAAABAAAAAAAIAA0AAAABAAAAAAAJAA0AAAABAAAAAAAKAA0AAAABAAAAAAALAA0AAAABAAAAAAAMAA0AAAABAAAAAAANAA0AAAABAAAAAAAOAA0AAAABAAAAAAAPAA0AAAABAAAAAAAQAA0AAAABAAAAAAARAA0AAAABAAAAAAASAA0AAAABAAAAAAATAA0AAAABAAAAAAAUAA0AAAABAAAAAAAVAA0AAAABAAAAAAAWAA0AAAABAAAAAAAXAA0AAAABAAAAAAAYAA0AAAABAAAAAAAZAA0AAAABAAAAAAAaAA0AAAABAAAAAAAbAA0AAAABAAAAAAAcAA0AAAABAAAAAAAdAA0AAAABAAAAAAAeAA0AAAABAAAAAAAfAA0AAAABAAAAAAAgAA0AAAABAAAAAAAhAA0AAAABAAAAAAAiAA0AAAABAAAAAAAjAA0AAAABAAAAAAAkAA0AAAABAAAAAAAlAA0AAAABAAAAAAAmAA0AAAABAAAAAAAnAA0AAAABAAAAAAAoAA0AAAABAAAAAAApAA0AAAABAAAAAAAqAA0AAAACAAAAAAArAA0AAAABAAAAAAAsAA0AAAABAAAAAAAtAA0AAAABAAAAAAAuAA0AAAABAAAAAAAvAA0AAAABAAAAAAAAAA4AAAABAAAAAAABAA4AAAACAAAAAAACAA4AAAACAAAAAAADAA4AAAACAAAAAAAEAA4AAAACAAAAAAAFAA4AAAACAAAAAAAGAA4AAAACAAAAAAAHAA4AAAABAAAAAAAIAA4AAAABAAAAAAAJAA4AAAABAAAAAAAKAA4AAAABAAAAAAALAA4AAAABAAAAAAAMAA4AAAABAAAAAAANAA4AAAABAAAAAAAOAA4AAAABAAAAAAAPAA4AAAABAAAAAAAQAA4AAAABAAAAAAARAA4AAAABAAAAAAASAA4AAAABAAAAAAATAA4AAAABAAAAAAAUAA4AAAABAAAAAAAVAA4AAAABAAAAAAAWAA4AAAABAAAAAAAXAA4AAAABAAAAAAAYAA4AAAABAAAAAAAZAA4AAAABAAAAAAAaAA4AAAABAAAAAAAbAA4AAAABAAAAAAAcAA4AAAABAAAAAAAdAA4AAAABAAAAAAAeAA4AAAABAAAAAAAfAA4AAAABAAAAAAAgAA4AAAABAAAAAAAhAA4AAAABAAAAAAAiAA4AAAABAAAAAAAjAA4AAAABAAAAAAAkAA4AAAABAAAAAAAlAA4AAAABAAAAAAAmAA4AAAABAAAAAAAnAA4AAAABAAAAAAAoAA4AAAABAAAAAAApAA4AAAABAAAAAAAqAA4AAAACAAAAAAArAA4AAAABAAAAAAAsAA4AAAABAAAAAAAtAA4AAAABAAAAAAAuAA4AAAABAAAAAAAvAA4AAAABAAAAAAAAAA8AAAABAAAAAAABAA8AAAABAAAAAAACAA8AAAABAAAAAAADAA8AAAABAAAAAAAEAA8AAAABAAAAAAAFAA8AAAABAAAAAAAGAA8AAAABAAAAAAAHAA8AAAABAAAAAAAIAA8AAAABAAAAAAAJAA8AAAABAAAAAAAKAA8AAAABAAAAAAALAA8AAAABAAAAAAAMAA8AAAABAAAAAAANAA8AAAABAAAAAAAOAA8AAAABAAAAAAAPAA8AAAABAAAAAAAQAA8AAAABAAAAAAARAA8AAAABAAAAAAASAA8AAAABAAAAAAATAA8AAAABAAAAAAAUAA8AAAABAAAAAAAVAA8AAAABAAAAAAAWAA8AAAABAAAAAAAXAA8AAAABAAAAAAAYAA8AAAABAAAAAAAZAA8AAAABAAAAAAAaAA8AAAABAAAAAAAbAA8AAAABAAAAAAAcAA8AAAABAAAAAAAdAA8AAAABAAAAAAAeAA8AAAABAAAAAAAfAA8AAAABAAAAAAAgAA8AAAABAAAAAAAhAA8AAAABAAAAAAAiAA8AAAABAAAAAAAjAA8AAAABAAAAAAAkAA8AAAABAAAAAAAlAA8AAAABAAAAAAAmAA8AAAABAAAAAAAnAA8AAAABAAAAAAAoAA8AAAABAAAAAAApAA8AAAABAAAAAAAqAA8AAAACAAAAAAArAA8AAAABAAAAAAAsAA8AAAABAAAAAAAtAA8AAAABAAAAAAAuAA8AAAABAAAAAAAvAA8AAAABAAAAAAAAABAAAAABAAAAAAABABAAAAABAAAAAAACABAAAAABAAAAAAADABAAAAABAAAAAAAEABAAAAABAAAAAAAFABAAAAABAAAAAAAGABAAAAABAAAAAAAHABAAAAABAAAAAAAIABAAAAABAAAAAAAJABAAAAABAAAAAAAKABAAAAABAAAAAAALABAAAAABAAAAAAAMABAAAAABAAAAAAANABAAAAABAAAAAAAOABAAAAABAAAAAAAPABAAAAABAAAAAAAQABAAAAABAAAAAAARABAAAAABAAAAAAASABAAAAABAAAAAAATABAAAAABAAAAAAAUABAAAAABAAAAAAAVABAAAAABAAAAAAAWABAAAAABAAAAAAAXABAAAAABAAAAAAAYABAAAAABAAAAAAAZABAAAAABAAAAAAAaABAAAAABAAAAAAAbABAAAAABAAAAAAAcABAAAAABAAAAAAAdABAAAAABAAAAAAAeABAAAAABAAAAAAAfABAAAAABAAAAAAAgABAAAAABAAAAAAAhABAAAAABAAAAAAAiABAAAAABAAAAAAAjABAAAAABAAAAAAAkABAAAAABAAAAAAAlABAAAAABAAAAAAAmABAAAAABAAAAAAAnABAAAAABAAAAAAAoABAAAAABAAAAAAApABAAAAABAAAAAAAqABAAAAACAAAAAAArABAAAAABAAAAAAAsABAAAAABAAAAAAAtABAAAAABAAAAAAAuABAAAAABAAAAAAAvABAAAAABAAAAAAAAABEAAAABAAAAAAABABEAAAABAAAAAAACABEAAAABAAAAAAADABEAAAABAAAAAAAEABEAAAABAAAAAAAFABEAAAABAAAAAAAGABEAAAABAAAAAAAHABEAAAABAAAAAAAIABEAAAABAAAAAAAJABEAAAABAAAAAAAKABEAAAABAAAAAAALABEAAAABAAAAAAAMABEAAAABAAAAAAANABEAAAABAAAAAAAOABEAAAABAAAAAAAPABEAAAABAAAAAAAQABEAAAABAAAAAAARABEAAAABAAAAAAASABEAAAABAAAAAAATABEAAAABAAAAAAAUABEAAAABAAAAAAAVABEAAAABAAAAAAAWABEAAAABAAAAAAAXABEAAAABAAAAAAAYABEAAAABAAAAAAAZABEAAAABAAAAAAAaABEAAAABAAAAAAAbABEAAAABAAAAAAAcABEAAAABAAAAAAAdABEAAAABAAAAAAAeABEAAAABAAAAAAAfABEAAAABAAAAAAAgABEAAAABAAAAAAAhABEAAAABAAAAAAAiABEAAAABAAAAAAAjABEAAAABAAAAAAAkABEAAAABAAAAAAAlABEAAAABAAAAAAAmABEAAAABAAAAAAAnABEAAAABAAAAAAAoABEAAAABAAAAAAApABEAAAABAAAAAAAqABEAAAACAAAAAAArABEAAAABAAAAAAAsABEAAAABAAAAAAAtABEAAAABAAAAAAAuABEAAAABAAAAAAAvABEAAAABAAAAAAAAABIAAAABAAAAAAABABIAAAABAAAAAAACABIAAAABAAAAAAADABIAAAABAAAAAAAEABIAAAABAAAAAAAFABIAAAABAAAAAAAGABIAAAABAAAAAAAHABIAAAABAAAAAAAIABIAAAABAAAAAAAJABIAAAABAAAAAAAKABIAAAABAAAAAAALABIAAAABAAAAAAAMABIAAAABAAAAAAANABIAAAABAAAAAAAOABIAAAABAAAAAAAPABIAAAABAAAAAAAQABIAAAABAAAAAAARABIAAAABAAAAAAASABIAAAABAAAAAAATABIAAAABAAAAAAAUABIAAAABAAAAAAAVABIAAAABAAAAAAAWABIAAAABAAAAAAAXABIAAAABAAAAAAAYABIAAAABAAAAAAAZABIAAAABAAAAAAAaABIAAAABAAAAAAAbABIAAAABAAAAAAAcABIAAAABAAAAAAAdABIAAAABAAAAAAAeABIAAAABAAAAAAAfABIAAAABAAAAAAAgABIAAAABAAAAAAAhABIAAAABAAAAAAAiABIAAAABAAAAAAAjABIAAAABAAAAAAAkABIAAAABAAAAAAAlABIAAAABAAAAAAAmABIAAAABAAAAAAAnABIAAAABAAAAAAAoABIAAAABAAAAAAApABIAAAABAAAAAAAqABIAAAACAAAAAAArABIAAAABAAAAAAAsABIAAAABAAAAAAAtABIAAAABAAAAAAAuABIAAAABAAAAAAAvABIAAAABAAAAAAAAABMAAAABAAAAAAABABMAAAABAAAAAAACABMAAAABAAAAAAADABMAAAABAAAAAAAEABMAAAABAAAAAAAFABMAAAABAAAAAAAGABMAAAABAAAAAAAHABMAAAABAAAAAAAIABMAAAABAAAAAAAJABMAAAABAAAAAAAKABMAAAABAAAAAAALABMAAAABAAAAAAAMABMAAAABAAAAAAANABMAAAABAAAAAAAOABMAAAABAAAAAAAPABMAAAABAAAAAAAQABMAAAABAAAAAAARABMAAAABAAAAAAASABMAAAABAAAAAAATABMAAAABAAAAAAAUABMAAAABAAAAAAAVABMAAAABAAAAAAAWABMAAAABAAAAAAAXABMAAAABAAAAAAAYABMAAAABAAAAAAAZABMAAAABAAAAAAAaABMAAAABAAAAAAAbABMAAAABAAAAAAAcABMAAAABAAAAAAAdABMAAAABAAAAAAAeABMAAAABAAAAAAAfABMAAAABAAAAAAAgABMAAAABAAAAAAAhABMAAAABAAAAAAAiABMAAAABAAAAAAAjABMAAAABAAAAAAAkABMAAAABAAAAAAAlABMAAAABAAAAAAAmABMAAAABAAAAAAAnABMAAAABAAAAAAAoABMAAAABAAAAAAApABMAAAABAAAAAAAqABMAAAACAAAAAAArABMAAAABAAAAAAAsABMAAAABAAAAAAAtABMAAAABAAAAAAAuABMAAAABAAAAAAAvABMAAAABAAAAAAAAABQAAAACAAAAAAABABQAAAACAAAAAAACABQAAAACAAAAAAADABQAAAACAAAAAAAEABQAAAACAAAAAAAFABQAAAACAAAAAAAGABQAAAACAAAAAAAHABQAAAACAAAAAAAIABQAAAACAAAAAAAJABQAAAACAAAAAAAKABQAAAACAAAAAAALABQAAAACAAAAAAAMABQAAAACAAAAAAANABQAAAACAAAAAAAOABQAAAACAAAAAAAPABQAAAACAAAAAAAQABQAAAACAAAAAAARABQAAAACAAAAAAASABQAAAACAAAAAAATABQAAAACAAAAAAAUABQAAAACAAAAAAAVABQAAAACAAAAAAAWABQAAAACAAAAAAAXABQAAAACAAAAAAAYABQAAAACAAAAAAAZABQAAAACAAAAAAAaABQAAAACAAAAAAAbABQAAAACAAAAAAAcABQAAAACAAAAAAAdABQAAAACAAAAAAAeABQAAAACAAAAAAAfABQAAAACAAAAAAAgABQAAAACAAAAAAAhABQAAAACAAAAAAAiABQAAAACAAAAAAAjABQAAAACAAAAAAAkABQAAAACAAAAAAAlABQAAAACAAAAAAAmABQAAAACAAAAAAAnABQAAAACAAAAAAAoABQAAAACAAAAAAApABQAAAACAAAAAAAqABQAAAACAAAAAAArABQAAAACAAAAAAAsABQAAAACAAAAAAAtABQAAAACAAAAAAAuABQAAAACAAAAAAAvABQAAAACAAAAAAAAABUAAAABAAAAAAABABUAAAABAAAAAAACABUAAAABAAAAAAADABUAAAABAAAAAAAEABUAAAABAAAAAAAFABUAAAABAAAAAAAGABUAAAABAAAAAAAHABUAAAABAAAAAAAIABUAAAABAAAAAAAJABUAAAABAAAAAAAKABUAAAABAAAAAAALABUAAAABAAAAAAAMABUAAAABAAAAAAANABUAAAABAAAAAAAOABUAAAACAAAAAAAPABUAAAACAAAAAAAQABUAAAACAAAAAAARABUAAAACAAAAAAASABUAAAACAAAAAAATABUAAAACAAAAAAAUABUAAAACAAAAAAAVABUAAAACAAAAAAAWABUAAAACAAAAAAAXABUAAAACAAAAAAAYABUAAAACAAAAAAAZABUAAAACAAAAAAAaABUAAAACAAAAAAAbABUAAAACAAAAAAAcABUAAAACAAAAAAAdABUAAAABAAAAAAAeABUAAAABAAAAAAAfABUAAAABAAAAAAAgABUAAAABAAAAAAAhABUAAAABAAAAAAAiABUAAAABAAAAAAAjABUAAAABAAAAAAAkABUAAAABAAAAAAAlABUAAAABAAAAAAAmABUAAAABAAAAAAAnABUAAAABAAAAAAAoABUAAAABAAAAAAApABUAAAABAAAAAAAqABUAAAACAAAAAAArABUAAAABAAAAAAAsABUAAAABAAAAAAAtABUAAAABAAAAAAAuABUAAAABAAAAAAAvABUAAAABAAAAAAAAABYAAAABAAAAAAABABYAAAABAAAAAAACABYAAAABAAAAAAADABYAAAABAAAAAAAEABYAAAABAAAAAAAFABYAAAABAAAAAAAGABYAAAABAAAAAAAHABYAAAABAAAAAAAIABYAAAABAAAAAAAJABYAAAABAAAAAAAKABYAAAABAAAAAAALABYAAAABAAAAAAAMABYAAAABAAAAAAANABYAAAABAAAAAAAOABYAAAACAAAAAAAPABYAAAACAAAAAAAQABYAAAACAAAAAAARABYAAAACAAAAAAASABYAAAACAAAAAAATABYAAAACAAAAAAAUABYAAAACAAAAAAAVABYAAAACAAAAAAAWABYAAAACAAAAAAAXABYAAAACAAAAAAAYABYAAAACAAAAAAAZABYAAAACAAAAAAAaABYAAAACAAAAAAAbABYAAAACAAAAAAAcABYAAAACAAAAAAAdABYAAAABAAAAAAAeABYAAAABAAAAAAAfABYAAAABAAAAAAAgABYAAAABAAAAAAAhABYAAAABAAAAAAAiABYAAAABAAAAAAAjABYAAAABAAAAAAAkABYAAAABAAAAAAAlABYAAAABAAAAAAAmABYAAAABAAAAAAAnABYAAAABAAAAAAAoABYAAAABAAAAAAApABYAAAABAAAAAAAqABYAAAACAAAAAAArABYAAAABAAAAAAAsABYAAAABAAAAAAAtABYAAAABAAAAAAAuABYAAAABAAAAAAAvABYAAAABAAAAAAAAABcAAAABAAAAAAABABcAAAABAAAAAAACABcAAAABAAAAAAADABcAAAABAAAAAAAEABcAAAABAAAAAAAFABcAAAABAAAAAAAGABcAAAABAAAAAAAHABcAAAABAAAAAAAIABcAAAABAAAAAAAJABcAAAABAAAAAAAKABcAAAABAAAAAAALABcAAAABAAAAAAAMABcAAAABAAAAAAANABcAAAABAAAAAAAOABcAAAACAAAAAAAPABcAAAACAAAAAAAQABcAAAACAAAAAAARABcAAAACAAAAAAASABcAAAACAAAAAAATABcAAAACAAAAAAAUABcAAAACAAAAAAAVABcAAAACAAAAAAAWABcAAAACAAAAAAAXABcAAAACAAAAAAAYABcAAAACAAAAAAAZABcAAAACAAAAAAAaABcAAAACAAAAAAAbABcAAAACAAAAAAAcABcAAAACAAAAAAAdABcAAAABAAAAAAAeABcAAAABAAAAAAAfABcAAAABAAAAAAAgABcAAAABAAAAAAAhABcAAAABAAAAAAAiABcAAAABAAAAAAAjABcAAAABAAAAAAAkABcAAAABAAAAAAAlABcAAAABAAAAAAAmABcAAAABAAAAAAAnABcAAAABAAAAAAAoABcAAAABAAAAAAApABcAAAABAAAAAAAqABcAAAACAAAAAAArABcAAAABAAAAAAAsABcAAAABAAAAAAAtABcAAAABAAAAAAAuABcAAAABAAAAAAAvABcAAAABAAAAAAAAABgAAAABAAAAAAABABgAAAABAAAAAAACABgAAAABAAAAAAADABgAAAABAAAAAAAEABgAAAABAAAAAAAFABgAAAABAAAAAAAGABgAAAABAAAAAAAHABgAAAABAAAAAAAIABgAAAABAAAAAAAJABgAAAABAAAAAAAKABgAAAABAAAAAAALABgAAAABAAAAAAAMABgAAAABAAAAAAANABgAAAABAAAAAAAOABgAAAACAAAAAAAPABgAAAACAAAAAAAQABgAAAACAAAAAAARABgAAAACAAAAAAASABgAAAACAAAAAAATABgAAAACAAAAAAAUABgAAAACAAAAAAAVABgAAAACAAAAAAAWABgAAAACAAAAAAAXABgAAAACAAAAAAAYABgAAAACAAAAAAAZABgAAAACAAAAAAAaABgAAAACAAAAAAAbABgAAAACAAAAAAAcABgAAAACAAAAAAAdABgAAAABAAAAAAAeABgAAAABAAAAAAAfABgAAAABAAAAAAAgABgAAAABAAAAAAAhABgAAAABAAAAAAAiABgAAAABAAAAAAAjABgAAAABAAAAAAAkABgAAAABAAAAAAAlABgAAAABAAAAAAAmABgAAAABAAAAAAAnABgAAAABAAAAAAAoABgAAAABAAAAAAApABgAAAABAAAAAAAqABgAAAACAAAAAAArABgAAAABAAAAAAAsABgAAAABAAAAAAAtABgAAAABAAAAAAAuABgAAAABAAAAAAAvABgAAAABAAAAAAAAABkAAAABAAAAAAABABkAAAABAAAAAAACABkAAAABAAAAAAADABkAAAABAAAAAAAEABkAAAABAAAAAAAFABkAAAABAAAAAAAGABkAAAABAAAAAAAHABkAAAABAAAAAAAIABkAAAABAAAAAAAJABkAAAABAAAAAAAKABkAAAABAAAAAAALABkAAAABAAAAAAAMABkAAAABAAAAAAANABkAAAABAAAAAAAOABkAAAACAAAAAAAPABkAAAACAAAAAAAQABkAAAACAAAAAAARABkAAAACAAAAAAASABkAAAACAAAAAAATABkAAAACAAAAAAAUABkAAAACAAAAAAAVABkAAAACAAAAAAAWABkAAAACAAAAAAAXABkAAAACAAAAAAAYABkAAAACAAAAAAAZABkAAAACAAAAAAAaABkAAAACAAAAAAAbABkAAAACAAAAAAAcABkAAAACAAAAAAAdABkAAAABAAAAAAAeABkAAAABAAAAAAAfABkAAAABAAAAAAAgABkAAAABAAAAAAAhABkAAAABAAAAAAAiABkAAAABAAAAAAAjABkAAAABAAAAAAAkABkAAAABAAAAAAAlABkAAAABAAAAAAAmABkAAAABAAAAAAAnABkAAAABAAAAAAAoABkAAAABAAAAAAApABkAAAABAAAAAAAqABkAAAACAAAAAAArABkAAAABAAAAAAAsABkAAAABAAAAAAAtABkAAAABAAAAAAAuABkAAAABAAAAAAAvABkAAAABAAAAAAAAABoAAAABAAAAAAABABoAAAABAAAAAAACABoAAAABAAAAAAADABoAAAABAAAAAAAEABoAAAABAAAAAAAFABoAAAABAAAAAAAGABoAAAABAAAAAAAHABoAAAABAAAAAAAIABoAAAABAAAAAAAJABoAAAABAAAAAAAKABoAAAABAAAAAAALABoAAAABAAAAAAAMABoAAAABAAAAAAANABoAAAABAAAAAAAOABoAAAACAAAAAAAPABoAAAACAAAAAAAQABoAAAACAAAAAAARABoAAAACAAAAAAASABoAAAACAAAAAAATABoAAAACAAAAAAAUABoAAAACAAAAAAAVABoAAAACAAAAAAAWABoAAAACAAAAAAAXABoAAAACAAAAAAAYABoAAAACAAAAAAAZABoAAAACAAAAAAAaABoAAAACAAAAAAAbABoAAAACAAAAAAAcABoAAAACAAAAAAAdABoAAAABAAAAAAAeABoAAAABAAAAAAAfABoAAAABAAAAAAAgABoAAAABAAAAAAAhABoAAAABAAAAAAAiABoAAAABAAAAAAAjABoAAAABAAAAAAAkABoAAAABAAAAAAAlABoAAAABAAAAAAAmABoAAAABAAAAAAAnABoAAAABAAAAAAAoABoAAAABAAAAAAApABoAAAABAAAAAAAqABoAAAACAAAAAAArABoAAAABAAAAAAAsABoAAAABAAAAAAAtABoAAAABAAAAAAAuABoAAAABAAAAAAAvABoAAAABAAAAAAAAABsAAAABAAAAAAABABsAAAABAAAAAAACABsAAAABAAAAAAADABsAAAABAAAAAAAEABsAAAABAAAAAAAFABsAAAABAAAAAAAGABsAAAABAAAAAAAHABsAAAABAAAAAAAIABsAAAABAAAAAAAJABsAAAABAAAAAAAKABsAAAABAAAAAAALABsAAAABAAAAAAAMABsAAAABAAAAAAANABsAAAABAAAAAAAOABsAAAABAAAAAAAPABsAAAABAAAAAAAQABsAAAABAAAAAAARABsAAAABAAAAAAASABsAAAABAAAAAAATABsAAAABAAAAAAAUABsAAAABAAAAAAAVABsAAAABAAAAAAAWABsAAAABAAAAAAAXABsAAAABAAAAAAAYABsAAAABAAAAAAAZABsAAAABAAAAAAAaABsAAAABAAAAAAAbABsAAAABAAAAAAAcABsAAAABAAAAAAAdABsAAAABAAAAAAAeABsAAAABAAAAAAAfABsAAAABAAAAAAAgABsAAAABAAAAAAAhABsAAAABAAAAAAAiABsAAAABAAAAAAAjABsAAAABAAAAAAAkABsAAAABAAAAAAAlABsAAAABAAAAAAAmABsAAAABAAAAAAAnABsAAAABAAAAAAAoABsAAAABAAAAAAApABsAAAABAAAAAAAqABsAAAACAAAAAAArABsAAAABAAAAAAAsABsAAAABAAAAAAAtABsAAAABAAAAAAAuABsAAAABAAAAAAAvABsAAAABAAAAAAA=")
-tile_set = ExtResource("27_lkded")
+tile_set = ExtResource("26_75ls7")
 
-[node name="WallLayer" type="TileMapLayer" parent="." unique_id=879688523]
+[node name="WallLayer" type="TileMapLayer" parent="." unique_id=1394772803]
 z_index = -1
 tile_map_data = PackedByteArray("AAAAAAAAAQACAAEAAAAAAAEAAQABAAEAAAAAABsAAQADAAAAAAABAAAAAQAHAAMAAAABAAEAAQAEAAQAAAABABsAAQAHAAEAAAACAAAAAQAHAAMAAAACAAEAAQAEAAQAAAACABsAAQAHAAEAAAADAAAAAQAHAAMAAAADAAEAAQAEAAQAAAADABsAAQAHAAEAAAAEAAAAAQAHAAMAAAAEAAEAAQAEAAQAAAAEABsAAQAHAAEAAAAFAAAAAQAHAAMAAAAFAAEAAQAEAAQAAAAFABsAAQAHAAEAAAAGAAAAAQAHAAMAAAAGAAEAAQAEAAQAAAAGABsAAQAHAAEAAAAHAAAAAQAHAAMAAAAHAAEAAQAHAAQAAAAHABsAAQAHAAEAAAAIAAAAAQAHAAMAAAAIAAEAAQAEAAQAAAAIABsAAQAHAAEAAAAJAAAAAQAHAAMAAAAJAAEAAQAEAAQAAAAJABsAAQAHAAEAAAAKAAAAAQAHAAMAAAAKAAEAAQAEAAQAAAAKABsAAQAHAAEAAAALAAAAAQAHAAMAAAALAAEAAQAEAAQAAAALABsAAQAHAAEAAAAMAAAAAQAHAAMAAAAMAAEAAQAEAAQAAAAMABsAAQAHAAEAAAANAAAAAQAHAAMAAAANAAEAAQAHAAQAAAANABsAAQAHAAEAAAAOAAAAAQAHAAMAAAAOAAEAAQAEAAQAAAAOABsAAQAAAAIAAAAPAAAAAQAHAAMAAAAPAAEAAQAEAAQAAAAPABsAAQAHAAEAAAAQAAAAAQAHAAMAAAAQAAEAAQAEAAQAAAAQABsAAQAHAAEAAAARAAAAAQAHAAMAAAARAAEAAQAEAAQAAAARABsAAQAHAAEAAAASAAAAAQAHAAMAAAASAAEAAQAEAAQAAAASABsAAQAHAAEAAAATAAAAAQAHAAMAAAATAAEAAQAHAAQAAAATABsAAQAHAAEAAAAUAAAAAQAHAAMAAAAUAAEAAQAEAAQAAAAUABsAAQAHAAEAAAAVAAAAAQAHAAMAAAAVAAEAAQAEAAQAAAAVABsAAQAAAAIAAAAWAAAAAQAHAAMAAAAWAAEAAQAEAAQAAAAWABsAAQAHAAEAAAAXAAAAAQAHAAMAAAAXAAEAAQAEAAQAAAAXABsAAQAHAAEAAAAYAAAAAQAHAAMAAAAYAAEAAQAEAAQAAAAYABsAAQAHAAEAAAAZAAAAAQAHAAMAAAAZAAEAAQAEAAQAAAAZABsAAQAHAAEAAAAaAAAAAQAHAAMAAAAaAAEAAQAEAAQAAAAaABsAAQAHAAEAAAAbAAAAAQAHAAMAAAAbAAEAAQAEAAQAAAAbABsAAQAHAAEAAAAcAAAAAQAHAAMAAAAcAAEAAQAHAAQAAAAcABsAAQAHAAEAAAAdAAAAAQAHAAMAAAAdAAEAAQAEAAQAAAAdABsAAQAAAAIAAAAeAAAAAQAHAAMAAAAeAAEAAQAEAAQAAAAeABsAAQAHAAEAAAAfAAAAAQAHAAMAAAAfAAEAAQAEAAQAAAAfABsAAQAHAAEAAAAgAAAAAQAHAAMAAAAgAAEAAQAEAAQAAAAgABsAAQAHAAEAAAAhAAAAAQAHAAMAAAAhAAEAAQAEAAQAAAAhABsAAQAHAAEAAAAiAAAAAQAHAAMAAAAiAAEAAQAEAAQAAAAiABsAAQAHAAEAAAAjAAAAAQAHAAMAAAAjAAEAAQAHAAQAAAAjABsAAQAHAAEAAAAkAAAAAQAHAAMAAAAkAAEAAQAEAAQAAAAkABsAAQAHAAEAAAAlAAAAAQAHAAMAAAAlAAEAAQAEAAQAAAAlABsAAQAHAAEAAAAmAAAAAQAHAAMAAAAmAAEAAQAEAAQAAAAmABsAAQAHAAEAAAAnAAAAAQAHAAMAAAAnAAEAAQAEAAQAAAAnABsAAQAHAAEAAAAoAAAAAQAHAAMAAAAoAAEAAQAEAAQAAAAoABsAAQAHAAEAAAApAAAAAQAHAAMAAAApAAEAAQAEAAQAAAApABsAAQAHAAEAAAAqAAAAAQAHAAMAAAAqAAEAAQAHAAQAAAAqABsAAQAAAAIAAAArAAAAAQAHAAMAAAArAAEAAQAEAAQAAAArABsAAQAHAAEAAAAsAAAAAQAHAAMAAAAsAAEAAQAEAAQAAAAsABsAAQAHAAEAAAAtAAAAAQAHAAMAAAAtAAEAAQAEAAQAAAAtABsAAQAHAAEAAAAuAAAAAQAHAAMAAAAuAAEAAQAEAAQAAAAuABsAAQAHAAEAAAAvAAAAAQACAAMAAAAvAAEAAQAFAAQAAAAvABsAAQAGAAEAAAAAAAIAAQAGAAAAAAAvAAIAAQAGAAAAAAAAAAMAAQAGAAAAAAAvAAMAAQAGAAAAAAAAAAQAAQAGAAAAAAAvAAQAAQAGAAAAAAAAAAUAAQAGAAAAAAAvAAUAAQAGAAAAAAAAAAYAAQAGAAAAAAAvAAYAAQAGAAAAAAAAAAcAAQAGAAAAAAAvAAcAAQAGAAAAAAAAAAgAAQAGAAAAAAAvAAgAAQAGAAAAAAAAAAkAAQAAAAEAAAAvAAkAAQAGAAAAAAAAAAoAAQAGAAAAAAAvAAoAAQAGAAAAAAAAAAsAAQAGAAAAAAAvAAsAAQAGAAAAAAAAAAwAAQAGAAAAAAAvAAwAAQAGAAAAAAAAAA0AAQAGAAAAAAAvAA0AAQAGAAAAAAAAAA4AAQAGAAAAAAAvAA4AAQAGAAAAAAAAAA8AAQAAAAEAAAAvAA8AAQAGAAAAAAAAABAAAQAGAAAAAAAvABAAAQAGAAAAAAAAABEAAQAGAAAAAAAvABEAAQAGAAAAAAAAABIAAQAGAAAAAAAvABIAAQAGAAAAAAAAABMAAQAGAAAAAAAvABMAAQAGAAAAAAAAABQAAQAGAAAAAAAvABQAAQAGAAAAAAAAABUAAQAAAAEAAAAvABUAAQAGAAAAAAAAABYAAQAGAAAAAAAvABYAAQAGAAAAAAAAABcAAQAGAAAAAAAvABcAAQAGAAAAAAAAABgAAQAGAAAAAAAvABgAAQAGAAAAAAAAABkAAQAGAAAAAAAvABkAAQAGAAAAAAAAABoAAQAGAAAAAAAvABoAAQAGAAAAAAAHAAcAAQAHAAAAAAAIAAcAAQAFAAEAAAALAAcAAQACAAAAAAAMAAcAAQAHAAEAAAANAAcAAQAAAAIAAAAOAAcAAQAFAAEAAAARAAcAAQACAAAAAAASAAcAAQAHAAEAAAATAAcAAQAAAAIAAAAUAAcAAQAHAAEAAAAVAAcAAQAFAAEAAAAYAAcAAQACAAAAAAAZAAcAAQAHAAEAAAAaAAcAAQAHAAEAAAAbAAcAAQAHAAEAAAAcAAcAAQAAAAIAAAAdAAcAAQAFAAEAAAAgAAcAAQACAAAAAAAhAAcAAQAHAAEAAAAiAAcAAQAHAAEAAAAjAAcAAQAAAAIAAAAkAAcAAQAFAAEAAAAnAAcAAQACAAAAAAAoAAcAAQAHAAEAAAApAAcAAQAHAAEAAAABAAkAAQAHAAEAAAACAAkAAQAFAAEAAAAFAAkAAQACAAAAAAAGAAkAAQAHAAEAAAABAA8AAQAHAAEAAAACAA8AAQAHAAEAAAADAA8AAQAHAAEAAAAEAA8AAQAHAAEAAAAFAA8AAQAHAAEAAAAGAA8AAQAHAAEAAAABABUAAQAHAAEAAAACABUAAQAHAAEAAAADABUAAQAHAAEAAAAEABUAAQAHAAEAAAAFABUAAQAHAAEAAAAGABUAAQAHAAEAAAAHABUAAQAAAAIAAAAIABUAAQAFAAEAAAALABUAAQACAAAAAAAMABUAAQAHAAEAAAANABUAAQAHAAEAAAAOABUAAQAEAAIAAAAPABUAAQAFAAEAAAASABUAAQACAAAAAAATABUAAQAHAAEAAAAUABUAAQAHAAEAAAAVABUAAQAEAAIAAAAWABUAAQAHAAEAAAAXABUAAQAFAAEAAAAaABUAAQACAAAAAAAbABUAAQAHAAEAAAAcABUAAQAHAAEAAAAdABUAAQAEAAIAAAAeABUAAQAHAAEAAAAfABUAAQAHAAEAAAAgABUAAQAHAAEAAAAhABUAAQAFAAEAAAAkABUAAQACAAAAAAAlABUAAQAHAAEAAAAmABUAAQAHAAEAAAAnABUAAQAHAAEAAAAoABUAAQAHAAEAAAApABUAAQAHAAEAAAAUAAkAAQAHAAAAAAAVAAkAAQAHAAEAAAAWAAkAAQAHAAEAAAAXAAkAAQAHAAEAAAAYAAkAAQAHAAEAAAAZAAkAAQAHAAEAAAAUAA8AAQADAAAAAAAVAA8AAQAFAAEAAAAYAA8AAQACAAAAAAAZAA8AAQAHAAEAAAAaAAkAAQAEAAIAAAAbAAkAAQAHAAEAAAAcAAkAAQAHAAEAAAAdAAkAAQAHAAEAAAAeAAkAAQAHAAEAAAAaAA8AAQAGAAEAAAAdAA8AAQACAAAAAAAeAA8AAQAHAAEAAAAfAAkAAQAEAAIAAAAgAAkAAQAHAAEAAAAhAAkAAQAHAAEAAAAiAAkAAQAHAAEAAAAjAAkAAQAHAAEAAAAkAAkAAQAHAAEAAAAfAA8AAQAAAAIAAAAgAA8AAQAFAAEAAAAjAA8AAQACAAAAAAAkAA8AAQAFAAEAAAAHAAIAAQAGAAAAAAAHAAMAAQAGAAAAAAAHAAQAAQABAAAAAAAHAAgAAQAGAAAAAAAHAAkAAQADAAIAAAAHAAoAAQABAAAAAAAHAA0AAQAFAAAAAAAHAA4AAQAGAAAAAAAHAA8AAQADAAIAAAAHABAAAQABAAAAAAAHABMAAQAFAAAAAAAHABQAAQAGAAAAAAANAAIAAQAGAAAAAAANAAMAAQABAAAAAAANAAYAAQAFAAAAAAATAAIAAQAGAAAAAAATAAMAAQABAAAAAAATAAYAAQAFAAAAAAAcAAIAAQAGAAAAAAAcAAMAAQABAAAAAAAcAAYAAQAFAAAAAAAjAAIAAQAGAAAAAAAjAAMAAQABAAAAAAAjAAYAAQAFAAAAAAAUAAoAAQAGAAAAAAAUAAsAAQAGAAAAAAAUAAwAAQAGAAAAAAAUAA0AAQAGAAAAAAAUAA4AAQAGAAAAAAAaAAoAAQABAAAAAAAaAA0AAQAFAAAAAAAaAA4AAQAGAAAAAAAfAAoAAQABAAAAAAAfAA0AAQAFAAAAAAAfAA4AAQAGAAAAAAAlAAkAAQACAAIAAAAlAAoAAQABAAAAAAAlAA0AAQAFAAAAAAAlAA4AAQABAAAAAAAqAAIAAQAGAAAAAAAqAAMAAQABAAAAAAAqAAYAAQAFAAAAAAAqAAcAAQADAAIAAAAqAAgAAQAGAAAAAAAqAAkAAQAGAAAAAAAqAAoAAQABAAAAAAAqAA0AAQAFAAAAAAAqAA4AAQAGAAAAAAAqAA8AAQAGAAAAAAAqABAAAQABAAAAAAAqABMAAQAFAAAAAAAqABQAAQAGAAAAAAAqABUAAQADAAIAAAAqABYAAQAGAAAAAAAqABcAAQAGAAAAAAAqABgAAQAGAAAAAAAqABkAAQAGAAAAAAAqABoAAQAGAAAAAAAOABYAAQABAAAAAAAOABkAAQAFAAAAAAAOABoAAQAGAAAAAAAVABYAAQABAAAAAAAVABkAAQAFAAAAAAAVABoAAQAGAAAAAAAdABYAAQABAAAAAAAdABkAAQAFAAAAAAAdABoAAQAGAAAAAAA=")
-tile_set = ExtResource("27_lkded")
+tile_set = ExtResource("26_75ls7")
 
-[node name="Darah_01" type="Polygon2D" parent="." unique_id=594081939]
+[node name="Darah_01" type="Polygon2D" parent="." unique_id=1707703767]
 z_index = -1
 position = Vector2(400, 320)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(31.474342, 0, 19.860746, 16.665146, 5.559109, 31.527273, -12.481092, 21.617886, -30.526503, 11.110739, -22.519793, -8.196534, -16.444012, -28.481863, 3.9834638, -22.591345, 25.447123, -21.352673)
 
-[node name="Darah_02" type="Polygon2D" parent="." unique_id=1666852597]
+[node name="Darah_02" type="Polygon2D" parent="." unique_id=1862068784]
 z_index = -1
 position = Vector2(440, 340)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(11.2792845, 0, 13.798036, 11.577927, 2.0581613, 11.672412, -8.934398, 15.474831, -11.666915, 4.24641, -16.619614, -6.049045, -6.483061, -11.228991, 3.0328054, -17.199894, 10.342479, -8.67837)
 
-[node name="Darah_03" type="Polygon2D" parent="." unique_id=112127412]
+[node name="Darah_03" type="Polygon2D" parent="." unique_id=1648778102]
 z_index = -1
 position = Vector2(900, 560)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(38.96046, 0, 16.519674, 13.861653, 6.7722597, 38.407394, -10.845736, 18.785364, -36.602554, 13.322241, -21.560755, -7.8474736, -19.407951, -33.61556, 4.2002034, -23.820536, 29.564247, -24.80735)
 
-[node name="Darah_04" type="Polygon2D" parent="." unique_id=1732722812]
+[node name="Darah_04" type="Polygon2D" parent="." unique_id=661883663]
 z_index = -1
 position = Vector2(940, 590)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(12.836004, 0, 10.65788, 8.943024, 2.2957673, 13.019943, -6.7881937, 11.757496, -12.763002, 4.6453533, -12.417739, -4.5196877, -6.959082, -12.053484, 2.2278225, -12.63461, 10.898774, -9.145158)
 
-[node name="Darah_05" type="Polygon2D" parent="." unique_id=1419660641]
+[node name="Darah_05" type="Polygon2D" parent="." unique_id=1077675174]
 z_index = -1
 position = Vector2(1300, 500)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(23.06277, 0, 20.230461, 16.975374, 3.8713741, 21.955654, -13.445106, 23.287605, -20.196201, 7.3508167, -25.668127, -9.342435, -10.330332, -17.89266, 4.80704, -27.262077, 15.170243, -12.729346)
 
-[node name="Darah_06" type="Polygon2D" parent="." unique_id=161576215]
+[node name="Darah_06" type="Polygon2D" parent="." unique_id=1944688797]
 z_index = -1
 position = Vector2(300, 620)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(23.397364, 0, 9.758122, 8.188037, 4.061233, 23.032396, -6.745648, 11.6838045, -21.918797, 7.97779, -13.381152, -4.8703413, -11.6055155, -20.101341, 2.6013477, -14.752975, 17.653395, -14.812958)
 
-[node name="Darah_07" type="Polygon2D" parent="." unique_id=105408892]
+[node name="Darah_07" type="Polygon2D" parent="." unique_id=1192092472]
 z_index = -1
 position = Vector2(760, 300)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(13.71824, 0, 15.739202, 13.2067585, 2.2688687, 12.8673935, -10.338153, 17.906206, -11.656377, 4.242574, -19.508371, -7.100467, -5.8685765, -10.164673, 3.611512, -20.481901, 8.681404, -7.2845635)
 
-[node name="Darah_08" type="Polygon2D" parent="." unique_id=1119807076]
+[node name="Darah_08" type="Polygon2D" parent="." unique_id=1946064250]
 z_index = -1
 position = Vector2(600, 300)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(10.897642, 0, 14.937569, 12.534109, 1.8633356, 10.567501, -9.74176, 16.873224, -10.672618, 3.8845155, -18.252274, -6.643285, -5.9902124, -10.375352, 3.3549404, -19.026812, 9.649154, -8.0966015)
 
-[node name="Darah_09" type="Polygon2D" parent="." unique_id=2125837158]
+[node name="Darah_09" type="Polygon2D" parent="." unique_id=1124998347]
 z_index = -1
 position = Vector2(1200, 600)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(15.059343, 0, 19.904009, 16.701448, 2.4697897, 14.006874, -12.999201, 22.515276, -13.733159, 4.9984612, -24.390198, -8.877307, -7.7245026, -13.3792305, 4.489564, -25.461582, 12.468468, -10.462287)
 
-[node name="Darah_10" type="Polygon2D" parent="." unique_id=1285817227]
+[node name="Darah_10" type="Polygon2D" parent="." unique_id=1576904245]
 z_index = -1
 position = Vector2(1400, 250)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(16.220589, 0, 9.598892, 8.054427, 2.775097, 15.738356, -6.5053806, 11.26765, -14.7608595, 5.372514, -12.659544, -4.6076975, -7.7015085, -13.339404, 2.4157848, -13.700596, 11.542105, -9.684977)
 
-[node name="Darah_11" type="Polygon2D" parent="." unique_id=1966975863]
+[node name="Darah_11" type="Polygon2D" parent="." unique_id=1050453677]
 z_index = -1
 position = Vector2(500, 700)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(16.671272, 0, 15.890256, 13.3335085, 3.0021205, 17.025871, -10.183571, 17.638462, -16.801254, 6.115156, -18.746658, -6.823226, -9.220694, -15.97071, 3.3849578, -19.197048, 14.532924, -12.1945715)
 
-[node name="Darah_12" type="Polygon2D" parent="." unique_id=842103921]
+[node name="Darah_12" type="Polygon2D" parent="." unique_id=8395315]
 z_index = -1
 position = Vector2(100, 200)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(15.057291, 0, 14.1068535, 11.837056, 2.5187354, 14.284458, -9.347361, 16.190104, -13.092583, 4.765311, -17.79245, -6.4759226, -6.672064, -11.556354, 3.322384, -18.842175, 9.760604, -8.19012)
 
-[node name="Kertas_01" type="Polygon2D" parent="." unique_id=995127955]
+[node name="Kertas_01" type="Polygon2D" parent="." unique_id=980783268]
 z_index = -1
 position = Vector2(500, 380)
 rotation = 0.4
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_02" type="Polygon2D" parent="." unique_id=707890080]
+[node name="Kertas_02" type="Polygon2D" parent="." unique_id=1449114713]
 z_index = -1
 position = Vector2(540, 400)
 rotation = -0.7
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_03" type="Polygon2D" parent="." unique_id=1962408670]
+[node name="Kertas_03" type="Polygon2D" parent="." unique_id=1178374941]
 z_index = -1
 position = Vector2(700, 580)
 rotation = 1.1
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_04" type="Polygon2D" parent="." unique_id=1018608504]
+[node name="Kertas_04" type="Polygon2D" parent="." unique_id=1376574839]
 z_index = -1
 position = Vector2(1100, 300)
 rotation = 0.2
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_05" type="Polygon2D" parent="." unique_id=442161707]
+[node name="Kertas_05" type="Polygon2D" parent="." unique_id=1462741451]
 z_index = -1
 position = Vector2(1140, 340)
 rotation = -1.2
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_06" type="Polygon2D" parent="." unique_id=48688762]
+[node name="Kertas_06" type="Polygon2D" parent="." unique_id=875506178]
 z_index = -1
 position = Vector2(400, 660)
 rotation = 0.9
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_07" type="Polygon2D" parent="." unique_id=1112145583]
+[node name="Kertas_07" type="Polygon2D" parent="." unique_id=1435668589]
 z_index = -1
 position = Vector2(1300, 300)
 rotation = -0.4
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_08" type="Polygon2D" parent="." unique_id=1983935956]
+[node name="Kertas_08" type="Polygon2D" parent="." unique_id=494596385]
 z_index = -1
 position = Vector2(800, 700)
 rotation = 0.6
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_09" type="Polygon2D" parent="." unique_id=804091597]
+[node name="Kertas_09" type="Polygon2D" parent="." unique_id=1271527311]
 z_index = -1
 position = Vector2(450, 550)
 rotation = 1.4
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_10" type="Polygon2D" parent="." unique_id=834495632]
+[node name="Kertas_10" type="Polygon2D" parent="." unique_id=2048755810]
 z_index = -1
 position = Vector2(1000, 200)
 rotation = -0.5
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_11" type="Polygon2D" parent="." unique_id=1638975972]
+[node name="Kertas_11" type="Polygon2D" parent="." unique_id=795517857]
 z_index = -1
 position = Vector2(1350, 550)
 rotation = 0.8
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_12" type="Polygon2D" parent="." unique_id=381048592]
+[node name="Kertas_12" type="Polygon2D" parent="." unique_id=398166168]
 z_index = -1
 position = Vector2(300, 500)
 rotation = -1.0
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Kertas_13" type="Polygon2D" parent="." unique_id=336506130]
+[node name="Kertas_13" type="Polygon2D" parent="." unique_id=2068215268]
 z_index = -1
 position = Vector2(900, 260)
 rotation = 0.3
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="Karpet_01_Tepi" type="Polygon2D" parent="." unique_id=1972366674]
+[node name="Karpet_01_Tepi" type="Polygon2D" parent="." unique_id=13268204]
 z_index = -1
 position = Vector2(1008, 180)
 color = Color(0.1, 0.07, 0.07, 0.9)
 polygon = PackedVector2Array(-81, -36, 81, -36, 81, 36, -81, 36)
 
-[node name="Karpet_01_Isi" type="Polygon2D" parent="." unique_id=1869128279]
+[node name="Karpet_01_Isi" type="Polygon2D" parent="." unique_id=2018238622]
 z_index = -1
 position = Vector2(1008, 180)
 color = Color(0.35, 0.08, 0.1, 0.85)
 polygon = PackedVector2Array(-75, -30, 75, -30, 75, 30, -75, 30)
 
-[node name="Karpet_02_Tepi" type="Polygon2D" parent="." unique_id=2128049090]
+[node name="Karpet_02_Tepi" type="Polygon2D" parent="." unique_id=198240871]
 z_index = -1
 position = Vector2(752, 160)
 color = Color(0.1, 0.07, 0.07, 0.9)
 polygon = PackedVector2Array(-136, -66, 136, -66, 136, 66, -136, 66)
 
-[node name="Karpet_02_Isi" type="Polygon2D" parent="." unique_id=513099172]
+[node name="Karpet_02_Isi" type="Polygon2D" parent="." unique_id=1849360641]
 z_index = -1
 position = Vector2(752, 160)
 color = Color(0.15, 0.18, 0.28, 0.85)
 polygon = PackedVector2Array(-130, -60, 130, -60, 130, 60, -130, 60)
 
-[node name="Karpet_03_Tepi" type="Polygon2D" parent="." unique_id=767037763]
+[node name="Karpet_03_Tepi" type="Polygon2D" parent="." unique_id=1937578601]
 z_index = -1
 position = Vector2(800, 780)
 color = Color(0.1, 0.07, 0.07, 0.9)
 polygon = PackedVector2Array(-96, -46, 96, -46, 96, 46, -96, 46)
 
-[node name="Karpet_03_Isi" type="Polygon2D" parent="." unique_id=16923329]
+[node name="Karpet_03_Isi" type="Polygon2D" parent="." unique_id=282974901]
 z_index = -1
 position = Vector2(800, 780)
 color = Color(0.4, 0.28, 0.15, 0.85)
 polygon = PackedVector2Array(-90, -40, 90, -40, 90, 40, -90, 40)
 
-[node name="Karpet_04_Tepi" type="Polygon2D" parent="." unique_id=518090115]
+[node name="Karpet_04_Tepi" type="Polygon2D" parent="." unique_id=1769922754]
 z_index = -1
 position = Vector2(1100, 780)
 color = Color(0.1, 0.07, 0.07, 0.9)
 polygon = PackedVector2Array(-106, -51, 106, -51, 106, 51, -106, 51)
 
-[node name="Karpet_04_Isi" type="Polygon2D" parent="." unique_id=349024054]
+[node name="Karpet_04_Isi" type="Polygon2D" parent="." unique_id=1611517997]
 z_index = -1
 position = Vector2(1100, 780)
 color = Color(0.2, 0.2, 0.3, 0.85)
 polygon = PackedVector2Array(-100, -45, 100, -45, 100, 45, -100, 45)
 
-[node name="Kabel_01" type="Line2D" parent="." unique_id=541187612]
+[node name="Kabel_01" type="Line2D" parent="." unique_id=457306766]
 z_index = -1
 points = PackedVector2Array(400, 400, 400, 340, 400, 300)
 width = 2.0
 default_color = Color(0.05, 0.05, 0.06, 0.9)
 
-[node name="Kabel_02" type="Line2D" parent="." unique_id=937200972]
+[node name="Kabel_02" type="Line2D" parent="." unique_id=2071557760]
 z_index = -1
 points = PackedVector2Array(736, 400, 736, 340, 736, 300)
 width = 2.0
 default_color = Color(0.05, 0.05, 0.06, 0.9)
 
-[node name="Kabel_03" type="Line2D" parent="." unique_id=1709683776]
+[node name="Kabel_03" type="Line2D" parent="." unique_id=1333189436]
 z_index = -1
 points = PackedVector2Array(752, 160, 752, 120, 752, 80)
 width = 2.0
 default_color = Color(0.05, 0.05, 0.06, 0.9)
 
-[node name="Bayangan_Ruang_Bos" type="Polygon2D" parent="." unique_id=210410703]
+[node name="Bayangan_Ruang_Bos" type="Polygon2D" parent="." unique_id=795028213]
 z_index = 5
 color = Color(0, 0, 0, 0.35)
 polygon = PackedVector2Array(896, 64, 1120, 64, 1120, 224, 896, 224)

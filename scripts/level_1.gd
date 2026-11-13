@@ -477,16 +477,13 @@ func _build_horror_static() -> void:
 	_cable(PackedVector2Array([Vector2(400, 400), Vector2(400, 340), Vector2(400, 300)]))
 	_cable(PackedVector2Array([Vector2(736, 400), Vector2(736, 340), Vector2(736, 300)]))
 	_cable(PackedVector2Array([Vector2(752, 160), Vector2(752, 120), Vector2(752, 80)]))
-	var chair_tex := load(PROP_BASE + "Seating/office_chair/office_chair_front.png") as Texture2D
-	if chair_tex != null:
-		var root := Node2D.new()
+	var chair_scene := load("res://scenes/props/kursi_depan.tscn") as PackedScene
+	if chair_scene != null:
+		var root := chair_scene.instantiate() as Prop
 		root.name = "Kursi_Terbalik"
 		root.position = Vector2(1200, 500)
 		root.rotation = PI / 2.0
 		ysort.add_child(root)
-		var spr := Sprite2D.new()
-		spr.texture = chair_tex
-		root.add_child(spr)
 
 
 func _build_horror_lights() -> void:
