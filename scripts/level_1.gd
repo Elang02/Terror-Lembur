@@ -107,6 +107,12 @@ var game_result := ""
 var stars := 0
 var ever_caught := false
 var boss_speed_mult := 1.0
+var solo_mode := false
+var solo_catches := 0
+const SOLO_MAX_CATCHES := 3
+var self_rescue_progress := 0.0
+const SELF_RESCUE_TIME := 15.0
+var self_rescue_noise_timer := 0.0
 var warn_timer := 0.0
 var noise_emit_timer := 0.0
 var debug_timer := 0.0
@@ -238,6 +244,13 @@ func _ready() -> void:
 		boss.global_position = boss_room_center()
 		boss.speed_mult = boss_speed_mult
 		ysort.add_child(boss, true)
+
+func set_solo_mode(value: bool) -> void:
+	solo_mode = value
+	if solo_mode:
+		boss_speed_mult = 0.9
+		if boss != null:
+			boss.speed_mult = boss_speed_mult
 
 func _build_tilemap_layers() -> void:
 	var tile_set := load(TILESET_PATH) as TileSet
@@ -919,6 +932,7 @@ func _process(delta: float) -> void:
 		local_camera.offset = Vector2.ZERO
 	if multiplayer.is_server() and not game_over:
 		_update_tasks(delta)
+		_update_self_rescue(delta)
 		_update_pickups()
 		_check_endings()
 	_update_hud()
@@ -958,11 +972,14 @@ func _update_tasks(delta: float) -> void:
 			if workers >= 2:
 				tp.progress += delta / tp.time_needed
 				advancing = true
+			elif workers == 1 and solo_mode:
+				tp.progress += delta / (tp.time_needed * 2.0)
+				advancing = true
 		elif id == 3:
 			if workers >= 2:
 				tp.progress += delta / 5.0
 				advancing = true
-			elif workers == 1 and _any_locked():
+			elif workers == 1 and (_any_locked() or solo_mode):
 				tp.progress += delta / 10.0
 				advancing = true
 		elif id == 4:
@@ -984,6 +1001,35 @@ func _update_tasks(delta: float) -> void:
 			tp.progress = 1.0
 			tp.done = true
 			_on_task_done(tp)
+
+func _update_self_rescue(delta: float) -> void:
+	if not solo_mode:
+		return
+	var locked_player: Node2D = null
+	for child in ysort.get_children():
+		if not _is_player(child):
+			continue
+		if child.get("locked"):
+			locked_player = child
+			break
+	if locked_player == null:
+		self_rescue_progress = 0.0
+		return
+	if locked_player.get("interacting") and locked_player.get("interact_target") == 99:
+		self_rescue_progress += delta / SELF_RESCUE_TIME
+		self_rescue_noise_timer += delta
+		if self_rescue_noise_timer >= 1.0:
+			self_rescue_noise_timer = 0.0
+			report_noise(locked_player.global_position, 400.0)
+		if self_rescue_progress >= 1.0:
+			self_rescue_progress = 0.0
+			locked_player.rpc_id(int(locked_player.name), "set_locked", false)
+			if boss != null:
+				boss.blind_timer = 2.0
+			hud_warn_label.text = "Kamu berhasil kabur dari sel!"
+			warn_timer = 2.0
+	else:
+		self_rescue_progress = maxf(0.0, self_rescue_progress - delta * 0.1)
 
 func _on_task_done(tp) -> void:
 	if tp.task_id == 4:
@@ -1051,7 +1097,10 @@ func _finish_level() -> void:
 		rpc("_show_end", "ENDING PAHIT", "Pintu terbuka, tapi satu teman masih dikurung di ruang bos. Yang bebas kabur sendiri. Yang dikurung kena nerf di level berikut.", 1)
 	else:
 		var s := 3 if not ever_caught else 2
-		rpc("_show_end", "HAPPY ENDING", "Keduanya kabur bareng lewat pintu keluar. Gotong royong berhasil.", s)
+		if solo_mode:
+			rpc("_show_end", "HAPPY ENDING", "Kamu kabur sendiri lewat pintu keluar. Akhirnya bisa pulang.", s)
+		else:
+			rpc("_show_end", "HAPPY ENDING", "Keduanya kabur bareng lewat pintu keluar. Gotong royong berhasil.", s)
 
 @rpc("any_peer", "call_local")
 func _show_end(title: String, detail: String, s: int) -> void:
@@ -1145,7 +1194,10 @@ func _update_hud() -> void:
 			var disp := "Pemain 1" if str(child.name) == "1" else "Pemain 2"
 			locked_names += disp + " DIKURUNG di ruang bos! "
 	if locked_names != "":
-		hud_status_label.text = locked_names + "Tahan E di TUAS SEL buat bebaskan (3 detik)."
+		if solo_mode:
+			hud_status_label.text = locked_names + "Tahan E buat kabur dari sel (15 detik, berisik!)."
+		else:
+			hud_status_label.text = locked_names + "Tahan E di TUAS SEL buat bebaskan (3 detik)."
 		hud_status_pill.visible = true
 	else:
 		hud_status_label.text = ""
@@ -1156,22 +1208,26 @@ func _update_hud() -> void:
 	if me != null and not game_over:
 		if me.get("interacting") and me.get("interact_target") >= 0:
 			var tid: int = me.get("interact_target")
-			var tp = tasks[tid] if tid < tasks.size() else null
-			if tp != null:
-				prompt_txt = "Mengerjakan " + tp.label_text + "... " + str(int(tp.progress * 100.0)) + "%"
-				prompt_prog = tp.progress
+			if tid == 99:
+				prompt_txt = "Kabur dari sel... " + str(int(self_rescue_progress * 100.0)) + "% (berisik!)"
+				prompt_prog = self_rescue_progress
+			else:
+				var tp = tasks[tid] if tid < tasks.size() else null
+				if tp != null:
+					prompt_txt = "Mengerjakan " + tp.label_text + "... " + str(int(tp.progress * 100.0)) + "%"
+					prompt_prog = tp.progress
 		else:
 			var nid := nearest_interactable(me.global_position)
 			if nid >= 0:
 				var tp = tasks[nid]
 				var need_txt := ""
 				if tp.task_id == 0:
-					need_txt = " (butuh 2 orang)"
+					need_txt = " (sendiri: 16 detik)" if solo_mode else " (butuh 2 orang)"
 				elif tp.task_id == 3:
-					need_txt = " (butuh 2 orang, atau 1 orang 10 detik kalau teman dikurung)"
+					need_txt = " (sendiri: 10 detik)" if solo_mode else " (butuh 2 orang, atau 1 orang 10 detik kalau teman dikurung)"
 				prompt_txt = "Tahan E: " + tp.label_text + need_txt
 			elif me.get("hiding"):
-				prompt_txt = "NGUMPET — gerak atau tekan C buat keluar"
+				prompt_txt = "NGUMPET, gerak atau tekan C buat keluar"
 			elif nearest_desk(me.global_position) != Vector2.INF:
 				prompt_txt = "C: ngumpet di bawah meja"
 			elif me.get("has_throwable"):
@@ -1293,12 +1349,19 @@ func on_player_caught(player: Node2D) -> void:
 	player.global_position = CELL_POS
 	player.rpc_id(int(player.name), "set_locked", true)
 	rpc("_fx_caught")
+	if solo_mode:
+		solo_catches += 1
+		if solo_catches >= SOLO_MAX_CATCHES:
+			rpc("_show_end", "GAME OVER", "Kamu ketangkep 3 kali. Bos menang, kamu nggak jadi pulang.", 0)
 
 @rpc("any_peer", "call_local")
 func _fx_caught() -> void:
 	add_shake(10.0)
 	flash_red(0.4)
-	hud_warn_label.text = "TEMANMU DITANGKAP!"
+	if solo_mode:
+		hud_warn_label.text = "KAMU DITANGKAP! Tahan E buat kabur dari sel."
+	else:
+		hud_warn_label.text = "TEMANMU DITANGKAP!"
 	warn_timer = 3.0
 	play_sfx("sting", -2.0)
 

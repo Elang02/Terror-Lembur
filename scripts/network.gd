@@ -46,7 +46,9 @@ func _ready() -> void:
 				spawn_player(id)
 		return
 	var args := OS.get_cmdline_user_args()
-	if "--host" in args:
+	if "--solo" in args:
+		solo()
+	elif "--host" in args:
 		host()
 	elif "--join" in args:
 		var ip := "127.0.0.1"
@@ -126,6 +128,26 @@ func host() -> void:
 	spawn_player(1)
 	_set_status("Hosting di port %d. Menunggu pemain 2..." % PORT)
 	print("HOST started on port ", PORT)
+
+func solo() -> void:
+	var peer := _make_peer()
+	var err: Error
+	if peer is WebSocketMultiplayerPeer:
+		err = (peer as WebSocketMultiplayerPeer).create_server(PORT)
+	else:
+		err = (peer as ENetMultiplayerPeer).create_server(PORT, MAX_PLAYERS)
+	if err != OK:
+		_set_status("Gagal solo: %s" % err)
+		return
+	multiplayer.multiplayer_peer = peer
+	_hide_menu()
+	_show_hud()
+	spawn_player(1)
+	var lvl := get_parent()
+	if lvl != null and lvl.has_method("set_solo_mode"):
+		lvl.set_solo_mode(true)
+	_set_status("Mode solo. Selesaikan tugas dan kabur sendiri.")
+	print("SOLO started on port ", PORT)
 
 func join(ip: String) -> void:
 	var peer := _make_peer()
@@ -314,7 +336,7 @@ func _build_menu() -> void:
 	vb.add_child(badge_row)
 	var badge := PanelContainer.new()
 	UITheme.apply_panel(badge, Color(0.25, 0.05, 0.05, 0.92), UITheme.COL_BLOOD, 1, 4)
-	badge.add_child(UITheme.make_label("2 PEMAIN  •  LAN  •  GOTONG ROYONG  •  ARA & BIMA", UITheme.body_font(), 14, UITheme.COL_GOLD))
+	badge.add_child(UITheme.make_label("SOLO / 2 PEMAIN  •  LAN  •  PULANG  •  ARA & BIMA", UITheme.body_font(), 14, UITheme.COL_GOLD))
 	badge_row.add_child(badge)
 	var tag := UITheme.make_label("Dua karyawan lembur. Satu bos yang tidak pernah pulang.", UITheme.body_font(), 16, UITheme.COL_PAPER)
 	tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -352,6 +374,12 @@ func _build_menu() -> void:
 	UITheme.apply_button(host_btn, 18)
 	host_btn.pressed.connect(host)
 	pvb.add_child(host_btn)
+	var solo_btn := Button.new()
+	solo_btn.text = "Main Sendiri (Solo)"
+	solo_btn.custom_minimum_size = Vector2(0, 44)
+	UITheme.apply_button(solo_btn, 18)
+	solo_btn.pressed.connect(solo)
+	pvb.add_child(solo_btn)
 	server_list_label = UITheme.make_label("Mencari server di LAN...", UITheme.body_font(), 14, UITheme.COL_GREY)
 	server_list_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	pvb.add_child(server_list_label)

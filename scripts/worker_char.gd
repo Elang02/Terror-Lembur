@@ -127,6 +127,14 @@ func _update_interact() -> void:
 		interacting = false
 		interact_target = -1
 		return
+	if locked:
+		if lvl.get("solo_mode") == true and Input.is_action_pressed("interact"):
+			interacting = true
+			interact_target = 99
+			return
+		interacting = false
+		interact_target = -1
+		return
 	if not Input.is_action_pressed("interact"):
 		interacting = false
 		interact_target = -1
