@@ -3,10 +3,10 @@ gsd_state_version: '1.0'
 status: executing
 progress:
   total_phases: 6
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 0
   completed_plans: 0
-  percent: 50
+  percent: 67
 ---
 
 # Project State
@@ -16,16 +16,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-14)
 
 **Core value:** A solo curator can play the game start to finish, feel fear and tension, and reach an ending.
-**Current focus:** Phase 4 — Checkpoint Package (due 19 Nov 2026 23:59 WIB)
+**Current focus:** Phase 5 — Final Submission (due 29 Nov 2026 23:59 WIB)
 
 ## Current Position
 
-Phase: 4 of 6 (Checkpoint Package)
+Phase: 5 of 6 (Final Submission)
 Plan: 0 of 3 in current phase
 Status: Executing (Elang approved all 6 phases 14 Nov 2026 00:56 WIB, roadmap approval gate lifted)
-Last activity: 2026-11-14 — Phase 1 (solo mode), Phase 2 (Pale Figure boss), Phase 3 (flow fixes + docs + art + progress report) complete
+Last activity: 2026-11-14 — Phase 1 (solo mode), Phase 2 (Pale Figure boss), Phase 3 (flow fixes + docs + art + progress report), Phase 4 (WebGL + Windows builds, itch.io zip, paragraph) complete; Phase 5 in progress (submission docs + 3 screenshots done, gameplay video recording)
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 67%
 
 ## Performance Metrics
 
