@@ -40,6 +40,7 @@ const PATROL_LOOP := [
 	Vector2(272, 624), Vector2(272, 448),
 ]
 const INTERACT_RANGE := 80.0
+const LOCKED_DOORS := [[Vector2i(3, 15), Vector2i(4, 15)], [Vector2i(42, 23), Vector2i(42, 24)]]
 const WALL_TILE := {
 	0: Vector2i(0, 0), 1: Vector2i(1, 0), 4: Vector2i(2, 0), 5: Vector2i(3, 0),
 	7: Vector2i(4, 0), 16: Vector2i(5, 0), 17: Vector2i(6, 0), 20: Vector2i(7, 0),
@@ -115,31 +116,15 @@ var end_detail: Label
 var end_stars: Array[Label] = []
 
 func _ready() -> void:
-	if has_node("FloorLayer"):
-		return
-	var tile_set := load(TILESET_PATH) as TileSet
-	var floor_layer := TileMapLayer.new()
-	floor_layer.name = "FloorLayer"
-	floor_layer.tile_set = tile_set
-	floor_layer.z_index = -2
-	add_child(floor_layer)
-	var wall_layer := TileMapLayer.new()
-	wall_layer.name = "WallLayer"
-	wall_layer.tile_set = tile_set
-	wall_layer.collision_enabled = true
-	wall_layer.z_index = -1
-	add_child(wall_layer)
-	for y in range(ROOM_H):
-		for x in range(ROOM_W):
-			floor_layer.set_cell(Vector2i(x, y), 0, _floor_tile_for(x, y))
-	for x in range(ROOM_W):
-		_set_wall(wall_layer, x, 0, Vector2i(1, 0) if x == 0 else (Vector2i(5, 0) if x == ROOM_W - 1 else Vector2i(2, 0)))
-		_set_wall(wall_layer, x, 1, Vector2i(6, 0) if x == 0 else (Vector2i(2, 1) if x == ROOM_W - 1 else Vector2i(7, 0)))
-		_set_wall(wall_layer, x, ROOM_H - 1, Vector2i(4, 2) if x == 0 else (Vector2i(0, 3) if x == ROOM_W - 1 else Vector2i(7, 2)))
-	for y in range(2, ROOM_H - 1):
-		_set_wall(wall_layer, 0, y, Vector2i(3, 1))
-		_set_wall(wall_layer, ROOM_W - 1, y, Vector2i(5, 1))
-	_build_partitions(wall_layer)
+	if has_node("FloorLayer") and has_node("WallLayer"):
+		wall_layer_ref = $"WallLayer"
+	else:
+		_build_tilemap_layers()
+	for cells in LOCKED_DOORS:
+		for c in cells:
+			locked_door_cells.append(c)
+	if not Engine.is_editor_hint():
+		_create_locked_door_markers()
 	ysort = $"YSort"
 	spawner = $"Spawner"
 	_build_props()
@@ -167,6 +152,31 @@ func _ready() -> void:
 		boss.global_position = boss_room_center()
 		boss.speed_mult = boss_speed_mult
 		ysort.add_child(boss, true)
+
+func _build_tilemap_layers() -> void:
+	var tile_set := load(TILESET_PATH) as TileSet
+	var floor_layer := TileMapLayer.new()
+	floor_layer.name = "FloorLayer"
+	floor_layer.tile_set = tile_set
+	floor_layer.z_index = -2
+	add_child(floor_layer)
+	var wall_layer := TileMapLayer.new()
+	wall_layer.name = "WallLayer"
+	wall_layer.tile_set = tile_set
+	wall_layer.collision_enabled = true
+	wall_layer.z_index = -1
+	add_child(wall_layer)
+	for y in range(ROOM_H):
+		for x in range(ROOM_W):
+			floor_layer.set_cell(Vector2i(x, y), 0, _floor_tile_for(x, y))
+	for x in range(ROOM_W):
+		_set_wall(wall_layer, x, 0, Vector2i(1, 0) if x == 0 else (Vector2i(5, 0) if x == ROOM_W - 1 else Vector2i(2, 0)))
+		_set_wall(wall_layer, x, 1, Vector2i(6, 0) if x == 0 else (Vector2i(2, 1) if x == ROOM_W - 1 else Vector2i(7, 0)))
+		_set_wall(wall_layer, x, ROOM_H - 1, Vector2i(4, 2) if x == 0 else (Vector2i(0, 3) if x == ROOM_W - 1 else Vector2i(7, 2)))
+	for y in range(2, ROOM_H - 1):
+		_set_wall(wall_layer, 0, y, Vector2i(3, 1))
+		_set_wall(wall_layer, ROOM_W - 1, y, Vector2i(5, 1))
+	_build_partitions(wall_layer)
 
 func _set_wall(layer: TileMapLayer, x: int, y: int, atlas: Vector2i) -> void:
 	layer.set_cell(Vector2i(x, y), 1, atlas)
@@ -229,21 +239,23 @@ func _wall_v(layer: TileMapLayer, y0: int, y1: int, x: int, gaps: Array = []) ->
 func _lock_door(layer: TileMapLayer, cells: Array[Vector2i], atlas: Vector2i) -> void:
 	for c in cells:
 		_set_wall(layer, c.x, c.y, atlas)
-		locked_door_cells.append(c)
-	var cx := 0.0
-	var cy := 0.0
-	for c in cells:
-		cx += float(c.x)
-		cy += float(c.y)
-	cx = cx / float(cells.size()) * 32.0 + 16.0
-	cy = cy / float(cells.size()) * 32.0 + 16.0
-	var mark := Polygon2D.new()
-	mark.color = Color(0.85, 0.1, 0.1, 0.95)
-	mark.polygon = PackedVector2Array([Vector2(-9, -11), Vector2(9, -11), Vector2(9, 11), Vector2(-9, 11)])
-	mark.position = Vector2(cx, cy)
-	mark.z_index = 0
-	add_child(mark)
-	locked_door_marks.append(mark)
+
+func _create_locked_door_markers() -> void:
+	for cells in LOCKED_DOORS:
+		var cx := 0.0
+		var cy := 0.0
+		for c in cells:
+			cx += float(c.x)
+			cy += float(c.y)
+		cx = cx / float(cells.size()) * 32.0 + 16.0
+		cy = cy / float(cells.size()) * 32.0 + 16.0
+		var mark := Polygon2D.new()
+		mark.color = Color(0.85, 0.1, 0.1, 0.95)
+		mark.polygon = PackedVector2Array([Vector2(-9, -11), Vector2(9, -11), Vector2(9, 11), Vector2(-9, 11)])
+		mark.position = Vector2(cx, cy)
+		mark.z_index = 0
+		add_child(mark)
+		locked_door_marks.append(mark)
 
 func _open_locked_doors() -> void:
 	if wall_layer_ref == null:
