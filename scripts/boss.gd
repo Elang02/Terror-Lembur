@@ -24,6 +24,7 @@ var blind_timer := 0.0
 var telegraph_timer := 0.0
 var search_center := Vector2.ZERO
 var waypoint_timer := 0.0
+var patrol_index := 0
 var speed_mult := 1.0
 var level: Node2D
 var rng := RandomNumberGenerator.new()
@@ -151,14 +152,9 @@ func _set_mark(t: String) -> void:
 	state_mark.text = t
 
 func _pick_waypoint() -> void:
-	for i in range(8):
-		var p := Vector2(rng.randf_range(80, 1200), rng.randf_range(100, 680))
-		if _in_other_room(p):
-			continue
-		target = p
-		waypoint_timer = 0.0
-		return
-	target = Vector2(rng.randf_range(80, 1200), rng.randf_range(100, 680))
+	var loop: Array = level.PATROL_LOOP
+	target = loop[patrol_index % loop.size()]
+	patrol_index += 1
 	waypoint_timer = 0.0
 
 func _in_other_room(p: Vector2) -> bool:

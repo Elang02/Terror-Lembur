@@ -61,9 +61,9 @@ func _ready() -> void:
 	name_label.add_theme_constant_override("outline_size", 5)
 	add_child(name_label)
 	if name.to_int() == 1:
-		position = Vector2(320, 320)
+		position = Vector2(740, 760)
 	else:
-		position = Vector2(960, 320)
+		position = Vector2(860, 760)
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():

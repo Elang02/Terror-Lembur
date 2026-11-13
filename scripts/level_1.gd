@@ -1,7 +1,7 @@
 extends Node2D
 
-const ROOM_W := 40
-const ROOM_H := 23
+const ROOM_W := 48
+const ROOM_H := 28
 const TILESET_PATH := "res://office_tileset.tres"
 const BOSS_SCENE := "res://scenes/boss.tscn"
 const THROWABLE_SCENE := "res://scenes/throwable.tscn"
@@ -9,23 +9,40 @@ const TASK_SCENE := "res://scenes/task_point.tscn"
 const PICKUP_SCENE := "res://scenes/pickup_item.tscn"
 
 const TASK_DEFS := [
-	{"id": 0, "label": "GENERATOR", "pos": Vector2(640, 100), "need": 2, "time": 8.0, "noise": 400.0},
-	{"id": 1, "label": "KOMPUTER", "pos": Vector2(170, 170), "need": 1, "time": 10.0, "noise": 150.0},
-	{"id": 2, "label": "BRANKAS", "pos": Vector2(460, 100), "need": 1, "time": 6.0, "noise": 150.0},
-	{"id": 3, "label": "PINTU KELUAR", "pos": Vector2(640, 700), "need": 2, "time": 5.0, "noise": 400.0},
-	{"id": 4, "label": "TUAS SEL", "pos": Vector2(1120, 140), "need": 1, "time": 3.0, "noise": 150.0},
+	{"id": 0, "label": "GENERATOR", "pos": Vector2(736, 400), "need": 2, "time": 8.0, "noise": 400.0},
+	{"id": 1, "label": "KOMPUTER", "pos": Vector2(400, 400), "need": 1, "time": 10.0, "noise": 150.0},
+	{"id": 2, "label": "ARSIP", "pos": Vector2(190, 560), "need": 1, "time": 6.0, "noise": 150.0},
+	{"id": 3, "label": "PINTU KELUAR", "pos": Vector2(800, 760), "need": 2, "time": 5.0, "noise": 400.0},
+	{"id": 4, "label": "TUAS SEL", "pos": Vector2(960, 140), "need": 1, "time": 3.0, "noise": 150.0},
 ]
-const CELL_POS := Vector2(1180, 140)
-const BOSS_ROOM := Rect2(1050, 64, 198, 156)
-const MEETING_ROOM := Rect2(480, 288, 352, 320)
-const IT_ROOM := Rect2(32, 64, 256, 192)
-const ARCHIVE_ROOM := Rect2(320, 64, 192, 128)
-const SERVER_ROOM := Rect2(544, 64, 224, 128)
-const HRD_ROOM := Rect2(800, 64, 224, 128)
-const PANTRY_ROOM := Rect2(992, 512, 256, 192)
-const TOILET_ROOM := Rect2(32, 544, 224, 160)
-const ALL_ROOMS := [BOSS_ROOM, MEETING_ROOM, IT_ROOM, ARCHIVE_ROOM, SERVER_ROOM, HRD_ROOM, PANTRY_ROOM, TOILET_ROOM]
+const CELL_POS := Vector2(1080, 140)
+const GUDANG_ROOM := Rect2(32, 64, 192, 224)
+const TOILET_ROOM := Rect2(32, 288, 192, 192)
+const ARSIP_ROOM := Rect2(32, 480, 192, 192)
+const PANTRY_ROOM := Rect2(224, 64, 192, 160)
+const ISTIRAHAT_ROOM := Rect2(416, 64, 192, 160)
+const RAPAT_ROOM := Rect2(608, 64, 288, 160)
+const MANAGER_ROOM := Rect2(896, 64, 224, 160)
+const KEUANGAN_ROOM := Rect2(1120, 64, 224, 160)
+const SERBAGUNA_ROOM := Rect2(224, 672, 224, 192)
+const SERVER_ROOM := Rect2(448, 672, 224, 192)
+const LOBBY_ROOM := Rect2(672, 672, 256, 192)
+const RESEPSIONIS_ROOM := Rect2(928, 672, 416, 192)
+const IT_ROOM := Rect2(640, 288, 192, 192)
+const FOTOKOPI_ROOM := Rect2(832, 288, 160, 192)
+const HR_ROOM := Rect2(992, 288, 192, 192)
+const BOSS_ROOM := MANAGER_ROOM
+const ALL_ROOMS := [GUDANG_ROOM, TOILET_ROOM, ARSIP_ROOM, PANTRY_ROOM, ISTIRAHAT_ROOM, RAPAT_ROOM, MANAGER_ROOM, KEUANGAN_ROOM, SERBAGUNA_ROOM, SERVER_ROOM, LOBBY_ROOM, RESEPSIONIS_ROOM, IT_ROOM, FOTOKOPI_ROOM, HR_ROOM]
+const PATROL_LOOP := [
+	Vector2(272, 272), Vector2(800, 272), Vector2(1328, 272),
+	Vector2(1328, 448), Vector2(1328, 624), Vector2(800, 624),
+	Vector2(272, 624), Vector2(272, 448),
+]
 const INTERACT_RANGE := 80.0
+
+var locked_door_cells: Array[Vector2i] = []
+var locked_door_marks: Array[Polygon2D] = []
+var wall_layer_ref: TileMapLayer = null
 
 var ysort: Node2D
 var spawner: MultiplayerSpawner
@@ -121,7 +138,7 @@ func _ready() -> void:
 		show_hud()
 	elif "--host" in OS.get_cmdline_user_args() or "--join" in OS.get_cmdline_user_args():
 		show_hud()
-	lit_areas.append(Vector2(640, 700))
+	lit_areas.append(Vector2(800, 760))
 	spawner.add_spawnable_scene(BOSS_SCENE)
 	spawner.add_spawnable_scene(THROWABLE_SCENE)
 	spawner.add_spawnable_scene(TASK_SCENE)
@@ -137,67 +154,82 @@ func _set_wall(layer: TileMapLayer, x: int, y: int, atlas: Vector2i) -> void:
 
 func _floor_tile_for(tx: int, ty: int) -> Vector2i:
 	var c := Vector2(tx * 32 + 16, ty * 32 + 16)
-	if BOSS_ROOM.has_point(c):
+	if MANAGER_ROOM.has_point(c):
 		return Vector2i(0, 0)
-	if PANTRY_ROOM.has_point(c) or TOILET_ROOM.has_point(c) or SERVER_ROOM.has_point(c):
+	if TOILET_ROOM.has_point(c) or SERVER_ROOM.has_point(c) or LOBBY_ROOM.has_point(c):
 		return Vector2i(2, 0)
-	if ty == 8 or tx == 14:
+	if ty == 7 or ty == 20 or tx == 42:
 		return Vector2i(2, 0)
 	return Vector2i(1, 0)
 
+func _wall_h(layer: TileMapLayer, x0: int, x1: int, y: int, gaps: Array = []) -> void:
+	for x in range(x0, x1 + 1):
+		if gaps.has(x):
+			continue
+		_set_wall(layer, x, y, Vector2i(7, 0))
+
+func _wall_v(layer: TileMapLayer, y0: int, y1: int, x: int, gaps: Array = []) -> void:
+	for y in range(y0, y1 + 1):
+		if gaps.has(y):
+			continue
+		_set_wall(layer, x, y, Vector2i(3, 1))
+
+func _lock_door(layer: TileMapLayer, cells: Array[Vector2i], atlas: Vector2i) -> void:
+	for c in cells:
+		_set_wall(layer, c.x, c.y, atlas)
+		locked_door_cells.append(c)
+	var cx := 0.0
+	var cy := 0.0
+	for c in cells:
+		cx += float(c.x)
+		cy += float(c.y)
+	cx = cx / float(cells.size()) * 32.0 + 16.0
+	cy = cy / float(cells.size()) * 32.0 + 16.0
+	var mark := Polygon2D.new()
+	mark.color = Color(0.85, 0.1, 0.1, 0.95)
+	mark.polygon = PackedVector2Array([Vector2(-9, -11), Vector2(9, -11), Vector2(9, 11), Vector2(-9, 11)])
+	mark.position = Vector2(cx, cy)
+	mark.z_index = 0
+	add_child(mark)
+	locked_door_marks.append(mark)
+
+func _open_locked_doors() -> void:
+	if wall_layer_ref == null:
+		return
+	for c in locked_door_cells:
+		wall_layer_ref.erase_cell(c)
+	locked_door_cells.clear()
+	for m in locked_door_marks:
+		m.queue_free()
+	locked_door_marks.clear()
+
 func _build_partitions(layer: TileMapLayer) -> void:
-	var h := Vector2i(7, 0)
-	var v := Vector2i(3, 1)
-	var v2 := Vector2i(5, 1)
-	for y in [2, 3, 6]:
-		_set_wall(layer, 32, y, v)
-	for x in range(32, 39):
-		_set_wall(layer, x, 7, h)
-	for x in range(15, 19):
-		_set_wall(layer, x, 9, h)
-	for x in range(21, 26):
-		_set_wall(layer, x, 9, h)
-	for x in range(15, 26):
-		_set_wall(layer, x, 18, h)
-	for y in range(9, 19):
-		_set_wall(layer, 15, y, v)
-		_set_wall(layer, 25, y, v2)
-	for y in range(2, 8):
-		_set_wall(layer, 9, y, v2)
-	for x in range(1, 4):
-		_set_wall(layer, x, 8, h)
-	for x in range(6, 9):
-		_set_wall(layer, x, 8, h)
-	for y in range(2, 6):
-		_set_wall(layer, 16, y, v2)
-	for x in range(10, 12):
-		_set_wall(layer, x, 6, h)
-	for x in range(14, 16):
-		_set_wall(layer, x, 6, h)
-	for y in range(2, 6):
-		_set_wall(layer, 24, y, v2)
-	for x in range(17, 20):
-		_set_wall(layer, x, 6, h)
-	for x in range(22, 24):
-		_set_wall(layer, x, 6, h)
-	for y in range(2, 6):
-		_set_wall(layer, 25, y, v)
-	for x in range(25, 27):
-		_set_wall(layer, x, 6, h)
-	for x in range(29, 32):
-		_set_wall(layer, x, 6, h)
-	for y in range(15, 22):
-		_set_wall(layer, 30, y, v)
-	for x in range(30, 33):
-		_set_wall(layer, x, 15, h)
-	for x in range(35, 39):
-		_set_wall(layer, x, 15, h)
-	for y in range(16, 22):
-		_set_wall(layer, 8, y, v2)
-	for x in range(1, 4):
-		_set_wall(layer, x, 16, h)
-	for x in range(6, 8):
-		_set_wall(layer, x, 16, h)
+	wall_layer_ref = layer
+	_wall_h(layer, 7, 41, 7, [9, 10, 15, 16, 22, 23, 30, 31, 37, 38])
+	_wall_h(layer, 1, 6, 9, [3, 4])
+	_wall_h(layer, 1, 6, 15, [])
+	_wall_h(layer, 1, 41, 21, [9, 10, 16, 17, 24, 25, 34, 35])
+	_wall_h(layer, 20, 25, 9, [])
+	_wall_h(layer, 20, 25, 15, [22, 23])
+	_wall_h(layer, 26, 30, 9, [])
+	_wall_h(layer, 26, 30, 15, [27, 28])
+	_wall_h(layer, 31, 36, 9, [])
+	_wall_h(layer, 31, 36, 15, [33, 34])
+	_wall_v(layer, 2, 20, 7, [5, 6, 11, 12, 17, 18])
+	_wall_v(layer, 2, 6, 13, [4, 5])
+	_wall_v(layer, 2, 6, 19, [4, 5])
+	_wall_v(layer, 2, 6, 28, [4, 5])
+	_wall_v(layer, 2, 6, 35, [4, 5])
+	_wall_v(layer, 9, 14, 20, [])
+	_wall_v(layer, 9, 14, 26, [11, 12])
+	_wall_v(layer, 9, 14, 31, [11, 12])
+	_wall_v(layer, 9, 14, 37, [11, 12])
+	_wall_v(layer, 2, 26, 42, [4, 5, 11, 12, 17, 18])
+	_wall_v(layer, 21, 26, 14, [23, 24])
+	_wall_v(layer, 21, 26, 21, [23, 24])
+	_wall_v(layer, 21, 26, 29, [23, 24])
+	_lock_door(layer, [Vector2i(3, 15), Vector2i(4, 15)], Vector2i(7, 0))
+	_lock_door(layer, [Vector2i(42, 23), Vector2i(42, 24)], Vector2i(3, 1))
 
 func _build_darkness() -> void:
 	var mod := CanvasModulate.new()
@@ -250,38 +282,39 @@ func _cable(points: PackedVector2Array) -> void:
 	add_child(l)
 
 func _build_horror() -> void:
-	_blood_spot(Vector2(300, 300), 26.0)
-	_blood_spot(Vector2(340, 320), 14.0)
-	_blood_spot(Vector2(700, 560), 30.0)
-	_blood_spot(Vector2(740, 590), 12.0)
-	_blood_spot(Vector2(1120, 500), 22.0)
-	_blood_spot(Vector2(200, 620), 18.0)
-	_blood_spot(Vector2(640, 180), 16.0)
-	_blood_spot(Vector2(500, 200), 15.0)
-	_blood_spot(Vector2(900, 600), 20.0)
-	_blood_spot(Vector2(1100, 250), 13.0)
-	_blood_spot(Vector2(480, 640), 17.0)
-	_paper(Vector2(420, 280), 0.4)
-	_paper(Vector2(460, 300), -0.7)
-	_paper(Vector2(560, 480), 1.1)
-	_paper(Vector2(900, 300), 0.2)
-	_paper(Vector2(940, 340), -1.2)
-	_paper(Vector2(300, 560), 0.9)
-	_paper(Vector2(1080, 300), -0.4)
-	_paper(Vector2(640, 620), 0.6)
-	_paper(Vector2(350, 450), 1.4)
-	_paper(Vector2(800, 200), -0.5)
-	_paper(Vector2(1150, 550), 0.8)
-	_paper(Vector2(200, 400), -1.0)
-	_paper(Vector2(700, 260), 0.3)
-	_rug(Vector2(1140, 185), Vector2(150, 60), Color(0.35, 0.08, 0.1, 0.85))
-	_rug(Vector2(640, 430), Vector2(260, 150), Color(0.15, 0.18, 0.28, 0.85))
-	_rug(Vector2(1120, 610), Vector2(130, 70), Color(0.4, 0.28, 0.15, 0.85))
-	_cable(PackedVector2Array([Vector2(155, 160), Vector2(150, 120), Vector2(150, 80)]))
-	_cable(PackedVector2Array([Vector2(995, 160), Vector2(995, 120), Vector2(995, 80)]))
-	_cable(PackedVector2Array([Vector2(640, 110), Vector2(640, 80)]))
-	_cable(PackedVector2Array([Vector2(615, 400), Vector2(600, 430), Vector2(600, 460)]))
-	for pos in [Vector2(400, 260), Vector2(880, 420), Vector2(640, 620)]:
+	_blood_spot(Vector2(400, 320), 26.0)
+	_blood_spot(Vector2(440, 340), 14.0)
+	_blood_spot(Vector2(900, 560), 30.0)
+	_blood_spot(Vector2(940, 590), 12.0)
+	_blood_spot(Vector2(1300, 500), 22.0)
+	_blood_spot(Vector2(300, 620), 18.0)
+	_blood_spot(Vector2(760, 300), 16.0)
+	_blood_spot(Vector2(600, 300), 15.0)
+	_blood_spot(Vector2(1200, 600), 20.0)
+	_blood_spot(Vector2(1400, 250), 13.0)
+	_blood_spot(Vector2(500, 700), 17.0)
+	_blood_spot(Vector2(100, 200), 15.0)
+	_paper(Vector2(500, 380), 0.4)
+	_paper(Vector2(540, 400), -0.7)
+	_paper(Vector2(700, 580), 1.1)
+	_paper(Vector2(1100, 300), 0.2)
+	_paper(Vector2(1140, 340), -1.2)
+	_paper(Vector2(400, 660), 0.9)
+	_paper(Vector2(1300, 300), -0.4)
+	_paper(Vector2(800, 700), 0.6)
+	_paper(Vector2(450, 550), 1.4)
+	_paper(Vector2(1000, 200), -0.5)
+	_paper(Vector2(1350, 550), 0.8)
+	_paper(Vector2(300, 500), -1.0)
+	_paper(Vector2(900, 260), 0.3)
+	_rug(Vector2(1008, 180), Vector2(150, 60), Color(0.35, 0.08, 0.1, 0.85))
+	_rug(Vector2(752, 160), Vector2(260, 120), Color(0.15, 0.18, 0.28, 0.85))
+	_rug(Vector2(800, 780), Vector2(180, 80), Color(0.4, 0.28, 0.15, 0.85))
+	_rug(Vector2(1100, 780), Vector2(200, 90), Color(0.2, 0.2, 0.3, 0.85))
+	_cable(PackedVector2Array([Vector2(400, 400), Vector2(400, 340), Vector2(400, 300)]))
+	_cable(PackedVector2Array([Vector2(736, 400), Vector2(736, 340), Vector2(736, 300)]))
+	_cable(PackedVector2Array([Vector2(752, 160), Vector2(752, 120), Vector2(752, 80)]))
+	for pos in [Vector2(500, 360), Vector2(1100, 420), Vector2(800, 700)]:
 		var fl := PointLight2D.new()
 		fl.position = pos
 		fl.color = Color(1, 0.85, 0.6, 1)
@@ -291,7 +324,7 @@ func _build_horror() -> void:
 		flicker_lights.append(fl)
 		flicker_base.append(0.9)
 	var red := PointLight2D.new()
-	red.position = Vector2(1149, 142)
+	red.position = Vector2(1008, 142)
 	red.color = Color(0.9, 0.1, 0.1, 1)
 	red.energy = 0.5
 	red.texture_scale = 2.0
@@ -299,7 +332,7 @@ func _build_horror() -> void:
 	var chair_tex := load(PROP_BASE + "Seating/office_chair/office_chair_front.png") as Texture2D
 	if chair_tex != null:
 		var root := Node2D.new()
-		root.position = Vector2(980, 420)
+		root.position = Vector2(1200, 500)
 		root.rotation = PI / 2.0
 		ysort.add_child(root)
 		var spr := Sprite2D.new()
@@ -352,8 +385,8 @@ func _build_tasks() -> void:
 func _build_pickups() -> void:
 	var scene := load(PICKUP_SCENE) as PackedScene
 	var spots := [
-		Vector2(200, 160), Vector2(300, 160), Vector2(1040, 160),
-		Vector2(1140, 160), Vector2(200, 360), Vector2(1040, 360),
+		Vector2(320, 300), Vector2(420, 300), Vector2(1150, 300),
+		Vector2(1250, 300), Vector2(560, 540), Vector2(1150, 500),
 	]
 	for s in spots:
 		var pk := scene.instantiate() as Node2D
@@ -717,6 +750,8 @@ func _on_task_done(tp) -> void:
 	boss_speed_mult += 0.1
 	if boss != null:
 		boss.speed_mult = boss_speed_mult
+	if _main_tasks_done():
+		_open_locked_doors()
 	lit_areas.append(tp.global_position)
 	var light := PointLight2D.new()
 	light.position = tp.global_position
@@ -978,8 +1013,8 @@ func teleport_destination() -> Vector2:
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
 	var dest := base + Vector2(rng.randf_range(-180, 180), rng.randf_range(-180, 180))
-	dest.x = clampf(dest.x, 80, 1200)
-	dest.y = clampf(dest.y, 100, 680)
+	dest.x = clampf(dest.x, 80, 1450)
+	dest.y = clampf(dest.y, 100, 830)
 	for child in ysort.get_children():
 		if _is_player(child) and child.get("hiding"):
 			if dest.distance_to(child.global_position) < 80.0:
@@ -1077,93 +1112,155 @@ func _build_props() -> void:
 	var flip := "Meeting/flip_chart/flip_chart_right.png"
 	var clock := "Decor/wall_clock/wall_clock_front.png"
 	var screen := "Meeting/projector_screen/projector_screen_front.png"
-	_place_prop(cab, Vector2(380, 88), true, Vector2(28, 24))
-	_place_prop(cab, Vector2(420, 88), true, Vector2(28, 24))
-	_place_prop(cab, Vector2(460, 88), true, Vector2(28, 24))
-	_place_prop(cab, Vector2(820, 88), true, Vector2(28, 24))
-	_place_prop(cab, Vector2(860, 88), true, Vector2(28, 24))
-	_place_prop(cab, Vector2(900, 88), true, Vector2(28, 24))
-	_place_prop(clock, Vector2(480, 40), false, Vector2.ZERO)
-	_place_prop(screen, Vector2(640, 40), false, Vector2.ZERO)
-	_place_prop(desk, Vector2(170, 170), true, Vector2(64, 24))
-	_place_prop(chair_b, Vector2(170, 240), true, Vector2(26, 20))
-	_place_prop(pc, Vector2(155, 152), false, Vector2.ZERO)
-	_place_prop(lamp, Vector2(195, 154), false, Vector2.ZERO)
-	_place_prop(desk, Vector2(270, 170), true, Vector2(64, 24))
-	_place_prop(chair_b, Vector2(270, 240), true, Vector2(26, 20))
-	_place_prop(lap, Vector2(265, 152), false, Vector2.ZERO)
-	_place_prop(mug, Vector2(290, 156), false, Vector2.ZERO)
-	_place_prop(desk, Vector2(170, 370), true, Vector2(64, 24))
-	_place_prop(chair_b, Vector2(170, 440), true, Vector2(26, 20))
-	_place_prop(pc, Vector2(155, 352), false, Vector2.ZERO)
-	_place_prop(paper, Vector2(195, 354), false, Vector2.ZERO)
-	_place_prop(desk, Vector2(270, 370), true, Vector2(64, 24))
-	_place_prop(chair_b, Vector2(270, 440), true, Vector2(26, 20))
-	_place_prop(lap, Vector2(265, 352), false, Vector2.ZERO)
-	_place_prop(lamp, Vector2(290, 354), false, Vector2.ZERO)
-	_place_prop(desk, Vector2(1010, 170), true, Vector2(64, 24))
-	_place_prop(chair_b, Vector2(1010, 240), true, Vector2(26, 20))
-	_place_prop(pc, Vector2(995, 152), false, Vector2.ZERO)
-	_place_prop(mug, Vector2(1035, 156), false, Vector2.ZERO)
-	_place_prop(desk, Vector2(1110, 170), true, Vector2(64, 24))
-	_place_prop(chair_b, Vector2(1110, 240), true, Vector2(26, 20))
-	_place_prop(lap, Vector2(1105, 152), false, Vector2.ZERO)
-	_place_prop(paper, Vector2(1130, 154), false, Vector2.ZERO)
-	_place_prop(desk, Vector2(1010, 370), true, Vector2(64, 24))
-	_place_prop(chair_b, Vector2(1010, 440), true, Vector2(26, 20))
-	_place_prop(pc, Vector2(995, 352), false, Vector2.ZERO)
-	_place_prop(lamp, Vector2(1035, 354), false, Vector2.ZERO)
-	_place_prop(desk, Vector2(1110, 370), true, Vector2(64, 24))
-	_place_prop(chair_b, Vector2(1110, 440), true, Vector2(26, 20))
-	_place_prop(lap, Vector2(1105, 352), false, Vector2.ZERO)
-	_place_prop(mug, Vector2(1130, 356), false, Vector2.ZERO)
-	_place_prop(conf, Vector2(640, 430), true, Vector2(96, 40))
-	desk_positions.append(Vector2(640, 430))
-	_place_prop(chair_f, Vector2(590, 350), true, Vector2(26, 20))
-	_place_prop(chair_f, Vector2(640, 350), true, Vector2(26, 20))
-	_place_prop(chair_f, Vector2(690, 350), true, Vector2(26, 20))
-	_place_prop(chair_b, Vector2(590, 505), true, Vector2(26, 20))
-	_place_prop(chair_b, Vector2(640, 505), true, Vector2(26, 20))
-	_place_prop(chair_b, Vector2(690, 505), true, Vector2(26, 20))
-	_place_prop(chair_r, Vector2(530, 430), true, Vector2(26, 20))
-	_place_prop(chair_l, Vector2(750, 430), true, Vector2(26, 20))
-	_place_prop(lap, Vector2(615, 395), false, Vector2.ZERO)
-	_place_prop(paper, Vector2(660, 400), false, Vector2.ZERO)
-	_place_prop(flip, Vector2(520, 560), true, Vector2(24, 14))
+	_place_prop(clock, Vector2(752, 40), false, Vector2.ZERO)
+	_place_prop(screen, Vector2(752, 40), false, Vector2.ZERO)
+	_place_prop(conf, Vector2(752, 160), true, Vector2(96, 40))
+	desk_positions.append(Vector2(752, 160))
+	_place_prop(chair_f, Vector2(700, 90), true, Vector2(26, 20))
+	_place_prop(chair_f, Vector2(752, 90), true, Vector2(26, 20))
+	_place_prop(chair_f, Vector2(804, 90), true, Vector2(26, 20))
+	_place_prop(chair_b, Vector2(700, 210), true, Vector2(26, 20))
+	_place_prop(chair_b, Vector2(752, 210), true, Vector2(26, 20))
+	_place_prop(chair_b, Vector2(804, 210), true, Vector2(26, 20))
+	_place_prop(chair_r, Vector2(640, 160), true, Vector2(26, 20))
+	_place_prop(chair_l, Vector2(864, 160), true, Vector2(26, 20))
+	_place_prop(lap, Vector2(730, 140), false, Vector2.ZERO)
+	_place_prop(paper, Vector2(780, 145), false, Vector2.ZERO)
+	_place_prop(flip, Vector2(620, 220), true, Vector2(24, 14))
+	_place_modern("whiteboard.png", Vector2(860, 80), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(320, 320), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(320, 390), true, Vector2(26, 20))
+	_place_prop(pc, Vector2(305, 302), false, Vector2.ZERO)
+	_place_prop(lamp, Vector2(345, 304), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(420, 320), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(420, 390), true, Vector2(26, 20))
+	_place_prop(lap, Vector2(415, 302), false, Vector2.ZERO)
+	_place_prop(mug, Vector2(440, 306), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(320, 520), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(320, 590), true, Vector2(26, 20))
+	_place_prop(pc, Vector2(305, 502), false, Vector2.ZERO)
+	_place_prop(paper, Vector2(345, 504), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(420, 520), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(420, 590), true, Vector2(26, 20))
+	_place_prop(lap, Vector2(415, 502), false, Vector2.ZERO)
+	_place_prop(lamp, Vector2(440, 504), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(1150, 320), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(1150, 390), true, Vector2(26, 20))
+	_place_prop(pc, Vector2(1135, 302), false, Vector2.ZERO)
+	_place_prop(mug, Vector2(1175, 306), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(1250, 320), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(1250, 390), true, Vector2(26, 20))
+	_place_prop(lap, Vector2(1245, 302), false, Vector2.ZERO)
+	_place_prop(paper, Vector2(1270, 304), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(1150, 520), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(1150, 590), true, Vector2(26, 20))
+	_place_prop(pc, Vector2(1135, 502), false, Vector2.ZERO)
+	_place_prop(lamp, Vector2(1175, 504), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(1250, 520), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(1250, 590), true, Vector2(26, 20))
+	_place_prop(lap, Vector2(1245, 502), false, Vector2.ZERO)
+	_place_prop(mug, Vector2(1270, 506), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(560, 560), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(560, 630), true, Vector2(26, 20))
+	_place_prop(pc, Vector2(545, 542), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(660, 560), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(660, 630), true, Vector2(26, 20))
+	_place_prop(lap, Vector2(655, 542), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(800, 260), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(800, 330), true, Vector2(26, 20))
+	_place_prop(pc, Vector2(785, 242), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(900, 260), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(900, 330), true, Vector2(26, 20))
+	_place_prop(lap, Vector2(895, 242), false, Vector2.ZERO)
+	_place_prop(desk, Vector2(320, 140), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(320, 210), true, Vector2(26, 20))
+	_place_prop(cooler, Vector2(400, 200), true, Vector2(20, 16))
+	_place_prop(plant, Vector2(240, 200), true, Vector2(26, 16))
+	_place_prop(trash, Vector2(400, 100), true, Vector2(16, 12))
+	_place_modern("sofa.png", Vector2(500, 160), true, Vector2(44, 20))
+	_place_prop(plant, Vector2(430, 200), true, Vector2(26, 16))
+	_place_prop(chair_f, Vector2(580, 200), true, Vector2(26, 20))
+	_place_modern("bookshelf.png", Vector2(590, 80), true, Vector2(30, 20))
+	_place_prop(desk, Vector2(940, 110), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(940, 180), true, Vector2(26, 20))
+	_place_prop(lap, Vector2(935, 92), false, Vector2.ZERO)
+	_place_prop(plant, Vector2(1100, 200), true, Vector2(26, 16))
+	_place_modern("bookshelf.png", Vector2(900, 80), true, Vector2(30, 20))
+	_place_prop(desk, Vector2(1200, 140), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(1200, 210), true, Vector2(26, 20))
+	_place_prop(pc, Vector2(1185, 122), false, Vector2.ZERO)
+	_place_prop(cab, Vector2(1240, 88), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(1280, 88), true, Vector2(28, 24))
+	_place_prop(plant, Vector2(1330, 200), true, Vector2(26, 16))
+	_place_prop(cab, Vector2(80, 100), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(120, 100), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(160, 100), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(80, 180), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(120, 180), true, Vector2(28, 24))
+	desk_positions.append(Vector2(80, 100))
+	desk_positions.append(Vector2(120, 100))
+	desk_positions.append(Vector2(80, 180))
+	_place_prop(plant, Vector2(200, 260), true, Vector2(26, 16))
+	_place_prop(trash, Vector2(60, 260), true, Vector2(16, 12))
+	_place_prop(plant, Vector2(60, 320), true, Vector2(26, 16))
+	_place_prop(plant, Vector2(200, 440), true, Vector2(26, 16))
+	_place_prop(trash, Vector2(180, 440), true, Vector2(16, 12))
+	_place_prop(cab, Vector2(80, 520), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(120, 520), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(160, 520), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(80, 600), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(120, 600), true, Vector2(28, 24))
+	desk_positions.append(Vector2(80, 520))
+	desk_positions.append(Vector2(120, 520))
+	desk_positions.append(Vector2(80, 600))
+	_place_prop(paper, Vector2(180, 560), false, Vector2.ZERO)
+	_place_prop(paper, Vector2(190, 580), false, Vector2.ZERO)
+	_place_prop(plant, Vector2(200, 640), true, Vector2(26, 16))
+	_place_prop(desk, Vector2(320, 760), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(320, 830), true, Vector2(26, 20))
+	_place_prop(pc, Vector2(305, 742), false, Vector2.ZERO)
+	_place_prop(chair_f, Vector2(400, 700), true, Vector2(26, 20))
+	_place_modern("whiteboard.png", Vector2(420, 700), false, Vector2.ZERO)
+	_place_prop(plant, Vector2(240, 840), true, Vector2(26, 16))
+	_place_prop(cab, Vector2(500, 700), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(540, 700), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(580, 700), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(620, 700), true, Vector2(28, 24))
+	desk_positions.append(Vector2(500, 700))
+	desk_positions.append(Vector2(580, 700))
+	_place_prop(cab, Vector2(500, 820), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(540, 820), true, Vector2(28, 24))
+	_place_prop(desk, Vector2(720, 720), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(720, 790), true, Vector2(26, 20))
+	_place_prop(pc, Vector2(705, 702), false, Vector2.ZERO)
+	_place_modern("sofa.png", Vector2(880, 800), true, Vector2(44, 20))
+	_place_prop(plant, Vector2(690, 840), true, Vector2(26, 16))
+	_place_prop(plant, Vector2(910, 700), true, Vector2(26, 16))
+	_place_prop(desk, Vector2(1000, 760), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(1000, 830), true, Vector2(26, 20))
+	_place_prop(pc, Vector2(985, 742), false, Vector2.ZERO)
+	_place_prop(plant, Vector2(1300, 700), true, Vector2(26, 16))
+	_place_prop(plant, Vector2(1300, 840), true, Vector2(26, 16))
+	_place_modern("bookshelf.png", Vector2(950, 700), true, Vector2(30, 20))
+	_place_prop(pc, Vector2(700, 340), false, Vector2.ZERO)
+	_place_prop(pc, Vector2(760, 340), false, Vector2.ZERO)
+	_place_prop(cab, Vector2(660, 310), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(800, 310), true, Vector2(28, 24))
+	_place_prop(cab, Vector2(880, 350), true, Vector2(28, 24))
+	_place_prop(paper, Vector2(900, 400), false, Vector2.ZERO)
+	_place_prop(plant, Vector2(970, 450), true, Vector2(26, 16))
+	_place_prop(trash, Vector2(850, 450), true, Vector2(16, 12))
+	_place_prop(desk, Vector2(1060, 350), true, Vector2(64, 24))
+	_place_prop(chair_b, Vector2(1060, 420), true, Vector2(26, 20))
+	_place_prop(pc, Vector2(1045, 332), false, Vector2.ZERO)
+	_place_prop(cab, Vector2(1120, 320), true, Vector2(28, 24))
+	_place_prop(plant, Vector2(1160, 450), true, Vector2(26, 16))
 	_place_prop(plant, Vector2(70, 100), true, Vector2(26, 16))
-	_place_prop(tplant, Vector2(1210, 100), true, Vector2(18, 16))
-	_place_prop(plant, Vector2(70, 660), true, Vector2(26, 16))
-	_place_prop(tplant, Vector2(1210, 660), true, Vector2(18, 16))
-	_place_prop(cooler, Vector2(1210, 620), true, Vector2(20, 16))
-	_place_prop(trash, Vector2(1150, 620), true, Vector2(16, 12))
-	_place_prop(trash, Vector2(320, 232), true, Vector2(16, 12))
-	_place_prop(trash, Vector2(960, 232), true, Vector2(16, 12))
-	_place_prop(trash, Vector2(760, 520), true, Vector2(16, 12))
-	_place_prop(desk, Vector2(1090, 90), true, Vector2(64, 24))
-	_place_prop(chair_b, Vector2(1090, 120), true, Vector2(26, 20))
-	_place_prop(lap, Vector2(1085, 72), false, Vector2.ZERO)
-	_place_prop(plant, Vector2(1240, 200), true, Vector2(26, 16))
-	_place_prop(cab, Vector2(500, 88), true, Vector2(28, 24))
-	_place_prop(paper, Vector2(480, 150), false, Vector2.ZERO)
-	_place_prop(paper, Vector2(490, 170), false, Vector2.ZERO)
-	_place_prop(cab, Vector2(720, 88), true, Vector2(28, 24))
-	_place_prop(cab, Vector2(750, 88), true, Vector2(28, 24))
-	_place_prop(desk, Vector2(1060, 600), true, Vector2(64, 24))
-	_place_prop(chair_f, Vector2(1060, 570), true, Vector2(26, 20))
-	_place_prop(chair_b, Vector2(1060, 630), true, Vector2(26, 20))
-	_place_prop(plant, Vector2(1010, 540), true, Vector2(26, 16))
-	_place_prop(plant, Vector2(60, 580), true, Vector2(26, 16))
-	_place_prop(trash, Vector2(220, 660), true, Vector2(16, 12))
-	_place_prop(desk, Vector2(880, 140), true, Vector2(64, 24))
-	_place_prop(chair_b, Vector2(880, 170), true, Vector2(26, 20))
-	_place_prop(pc, Vector2(865, 122), false, Vector2.ZERO)
-	_place_prop(plant, Vector2(60, 220), true, Vector2(26, 16))
-	_place_prop(paper, Vector2(250, 220), false, Vector2.ZERO)
-	_place_prop(cab, Vector2(500, 300), true, Vector2(28, 24))
-	_place_prop(plant, Vector2(810, 300), true, Vector2(26, 16))
-	_place_modern("bookshelf.png", Vector2(1150, 80), true, Vector2(30, 20))
-	_place_modern("sofa.png", Vector2(1200, 560), true, Vector2(44, 20))
-	_place_modern("whiteboard.png", Vector2(700, 300), false, Vector2.ZERO)
+	_place_prop(tplant, Vector2(1450, 100), true, Vector2(18, 16))
+	_place_prop(plant, Vector2(70, 860), true, Vector2(26, 16))
+	_place_prop(tplant, Vector2(1450, 860), true, Vector2(18, 16))
+	_place_prop(trash, Vector2(1400, 620), true, Vector2(16, 12))
+	_place_prop(trash, Vector2(1400, 300), true, Vector2(16, 12))
 
 func _place_prop(rel: String, pos: Vector2, solid: bool, col_size: Vector2) -> void:
 	var tex := load(PROP_BASE + rel) as Texture2D
