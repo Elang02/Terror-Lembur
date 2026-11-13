@@ -99,6 +99,24 @@ func _run() -> void:
 		_ok("player unlocked after self-rescue completes")
 	else:
 		_fail("player still locked after self-rescue should complete")
+	var boss: Node2D = lvl.get("boss")
+	if boss == null:
+		_fail("boss null after self-rescue")
+	else:
+		var cell_pos: Vector2 = lvl.get("CELL_POS")
+		var boss_cell_dist := boss.global_position.distance_to(cell_pos)
+		if boss_cell_dist > 40.0:
+			_ok("boss pushed away from cell on self-rescue (dist " + str(boss_cell_dist) + ", catch range 30)")
+		else:
+			_fail("boss still on top of cell after self-rescue (dist " + str(boss_cell_dist) + ")")
+		if int(boss.get("state")) == 4 or int(boss.get("state")) == 0:
+			_ok("boss back to patrol/return after self-rescue (state " + str(boss.get("state")) + ")")
+		else:
+			_fail("boss state is " + str(boss.get("state")) + " expected RETURN (4) or PATROL (0)")
+		if float(boss.get("blind_timer")) > 0.0:
+			_ok("boss blind after self-rescue (" + str(boss.get("blind_timer")) + "s)")
+		else:
+			_fail("boss blind_timer 0 after self-rescue")
 	var catches_before := int(lvl.get("solo_catches"))
 	lvl.call("on_player_caught", player)
 	lvl.call("on_player_caught", player)

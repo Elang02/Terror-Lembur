@@ -347,3 +347,12 @@ func _do_teleport() -> void:
 	state_timer = 0.0
 	_pick_waypoint()
 	level.rpc("on_boss_teleported", dest)
+
+func send_back_to_room() -> void:
+	global_position = level.boss_room_center()
+	blind_timer = 3.0
+	teleport_timer = rng.randf_range(TELEPORT_MIN, TELEPORT_MAX) * teleport_mult
+	state = State.RETURN
+	state_timer = 0.0
+	path = []
+	path_index = 0

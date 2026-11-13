@@ -1025,7 +1025,7 @@ func _update_self_rescue(delta: float) -> void:
 			self_rescue_progress = 0.0
 			locked_player.rpc_id(int(locked_player.name), "set_locked", false)
 			if boss != null:
-				boss.blind_timer = 2.0
+				boss.send_back_to_room()
 			hud_warn_label.text = "Kamu berhasil kabur dari sel!"
 			warn_timer = 2.0
 	else:
