@@ -40,6 +40,20 @@ const PATROL_LOOP := [
 	Vector2(272, 624), Vector2(272, 448),
 ]
 const INTERACT_RANGE := 80.0
+const WALL_TILE := {
+	0: Vector2i(0, 0), 1: Vector2i(1, 0), 4: Vector2i(2, 0), 5: Vector2i(3, 0),
+	7: Vector2i(4, 0), 16: Vector2i(5, 0), 17: Vector2i(6, 0), 20: Vector2i(7, 0),
+	21: Vector2i(0, 1), 23: Vector2i(1, 1), 28: Vector2i(2, 1), 29: Vector2i(3, 1),
+	31: Vector2i(4, 1), 64: Vector2i(5, 1), 65: Vector2i(6, 1), 68: Vector2i(7, 1),
+	69: Vector2i(0, 2), 71: Vector2i(1, 2), 80: Vector2i(2, 2), 81: Vector2i(3, 2),
+	84: Vector2i(4, 2), 85: Vector2i(5, 2), 87: Vector2i(6, 2), 92: Vector2i(7, 2),
+	93: Vector2i(0, 3), 95: Vector2i(1, 3), 112: Vector2i(2, 3), 113: Vector2i(3, 3),
+	116: Vector2i(4, 3), 117: Vector2i(5, 3), 119: Vector2i(6, 3), 124: Vector2i(7, 3),
+	125: Vector2i(0, 4), 127: Vector2i(1, 4), 193: Vector2i(2, 4), 197: Vector2i(3, 4),
+	199: Vector2i(4, 4), 209: Vector2i(5, 4), 213: Vector2i(6, 4), 215: Vector2i(7, 4),
+	221: Vector2i(0, 5), 223: Vector2i(1, 5), 241: Vector2i(2, 5), 245: Vector2i(3, 5),
+	247: Vector2i(4, 5), 253: Vector2i(5, 5), 255: Vector2i(6, 5),
+}
 
 var locked_door_cells: Array[Vector2i] = []
 var locked_door_marks: Array[Polygon2D] = []
@@ -157,6 +171,39 @@ func _ready() -> void:
 func _set_wall(layer: TileMapLayer, x: int, y: int, atlas: Vector2i) -> void:
 	layer.set_cell(Vector2i(x, y), 1, atlas)
 
+func _wall_bitmask(cells: Dictionary, x: int, y: int) -> int:
+	var n := cells.has(Vector2i(x, y - 1))
+	var e := cells.has(Vector2i(x + 1, y))
+	var s := cells.has(Vector2i(x, y + 1))
+	var w := cells.has(Vector2i(x - 1, y))
+	var bm := 0
+	if n:
+		bm |= 1
+	if e:
+		bm |= 4
+	if s:
+		bm |= 16
+	if w:
+		bm |= 64
+	if n and e and cells.has(Vector2i(x + 1, y - 1)):
+		bm |= 2
+	if s and e and cells.has(Vector2i(x + 1, y + 1)):
+		bm |= 8
+	if s and w and cells.has(Vector2i(x - 1, y + 1)):
+		bm |= 32
+	if n and w and cells.has(Vector2i(x - 1, y - 1)):
+		bm |= 128
+	return bm
+
+func _autotile_walls(layer: TileMapLayer) -> void:
+	var cells := {}
+	for c in layer.get_used_cells():
+		cells[c] = true
+	for c in cells.keys():
+		var bm := _wall_bitmask(cells, c.x, c.y)
+		var atlas: Vector2i = WALL_TILE.get(bm, Vector2i(6, 5))
+		layer.set_cell(c, 1, atlas)
+
 func _floor_tile_for(tx: int, ty: int) -> Vector2i:
 	var c := Vector2(tx * 32 + 16, ty * 32 + 16)
 	if MANAGER_ROOM.has_point(c):
@@ -207,6 +254,7 @@ func _open_locked_doors() -> void:
 	for m in locked_door_marks:
 		m.queue_free()
 	locked_door_marks.clear()
+	_autotile_walls(wall_layer_ref)
 
 func _build_partitions(layer: TileMapLayer) -> void:
 	wall_layer_ref = layer
@@ -235,6 +283,7 @@ func _build_partitions(layer: TileMapLayer) -> void:
 	_wall_v(layer, 21, 26, 29, [23, 24])
 	_lock_door(layer, [Vector2i(3, 15), Vector2i(4, 15)], Vector2i(7, 0))
 	_lock_door(layer, [Vector2i(42, 23), Vector2i(42, 24)], Vector2i(3, 1))
+	_autotile_walls(layer)
 
 func _build_darkness() -> void:
 	var mod := CanvasModulate.new()

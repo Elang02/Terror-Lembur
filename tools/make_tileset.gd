@@ -1,12 +1,16 @@
 extends SceneTree
 
-# One-off tool: builds office_tileset.tres from the Imersa office pack.
+# One-off tool: builds office_tileset.tres.
+# Floor: Imersa office pack (3 tiles). Walls: Gridwright Modern Office & Home
+# free sample, painted wall autotile set (47 tiles, 32x32, 2x sheet).
 # Run: godot --headless --path . --script res://tools/make_tileset.gd
-# Floor atlas: 96x32, 3 tiles of 32x32. Wall atlas: 256x128, 8 cols, 25 tiles.
+# Wall atlas: 256x192, 8 cols x 6 rows; cell (7,5) is empty.
 # All wall tiles get a full-tile collision polygon on physics layer 0.
+# Gridwright bitmask (N=1 NE=2 E=4 SE=8 S=16 SW=32 W=64 NW=128) is handled
+# at runtime by level_1.gd _autotile_walls(); this tool only builds the atlas.
 
 const FLOOR_TEX := "res://assets/office_assets/main/Office_Pixel_Art_Free_v1.0/Tilesets/Floors/office_floors_tileset.png"
-const WALL_TEX := "res://assets/office_assets/main/Office_Pixel_Art_Free_v1.0/Tilesets/Walls_Plain/office_walls_tileset.png"
+const WALL_TEX := "res://assets/gridwright_walls_paint.png"
 const OUT_PATH := "res://office_tileset.tres"
 const TILE := Vector2i(32, 32)
 
@@ -39,12 +43,18 @@ func _init() -> void:
 	wall_source.texture_region_size = TILE
 	var wall_id := tile_set.add_source(wall_source)
 	var poly := PackedVector2Array([Vector2(0, 0), Vector2(32, 0), Vector2(32, 32), Vector2(0, 32)])
-	for i in range(25):
-		var coords := Vector2i(i % 8, i / 8)
-		wall_source.create_tile(coords)
-		var tile_data := wall_source.get_tile_data(coords, 0)
-		tile_data.add_collision_polygon(0)
-		tile_data.set_collision_polygon_points(0, 0, poly)
+	var made := 0
+	for y in range(6):
+		for x in range(8):
+			if x == 7 and y == 5:
+				continue
+			var coords := Vector2i(x, y)
+			wall_source.create_tile(coords)
+			var tile_data := wall_source.get_tile_data(coords, 0)
+			tile_data.add_collision_polygon(0)
+			tile_data.set_collision_polygon_points(0, 0, poly)
+			made += 1
+	print("wall tiles made: ", made)
 
 	print("floor source id: ", floor_id, " wall source id: ", wall_id)
 	var err := ResourceSaver.save(tile_set, OUT_PATH)
