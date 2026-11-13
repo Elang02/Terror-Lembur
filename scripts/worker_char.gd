@@ -20,6 +20,8 @@ var demo_path_index := 0
 var demo_repath_timer := 0.0
 var demo_task_id := -1
 var demo_wait_timer := 0.0
+var demo_stuck_timer := 0.0
+var demo_last_pos := Vector2.ZERO
 var locked := false
 var hiding := false
 var interacting := false
@@ -120,12 +122,29 @@ func _demo_update(delta: float) -> Vector2:
 	if locked:
 		interacting = true
 		interact_target = 99
+		demo_stuck_timer = 0.0
+		demo_last_pos = global_position
 		return Vector2.ZERO
 	var lvl := get_parent().get_parent()
 	if lvl == null or demo_wp_index >= demo_waypoints.size():
 		return Vector2.ZERO
 	var target: Vector2 = demo_waypoints[demo_wp_index]
 	var dist := global_position.distance_to(target)
+	if global_position.distance_to(demo_last_pos) > 5.0:
+		demo_stuck_timer = 0.0
+		demo_last_pos = global_position
+	else:
+		demo_stuck_timer += delta
+		if demo_stuck_timer > 2.0:
+			demo_stuck_timer = 0.0
+			demo_last_pos = global_position
+			if demo_path_index < demo_path.size():
+				global_position = demo_path[demo_path_index]
+				demo_path_index += 1
+				print("DEMO unstuck: jumped to path point " + str(demo_path_index))
+			else:
+				global_position = global_position.move_toward(target, 60.0)
+				print("DEMO unstuck: nudged toward target")
 	if dist < 70.0:
 		var task_done := false
 		if demo_task_id >= 0 and lvl.has_method("get"):
