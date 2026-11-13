@@ -1040,6 +1040,7 @@ func _on_task_done(tp) -> void:
 		boss.speed_mult = boss_speed_mult
 	if _main_tasks_done():
 		_open_locked_doors()
+		_enrage_boss()
 	lit_areas.append(tp.global_position)
 	var light := PointLight2D.new()
 	light.position = tp.global_position
@@ -1049,6 +1050,15 @@ func _on_task_done(tp) -> void:
 	add_child(light)
 	if tp.task_id == 3:
 		_finish_level()
+
+func _enrage_boss() -> void:
+	boss_speed_mult += 0.3
+	if boss != null:
+		boss.speed_mult = boss_speed_mult
+		boss.teleport_mult = 0.6
+	hud_warn_label.text = "BOS MARAH! Pintu keluar terbuka, dia tidak mau kamu pulang!"
+	warn_timer = 3.0
+	play_sfx("alarm", -4.0)
 
 func _unlock_all() -> void:
 	for child in ysort.get_children():
@@ -1293,31 +1303,27 @@ func boss_room_center() -> Vector2:
 	return BOSS_ROOM.get_center()
 
 func teleport_destination() -> Vector2:
-	var candidates: Array[Vector2] = []
+	var players: Array[Vector2] = []
 	for child in ysort.get_children():
-		if not _is_player(child):
-			continue
-		if child.get("locked"):
-			continue
-		if child.get("interacting"):
-			candidates.append(child.global_position)
-	if candidates.is_empty():
-		for child in ysort.get_children():
-			if _is_player(child) and not child.get("locked"):
-				candidates.append(child.global_position)
-	if candidates.is_empty():
+		if _is_player(child) and not child.get("locked"):
+			players.append(child.global_position)
+	if players.is_empty():
 		return boss_room_center()
-	var base: Vector2 = candidates[randi() % candidates.size()]
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
-	var dest := base + Vector2(rng.randf_range(-180, 180), rng.randf_range(-180, 180))
-	dest.x = clampf(dest.x, 80, 1450)
-	dest.y = clampf(dest.y, 100, 830)
-	for child in ysort.get_children():
-		if _is_player(child) and child.get("hiding"):
-			if dest.distance_to(child.global_position) < 80.0:
-				dest = child.global_position + Vector2(200, 0)
-	return dest
+	for attempt in range(8):
+		var base: Vector2 = players[rng.randi() % players.size()]
+		var dest := base + Vector2(rng.randf_range(-260, 260), rng.randf_range(-260, 260))
+		dest.x = clampf(dest.x, 80, 1450)
+		dest.y = clampf(dest.y, 100, 830)
+		var ok := true
+		for p in players:
+			if dest.distance_to(p) < 150.0:
+				ok = false
+				break
+		if ok:
+			return dest
+	return boss_room_center()
 
 @rpc("any_peer", "call_local")
 func report_noise(pos: Vector2, radius: float) -> void:

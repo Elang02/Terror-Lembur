@@ -26,6 +26,7 @@ var search_center := Vector2.ZERO
 var waypoint_timer := 0.0
 var patrol_index := 0
 var speed_mult := 1.0
+var teleport_mult := 1.0
 var path: PackedVector2Array = []
 var path_index := 0
 var repath_timer := 0.0
@@ -341,7 +342,7 @@ func _do_teleport() -> void:
 	var dest: Vector2 = level.teleport_destination()
 	global_position = dest
 	blind_timer = BLIND_TIME
-	teleport_timer = rng.randf_range(TELEPORT_MIN, TELEPORT_MAX)
+	teleport_timer = rng.randf_range(TELEPORT_MIN, TELEPORT_MAX) * teleport_mult
 	state = State.PATROL
 	state_timer = 0.0
 	_pick_waypoint()
