@@ -190,6 +190,28 @@ func _show_hud() -> void:
 	if lvl != null and lvl.has_method("show_hud"):
 		lvl.show_hud()
 
+func _best_lan_ip() -> String:
+	var candidates: Array[String] = []
+	for ip in IP.get_local_addresses():
+		if ip.begins_with("127.") or ip.begins_with("169.254.") or ":" in ip:
+			continue
+		candidates.append(ip)
+	if candidates.is_empty():
+		return ""
+	for ip in candidates:
+		if ip.begins_with("192.168.") and not ip.begins_with("192.168.56."):
+			return ip
+	for ip in candidates:
+		if ip.begins_with("192.168."):
+			return ip
+	for ip in candidates:
+		if ip.begins_with("10."):
+			return ip
+	for ip in candidates:
+		if ip.begins_with("172."):
+			return ip
+	return candidates[0]
+
 func _compute_broadcast_targets() -> Array[String]:
 	var targets: Array[String] = ["255.255.255.255"]
 	for ip in IP.get_local_addresses():
@@ -230,13 +252,12 @@ func _start_listening() -> void:
 	broadcast_targets = _compute_broadcast_targets()
 	is_listening = true
 	request_timer = 0.0
-	var my_ips: Array[String] = []
-	for ip in IP.get_local_addresses():
-		if ip.begins_with("127.") or ":" in ip:
-			continue
-		my_ips.append(ip)
+	var best_ip := _best_lan_ip()
 	if ip_hint_label:
-		ip_hint_label.text = "IP PC ini: " + ", ".join(my_ips) + "  (pastikan 2 PC satu WiFi)"
+		if best_ip != "":
+			ip_hint_label.text = "IP PC ini: " + best_ip + "  (pastikan 2 PC satu WiFi)"
+		else:
+			ip_hint_label.text = "IP tidak ketemu. Cek WiFi, lalu join manual."
 	print("DISCOVERY listening on ", DISCOVERY_PORT, " target: ", broadcast_targets)
 
 func _stop_listening() -> void:
