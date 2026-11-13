@@ -89,6 +89,53 @@ var debug_timer := 0.0
 var flicker_lights: Array[PointLight2D] = []
 var flicker_base: Array[float] = []
 var flicker_timer := 0.0
+var _name_counts: Dictionary = {}
+
+func _indo_name(rel: String) -> String:
+	if rel.begins_with("Desks/office_desk"):
+		return "Meja"
+	if rel.begins_with("Seating/office_chair"):
+		return "Kursi"
+	if rel.begins_with("Tech/computer"):
+		return "Komputer"
+	if rel.begins_with("Tech/laptop"):
+		return "Laptop"
+	if rel.begins_with("Storage/filing_cabinet"):
+		return "Lemari"
+	if rel.begins_with("Decor/office_plant"):
+		return "Tanaman"
+	if rel.begins_with("Decor/tall_plant"):
+		return "Tanaman_Tinggi"
+	if rel.begins_with("Decor/wall_clock"):
+		return "Jam_Dinding"
+	if rel.begins_with("Kitchen/water_cooler"):
+		return "Dispenser"
+	if rel.begins_with("Kitchen/trash_bin"):
+		return "Tempat_Sampah"
+	if rel.begins_with("Desk_Items/desk_lamp"):
+		return "Lampu_Meja"
+	if rel.begins_with("Desk_Items/coffee_mug"):
+		return "Mug"
+	if rel.begins_with("Desk_Items/paper_stack"):
+		return "Tumpukan_Kertas"
+	if rel.begins_with("Meeting/conference_table"):
+		return "Meja_Rapat"
+	if rel.begins_with("Meeting/flip_chart"):
+		return "Flipchart"
+	if rel.begins_with("Meeting/projector_screen"):
+		return "Layar_Proyektor"
+	if rel == "whiteboard.png":
+		return "Papan_Tulis"
+	if rel == "sofa.png":
+		return "Sofa"
+	if rel == "bookshelf.png":
+		return "Rak_Buku"
+	return "Prop"
+
+func _prop_name(base: String) -> String:
+	var n := int(_name_counts.get(base, 0)) + 1
+	_name_counts[base] = n
+	return base + "_%02d" % n
 
 var hud_layer: CanvasLayer = null
 var hud_task_bars: Array[ProgressBar] = []
@@ -263,6 +310,7 @@ func _create_locked_door_markers() -> void:
 		cx = cx / float(cells.size()) * 32.0 + 16.0
 		cy = cy / float(cells.size()) * 32.0 + 16.0
 		var mark := Polygon2D.new()
+		mark.name = _prop_name("Pintu_Terkunci")
 		mark.color = Color(0.85, 0.1, 0.1, 0.95)
 		mark.polygon = PackedVector2Array([Vector2(-9, -11), Vector2(9, -11), Vector2(9, 11), Vector2(-9, 11)])
 		mark.position = Vector2(cx, cy)
@@ -322,6 +370,7 @@ func _build_darkness() -> void:
 
 func _blood_spot(pos: Vector2, s: float) -> void:
 	var b := Polygon2D.new()
+	b.name = _prop_name("Darah")
 	b.color = Color(0.35, 0.02, 0.02, 0.75)
 	b.z_index = -1
 	var pts := PackedVector2Array()
@@ -336,6 +385,7 @@ func _blood_spot(pos: Vector2, s: float) -> void:
 
 func _paper(pos: Vector2, rot: float) -> void:
 	var p := Polygon2D.new()
+	p.name = _prop_name("Kertas")
 	p.color = Color(0.85, 0.85, 0.8, 0.9)
 	p.z_index = -1
 	p.polygon = PackedVector2Array([Vector2(-9, -6), Vector2(9, -6), Vector2(9, 6), Vector2(-9, 6)])
@@ -344,13 +394,16 @@ func _paper(pos: Vector2, rot: float) -> void:
 	add_child(p)
 
 func _rug(center: Vector2, size: Vector2, color: Color) -> void:
+	var rug_name := _prop_name("Karpet")
 	var border := Polygon2D.new()
+	border.name = rug_name + "_Tepi"
 	border.color = Color(0.1, 0.07, 0.07, 0.9)
 	border.z_index = -1
 	border.polygon = PackedVector2Array([Vector2(-size.x / 2 - 6, -size.y / 2 - 6), Vector2(size.x / 2 + 6, -size.y / 2 - 6), Vector2(size.x / 2 + 6, size.y / 2 + 6), Vector2(-size.x / 2 - 6, size.y / 2 + 6)])
 	border.position = center
 	add_child(border)
 	var fill := Polygon2D.new()
+	fill.name = rug_name + "_Isi"
 	fill.color = color
 	fill.z_index = -1
 	fill.polygon = PackedVector2Array([Vector2(-size.x / 2, -size.y / 2), Vector2(size.x / 2, -size.y / 2), Vector2(size.x / 2, size.y / 2), Vector2(-size.x / 2, size.y / 2)])
@@ -359,6 +412,7 @@ func _rug(center: Vector2, size: Vector2, color: Color) -> void:
 
 func _cable(points: PackedVector2Array) -> void:
 	var l := Line2D.new()
+	l.name = _prop_name("Kabel")
 	l.points = points
 	l.width = 2.0
 	l.default_color = Color(0.05, 0.05, 0.06, 0.9)
@@ -401,6 +455,7 @@ func _build_horror_static() -> void:
 	var chair_tex := load(PROP_BASE + "Seating/office_chair/office_chair_front.png") as Texture2D
 	if chair_tex != null:
 		var root := Node2D.new()
+		root.name = "Kursi_Terbalik"
 		root.position = Vector2(1200, 500)
 		root.rotation = PI / 2.0
 		ysort.add_child(root)
@@ -412,6 +467,7 @@ func _build_horror_static() -> void:
 func _build_horror_lights() -> void:
 	for pos in [Vector2(500, 360), Vector2(1100, 420), Vector2(800, 700)]:
 		var fl := PointLight2D.new()
+		fl.name = _prop_name("Lampu_Kedip")
 		fl.position = pos
 		fl.color = Color(1, 0.85, 0.6, 1)
 		fl.energy = 0.9
@@ -420,6 +476,7 @@ func _build_horror_lights() -> void:
 		flicker_lights.append(fl)
 		flicker_base.append(0.9)
 	var red := PointLight2D.new()
+	red.name = "Lampu_Merah_Bos"
 	red.position = Vector2(1008, 142)
 	red.color = Color(0.9, 0.1, 0.1, 1)
 	red.energy = 0.5
@@ -427,6 +484,7 @@ func _build_horror_lights() -> void:
 	add_child(red)
 func _build_cell() -> void:
 	var room := Polygon2D.new()
+	room.name = "Bayangan_Ruang_Bos"
 	room.color = Color(0, 0, 0, 0.35)
 	room.polygon = PackedVector2Array([
 		BOSS_ROOM.position, Vector2(BOSS_ROOM.end.x, BOSS_ROOM.position.y),
@@ -435,10 +493,12 @@ func _build_cell() -> void:
 	room.z_index = 5
 	add_child(room)
 	var cell := Node2D.new()
+	cell.name = "Sel"
 	cell.position = CELL_POS
 	ysort.add_child(cell)
 	for i in range(5):
 		var bar := Polygon2D.new()
+		bar.name = "Jeruji_%02d" % (i + 1)
 		var bx := -30.0 + float(i) * 15.0
 		bar.color = Color(0.15, 0.15, 0.15, 1)
 		bar.polygon = PackedVector2Array([
@@ -447,12 +507,14 @@ func _build_cell() -> void:
 		])
 		cell.add_child(bar)
 	var frame := Polygon2D.new()
+	frame.name = "Jeruji_Atas"
 	frame.color = Color(0.15, 0.15, 0.15, 1)
 	frame.polygon = PackedVector2Array([
 		Vector2(-32, -26), Vector2(32, -26), Vector2(32, -22), Vector2(-32, -22),
 	])
 	cell.add_child(frame)
 	var frame2 := Polygon2D.new()
+	frame2.name = "Jeruji_Bawah"
 	frame2.color = Color(0.15, 0.15, 0.15, 1)
 	frame2.polygon = PackedVector2Array([
 		Vector2(-32, 22), Vector2(32, 22), Vector2(32, 26), Vector2(-32, 26),
@@ -463,6 +525,7 @@ func _build_tasks() -> void:
 	var scene := load(TASK_SCENE) as PackedScene
 	for def in TASK_DEFS:
 		var tp := scene.instantiate() as Node2D
+		tp.name = "Task_" + str(def["label"]).replace(" ", "_")
 		tp.setup(def["id"], def["label"], def["need"], def["time"], def["noise"])
 		tp.position = def["pos"]
 		add_child(tp)
@@ -476,6 +539,7 @@ func _build_pickups() -> void:
 	]
 	for s in spots:
 		var pk := scene.instantiate() as Node2D
+		pk.name = _prop_name("Mug_Lempar")
 		pk.position = s
 		add_child(pk)
 		pickups.append(pk)
@@ -1346,14 +1410,17 @@ func _place_prop(rel: String, pos: Vector2, solid: bool, col_size: Vector2) -> v
 	if tex == null:
 		return
 	var root := Node2D.new()
+	root.name = _prop_name(_indo_name(rel))
 	root.position = pos
 	ysort.add_child(root)
 	var spr := Sprite2D.new()
+	spr.name = root.name + "_Gambar"
 	spr.texture = tex
 	spr.position = Vector2(0, -tex.get_height() / 2.0 + 16)
 	root.add_child(spr)
 	if solid:
 		var body := StaticBody2D.new()
+		body.name = root.name + "_Collision"
 		body.collision_layer = 1
 		body.collision_mask = 0
 		var shape := CollisionShape2D.new()
@@ -1369,14 +1436,17 @@ func _place_modern(rel: String, pos: Vector2, solid: bool, col_size: Vector2) ->
 	if tex == null:
 		return
 	var root := Node2D.new()
+	root.name = _prop_name(_indo_name(rel))
 	root.position = pos
 	ysort.add_child(root)
 	var spr := Sprite2D.new()
+	spr.name = root.name + "_Gambar"
 	spr.texture = tex
 	spr.position = Vector2(0, -tex.get_height() / 2.0 + 16)
 	root.add_child(spr)
 	if solid:
 		var body := StaticBody2D.new()
+		body.name = root.name + "_Collision"
 		body.collision_layer = 1
 		body.collision_mask = 0
 		var shape := CollisionShape2D.new()

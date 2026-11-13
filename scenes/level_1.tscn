@@ -335,1993 +335,1993 @@ size = Vector2(16, 12)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_166xl"]
 size = Vector2(16, 12)
 
-[node name="Level1" type="Node2D" unique_id=575844128]
+[node name="Level1" type="Node2D" unique_id=2031605907]
 script = ExtResource("1_x2fux")
 
-[node name="YSort" type="Node2D" parent="." unique_id=828436659]
+[node name="YSort" type="Node2D" parent="." unique_id=1766702385]
 y_sort_enabled = true
 
-[node name="@Node2D@2" type="Node2D" parent="YSort" unique_id=1639191036]
+[node name="Jam_Dinding_01" type="Node2D" parent="YSort" unique_id=1704459208]
 position = Vector2(752, 40)
 
-[node name="@Sprite2D@3" type="Sprite2D" parent="YSort/@Node2D@2" unique_id=12260919]
+[node name="Jam_Dinding_01_Gambar" type="Sprite2D" parent="YSort/Jam_Dinding_01" unique_id=658144161]
 position = Vector2(0, 4.5)
 texture = ExtResource("2_s7g0b")
 
-[node name="@Node2D@4" type="Node2D" parent="YSort" unique_id=1493182874]
+[node name="Layar_Proyektor_01" type="Node2D" parent="YSort" unique_id=1696555595]
 position = Vector2(752, 40)
 
-[node name="@Sprite2D@5" type="Sprite2D" parent="YSort/@Node2D@4" unique_id=2090622261]
+[node name="Layar_Proyektor_01_Gambar" type="Sprite2D" parent="YSort/Layar_Proyektor_01" unique_id=705280558]
 position = Vector2(0, 0.5)
 texture = ExtResource("3_mmfjm")
 
-[node name="@Node2D@6" type="Node2D" parent="YSort" unique_id=607844867]
+[node name="Meja_Rapat_01" type="Node2D" parent="YSort" unique_id=1482870246]
 position = Vector2(752, 160)
 
-[node name="@Sprite2D@7" type="Sprite2D" parent="YSort/@Node2D@6" unique_id=283595103]
+[node name="Meja_Rapat_01_Gambar" type="Sprite2D" parent="YSort/Meja_Rapat_01" unique_id=7709757]
 position = Vector2(0, -22)
 texture = ExtResource("4_k8ld0")
 
-[node name="@StaticBody2D@9" type="StaticBody2D" parent="YSort/@Node2D@6" unique_id=1490682118]
+[node name="Meja_Rapat_01_Collision" type="StaticBody2D" parent="YSort/Meja_Rapat_01" unique_id=1659904158]
 collision_mask = 0
 
-[node name="@CollisionShape2D@8" type="CollisionShape2D" parent="YSort/@Node2D@6/@StaticBody2D@9" unique_id=1161273358]
+[node name="@CollisionShape2D@2" type="CollisionShape2D" parent="YSort/Meja_Rapat_01/Meja_Rapat_01_Collision" unique_id=1841627665]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_3x5jj")
 
-[node name="@Node2D@10" type="Node2D" parent="YSort" unique_id=703192722]
+[node name="Kursi_01" type="Node2D" parent="YSort" unique_id=645224112]
 position = Vector2(700, 90)
 
-[node name="@Sprite2D@11" type="Sprite2D" parent="YSort/@Node2D@10" unique_id=749869859]
+[node name="Kursi_01_Gambar" type="Sprite2D" parent="YSort/Kursi_01" unique_id=1271655838]
 position = Vector2(0, -13)
 texture = ExtResource("5_mbb35")
 
-[node name="@StaticBody2D@13" type="StaticBody2D" parent="YSort/@Node2D@10" unique_id=305212920]
+[node name="Kursi_01_Collision" type="StaticBody2D" parent="YSort/Kursi_01" unique_id=1028558753]
 collision_mask = 0
 
-[node name="@CollisionShape2D@12" type="CollisionShape2D" parent="YSort/@Node2D@10/@StaticBody2D@13" unique_id=879780547]
+[node name="@CollisionShape2D@3" type="CollisionShape2D" parent="YSort/Kursi_01/Kursi_01_Collision" unique_id=236431823]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_75ls7")
 
-[node name="@Node2D@14" type="Node2D" parent="YSort" unique_id=1040223946]
+[node name="Kursi_02" type="Node2D" parent="YSort" unique_id=287952246]
 position = Vector2(752, 90)
 
-[node name="@Sprite2D@15" type="Sprite2D" parent="YSort/@Node2D@14" unique_id=2117282106]
+[node name="Kursi_02_Gambar" type="Sprite2D" parent="YSort/Kursi_02" unique_id=931248382]
 position = Vector2(0, -13)
 texture = ExtResource("5_mbb35")
 
-[node name="@StaticBody2D@17" type="StaticBody2D" parent="YSort/@Node2D@14" unique_id=931045060]
+[node name="Kursi_02_Collision" type="StaticBody2D" parent="YSort/Kursi_02" unique_id=830353944]
 collision_mask = 0
 
-[node name="@CollisionShape2D@16" type="CollisionShape2D" parent="YSort/@Node2D@14/@StaticBody2D@17" unique_id=2118329183]
+[node name="@CollisionShape2D@4" type="CollisionShape2D" parent="YSort/Kursi_02/Kursi_02_Collision" unique_id=1822891730]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_gwsl1")
 
-[node name="@Node2D@18" type="Node2D" parent="YSort" unique_id=1937859607]
+[node name="Kursi_03" type="Node2D" parent="YSort" unique_id=1138728652]
 position = Vector2(804, 90)
 
-[node name="@Sprite2D@19" type="Sprite2D" parent="YSort/@Node2D@18" unique_id=1977572574]
+[node name="Kursi_03_Gambar" type="Sprite2D" parent="YSort/Kursi_03" unique_id=835418117]
 position = Vector2(0, -13)
 texture = ExtResource("5_mbb35")
 
-[node name="@StaticBody2D@21" type="StaticBody2D" parent="YSort/@Node2D@18" unique_id=1002681087]
+[node name="Kursi_03_Collision" type="StaticBody2D" parent="YSort/Kursi_03" unique_id=1855537035]
 collision_mask = 0
 
-[node name="@CollisionShape2D@20" type="CollisionShape2D" parent="YSort/@Node2D@18/@StaticBody2D@21" unique_id=1074307030]
+[node name="@CollisionShape2D@5" type="CollisionShape2D" parent="YSort/Kursi_03/Kursi_03_Collision" unique_id=1592296784]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_lkded")
 
-[node name="@Node2D@22" type="Node2D" parent="YSort" unique_id=1198606008]
+[node name="Kursi_04" type="Node2D" parent="YSort" unique_id=1699262121]
 position = Vector2(700, 210)
 
-[node name="@Sprite2D@23" type="Sprite2D" parent="YSort/@Node2D@22" unique_id=379306957]
+[node name="Kursi_04_Gambar" type="Sprite2D" parent="YSort/Kursi_04" unique_id=292643992]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@25" type="StaticBody2D" parent="YSort/@Node2D@22" unique_id=1391273868]
+[node name="Kursi_04_Collision" type="StaticBody2D" parent="YSort/Kursi_04" unique_id=930022888]
 collision_mask = 0
 
-[node name="@CollisionShape2D@24" type="CollisionShape2D" parent="YSort/@Node2D@22/@StaticBody2D@25" unique_id=571444958]
+[node name="@CollisionShape2D@6" type="CollisionShape2D" parent="YSort/Kursi_04/Kursi_04_Collision" unique_id=1330712862]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ensge")
 
-[node name="@Node2D@26" type="Node2D" parent="YSort" unique_id=2077818777]
+[node name="Kursi_05" type="Node2D" parent="YSort" unique_id=1475997444]
 position = Vector2(752, 210)
 
-[node name="@Sprite2D@27" type="Sprite2D" parent="YSort/@Node2D@26" unique_id=469426651]
+[node name="Kursi_05_Gambar" type="Sprite2D" parent="YSort/Kursi_05" unique_id=1532126411]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@29" type="StaticBody2D" parent="YSort/@Node2D@26" unique_id=1963788996]
+[node name="Kursi_05_Collision" type="StaticBody2D" parent="YSort/Kursi_05" unique_id=719771247]
 collision_mask = 0
 
-[node name="@CollisionShape2D@28" type="CollisionShape2D" parent="YSort/@Node2D@26/@StaticBody2D@29" unique_id=161889588]
+[node name="@CollisionShape2D@7" type="CollisionShape2D" parent="YSort/Kursi_05/Kursi_05_Collision" unique_id=164560469]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_qb2q0")
 
-[node name="@Node2D@30" type="Node2D" parent="YSort" unique_id=2126789870]
+[node name="Kursi_06" type="Node2D" parent="YSort" unique_id=690047711]
 position = Vector2(804, 210)
 
-[node name="@Sprite2D@31" type="Sprite2D" parent="YSort/@Node2D@30" unique_id=2006843159]
+[node name="Kursi_06_Gambar" type="Sprite2D" parent="YSort/Kursi_06" unique_id=556009313]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@33" type="StaticBody2D" parent="YSort/@Node2D@30" unique_id=271436623]
+[node name="Kursi_06_Collision" type="StaticBody2D" parent="YSort/Kursi_06" unique_id=1623419075]
 collision_mask = 0
 
-[node name="@CollisionShape2D@32" type="CollisionShape2D" parent="YSort/@Node2D@30/@StaticBody2D@33" unique_id=1389122765]
+[node name="@CollisionShape2D@8" type="CollisionShape2D" parent="YSort/Kursi_06/Kursi_06_Collision" unique_id=1636593317]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_x3eym")
 
-[node name="@Node2D@34" type="Node2D" parent="YSort" unique_id=1489565037]
+[node name="Kursi_07" type="Node2D" parent="YSort" unique_id=1368815265]
 position = Vector2(640, 160)
 
-[node name="@Sprite2D@35" type="Sprite2D" parent="YSort/@Node2D@34" unique_id=344976962]
+[node name="Kursi_07_Gambar" type="Sprite2D" parent="YSort/Kursi_07" unique_id=1367338948]
 position = Vector2(0, -11.5)
 texture = ExtResource("7_hnsmf")
 
-[node name="@StaticBody2D@37" type="StaticBody2D" parent="YSort/@Node2D@34" unique_id=49974109]
+[node name="Kursi_07_Collision" type="StaticBody2D" parent="YSort/Kursi_07" unique_id=1163034412]
 collision_mask = 0
 
-[node name="@CollisionShape2D@36" type="CollisionShape2D" parent="YSort/@Node2D@34/@StaticBody2D@37" unique_id=1186237360]
+[node name="@CollisionShape2D@9" type="CollisionShape2D" parent="YSort/Kursi_07/Kursi_07_Collision" unique_id=1811325083]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ffvxj")
 
-[node name="@Node2D@38" type="Node2D" parent="YSort" unique_id=1698276624]
+[node name="Kursi_08" type="Node2D" parent="YSort" unique_id=1135399190]
 position = Vector2(864, 160)
 
-[node name="@Sprite2D@39" type="Sprite2D" parent="YSort/@Node2D@38" unique_id=1947068546]
+[node name="Kursi_08_Gambar" type="Sprite2D" parent="YSort/Kursi_08" unique_id=244819672]
 position = Vector2(0, -11.5)
 texture = ExtResource("8_nossa")
 
-[node name="@StaticBody2D@41" type="StaticBody2D" parent="YSort/@Node2D@38" unique_id=2077379267]
+[node name="Kursi_08_Collision" type="StaticBody2D" parent="YSort/Kursi_08" unique_id=879175360]
 collision_mask = 0
 
-[node name="@CollisionShape2D@40" type="CollisionShape2D" parent="YSort/@Node2D@38/@StaticBody2D@41" unique_id=1942600161]
+[node name="@CollisionShape2D@10" type="CollisionShape2D" parent="YSort/Kursi_08/Kursi_08_Collision" unique_id=1338104096]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_yfehg")
 
-[node name="@Node2D@42" type="Node2D" parent="YSort" unique_id=1918529602]
+[node name="Laptop_01" type="Node2D" parent="YSort" unique_id=1940270963]
 position = Vector2(730, 140)
 
-[node name="@Sprite2D@43" type="Sprite2D" parent="YSort/@Node2D@42" unique_id=1264139588]
+[node name="Laptop_01_Gambar" type="Sprite2D" parent="YSort/Laptop_01" unique_id=1512828593]
 position = Vector2(0, 0.5)
 texture = ExtResource("9_hjqri")
 
-[node name="@Node2D@44" type="Node2D" parent="YSort" unique_id=409095678]
+[node name="Tumpukan_Kertas_01" type="Node2D" parent="YSort" unique_id=1816887590]
 position = Vector2(780, 145)
 
-[node name="@Sprite2D@45" type="Sprite2D" parent="YSort/@Node2D@44" unique_id=999996087]
+[node name="Tumpukan_Kertas_01_Gambar" type="Sprite2D" parent="YSort/Tumpukan_Kertas_01" unique_id=239762547]
 position = Vector2(0, 1)
 texture = ExtResource("10_hg84p")
 
-[node name="@Node2D@46" type="Node2D" parent="YSort" unique_id=554302551]
+[node name="Flipchart_01" type="Node2D" parent="YSort" unique_id=1291725168]
 position = Vector2(620, 220)
 
-[node name="@Sprite2D@47" type="Sprite2D" parent="YSort/@Node2D@46" unique_id=1552295869]
+[node name="Flipchart_01_Gambar" type="Sprite2D" parent="YSort/Flipchart_01" unique_id=1619039555]
 position = Vector2(0, -12.5)
 texture = ExtResource("11_1aans")
 
-[node name="@StaticBody2D@49" type="StaticBody2D" parent="YSort/@Node2D@46" unique_id=902058048]
+[node name="Flipchart_01_Collision" type="StaticBody2D" parent="YSort/Flipchart_01" unique_id=268840497]
 collision_mask = 0
 
-[node name="@CollisionShape2D@48" type="CollisionShape2D" parent="YSort/@Node2D@46/@StaticBody2D@49" unique_id=1532868527]
+[node name="@CollisionShape2D@11" type="CollisionShape2D" parent="YSort/Flipchart_01/Flipchart_01_Collision" unique_id=958312505]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_48b18")
 
-[node name="@Node2D@50" type="Node2D" parent="YSort" unique_id=485526697]
+[node name="Papan_Tulis_01" type="Node2D" parent="YSort" unique_id=1462657304]
 position = Vector2(860, 80)
 
-[node name="@Sprite2D@51" type="Sprite2D" parent="YSort/@Node2D@50" unique_id=1398957893]
+[node name="Papan_Tulis_01_Gambar" type="Sprite2D" parent="YSort/Papan_Tulis_01" unique_id=873110836]
 texture = ExtResource("12_q0ron")
 
-[node name="@Node2D@52" type="Node2D" parent="YSort" unique_id=1464955073]
+[node name="Meja_01" type="Node2D" parent="YSort" unique_id=1015038505]
 position = Vector2(320, 320)
 
-[node name="@Sprite2D@53" type="Sprite2D" parent="YSort/@Node2D@52" unique_id=559798246]
+[node name="Meja_01_Gambar" type="Sprite2D" parent="YSort/Meja_01" unique_id=1633788494]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@55" type="StaticBody2D" parent="YSort/@Node2D@52" unique_id=597966003]
+[node name="Meja_01_Collision" type="StaticBody2D" parent="YSort/Meja_01" unique_id=1860716545]
 collision_mask = 0
 
-[node name="@CollisionShape2D@54" type="CollisionShape2D" parent="YSort/@Node2D@52/@StaticBody2D@55" unique_id=1590346484]
+[node name="@CollisionShape2D@12" type="CollisionShape2D" parent="YSort/Meja_01/Meja_01_Collision" unique_id=2096270529]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_88rua")
 
-[node name="@Node2D@56" type="Node2D" parent="YSort" unique_id=1827363400]
+[node name="Kursi_09" type="Node2D" parent="YSort" unique_id=1603970947]
 position = Vector2(320, 390)
 
-[node name="@Sprite2D@57" type="Sprite2D" parent="YSort/@Node2D@56" unique_id=921735591]
+[node name="Kursi_09_Gambar" type="Sprite2D" parent="YSort/Kursi_09" unique_id=493840374]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@59" type="StaticBody2D" parent="YSort/@Node2D@56" unique_id=9845957]
+[node name="Kursi_09_Collision" type="StaticBody2D" parent="YSort/Kursi_09" unique_id=762914785]
 collision_mask = 0
 
-[node name="@CollisionShape2D@58" type="CollisionShape2D" parent="YSort/@Node2D@56/@StaticBody2D@59" unique_id=451169869]
+[node name="@CollisionShape2D@13" type="CollisionShape2D" parent="YSort/Kursi_09/Kursi_09_Collision" unique_id=187831703]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_4ila6")
 
-[node name="@Node2D@60" type="Node2D" parent="YSort" unique_id=272896858]
+[node name="Komputer_01" type="Node2D" parent="YSort" unique_id=558801191]
 position = Vector2(305, 302)
 
-[node name="@Sprite2D@61" type="Sprite2D" parent="YSort/@Node2D@60" unique_id=363416811]
+[node name="Komputer_01_Gambar" type="Sprite2D" parent="YSort/Komputer_01" unique_id=1962882506]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@62" type="Node2D" parent="YSort" unique_id=570273874]
+[node name="Lampu_Meja_01" type="Node2D" parent="YSort" unique_id=1417866524]
 position = Vector2(345, 304)
 
-[node name="@Sprite2D@63" type="Sprite2D" parent="YSort/@Node2D@62" unique_id=246472648]
+[node name="Lampu_Meja_01_Gambar" type="Sprite2D" parent="YSort/Lampu_Meja_01" unique_id=945246636]
 position = Vector2(0, -0.5)
 texture = ExtResource("15_rscm6")
 
-[node name="@Node2D@64" type="Node2D" parent="YSort" unique_id=469837604]
+[node name="Meja_02" type="Node2D" parent="YSort" unique_id=240849168]
 position = Vector2(420, 320)
 
-[node name="@Sprite2D@65" type="Sprite2D" parent="YSort/@Node2D@64" unique_id=564854385]
+[node name="Meja_02_Gambar" type="Sprite2D" parent="YSort/Meja_02" unique_id=1945135859]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@67" type="StaticBody2D" parent="YSort/@Node2D@64" unique_id=827345410]
+[node name="Meja_02_Collision" type="StaticBody2D" parent="YSort/Meja_02" unique_id=1236421516]
 collision_mask = 0
 
-[node name="@CollisionShape2D@66" type="CollisionShape2D" parent="YSort/@Node2D@64/@StaticBody2D@67" unique_id=403961657]
+[node name="@CollisionShape2D@14" type="CollisionShape2D" parent="YSort/Meja_02/Meja_02_Collision" unique_id=2011840029]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_lvvyj")
 
-[node name="@Node2D@68" type="Node2D" parent="YSort" unique_id=604663539]
+[node name="Kursi_10" type="Node2D" parent="YSort" unique_id=310444069]
 position = Vector2(420, 390)
 
-[node name="@Sprite2D@69" type="Sprite2D" parent="YSort/@Node2D@68" unique_id=668189794]
+[node name="Kursi_10_Gambar" type="Sprite2D" parent="YSort/Kursi_10" unique_id=1027521093]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@71" type="StaticBody2D" parent="YSort/@Node2D@68" unique_id=910461025]
+[node name="Kursi_10_Collision" type="StaticBody2D" parent="YSort/Kursi_10" unique_id=1299671569]
 collision_mask = 0
 
-[node name="@CollisionShape2D@70" type="CollisionShape2D" parent="YSort/@Node2D@68/@StaticBody2D@71" unique_id=585612126]
+[node name="@CollisionShape2D@15" type="CollisionShape2D" parent="YSort/Kursi_10/Kursi_10_Collision" unique_id=1070877988]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_iwav6")
 
-[node name="@Node2D@72" type="Node2D" parent="YSort" unique_id=380190235]
+[node name="Laptop_02" type="Node2D" parent="YSort" unique_id=1985493479]
 position = Vector2(415, 302)
 
-[node name="@Sprite2D@73" type="Sprite2D" parent="YSort/@Node2D@72" unique_id=652366292]
+[node name="Laptop_02_Gambar" type="Sprite2D" parent="YSort/Laptop_02" unique_id=1003613206]
 position = Vector2(0, 0.5)
 texture = ExtResource("9_hjqri")
 
-[node name="@Node2D@74" type="Node2D" parent="YSort" unique_id=2038993501]
+[node name="Mug_01" type="Node2D" parent="YSort" unique_id=207302969]
 position = Vector2(440, 306)
 
-[node name="@Sprite2D@75" type="Sprite2D" parent="YSort/@Node2D@74" unique_id=749950936]
+[node name="Mug_01_Gambar" type="Sprite2D" parent="YSort/Mug_01" unique_id=667284760]
 position = Vector2(0, 7.5)
 texture = ExtResource("16_wom8k")
 
-[node name="@Node2D@76" type="Node2D" parent="YSort" unique_id=400745749]
+[node name="Meja_03" type="Node2D" parent="YSort" unique_id=772704532]
 position = Vector2(320, 520)
 
-[node name="@Sprite2D@77" type="Sprite2D" parent="YSort/@Node2D@76" unique_id=939158133]
+[node name="Meja_03_Gambar" type="Sprite2D" parent="YSort/Meja_03" unique_id=1616877060]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@79" type="StaticBody2D" parent="YSort/@Node2D@76" unique_id=1100031472]
+[node name="Meja_03_Collision" type="StaticBody2D" parent="YSort/Meja_03" unique_id=819739441]
 collision_mask = 0
 
-[node name="@CollisionShape2D@78" type="CollisionShape2D" parent="YSort/@Node2D@76/@StaticBody2D@79" unique_id=1347485081]
+[node name="@CollisionShape2D@16" type="CollisionShape2D" parent="YSort/Meja_03/Meja_03_Collision" unique_id=180133052]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_n50md")
 
-[node name="@Node2D@80" type="Node2D" parent="YSort" unique_id=2026279744]
+[node name="Kursi_11" type="Node2D" parent="YSort" unique_id=1266026124]
 position = Vector2(320, 590)
 
-[node name="@Sprite2D@81" type="Sprite2D" parent="YSort/@Node2D@80" unique_id=1443900460]
+[node name="Kursi_11_Gambar" type="Sprite2D" parent="YSort/Kursi_11" unique_id=590098354]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@83" type="StaticBody2D" parent="YSort/@Node2D@80" unique_id=502705169]
+[node name="Kursi_11_Collision" type="StaticBody2D" parent="YSort/Kursi_11" unique_id=230618567]
 collision_mask = 0
 
-[node name="@CollisionShape2D@82" type="CollisionShape2D" parent="YSort/@Node2D@80/@StaticBody2D@83" unique_id=836529558]
+[node name="@CollisionShape2D@17" type="CollisionShape2D" parent="YSort/Kursi_11/Kursi_11_Collision" unique_id=531095256]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_mteb0")
 
-[node name="@Node2D@84" type="Node2D" parent="YSort" unique_id=874728679]
+[node name="Komputer_02" type="Node2D" parent="YSort" unique_id=182743251]
 position = Vector2(305, 502)
 
-[node name="@Sprite2D@85" type="Sprite2D" parent="YSort/@Node2D@84" unique_id=1000368089]
+[node name="Komputer_02_Gambar" type="Sprite2D" parent="YSort/Komputer_02" unique_id=1514907374]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@86" type="Node2D" parent="YSort" unique_id=1001407035]
+[node name="Tumpukan_Kertas_02" type="Node2D" parent="YSort" unique_id=1851415724]
 position = Vector2(345, 504)
 
-[node name="@Sprite2D@87" type="Sprite2D" parent="YSort/@Node2D@86" unique_id=1316462300]
+[node name="Tumpukan_Kertas_02_Gambar" type="Sprite2D" parent="YSort/Tumpukan_Kertas_02" unique_id=2022240687]
 position = Vector2(0, 1)
 texture = ExtResource("10_hg84p")
 
-[node name="@Node2D@88" type="Node2D" parent="YSort" unique_id=999767745]
+[node name="Meja_04" type="Node2D" parent="YSort" unique_id=900980454]
 position = Vector2(420, 520)
 
-[node name="@Sprite2D@89" type="Sprite2D" parent="YSort/@Node2D@88" unique_id=1872067178]
+[node name="Meja_04_Gambar" type="Sprite2D" parent="YSort/Meja_04" unique_id=1104617386]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@91" type="StaticBody2D" parent="YSort/@Node2D@88" unique_id=811337547]
+[node name="Meja_04_Collision" type="StaticBody2D" parent="YSort/Meja_04" unique_id=893970283]
 collision_mask = 0
 
-[node name="@CollisionShape2D@90" type="CollisionShape2D" parent="YSort/@Node2D@88/@StaticBody2D@91" unique_id=1734103499]
+[node name="@CollisionShape2D@18" type="CollisionShape2D" parent="YSort/Meja_04/Meja_04_Collision" unique_id=771852367]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_7dh7s")
 
-[node name="@Node2D@92" type="Node2D" parent="YSort" unique_id=297540958]
+[node name="Kursi_12" type="Node2D" parent="YSort" unique_id=1678769473]
 position = Vector2(420, 590)
 
-[node name="@Sprite2D@93" type="Sprite2D" parent="YSort/@Node2D@92" unique_id=108628583]
+[node name="Kursi_12_Gambar" type="Sprite2D" parent="YSort/Kursi_12" unique_id=2020718131]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@95" type="StaticBody2D" parent="YSort/@Node2D@92" unique_id=851084837]
+[node name="Kursi_12_Collision" type="StaticBody2D" parent="YSort/Kursi_12" unique_id=177342351]
 collision_mask = 0
 
-[node name="@CollisionShape2D@94" type="CollisionShape2D" parent="YSort/@Node2D@92/@StaticBody2D@95" unique_id=2033040550]
+[node name="@CollisionShape2D@19" type="CollisionShape2D" parent="YSort/Kursi_12/Kursi_12_Collision" unique_id=592101225]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ymcg8")
 
-[node name="@Node2D@96" type="Node2D" parent="YSort" unique_id=822349585]
+[node name="Laptop_03" type="Node2D" parent="YSort" unique_id=1554593622]
 position = Vector2(415, 502)
 
-[node name="@Sprite2D@97" type="Sprite2D" parent="YSort/@Node2D@96" unique_id=1889784091]
+[node name="Laptop_03_Gambar" type="Sprite2D" parent="YSort/Laptop_03" unique_id=1289029621]
 position = Vector2(0, 0.5)
 texture = ExtResource("9_hjqri")
 
-[node name="@Node2D@98" type="Node2D" parent="YSort" unique_id=533038896]
+[node name="Lampu_Meja_02" type="Node2D" parent="YSort" unique_id=1398709781]
 position = Vector2(440, 504)
 
-[node name="@Sprite2D@99" type="Sprite2D" parent="YSort/@Node2D@98" unique_id=949132887]
+[node name="Lampu_Meja_02_Gambar" type="Sprite2D" parent="YSort/Lampu_Meja_02" unique_id=955535191]
 position = Vector2(0, -0.5)
 texture = ExtResource("15_rscm6")
 
-[node name="@Node2D@100" type="Node2D" parent="YSort" unique_id=232699126]
+[node name="Meja_05" type="Node2D" parent="YSort" unique_id=758038633]
 position = Vector2(1150, 320)
 
-[node name="@Sprite2D@101" type="Sprite2D" parent="YSort/@Node2D@100" unique_id=1481255082]
+[node name="Meja_05_Gambar" type="Sprite2D" parent="YSort/Meja_05" unique_id=388795198]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@103" type="StaticBody2D" parent="YSort/@Node2D@100" unique_id=191057950]
+[node name="Meja_05_Collision" type="StaticBody2D" parent="YSort/Meja_05" unique_id=1066487128]
 collision_mask = 0
 
-[node name="@CollisionShape2D@102" type="CollisionShape2D" parent="YSort/@Node2D@100/@StaticBody2D@103" unique_id=735941851]
+[node name="@CollisionShape2D@20" type="CollisionShape2D" parent="YSort/Meja_05/Meja_05_Collision" unique_id=1765166215]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_gdkps")
 
-[node name="@Node2D@104" type="Node2D" parent="YSort" unique_id=2054622030]
+[node name="Kursi_13" type="Node2D" parent="YSort" unique_id=2116951733]
 position = Vector2(1150, 390)
 
-[node name="@Sprite2D@105" type="Sprite2D" parent="YSort/@Node2D@104" unique_id=639163589]
+[node name="Kursi_13_Gambar" type="Sprite2D" parent="YSort/Kursi_13" unique_id=1954813801]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@107" type="StaticBody2D" parent="YSort/@Node2D@104" unique_id=508199473]
+[node name="Kursi_13_Collision" type="StaticBody2D" parent="YSort/Kursi_13" unique_id=406901341]
 collision_mask = 0
 
-[node name="@CollisionShape2D@106" type="CollisionShape2D" parent="YSort/@Node2D@104/@StaticBody2D@107" unique_id=1947207762]
+[node name="@CollisionShape2D@21" type="CollisionShape2D" parent="YSort/Kursi_13/Kursi_13_Collision" unique_id=1351086444]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_fgw8e")
 
-[node name="@Node2D@108" type="Node2D" parent="YSort" unique_id=1037032316]
+[node name="Komputer_03" type="Node2D" parent="YSort" unique_id=34768681]
 position = Vector2(1135, 302)
 
-[node name="@Sprite2D@109" type="Sprite2D" parent="YSort/@Node2D@108" unique_id=577927756]
+[node name="Komputer_03_Gambar" type="Sprite2D" parent="YSort/Komputer_03" unique_id=1821056985]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@110" type="Node2D" parent="YSort" unique_id=1892472068]
+[node name="Mug_02" type="Node2D" parent="YSort" unique_id=1155197218]
 position = Vector2(1175, 306)
 
-[node name="@Sprite2D@111" type="Sprite2D" parent="YSort/@Node2D@110" unique_id=2002199596]
+[node name="Mug_02_Gambar" type="Sprite2D" parent="YSort/Mug_02" unique_id=1234320077]
 position = Vector2(0, 7.5)
 texture = ExtResource("16_wom8k")
 
-[node name="@Node2D@112" type="Node2D" parent="YSort" unique_id=1745936403]
+[node name="Meja_06" type="Node2D" parent="YSort" unique_id=133873524]
 position = Vector2(1250, 320)
 
-[node name="@Sprite2D@113" type="Sprite2D" parent="YSort/@Node2D@112" unique_id=922388992]
+[node name="Meja_06_Gambar" type="Sprite2D" parent="YSort/Meja_06" unique_id=1101291213]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@115" type="StaticBody2D" parent="YSort/@Node2D@112" unique_id=788223859]
+[node name="Meja_06_Collision" type="StaticBody2D" parent="YSort/Meja_06" unique_id=2019160126]
 collision_mask = 0
 
-[node name="@CollisionShape2D@114" type="CollisionShape2D" parent="YSort/@Node2D@112/@StaticBody2D@115" unique_id=913793125]
+[node name="@CollisionShape2D@22" type="CollisionShape2D" parent="YSort/Meja_06/Meja_06_Collision" unique_id=1744396370]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_uvb5a")
 
-[node name="@Node2D@116" type="Node2D" parent="YSort" unique_id=968429127]
+[node name="Kursi_14" type="Node2D" parent="YSort" unique_id=382105971]
 position = Vector2(1250, 390)
 
-[node name="@Sprite2D@117" type="Sprite2D" parent="YSort/@Node2D@116" unique_id=1092395062]
+[node name="Kursi_14_Gambar" type="Sprite2D" parent="YSort/Kursi_14" unique_id=485513224]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@119" type="StaticBody2D" parent="YSort/@Node2D@116" unique_id=1863846415]
+[node name="Kursi_14_Collision" type="StaticBody2D" parent="YSort/Kursi_14" unique_id=144798067]
 collision_mask = 0
 
-[node name="@CollisionShape2D@118" type="CollisionShape2D" parent="YSort/@Node2D@116/@StaticBody2D@119" unique_id=827322478]
+[node name="@CollisionShape2D@23" type="CollisionShape2D" parent="YSort/Kursi_14/Kursi_14_Collision" unique_id=1596759993]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_asvak")
 
-[node name="@Node2D@120" type="Node2D" parent="YSort" unique_id=1731935303]
+[node name="Laptop_04" type="Node2D" parent="YSort" unique_id=141067117]
 position = Vector2(1245, 302)
 
-[node name="@Sprite2D@121" type="Sprite2D" parent="YSort/@Node2D@120" unique_id=1585114007]
+[node name="Laptop_04_Gambar" type="Sprite2D" parent="YSort/Laptop_04" unique_id=621847763]
 position = Vector2(0, 0.5)
 texture = ExtResource("9_hjqri")
 
-[node name="@Node2D@122" type="Node2D" parent="YSort" unique_id=1586738908]
+[node name="Tumpukan_Kertas_03" type="Node2D" parent="YSort" unique_id=132618916]
 position = Vector2(1270, 304)
 
-[node name="@Sprite2D@123" type="Sprite2D" parent="YSort/@Node2D@122" unique_id=1546828856]
+[node name="Tumpukan_Kertas_03_Gambar" type="Sprite2D" parent="YSort/Tumpukan_Kertas_03" unique_id=1158459363]
 position = Vector2(0, 1)
 texture = ExtResource("10_hg84p")
 
-[node name="@Node2D@124" type="Node2D" parent="YSort" unique_id=191201786]
+[node name="Meja_07" type="Node2D" parent="YSort" unique_id=880931109]
 position = Vector2(1150, 520)
 
-[node name="@Sprite2D@125" type="Sprite2D" parent="YSort/@Node2D@124" unique_id=821291740]
+[node name="Meja_07_Gambar" type="Sprite2D" parent="YSort/Meja_07" unique_id=1439467321]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@127" type="StaticBody2D" parent="YSort/@Node2D@124" unique_id=1977202401]
+[node name="Meja_07_Collision" type="StaticBody2D" parent="YSort/Meja_07" unique_id=245465781]
 collision_mask = 0
 
-[node name="@CollisionShape2D@126" type="CollisionShape2D" parent="YSort/@Node2D@124/@StaticBody2D@127" unique_id=1409023395]
+[node name="@CollisionShape2D@24" type="CollisionShape2D" parent="YSort/Meja_07/Meja_07_Collision" unique_id=579213437]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ac6pt")
 
-[node name="@Node2D@128" type="Node2D" parent="YSort" unique_id=264933681]
+[node name="Kursi_15" type="Node2D" parent="YSort" unique_id=689968137]
 position = Vector2(1150, 590)
 
-[node name="@Sprite2D@129" type="Sprite2D" parent="YSort/@Node2D@128" unique_id=487150598]
+[node name="Kursi_15_Gambar" type="Sprite2D" parent="YSort/Kursi_15" unique_id=359897823]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@131" type="StaticBody2D" parent="YSort/@Node2D@128" unique_id=1153869555]
+[node name="Kursi_15_Collision" type="StaticBody2D" parent="YSort/Kursi_15" unique_id=2085101575]
 collision_mask = 0
 
-[node name="@CollisionShape2D@130" type="CollisionShape2D" parent="YSort/@Node2D@128/@StaticBody2D@131" unique_id=1831856519]
+[node name="@CollisionShape2D@25" type="CollisionShape2D" parent="YSort/Kursi_15/Kursi_15_Collision" unique_id=1487476429]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_5vesh")
 
-[node name="@Node2D@132" type="Node2D" parent="YSort" unique_id=965563405]
+[node name="Komputer_04" type="Node2D" parent="YSort" unique_id=1670367135]
 position = Vector2(1135, 502)
 
-[node name="@Sprite2D@133" type="Sprite2D" parent="YSort/@Node2D@132" unique_id=377468253]
+[node name="Komputer_04_Gambar" type="Sprite2D" parent="YSort/Komputer_04" unique_id=1721003624]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@134" type="Node2D" parent="YSort" unique_id=971325114]
+[node name="Lampu_Meja_03" type="Node2D" parent="YSort" unique_id=1769777933]
 position = Vector2(1175, 504)
 
-[node name="@Sprite2D@135" type="Sprite2D" parent="YSort/@Node2D@134" unique_id=1817940820]
+[node name="Lampu_Meja_03_Gambar" type="Sprite2D" parent="YSort/Lampu_Meja_03" unique_id=1986874590]
 position = Vector2(0, -0.5)
 texture = ExtResource("15_rscm6")
 
-[node name="@Node2D@136" type="Node2D" parent="YSort" unique_id=1837024610]
+[node name="Meja_08" type="Node2D" parent="YSort" unique_id=702644252]
 position = Vector2(1250, 520)
 
-[node name="@Sprite2D@137" type="Sprite2D" parent="YSort/@Node2D@136" unique_id=2082075557]
+[node name="Meja_08_Gambar" type="Sprite2D" parent="YSort/Meja_08" unique_id=825299714]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@139" type="StaticBody2D" parent="YSort/@Node2D@136" unique_id=1425091610]
+[node name="Meja_08_Collision" type="StaticBody2D" parent="YSort/Meja_08" unique_id=317704978]
 collision_mask = 0
 
-[node name="@CollisionShape2D@138" type="CollisionShape2D" parent="YSort/@Node2D@136/@StaticBody2D@139" unique_id=248427480]
+[node name="@CollisionShape2D@26" type="CollisionShape2D" parent="YSort/Meja_08/Meja_08_Collision" unique_id=177723865]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_y1m3s")
 
-[node name="@Node2D@140" type="Node2D" parent="YSort" unique_id=569715776]
+[node name="Kursi_16" type="Node2D" parent="YSort" unique_id=1641570300]
 position = Vector2(1250, 590)
 
-[node name="@Sprite2D@141" type="Sprite2D" parent="YSort/@Node2D@140" unique_id=1543081286]
+[node name="Kursi_16_Gambar" type="Sprite2D" parent="YSort/Kursi_16" unique_id=1889890031]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@143" type="StaticBody2D" parent="YSort/@Node2D@140" unique_id=971753398]
+[node name="Kursi_16_Collision" type="StaticBody2D" parent="YSort/Kursi_16" unique_id=1293925079]
 collision_mask = 0
 
-[node name="@CollisionShape2D@142" type="CollisionShape2D" parent="YSort/@Node2D@140/@StaticBody2D@143" unique_id=681020463]
+[node name="@CollisionShape2D@27" type="CollisionShape2D" parent="YSort/Kursi_16/Kursi_16_Collision" unique_id=1914356037]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_5gq73")
 
-[node name="@Node2D@144" type="Node2D" parent="YSort" unique_id=896164289]
+[node name="Laptop_05" type="Node2D" parent="YSort" unique_id=1390320222]
 position = Vector2(1245, 502)
 
-[node name="@Sprite2D@145" type="Sprite2D" parent="YSort/@Node2D@144" unique_id=494332170]
+[node name="Laptop_05_Gambar" type="Sprite2D" parent="YSort/Laptop_05" unique_id=1549959268]
 position = Vector2(0, 0.5)
 texture = ExtResource("9_hjqri")
 
-[node name="@Node2D@146" type="Node2D" parent="YSort" unique_id=1045429450]
+[node name="Mug_03" type="Node2D" parent="YSort" unique_id=84081005]
 position = Vector2(1270, 506)
 
-[node name="@Sprite2D@147" type="Sprite2D" parent="YSort/@Node2D@146" unique_id=1189412858]
+[node name="Mug_03_Gambar" type="Sprite2D" parent="YSort/Mug_03" unique_id=750003055]
 position = Vector2(0, 7.5)
 texture = ExtResource("16_wom8k")
 
-[node name="@Node2D@148" type="Node2D" parent="YSort" unique_id=932725499]
+[node name="Meja_09" type="Node2D" parent="YSort" unique_id=1066395506]
 position = Vector2(560, 560)
 
-[node name="@Sprite2D@149" type="Sprite2D" parent="YSort/@Node2D@148" unique_id=1182575684]
+[node name="Meja_09_Gambar" type="Sprite2D" parent="YSort/Meja_09" unique_id=817149288]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@151" type="StaticBody2D" parent="YSort/@Node2D@148" unique_id=1940953977]
+[node name="Meja_09_Collision" type="StaticBody2D" parent="YSort/Meja_09" unique_id=337784776]
 collision_mask = 0
 
-[node name="@CollisionShape2D@150" type="CollisionShape2D" parent="YSort/@Node2D@148/@StaticBody2D@151" unique_id=94469310]
+[node name="@CollisionShape2D@28" type="CollisionShape2D" parent="YSort/Meja_09/Meja_09_Collision" unique_id=893568035]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_uuude")
 
-[node name="@Node2D@152" type="Node2D" parent="YSort" unique_id=293619764]
+[node name="Kursi_17" type="Node2D" parent="YSort" unique_id=1682980668]
 position = Vector2(560, 630)
 
-[node name="@Sprite2D@153" type="Sprite2D" parent="YSort/@Node2D@152" unique_id=123773135]
+[node name="Kursi_17_Gambar" type="Sprite2D" parent="YSort/Kursi_17" unique_id=1396292135]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@155" type="StaticBody2D" parent="YSort/@Node2D@152" unique_id=897195901]
+[node name="Kursi_17_Collision" type="StaticBody2D" parent="YSort/Kursi_17" unique_id=2093194490]
 collision_mask = 0
 
-[node name="@CollisionShape2D@154" type="CollisionShape2D" parent="YSort/@Node2D@152/@StaticBody2D@155" unique_id=74782425]
+[node name="@CollisionShape2D@29" type="CollisionShape2D" parent="YSort/Kursi_17/Kursi_17_Collision" unique_id=1779362166]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_f7q5x")
 
-[node name="@Node2D@156" type="Node2D" parent="YSort" unique_id=877602430]
+[node name="Komputer_05" type="Node2D" parent="YSort" unique_id=952168731]
 position = Vector2(545, 542)
 
-[node name="@Sprite2D@157" type="Sprite2D" parent="YSort/@Node2D@156" unique_id=162815633]
+[node name="Komputer_05_Gambar" type="Sprite2D" parent="YSort/Komputer_05" unique_id=2118848945]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@158" type="Node2D" parent="YSort" unique_id=2058171937]
+[node name="Meja_10" type="Node2D" parent="YSort" unique_id=216080973]
 position = Vector2(660, 560)
 
-[node name="@Sprite2D@159" type="Sprite2D" parent="YSort/@Node2D@158" unique_id=1652405226]
+[node name="Meja_10_Gambar" type="Sprite2D" parent="YSort/Meja_10" unique_id=780433331]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@161" type="StaticBody2D" parent="YSort/@Node2D@158" unique_id=1320032102]
+[node name="Meja_10_Collision" type="StaticBody2D" parent="YSort/Meja_10" unique_id=1911589887]
 collision_mask = 0
 
-[node name="@CollisionShape2D@160" type="CollisionShape2D" parent="YSort/@Node2D@158/@StaticBody2D@161" unique_id=1698571118]
+[node name="@CollisionShape2D@30" type="CollisionShape2D" parent="YSort/Meja_10/Meja_10_Collision" unique_id=1252783625]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_d61pb")
 
-[node name="@Node2D@162" type="Node2D" parent="YSort" unique_id=304285813]
+[node name="Kursi_18" type="Node2D" parent="YSort" unique_id=1349315641]
 position = Vector2(660, 630)
 
-[node name="@Sprite2D@163" type="Sprite2D" parent="YSort/@Node2D@162" unique_id=1037026273]
+[node name="Kursi_18_Gambar" type="Sprite2D" parent="YSort/Kursi_18" unique_id=881952132]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@165" type="StaticBody2D" parent="YSort/@Node2D@162" unique_id=355953556]
+[node name="Kursi_18_Collision" type="StaticBody2D" parent="YSort/Kursi_18" unique_id=627339711]
 collision_mask = 0
 
-[node name="@CollisionShape2D@164" type="CollisionShape2D" parent="YSort/@Node2D@162/@StaticBody2D@165" unique_id=2068515254]
+[node name="@CollisionShape2D@31" type="CollisionShape2D" parent="YSort/Kursi_18/Kursi_18_Collision" unique_id=853428055]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_p48aj")
 
-[node name="@Node2D@166" type="Node2D" parent="YSort" unique_id=908768900]
+[node name="Laptop_06" type="Node2D" parent="YSort" unique_id=1389249164]
 position = Vector2(655, 542)
 
-[node name="@Sprite2D@167" type="Sprite2D" parent="YSort/@Node2D@166" unique_id=180444686]
+[node name="Laptop_06_Gambar" type="Sprite2D" parent="YSort/Laptop_06" unique_id=286088504]
 position = Vector2(0, 0.5)
 texture = ExtResource("9_hjqri")
 
-[node name="@Node2D@168" type="Node2D" parent="YSort" unique_id=1415752727]
+[node name="Meja_11" type="Node2D" parent="YSort" unique_id=1572573030]
 position = Vector2(800, 260)
 
-[node name="@Sprite2D@169" type="Sprite2D" parent="YSort/@Node2D@168" unique_id=1274344127]
+[node name="Meja_11_Gambar" type="Sprite2D" parent="YSort/Meja_11" unique_id=983976289]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@171" type="StaticBody2D" parent="YSort/@Node2D@168" unique_id=781193772]
+[node name="Meja_11_Collision" type="StaticBody2D" parent="YSort/Meja_11" unique_id=309381831]
 collision_mask = 0
 
-[node name="@CollisionShape2D@170" type="CollisionShape2D" parent="YSort/@Node2D@168/@StaticBody2D@171" unique_id=564781026]
+[node name="@CollisionShape2D@32" type="CollisionShape2D" parent="YSort/Meja_11/Meja_11_Collision" unique_id=822890644]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_dpqbu")
 
-[node name="@Node2D@172" type="Node2D" parent="YSort" unique_id=401079943]
+[node name="Kursi_19" type="Node2D" parent="YSort" unique_id=1548620994]
 position = Vector2(800, 330)
 
-[node name="@Sprite2D@173" type="Sprite2D" parent="YSort/@Node2D@172" unique_id=319360819]
+[node name="Kursi_19_Gambar" type="Sprite2D" parent="YSort/Kursi_19" unique_id=2074265244]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@175" type="StaticBody2D" parent="YSort/@Node2D@172" unique_id=856909950]
+[node name="Kursi_19_Collision" type="StaticBody2D" parent="YSort/Kursi_19" unique_id=1137915574]
 collision_mask = 0
 
-[node name="@CollisionShape2D@174" type="CollisionShape2D" parent="YSort/@Node2D@172/@StaticBody2D@175" unique_id=2090256579]
+[node name="@CollisionShape2D@33" type="CollisionShape2D" parent="YSort/Kursi_19/Kursi_19_Collision" unique_id=224646972]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_cjipi")
 
-[node name="@Node2D@176" type="Node2D" parent="YSort" unique_id=163788583]
+[node name="Komputer_06" type="Node2D" parent="YSort" unique_id=258142262]
 position = Vector2(785, 242)
 
-[node name="@Sprite2D@177" type="Sprite2D" parent="YSort/@Node2D@176" unique_id=384154514]
+[node name="Komputer_06_Gambar" type="Sprite2D" parent="YSort/Komputer_06" unique_id=1143773567]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@178" type="Node2D" parent="YSort" unique_id=1257761314]
+[node name="Meja_12" type="Node2D" parent="YSort" unique_id=217489658]
 position = Vector2(900, 260)
 
-[node name="@Sprite2D@179" type="Sprite2D" parent="YSort/@Node2D@178" unique_id=121129200]
+[node name="Meja_12_Gambar" type="Sprite2D" parent="YSort/Meja_12" unique_id=1543593598]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@181" type="StaticBody2D" parent="YSort/@Node2D@178" unique_id=61360360]
+[node name="Meja_12_Collision" type="StaticBody2D" parent="YSort/Meja_12" unique_id=1513458171]
 collision_mask = 0
 
-[node name="@CollisionShape2D@180" type="CollisionShape2D" parent="YSort/@Node2D@178/@StaticBody2D@181" unique_id=953832358]
+[node name="@CollisionShape2D@34" type="CollisionShape2D" parent="YSort/Meja_12/Meja_12_Collision" unique_id=362832013]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ou1ya")
 
-[node name="@Node2D@182" type="Node2D" parent="YSort" unique_id=114060292]
+[node name="Kursi_20" type="Node2D" parent="YSort" unique_id=380680239]
 position = Vector2(900, 330)
 
-[node name="@Sprite2D@183" type="Sprite2D" parent="YSort/@Node2D@182" unique_id=577950574]
+[node name="Kursi_20_Gambar" type="Sprite2D" parent="YSort/Kursi_20" unique_id=1168760806]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@185" type="StaticBody2D" parent="YSort/@Node2D@182" unique_id=1060921910]
+[node name="Kursi_20_Collision" type="StaticBody2D" parent="YSort/Kursi_20" unique_id=1144474327]
 collision_mask = 0
 
-[node name="@CollisionShape2D@184" type="CollisionShape2D" parent="YSort/@Node2D@182/@StaticBody2D@185" unique_id=2102960615]
+[node name="@CollisionShape2D@35" type="CollisionShape2D" parent="YSort/Kursi_20/Kursi_20_Collision" unique_id=1237173715]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_6ej1v")
 
-[node name="@Node2D@186" type="Node2D" parent="YSort" unique_id=428307679]
+[node name="Laptop_07" type="Node2D" parent="YSort" unique_id=1721964580]
 position = Vector2(895, 242)
 
-[node name="@Sprite2D@187" type="Sprite2D" parent="YSort/@Node2D@186" unique_id=444855587]
+[node name="Laptop_07_Gambar" type="Sprite2D" parent="YSort/Laptop_07" unique_id=968568312]
 position = Vector2(0, 0.5)
 texture = ExtResource("9_hjqri")
 
-[node name="@Node2D@188" type="Node2D" parent="YSort" unique_id=1133872421]
+[node name="Meja_13" type="Node2D" parent="YSort" unique_id=1147637167]
 position = Vector2(320, 140)
 
-[node name="@Sprite2D@189" type="Sprite2D" parent="YSort/@Node2D@188" unique_id=1930581189]
+[node name="Meja_13_Gambar" type="Sprite2D" parent="YSort/Meja_13" unique_id=640051414]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@191" type="StaticBody2D" parent="YSort/@Node2D@188" unique_id=2001360143]
+[node name="Meja_13_Collision" type="StaticBody2D" parent="YSort/Meja_13" unique_id=1822858736]
 collision_mask = 0
 
-[node name="@CollisionShape2D@190" type="CollisionShape2D" parent="YSort/@Node2D@188/@StaticBody2D@191" unique_id=1790461141]
+[node name="@CollisionShape2D@36" type="CollisionShape2D" parent="YSort/Meja_13/Meja_13_Collision" unique_id=1812472515]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_6krs4")
 
-[node name="@Node2D@192" type="Node2D" parent="YSort" unique_id=1083733810]
+[node name="Kursi_21" type="Node2D" parent="YSort" unique_id=2098429122]
 position = Vector2(320, 210)
 
-[node name="@Sprite2D@193" type="Sprite2D" parent="YSort/@Node2D@192" unique_id=1502364112]
+[node name="Kursi_21_Gambar" type="Sprite2D" parent="YSort/Kursi_21" unique_id=1571291819]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@195" type="StaticBody2D" parent="YSort/@Node2D@192" unique_id=857322064]
+[node name="Kursi_21_Collision" type="StaticBody2D" parent="YSort/Kursi_21" unique_id=885605106]
 collision_mask = 0
 
-[node name="@CollisionShape2D@194" type="CollisionShape2D" parent="YSort/@Node2D@192/@StaticBody2D@195" unique_id=1170536156]
+[node name="@CollisionShape2D@37" type="CollisionShape2D" parent="YSort/Kursi_21/Kursi_21_Collision" unique_id=2124839129]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ucjku")
 
-[node name="@Node2D@196" type="Node2D" parent="YSort" unique_id=352218352]
+[node name="Dispenser_01" type="Node2D" parent="YSort" unique_id=904714752]
 position = Vector2(400, 200)
 
-[node name="@Sprite2D@197" type="Sprite2D" parent="YSort/@Node2D@196" unique_id=489225088]
+[node name="Dispenser_01_Gambar" type="Sprite2D" parent="YSort/Dispenser_01" unique_id=2028307032]
 position = Vector2(0, -11.5)
 texture = ExtResource("17_wa552")
 
-[node name="@StaticBody2D@199" type="StaticBody2D" parent="YSort/@Node2D@196" unique_id=156460770]
+[node name="Dispenser_01_Collision" type="StaticBody2D" parent="YSort/Dispenser_01" unique_id=1051693026]
 collision_mask = 0
 
-[node name="@CollisionShape2D@198" type="CollisionShape2D" parent="YSort/@Node2D@196/@StaticBody2D@199" unique_id=1220815659]
+[node name="@CollisionShape2D@38" type="CollisionShape2D" parent="YSort/Dispenser_01/Dispenser_01_Collision" unique_id=1292167221]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_jjkyn")
 
-[node name="@Node2D@200" type="Node2D" parent="YSort" unique_id=1260665894]
+[node name="Tanaman_01" type="Node2D" parent="YSort" unique_id=645099184]
 position = Vector2(240, 200)
 
-[node name="@Sprite2D@201" type="Sprite2D" parent="YSort/@Node2D@200" unique_id=1822072714]
+[node name="Tanaman_01_Gambar" type="Sprite2D" parent="YSort/Tanaman_01" unique_id=2090121943]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@203" type="StaticBody2D" parent="YSort/@Node2D@200" unique_id=1762627475]
+[node name="Tanaman_01_Collision" type="StaticBody2D" parent="YSort/Tanaman_01" unique_id=1460405801]
 collision_mask = 0
 
-[node name="@CollisionShape2D@202" type="CollisionShape2D" parent="YSort/@Node2D@200/@StaticBody2D@203" unique_id=903890126]
+[node name="@CollisionShape2D@39" type="CollisionShape2D" parent="YSort/Tanaman_01/Tanaman_01_Collision" unique_id=498474014]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_vmnqh")
 
-[node name="@Node2D@204" type="Node2D" parent="YSort" unique_id=881179749]
+[node name="Tempat_Sampah_01" type="Node2D" parent="YSort" unique_id=1778641831]
 position = Vector2(400, 100)
 
-[node name="@Sprite2D@205" type="Sprite2D" parent="YSort/@Node2D@204" unique_id=967786001]
+[node name="Tempat_Sampah_01_Gambar" type="Sprite2D" parent="YSort/Tempat_Sampah_01" unique_id=1072894209]
 position = Vector2(0, 0.5)
 texture = ExtResource("19_bamb7")
 
-[node name="@StaticBody2D@207" type="StaticBody2D" parent="YSort/@Node2D@204" unique_id=2045401698]
+[node name="Tempat_Sampah_01_Collision" type="StaticBody2D" parent="YSort/Tempat_Sampah_01" unique_id=1602163498]
 collision_mask = 0
 
-[node name="@CollisionShape2D@206" type="CollisionShape2D" parent="YSort/@Node2D@204/@StaticBody2D@207" unique_id=1048577050]
+[node name="@CollisionShape2D@40" type="CollisionShape2D" parent="YSort/Tempat_Sampah_01/Tempat_Sampah_01_Collision" unique_id=1717574041]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ox6vd")
 
-[node name="@Node2D@208" type="Node2D" parent="YSort" unique_id=1548011123]
+[node name="Sofa_01" type="Node2D" parent="YSort" unique_id=14923787]
 position = Vector2(500, 160)
 
-[node name="@Sprite2D@209" type="Sprite2D" parent="YSort/@Node2D@208" unique_id=1193831901]
+[node name="Sofa_01_Gambar" type="Sprite2D" parent="YSort/Sofa_01" unique_id=1558219765]
 texture = ExtResource("20_8jqp6")
 
-[node name="@StaticBody2D@211" type="StaticBody2D" parent="YSort/@Node2D@208" unique_id=248332894]
+[node name="Sofa_01_Collision" type="StaticBody2D" parent="YSort/Sofa_01" unique_id=801548393]
 collision_mask = 0
 
-[node name="@CollisionShape2D@210" type="CollisionShape2D" parent="YSort/@Node2D@208/@StaticBody2D@211" unique_id=1472833981]
+[node name="@CollisionShape2D@41" type="CollisionShape2D" parent="YSort/Sofa_01/Sofa_01_Collision" unique_id=1755281675]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_gxyo6")
 
-[node name="@Node2D@212" type="Node2D" parent="YSort" unique_id=1189939402]
+[node name="Tanaman_02" type="Node2D" parent="YSort" unique_id=1031221448]
 position = Vector2(430, 200)
 
-[node name="@Sprite2D@213" type="Sprite2D" parent="YSort/@Node2D@212" unique_id=1656672731]
+[node name="Tanaman_02_Gambar" type="Sprite2D" parent="YSort/Tanaman_02" unique_id=1072961766]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@215" type="StaticBody2D" parent="YSort/@Node2D@212" unique_id=1587421593]
+[node name="Tanaman_02_Collision" type="StaticBody2D" parent="YSort/Tanaman_02" unique_id=629403173]
 collision_mask = 0
 
-[node name="@CollisionShape2D@214" type="CollisionShape2D" parent="YSort/@Node2D@212/@StaticBody2D@215" unique_id=1003488403]
+[node name="@CollisionShape2D@42" type="CollisionShape2D" parent="YSort/Tanaman_02/Tanaman_02_Collision" unique_id=2036698987]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ii587")
 
-[node name="@Node2D@216" type="Node2D" parent="YSort" unique_id=1153938521]
+[node name="Kursi_22" type="Node2D" parent="YSort" unique_id=924065749]
 position = Vector2(580, 200)
 
-[node name="@Sprite2D@217" type="Sprite2D" parent="YSort/@Node2D@216" unique_id=1695611101]
+[node name="Kursi_22_Gambar" type="Sprite2D" parent="YSort/Kursi_22" unique_id=276012396]
 position = Vector2(0, -13)
 texture = ExtResource("5_mbb35")
 
-[node name="@StaticBody2D@219" type="StaticBody2D" parent="YSort/@Node2D@216" unique_id=813923617]
+[node name="Kursi_22_Collision" type="StaticBody2D" parent="YSort/Kursi_22" unique_id=2016270453]
 collision_mask = 0
 
-[node name="@CollisionShape2D@218" type="CollisionShape2D" parent="YSort/@Node2D@216/@StaticBody2D@219" unique_id=348115305]
+[node name="@CollisionShape2D@43" type="CollisionShape2D" parent="YSort/Kursi_22/Kursi_22_Collision" unique_id=900134655]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_l0bqe")
 
-[node name="@Node2D@220" type="Node2D" parent="YSort" unique_id=1098122371]
+[node name="Rak_Buku_01" type="Node2D" parent="YSort" unique_id=1213858433]
 position = Vector2(590, 80)
 
-[node name="@Sprite2D@221" type="Sprite2D" parent="YSort/@Node2D@220" unique_id=183047745]
+[node name="Rak_Buku_01_Gambar" type="Sprite2D" parent="YSort/Rak_Buku_01" unique_id=1255623056]
 position = Vector2(0, -8)
 texture = ExtResource("21_jscgt")
 
-[node name="@StaticBody2D@223" type="StaticBody2D" parent="YSort/@Node2D@220" unique_id=480429262]
+[node name="Rak_Buku_01_Collision" type="StaticBody2D" parent="YSort/Rak_Buku_01" unique_id=1617303243]
 collision_mask = 0
 
-[node name="@CollisionShape2D@222" type="CollisionShape2D" parent="YSort/@Node2D@220/@StaticBody2D@223" unique_id=1808351343]
+[node name="@CollisionShape2D@44" type="CollisionShape2D" parent="YSort/Rak_Buku_01/Rak_Buku_01_Collision" unique_id=1395446474]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_3v0l0")
 
-[node name="@Node2D@224" type="Node2D" parent="YSort" unique_id=1773578708]
+[node name="Meja_14" type="Node2D" parent="YSort" unique_id=471340815]
 position = Vector2(940, 110)
 
-[node name="@Sprite2D@225" type="Sprite2D" parent="YSort/@Node2D@224" unique_id=888374268]
+[node name="Meja_14_Gambar" type="Sprite2D" parent="YSort/Meja_14" unique_id=519976139]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@227" type="StaticBody2D" parent="YSort/@Node2D@224" unique_id=1076467153]
+[node name="Meja_14_Collision" type="StaticBody2D" parent="YSort/Meja_14" unique_id=1346348746]
 collision_mask = 0
 
-[node name="@CollisionShape2D@226" type="CollisionShape2D" parent="YSort/@Node2D@224/@StaticBody2D@227" unique_id=2018971106]
+[node name="@CollisionShape2D@45" type="CollisionShape2D" parent="YSort/Meja_14/Meja_14_Collision" unique_id=725056632]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_pvbsl")
 
-[node name="@Node2D@228" type="Node2D" parent="YSort" unique_id=1987793917]
+[node name="Kursi_23" type="Node2D" parent="YSort" unique_id=1801107442]
 position = Vector2(940, 180)
 
-[node name="@Sprite2D@229" type="Sprite2D" parent="YSort/@Node2D@228" unique_id=1929613686]
+[node name="Kursi_23_Gambar" type="Sprite2D" parent="YSort/Kursi_23" unique_id=1568073928]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@231" type="StaticBody2D" parent="YSort/@Node2D@228" unique_id=2085640514]
+[node name="Kursi_23_Collision" type="StaticBody2D" parent="YSort/Kursi_23" unique_id=2045463144]
 collision_mask = 0
 
-[node name="@CollisionShape2D@230" type="CollisionShape2D" parent="YSort/@Node2D@228/@StaticBody2D@231" unique_id=712112556]
+[node name="@CollisionShape2D@46" type="CollisionShape2D" parent="YSort/Kursi_23/Kursi_23_Collision" unique_id=377179167]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_sxo2v")
 
-[node name="@Node2D@232" type="Node2D" parent="YSort" unique_id=693554724]
+[node name="Laptop_08" type="Node2D" parent="YSort" unique_id=2105715489]
 position = Vector2(935, 92)
 
-[node name="@Sprite2D@233" type="Sprite2D" parent="YSort/@Node2D@232" unique_id=1599912720]
+[node name="Laptop_08_Gambar" type="Sprite2D" parent="YSort/Laptop_08" unique_id=1344538143]
 position = Vector2(0, 0.5)
 texture = ExtResource("9_hjqri")
 
-[node name="@Node2D@234" type="Node2D" parent="YSort" unique_id=1948825368]
+[node name="Tanaman_03" type="Node2D" parent="YSort" unique_id=1688231644]
 position = Vector2(1100, 200)
 
-[node name="@Sprite2D@235" type="Sprite2D" parent="YSort/@Node2D@234" unique_id=968338604]
+[node name="Tanaman_03_Gambar" type="Sprite2D" parent="YSort/Tanaman_03" unique_id=1681214689]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@237" type="StaticBody2D" parent="YSort/@Node2D@234" unique_id=1544240603]
+[node name="Tanaman_03_Collision" type="StaticBody2D" parent="YSort/Tanaman_03" unique_id=1242759298]
 collision_mask = 0
 
-[node name="@CollisionShape2D@236" type="CollisionShape2D" parent="YSort/@Node2D@234/@StaticBody2D@237" unique_id=1188988054]
+[node name="@CollisionShape2D@47" type="CollisionShape2D" parent="YSort/Tanaman_03/Tanaman_03_Collision" unique_id=309227433]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_3ky4f")
 
-[node name="@Node2D@238" type="Node2D" parent="YSort" unique_id=1869748600]
+[node name="Rak_Buku_02" type="Node2D" parent="YSort" unique_id=1843264375]
 position = Vector2(900, 80)
 
-[node name="@Sprite2D@239" type="Sprite2D" parent="YSort/@Node2D@238" unique_id=1407704806]
+[node name="Rak_Buku_02_Gambar" type="Sprite2D" parent="YSort/Rak_Buku_02" unique_id=509265355]
 position = Vector2(0, -8)
 texture = ExtResource("21_jscgt")
 
-[node name="@StaticBody2D@241" type="StaticBody2D" parent="YSort/@Node2D@238" unique_id=430182754]
+[node name="Rak_Buku_02_Collision" type="StaticBody2D" parent="YSort/Rak_Buku_02" unique_id=226648400]
 collision_mask = 0
 
-[node name="@CollisionShape2D@240" type="CollisionShape2D" parent="YSort/@Node2D@238/@StaticBody2D@241" unique_id=583276216]
+[node name="@CollisionShape2D@48" type="CollisionShape2D" parent="YSort/Rak_Buku_02/Rak_Buku_02_Collision" unique_id=855743407]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_dpvf4")
 
-[node name="@Node2D@242" type="Node2D" parent="YSort" unique_id=1007964761]
+[node name="Meja_15" type="Node2D" parent="YSort" unique_id=393328843]
 position = Vector2(1200, 140)
 
-[node name="@Sprite2D@243" type="Sprite2D" parent="YSort/@Node2D@242" unique_id=1304665164]
+[node name="Meja_15_Gambar" type="Sprite2D" parent="YSort/Meja_15" unique_id=100186255]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@245" type="StaticBody2D" parent="YSort/@Node2D@242" unique_id=1310525517]
+[node name="Meja_15_Collision" type="StaticBody2D" parent="YSort/Meja_15" unique_id=26937555]
 collision_mask = 0
 
-[node name="@CollisionShape2D@244" type="CollisionShape2D" parent="YSort/@Node2D@242/@StaticBody2D@245" unique_id=1440795799]
+[node name="@CollisionShape2D@49" type="CollisionShape2D" parent="YSort/Meja_15/Meja_15_Collision" unique_id=1720959980]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_a1lg4")
 
-[node name="@Node2D@246" type="Node2D" parent="YSort" unique_id=692580157]
+[node name="Kursi_24" type="Node2D" parent="YSort" unique_id=100726471]
 position = Vector2(1200, 210)
 
-[node name="@Sprite2D@247" type="Sprite2D" parent="YSort/@Node2D@246" unique_id=1193216749]
+[node name="Kursi_24_Gambar" type="Sprite2D" parent="YSort/Kursi_24" unique_id=1950798596]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@249" type="StaticBody2D" parent="YSort/@Node2D@246" unique_id=132764825]
+[node name="Kursi_24_Collision" type="StaticBody2D" parent="YSort/Kursi_24" unique_id=1547291843]
 collision_mask = 0
 
-[node name="@CollisionShape2D@248" type="CollisionShape2D" parent="YSort/@Node2D@246/@StaticBody2D@249" unique_id=1053238224]
+[node name="@CollisionShape2D@50" type="CollisionShape2D" parent="YSort/Kursi_24/Kursi_24_Collision" unique_id=2007487264]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_m1gx3")
 
-[node name="@Node2D@250" type="Node2D" parent="YSort" unique_id=1660140668]
+[node name="Komputer_07" type="Node2D" parent="YSort" unique_id=606781789]
 position = Vector2(1185, 122)
 
-[node name="@Sprite2D@251" type="Sprite2D" parent="YSort/@Node2D@250" unique_id=1425733370]
+[node name="Komputer_07_Gambar" type="Sprite2D" parent="YSort/Komputer_07" unique_id=938788881]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@252" type="Node2D" parent="YSort" unique_id=1800316525]
+[node name="Lemari_01" type="Node2D" parent="YSort" unique_id=1306827678]
 position = Vector2(1240, 88)
 
-[node name="@Sprite2D@253" type="Sprite2D" parent="YSort/@Node2D@252" unique_id=1342740571]
+[node name="Lemari_01_Gambar" type="Sprite2D" parent="YSort/Lemari_01" unique_id=2003094087]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@255" type="StaticBody2D" parent="YSort/@Node2D@252" unique_id=1741713328]
+[node name="Lemari_01_Collision" type="StaticBody2D" parent="YSort/Lemari_01" unique_id=207131724]
 collision_mask = 0
 
-[node name="@CollisionShape2D@254" type="CollisionShape2D" parent="YSort/@Node2D@252/@StaticBody2D@255" unique_id=1498690984]
+[node name="@CollisionShape2D@51" type="CollisionShape2D" parent="YSort/Lemari_01/Lemari_01_Collision" unique_id=1923027690]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_l03su")
 
-[node name="@Node2D@256" type="Node2D" parent="YSort" unique_id=6995273]
+[node name="Lemari_02" type="Node2D" parent="YSort" unique_id=775482153]
 position = Vector2(1280, 88)
 
-[node name="@Sprite2D@257" type="Sprite2D" parent="YSort/@Node2D@256" unique_id=572466990]
+[node name="Lemari_02_Gambar" type="Sprite2D" parent="YSort/Lemari_02" unique_id=994797889]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@259" type="StaticBody2D" parent="YSort/@Node2D@256" unique_id=253920163]
+[node name="Lemari_02_Collision" type="StaticBody2D" parent="YSort/Lemari_02" unique_id=1604092598]
 collision_mask = 0
 
-[node name="@CollisionShape2D@258" type="CollisionShape2D" parent="YSort/@Node2D@256/@StaticBody2D@259" unique_id=1468481097]
+[node name="@CollisionShape2D@52" type="CollisionShape2D" parent="YSort/Lemari_02/Lemari_02_Collision" unique_id=2012620295]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_x6tdi")
 
-[node name="@Node2D@260" type="Node2D" parent="YSort" unique_id=1273064066]
+[node name="Tanaman_04" type="Node2D" parent="YSort" unique_id=162989246]
 position = Vector2(1330, 200)
 
-[node name="@Sprite2D@261" type="Sprite2D" parent="YSort/@Node2D@260" unique_id=880546298]
+[node name="Tanaman_04_Gambar" type="Sprite2D" parent="YSort/Tanaman_04" unique_id=1499766822]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@263" type="StaticBody2D" parent="YSort/@Node2D@260" unique_id=1156625755]
+[node name="Tanaman_04_Collision" type="StaticBody2D" parent="YSort/Tanaman_04" unique_id=1636512407]
 collision_mask = 0
 
-[node name="@CollisionShape2D@262" type="CollisionShape2D" parent="YSort/@Node2D@260/@StaticBody2D@263" unique_id=551792309]
+[node name="@CollisionShape2D@53" type="CollisionShape2D" parent="YSort/Tanaman_04/Tanaman_04_Collision" unique_id=1611860358]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ieq4v")
 
-[node name="@Node2D@264" type="Node2D" parent="YSort" unique_id=510486818]
+[node name="Lemari_03" type="Node2D" parent="YSort" unique_id=1392092391]
 position = Vector2(80, 100)
 
-[node name="@Sprite2D@265" type="Sprite2D" parent="YSort/@Node2D@264" unique_id=392469983]
+[node name="Lemari_03_Gambar" type="Sprite2D" parent="YSort/Lemari_03" unique_id=886425319]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@267" type="StaticBody2D" parent="YSort/@Node2D@264" unique_id=596117551]
+[node name="Lemari_03_Collision" type="StaticBody2D" parent="YSort/Lemari_03" unique_id=119540237]
 collision_mask = 0
 
-[node name="@CollisionShape2D@266" type="CollisionShape2D" parent="YSort/@Node2D@264/@StaticBody2D@267" unique_id=1077727637]
+[node name="@CollisionShape2D@54" type="CollisionShape2D" parent="YSort/Lemari_03/Lemari_03_Collision" unique_id=1821477139]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_dg810")
 
-[node name="@Node2D@268" type="Node2D" parent="YSort" unique_id=336368644]
+[node name="Lemari_04" type="Node2D" parent="YSort" unique_id=1944687025]
 position = Vector2(120, 100)
 
-[node name="@Sprite2D@269" type="Sprite2D" parent="YSort/@Node2D@268" unique_id=456861603]
+[node name="Lemari_04_Gambar" type="Sprite2D" parent="YSort/Lemari_04" unique_id=487990199]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@271" type="StaticBody2D" parent="YSort/@Node2D@268" unique_id=1364963869]
+[node name="Lemari_04_Collision" type="StaticBody2D" parent="YSort/Lemari_04" unique_id=473106083]
 collision_mask = 0
 
-[node name="@CollisionShape2D@270" type="CollisionShape2D" parent="YSort/@Node2D@268/@StaticBody2D@271" unique_id=1409263306]
+[node name="@CollisionShape2D@55" type="CollisionShape2D" parent="YSort/Lemari_04/Lemari_04_Collision" unique_id=1470490920]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_knhdr")
 
-[node name="@Node2D@272" type="Node2D" parent="YSort" unique_id=1595125796]
+[node name="Lemari_05" type="Node2D" parent="YSort" unique_id=1318612637]
 position = Vector2(160, 100)
 
-[node name="@Sprite2D@273" type="Sprite2D" parent="YSort/@Node2D@272" unique_id=1885125215]
+[node name="Lemari_05_Gambar" type="Sprite2D" parent="YSort/Lemari_05" unique_id=1876324200]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@275" type="StaticBody2D" parent="YSort/@Node2D@272" unique_id=1614858237]
+[node name="Lemari_05_Collision" type="StaticBody2D" parent="YSort/Lemari_05" unique_id=1359370126]
 collision_mask = 0
 
-[node name="@CollisionShape2D@274" type="CollisionShape2D" parent="YSort/@Node2D@272/@StaticBody2D@275" unique_id=1458665557]
+[node name="@CollisionShape2D@56" type="CollisionShape2D" parent="YSort/Lemari_05/Lemari_05_Collision" unique_id=690001036]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_q4oq8")
 
-[node name="@Node2D@276" type="Node2D" parent="YSort" unique_id=2007611657]
+[node name="Lemari_06" type="Node2D" parent="YSort" unique_id=765538144]
 position = Vector2(80, 180)
 
-[node name="@Sprite2D@277" type="Sprite2D" parent="YSort/@Node2D@276" unique_id=1245680023]
+[node name="Lemari_06_Gambar" type="Sprite2D" parent="YSort/Lemari_06" unique_id=1924221167]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@279" type="StaticBody2D" parent="YSort/@Node2D@276" unique_id=1853417211]
+[node name="Lemari_06_Collision" type="StaticBody2D" parent="YSort/Lemari_06" unique_id=845441842]
 collision_mask = 0
 
-[node name="@CollisionShape2D@278" type="CollisionShape2D" parent="YSort/@Node2D@276/@StaticBody2D@279" unique_id=2047331370]
+[node name="@CollisionShape2D@57" type="CollisionShape2D" parent="YSort/Lemari_06/Lemari_06_Collision" unique_id=1624581091]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_wdxu8")
 
-[node name="@Node2D@280" type="Node2D" parent="YSort" unique_id=1055922353]
+[node name="Lemari_07" type="Node2D" parent="YSort" unique_id=366273973]
 position = Vector2(120, 180)
 
-[node name="@Sprite2D@281" type="Sprite2D" parent="YSort/@Node2D@280" unique_id=1781525548]
+[node name="Lemari_07_Gambar" type="Sprite2D" parent="YSort/Lemari_07" unique_id=271404293]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@283" type="StaticBody2D" parent="YSort/@Node2D@280" unique_id=784664356]
+[node name="Lemari_07_Collision" type="StaticBody2D" parent="YSort/Lemari_07" unique_id=1023256362]
 collision_mask = 0
 
-[node name="@CollisionShape2D@282" type="CollisionShape2D" parent="YSort/@Node2D@280/@StaticBody2D@283" unique_id=619961770]
+[node name="@CollisionShape2D@58" type="CollisionShape2D" parent="YSort/Lemari_07/Lemari_07_Collision" unique_id=1265685965]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ci4s1")
 
-[node name="@Node2D@284" type="Node2D" parent="YSort" unique_id=1878771758]
+[node name="Tanaman_05" type="Node2D" parent="YSort" unique_id=436418400]
 position = Vector2(200, 260)
 
-[node name="@Sprite2D@285" type="Sprite2D" parent="YSort/@Node2D@284" unique_id=168326519]
+[node name="Tanaman_05_Gambar" type="Sprite2D" parent="YSort/Tanaman_05" unique_id=1918941888]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@287" type="StaticBody2D" parent="YSort/@Node2D@284" unique_id=128311052]
+[node name="Tanaman_05_Collision" type="StaticBody2D" parent="YSort/Tanaman_05" unique_id=887880293]
 collision_mask = 0
 
-[node name="@CollisionShape2D@286" type="CollisionShape2D" parent="YSort/@Node2D@284/@StaticBody2D@287" unique_id=1929827743]
+[node name="@CollisionShape2D@59" type="CollisionShape2D" parent="YSort/Tanaman_05/Tanaman_05_Collision" unique_id=353339861]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_j1heb")
 
-[node name="@Node2D@288" type="Node2D" parent="YSort" unique_id=798863174]
+[node name="Tempat_Sampah_02" type="Node2D" parent="YSort" unique_id=539696878]
 position = Vector2(60, 260)
 
-[node name="@Sprite2D@289" type="Sprite2D" parent="YSort/@Node2D@288" unique_id=1343844390]
+[node name="Tempat_Sampah_02_Gambar" type="Sprite2D" parent="YSort/Tempat_Sampah_02" unique_id=1221862948]
 position = Vector2(0, 0.5)
 texture = ExtResource("19_bamb7")
 
-[node name="@StaticBody2D@291" type="StaticBody2D" parent="YSort/@Node2D@288" unique_id=684955811]
+[node name="Tempat_Sampah_02_Collision" type="StaticBody2D" parent="YSort/Tempat_Sampah_02" unique_id=620085216]
 collision_mask = 0
 
-[node name="@CollisionShape2D@290" type="CollisionShape2D" parent="YSort/@Node2D@288/@StaticBody2D@291" unique_id=2085359365]
+[node name="@CollisionShape2D@60" type="CollisionShape2D" parent="YSort/Tempat_Sampah_02/Tempat_Sampah_02_Collision" unique_id=1208639907]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_dkd60")
 
-[node name="@Node2D@292" type="Node2D" parent="YSort" unique_id=1957673659]
+[node name="Tanaman_06" type="Node2D" parent="YSort" unique_id=1039741681]
 position = Vector2(60, 320)
 
-[node name="@Sprite2D@293" type="Sprite2D" parent="YSort/@Node2D@292" unique_id=326672961]
+[node name="Tanaman_06_Gambar" type="Sprite2D" parent="YSort/Tanaman_06" unique_id=193270336]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@295" type="StaticBody2D" parent="YSort/@Node2D@292" unique_id=738735001]
+[node name="Tanaman_06_Collision" type="StaticBody2D" parent="YSort/Tanaman_06" unique_id=1462781190]
 collision_mask = 0
 
-[node name="@CollisionShape2D@294" type="CollisionShape2D" parent="YSort/@Node2D@292/@StaticBody2D@295" unique_id=1335700978]
+[node name="@CollisionShape2D@61" type="CollisionShape2D" parent="YSort/Tanaman_06/Tanaman_06_Collision" unique_id=1374388889]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_6ltfv")
 
-[node name="@Node2D@296" type="Node2D" parent="YSort" unique_id=2112836040]
+[node name="Tanaman_07" type="Node2D" parent="YSort" unique_id=1313541320]
 position = Vector2(200, 440)
 
-[node name="@Sprite2D@297" type="Sprite2D" parent="YSort/@Node2D@296" unique_id=855827]
+[node name="Tanaman_07_Gambar" type="Sprite2D" parent="YSort/Tanaman_07" unique_id=1495807164]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@299" type="StaticBody2D" parent="YSort/@Node2D@296" unique_id=290096046]
+[node name="Tanaman_07_Collision" type="StaticBody2D" parent="YSort/Tanaman_07" unique_id=679909315]
 collision_mask = 0
 
-[node name="@CollisionShape2D@298" type="CollisionShape2D" parent="YSort/@Node2D@296/@StaticBody2D@299" unique_id=1705358676]
+[node name="@CollisionShape2D@62" type="CollisionShape2D" parent="YSort/Tanaman_07/Tanaman_07_Collision" unique_id=749471960]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_pjtvt")
 
-[node name="@Node2D@300" type="Node2D" parent="YSort" unique_id=1793333365]
+[node name="Tempat_Sampah_03" type="Node2D" parent="YSort" unique_id=1207281660]
 position = Vector2(180, 440)
 
-[node name="@Sprite2D@301" type="Sprite2D" parent="YSort/@Node2D@300" unique_id=1958919424]
+[node name="Tempat_Sampah_03_Gambar" type="Sprite2D" parent="YSort/Tempat_Sampah_03" unique_id=2117182405]
 position = Vector2(0, 0.5)
 texture = ExtResource("19_bamb7")
 
-[node name="@StaticBody2D@303" type="StaticBody2D" parent="YSort/@Node2D@300" unique_id=1481202565]
+[node name="Tempat_Sampah_03_Collision" type="StaticBody2D" parent="YSort/Tempat_Sampah_03" unique_id=1659305508]
 collision_mask = 0
 
-[node name="@CollisionShape2D@302" type="CollisionShape2D" parent="YSort/@Node2D@300/@StaticBody2D@303" unique_id=2035962410]
+[node name="@CollisionShape2D@63" type="CollisionShape2D" parent="YSort/Tempat_Sampah_03/Tempat_Sampah_03_Collision" unique_id=1596558158]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_i5gwk")
 
-[node name="@Node2D@304" type="Node2D" parent="YSort" unique_id=914721543]
+[node name="Lemari_08" type="Node2D" parent="YSort" unique_id=1500436085]
 position = Vector2(80, 520)
 
-[node name="@Sprite2D@305" type="Sprite2D" parent="YSort/@Node2D@304" unique_id=1817440383]
+[node name="Lemari_08_Gambar" type="Sprite2D" parent="YSort/Lemari_08" unique_id=662825147]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@307" type="StaticBody2D" parent="YSort/@Node2D@304" unique_id=779120090]
+[node name="Lemari_08_Collision" type="StaticBody2D" parent="YSort/Lemari_08" unique_id=1800381336]
 collision_mask = 0
 
-[node name="@CollisionShape2D@306" type="CollisionShape2D" parent="YSort/@Node2D@304/@StaticBody2D@307" unique_id=101215151]
+[node name="@CollisionShape2D@64" type="CollisionShape2D" parent="YSort/Lemari_08/Lemari_08_Collision" unique_id=12400466]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_0st31")
 
-[node name="@Node2D@308" type="Node2D" parent="YSort" unique_id=1956355668]
+[node name="Lemari_09" type="Node2D" parent="YSort" unique_id=1252293301]
 position = Vector2(120, 520)
 
-[node name="@Sprite2D@309" type="Sprite2D" parent="YSort/@Node2D@308" unique_id=1435510573]
+[node name="Lemari_09_Gambar" type="Sprite2D" parent="YSort/Lemari_09" unique_id=1371945078]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@311" type="StaticBody2D" parent="YSort/@Node2D@308" unique_id=95751948]
+[node name="Lemari_09_Collision" type="StaticBody2D" parent="YSort/Lemari_09" unique_id=1976732798]
 collision_mask = 0
 
-[node name="@CollisionShape2D@310" type="CollisionShape2D" parent="YSort/@Node2D@308/@StaticBody2D@311" unique_id=315919921]
+[node name="@CollisionShape2D@65" type="CollisionShape2D" parent="YSort/Lemari_09/Lemari_09_Collision" unique_id=1975440037]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_8j51k")
 
-[node name="@Node2D@312" type="Node2D" parent="YSort" unique_id=492338472]
+[node name="Lemari_10" type="Node2D" parent="YSort" unique_id=841590645]
 position = Vector2(160, 520)
 
-[node name="@Sprite2D@313" type="Sprite2D" parent="YSort/@Node2D@312" unique_id=2033949421]
+[node name="Lemari_10_Gambar" type="Sprite2D" parent="YSort/Lemari_10" unique_id=1545351810]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@315" type="StaticBody2D" parent="YSort/@Node2D@312" unique_id=352035777]
+[node name="Lemari_10_Collision" type="StaticBody2D" parent="YSort/Lemari_10" unique_id=1365890179]
 collision_mask = 0
 
-[node name="@CollisionShape2D@314" type="CollisionShape2D" parent="YSort/@Node2D@312/@StaticBody2D@315" unique_id=2117600064]
+[node name="@CollisionShape2D@66" type="CollisionShape2D" parent="YSort/Lemari_10/Lemari_10_Collision" unique_id=1638549316]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ku67w")
 
-[node name="@Node2D@316" type="Node2D" parent="YSort" unique_id=1292827154]
+[node name="Lemari_11" type="Node2D" parent="YSort" unique_id=1383756905]
 position = Vector2(80, 600)
 
-[node name="@Sprite2D@317" type="Sprite2D" parent="YSort/@Node2D@316" unique_id=653545709]
+[node name="Lemari_11_Gambar" type="Sprite2D" parent="YSort/Lemari_11" unique_id=1312746253]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@319" type="StaticBody2D" parent="YSort/@Node2D@316" unique_id=1492933329]
+[node name="Lemari_11_Collision" type="StaticBody2D" parent="YSort/Lemari_11" unique_id=113916861]
 collision_mask = 0
 
-[node name="@CollisionShape2D@318" type="CollisionShape2D" parent="YSort/@Node2D@316/@StaticBody2D@319" unique_id=298883267]
+[node name="@CollisionShape2D@67" type="CollisionShape2D" parent="YSort/Lemari_11/Lemari_11_Collision" unique_id=571677765]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_x7yw7")
 
-[node name="@Node2D@320" type="Node2D" parent="YSort" unique_id=944679116]
+[node name="Lemari_12" type="Node2D" parent="YSort" unique_id=1410836936]
 position = Vector2(120, 600)
 
-[node name="@Sprite2D@321" type="Sprite2D" parent="YSort/@Node2D@320" unique_id=1738691963]
+[node name="Lemari_12_Gambar" type="Sprite2D" parent="YSort/Lemari_12" unique_id=1781003606]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@323" type="StaticBody2D" parent="YSort/@Node2D@320" unique_id=1705203346]
+[node name="Lemari_12_Collision" type="StaticBody2D" parent="YSort/Lemari_12" unique_id=2048959402]
 collision_mask = 0
 
-[node name="@CollisionShape2D@322" type="CollisionShape2D" parent="YSort/@Node2D@320/@StaticBody2D@323" unique_id=1528969470]
+[node name="@CollisionShape2D@68" type="CollisionShape2D" parent="YSort/Lemari_12/Lemari_12_Collision" unique_id=2067045681]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_fi5fh")
 
-[node name="@Node2D@324" type="Node2D" parent="YSort" unique_id=82899275]
+[node name="Tumpukan_Kertas_04" type="Node2D" parent="YSort" unique_id=1766805564]
 position = Vector2(180, 560)
 
-[node name="@Sprite2D@325" type="Sprite2D" parent="YSort/@Node2D@324" unique_id=1381693716]
+[node name="Tumpukan_Kertas_04_Gambar" type="Sprite2D" parent="YSort/Tumpukan_Kertas_04" unique_id=1663579716]
 position = Vector2(0, 1)
 texture = ExtResource("10_hg84p")
 
-[node name="@Node2D@326" type="Node2D" parent="YSort" unique_id=1096989618]
+[node name="Tumpukan_Kertas_05" type="Node2D" parent="YSort" unique_id=267886462]
 position = Vector2(190, 580)
 
-[node name="@Sprite2D@327" type="Sprite2D" parent="YSort/@Node2D@326" unique_id=1052951317]
+[node name="Tumpukan_Kertas_05_Gambar" type="Sprite2D" parent="YSort/Tumpukan_Kertas_05" unique_id=819587022]
 position = Vector2(0, 1)
 texture = ExtResource("10_hg84p")
 
-[node name="@Node2D@328" type="Node2D" parent="YSort" unique_id=222526509]
+[node name="Tanaman_08" type="Node2D" parent="YSort" unique_id=1931173565]
 position = Vector2(200, 640)
 
-[node name="@Sprite2D@329" type="Sprite2D" parent="YSort/@Node2D@328" unique_id=180009738]
+[node name="Tanaman_08_Gambar" type="Sprite2D" parent="YSort/Tanaman_08" unique_id=1972836501]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@331" type="StaticBody2D" parent="YSort/@Node2D@328" unique_id=2072554455]
+[node name="Tanaman_08_Collision" type="StaticBody2D" parent="YSort/Tanaman_08" unique_id=949061755]
 collision_mask = 0
 
-[node name="@CollisionShape2D@330" type="CollisionShape2D" parent="YSort/@Node2D@328/@StaticBody2D@331" unique_id=774226958]
+[node name="@CollisionShape2D@69" type="CollisionShape2D" parent="YSort/Tanaman_08/Tanaman_08_Collision" unique_id=2005413508]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_lkwss")
 
-[node name="@Node2D@332" type="Node2D" parent="YSort" unique_id=1006188577]
+[node name="Meja_16" type="Node2D" parent="YSort" unique_id=784704963]
 position = Vector2(320, 760)
 
-[node name="@Sprite2D@333" type="Sprite2D" parent="YSort/@Node2D@332" unique_id=1499678598]
+[node name="Meja_16_Gambar" type="Sprite2D" parent="YSort/Meja_16" unique_id=1948375228]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@335" type="StaticBody2D" parent="YSort/@Node2D@332" unique_id=1538056670]
+[node name="Meja_16_Collision" type="StaticBody2D" parent="YSort/Meja_16" unique_id=737798061]
 collision_mask = 0
 
-[node name="@CollisionShape2D@334" type="CollisionShape2D" parent="YSort/@Node2D@332/@StaticBody2D@335" unique_id=845594527]
+[node name="@CollisionShape2D@70" type="CollisionShape2D" parent="YSort/Meja_16/Meja_16_Collision" unique_id=1242205548]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_umc3q")
 
-[node name="@Node2D@336" type="Node2D" parent="YSort" unique_id=981024967]
+[node name="Kursi_25" type="Node2D" parent="YSort" unique_id=1516193841]
 position = Vector2(320, 830)
 
-[node name="@Sprite2D@337" type="Sprite2D" parent="YSort/@Node2D@336" unique_id=30950706]
+[node name="Kursi_25_Gambar" type="Sprite2D" parent="YSort/Kursi_25" unique_id=1142722115]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@339" type="StaticBody2D" parent="YSort/@Node2D@336" unique_id=882208036]
+[node name="Kursi_25_Collision" type="StaticBody2D" parent="YSort/Kursi_25" unique_id=1491967835]
 collision_mask = 0
 
-[node name="@CollisionShape2D@338" type="CollisionShape2D" parent="YSort/@Node2D@336/@StaticBody2D@339" unique_id=746257778]
+[node name="@CollisionShape2D@71" type="CollisionShape2D" parent="YSort/Kursi_25/Kursi_25_Collision" unique_id=178976070]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_yfw1k")
 
-[node name="@Node2D@340" type="Node2D" parent="YSort" unique_id=10151788]
+[node name="Komputer_08" type="Node2D" parent="YSort" unique_id=1356003232]
 position = Vector2(305, 742)
 
-[node name="@Sprite2D@341" type="Sprite2D" parent="YSort/@Node2D@340" unique_id=594639992]
+[node name="Komputer_08_Gambar" type="Sprite2D" parent="YSort/Komputer_08" unique_id=1680195013]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@342" type="Node2D" parent="YSort" unique_id=190661692]
+[node name="Kursi_26" type="Node2D" parent="YSort" unique_id=300595440]
 position = Vector2(400, 700)
 
-[node name="@Sprite2D@343" type="Sprite2D" parent="YSort/@Node2D@342" unique_id=682185579]
+[node name="Kursi_26_Gambar" type="Sprite2D" parent="YSort/Kursi_26" unique_id=958011007]
 position = Vector2(0, -13)
 texture = ExtResource("5_mbb35")
 
-[node name="@StaticBody2D@345" type="StaticBody2D" parent="YSort/@Node2D@342" unique_id=31979564]
+[node name="Kursi_26_Collision" type="StaticBody2D" parent="YSort/Kursi_26" unique_id=2056289918]
 collision_mask = 0
 
-[node name="@CollisionShape2D@344" type="CollisionShape2D" parent="YSort/@Node2D@342/@StaticBody2D@345" unique_id=2097663123]
+[node name="@CollisionShape2D@72" type="CollisionShape2D" parent="YSort/Kursi_26/Kursi_26_Collision" unique_id=1222562378]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_7sb8w")
 
-[node name="@Node2D@346" type="Node2D" parent="YSort" unique_id=775226221]
+[node name="Papan_Tulis_02" type="Node2D" parent="YSort" unique_id=2025804939]
 position = Vector2(420, 700)
 
-[node name="@Sprite2D@347" type="Sprite2D" parent="YSort/@Node2D@346" unique_id=1769139943]
+[node name="Papan_Tulis_02_Gambar" type="Sprite2D" parent="YSort/Papan_Tulis_02" unique_id=1693684860]
 texture = ExtResource("12_q0ron")
 
-[node name="@Node2D@348" type="Node2D" parent="YSort" unique_id=521553344]
+[node name="Tanaman_09" type="Node2D" parent="YSort" unique_id=2032916669]
 position = Vector2(240, 840)
 
-[node name="@Sprite2D@349" type="Sprite2D" parent="YSort/@Node2D@348" unique_id=1796868078]
+[node name="Tanaman_09_Gambar" type="Sprite2D" parent="YSort/Tanaman_09" unique_id=1686438323]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@351" type="StaticBody2D" parent="YSort/@Node2D@348" unique_id=1803974836]
+[node name="Tanaman_09_Collision" type="StaticBody2D" parent="YSort/Tanaman_09" unique_id=1469492391]
 collision_mask = 0
 
-[node name="@CollisionShape2D@350" type="CollisionShape2D" parent="YSort/@Node2D@348/@StaticBody2D@351" unique_id=2000648493]
+[node name="@CollisionShape2D@73" type="CollisionShape2D" parent="YSort/Tanaman_09/Tanaman_09_Collision" unique_id=2056060444]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_30xvn")
 
-[node name="@Node2D@352" type="Node2D" parent="YSort" unique_id=1781085790]
+[node name="Lemari_13" type="Node2D" parent="YSort" unique_id=989741455]
 position = Vector2(500, 700)
 
-[node name="@Sprite2D@353" type="Sprite2D" parent="YSort/@Node2D@352" unique_id=1543402779]
+[node name="Lemari_13_Gambar" type="Sprite2D" parent="YSort/Lemari_13" unique_id=1774434157]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@355" type="StaticBody2D" parent="YSort/@Node2D@352" unique_id=984016545]
+[node name="Lemari_13_Collision" type="StaticBody2D" parent="YSort/Lemari_13" unique_id=2053658150]
 collision_mask = 0
 
-[node name="@CollisionShape2D@354" type="CollisionShape2D" parent="YSort/@Node2D@352/@StaticBody2D@355" unique_id=547355568]
+[node name="@CollisionShape2D@74" type="CollisionShape2D" parent="YSort/Lemari_13/Lemari_13_Collision" unique_id=1695984529]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_mknog")
 
-[node name="@Node2D@356" type="Node2D" parent="YSort" unique_id=578034995]
+[node name="Lemari_14" type="Node2D" parent="YSort" unique_id=283874366]
 position = Vector2(540, 700)
 
-[node name="@Sprite2D@357" type="Sprite2D" parent="YSort/@Node2D@356" unique_id=2120705083]
+[node name="Lemari_14_Gambar" type="Sprite2D" parent="YSort/Lemari_14" unique_id=248113441]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@359" type="StaticBody2D" parent="YSort/@Node2D@356" unique_id=1799589792]
+[node name="Lemari_14_Collision" type="StaticBody2D" parent="YSort/Lemari_14" unique_id=1771716118]
 collision_mask = 0
 
-[node name="@CollisionShape2D@358" type="CollisionShape2D" parent="YSort/@Node2D@356/@StaticBody2D@359" unique_id=1530890910]
+[node name="@CollisionShape2D@75" type="CollisionShape2D" parent="YSort/Lemari_14/Lemari_14_Collision" unique_id=1686294871]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_b42lo")
 
-[node name="@Node2D@360" type="Node2D" parent="YSort" unique_id=1348419868]
+[node name="Lemari_15" type="Node2D" parent="YSort" unique_id=1475186973]
 position = Vector2(580, 700)
 
-[node name="@Sprite2D@361" type="Sprite2D" parent="YSort/@Node2D@360" unique_id=829260339]
+[node name="Lemari_15_Gambar" type="Sprite2D" parent="YSort/Lemari_15" unique_id=14900053]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@363" type="StaticBody2D" parent="YSort/@Node2D@360" unique_id=432693606]
+[node name="Lemari_15_Collision" type="StaticBody2D" parent="YSort/Lemari_15" unique_id=1562388902]
 collision_mask = 0
 
-[node name="@CollisionShape2D@362" type="CollisionShape2D" parent="YSort/@Node2D@360/@StaticBody2D@363" unique_id=1758764032]
+[node name="@CollisionShape2D@76" type="CollisionShape2D" parent="YSort/Lemari_15/Lemari_15_Collision" unique_id=1188120048]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_sa842")
 
-[node name="@Node2D@364" type="Node2D" parent="YSort" unique_id=381111156]
+[node name="Lemari_16" type="Node2D" parent="YSort" unique_id=1017448484]
 position = Vector2(620, 700)
 
-[node name="@Sprite2D@365" type="Sprite2D" parent="YSort/@Node2D@364" unique_id=571393526]
+[node name="Lemari_16_Gambar" type="Sprite2D" parent="YSort/Lemari_16" unique_id=1339422052]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@367" type="StaticBody2D" parent="YSort/@Node2D@364" unique_id=1616362133]
+[node name="Lemari_16_Collision" type="StaticBody2D" parent="YSort/Lemari_16" unique_id=220393196]
 collision_mask = 0
 
-[node name="@CollisionShape2D@366" type="CollisionShape2D" parent="YSort/@Node2D@364/@StaticBody2D@367" unique_id=2015801810]
+[node name="@CollisionShape2D@77" type="CollisionShape2D" parent="YSort/Lemari_16/Lemari_16_Collision" unique_id=814532099]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_2ermk")
 
-[node name="@Node2D@368" type="Node2D" parent="YSort" unique_id=656742619]
+[node name="Lemari_17" type="Node2D" parent="YSort" unique_id=745764767]
 position = Vector2(500, 820)
 
-[node name="@Sprite2D@369" type="Sprite2D" parent="YSort/@Node2D@368" unique_id=1102380114]
+[node name="Lemari_17_Gambar" type="Sprite2D" parent="YSort/Lemari_17" unique_id=1147660687]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@371" type="StaticBody2D" parent="YSort/@Node2D@368" unique_id=88529195]
+[node name="Lemari_17_Collision" type="StaticBody2D" parent="YSort/Lemari_17" unique_id=538050760]
 collision_mask = 0
 
-[node name="@CollisionShape2D@370" type="CollisionShape2D" parent="YSort/@Node2D@368/@StaticBody2D@371" unique_id=2072065075]
+[node name="@CollisionShape2D@78" type="CollisionShape2D" parent="YSort/Lemari_17/Lemari_17_Collision" unique_id=2028963336]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_db2ip")
 
-[node name="@Node2D@372" type="Node2D" parent="YSort" unique_id=501485620]
+[node name="Lemari_18" type="Node2D" parent="YSort" unique_id=1000444669]
 position = Vector2(540, 820)
 
-[node name="@Sprite2D@373" type="Sprite2D" parent="YSort/@Node2D@372" unique_id=273379502]
+[node name="Lemari_18_Gambar" type="Sprite2D" parent="YSort/Lemari_18" unique_id=1103635297]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@375" type="StaticBody2D" parent="YSort/@Node2D@372" unique_id=1603013002]
+[node name="Lemari_18_Collision" type="StaticBody2D" parent="YSort/Lemari_18" unique_id=573733632]
 collision_mask = 0
 
-[node name="@CollisionShape2D@374" type="CollisionShape2D" parent="YSort/@Node2D@372/@StaticBody2D@375" unique_id=2139832451]
+[node name="@CollisionShape2D@79" type="CollisionShape2D" parent="YSort/Lemari_18/Lemari_18_Collision" unique_id=1746515266]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_sk0hn")
 
-[node name="@Node2D@376" type="Node2D" parent="YSort" unique_id=2043519479]
+[node name="Meja_17" type="Node2D" parent="YSort" unique_id=1384912570]
 position = Vector2(720, 720)
 
-[node name="@Sprite2D@377" type="Sprite2D" parent="YSort/@Node2D@376" unique_id=572878847]
+[node name="Meja_17_Gambar" type="Sprite2D" parent="YSort/Meja_17" unique_id=339684678]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@379" type="StaticBody2D" parent="YSort/@Node2D@376" unique_id=255813666]
+[node name="Meja_17_Collision" type="StaticBody2D" parent="YSort/Meja_17" unique_id=939343440]
 collision_mask = 0
 
-[node name="@CollisionShape2D@378" type="CollisionShape2D" parent="YSort/@Node2D@376/@StaticBody2D@379" unique_id=412973582]
+[node name="@CollisionShape2D@80" type="CollisionShape2D" parent="YSort/Meja_17/Meja_17_Collision" unique_id=483955052]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_y65gy")
 
-[node name="@Node2D@380" type="Node2D" parent="YSort" unique_id=822111325]
+[node name="Kursi_27" type="Node2D" parent="YSort" unique_id=1695422551]
 position = Vector2(720, 790)
 
-[node name="@Sprite2D@381" type="Sprite2D" parent="YSort/@Node2D@380" unique_id=1226399691]
+[node name="Kursi_27_Gambar" type="Sprite2D" parent="YSort/Kursi_27" unique_id=18490188]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@383" type="StaticBody2D" parent="YSort/@Node2D@380" unique_id=529128321]
+[node name="Kursi_27_Collision" type="StaticBody2D" parent="YSort/Kursi_27" unique_id=1442762955]
 collision_mask = 0
 
-[node name="@CollisionShape2D@382" type="CollisionShape2D" parent="YSort/@Node2D@380/@StaticBody2D@383" unique_id=1457434718]
+[node name="@CollisionShape2D@81" type="CollisionShape2D" parent="YSort/Kursi_27/Kursi_27_Collision" unique_id=2065385474]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_jy80b")
 
-[node name="@Node2D@384" type="Node2D" parent="YSort" unique_id=2060182166]
+[node name="Komputer_09" type="Node2D" parent="YSort" unique_id=1688867804]
 position = Vector2(705, 702)
 
-[node name="@Sprite2D@385" type="Sprite2D" parent="YSort/@Node2D@384" unique_id=464389467]
+[node name="Komputer_09_Gambar" type="Sprite2D" parent="YSort/Komputer_09" unique_id=1431985585]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@386" type="Node2D" parent="YSort" unique_id=1306226282]
+[node name="Sofa_02" type="Node2D" parent="YSort" unique_id=297897743]
 position = Vector2(880, 800)
 
-[node name="@Sprite2D@387" type="Sprite2D" parent="YSort/@Node2D@386" unique_id=370198936]
+[node name="Sofa_02_Gambar" type="Sprite2D" parent="YSort/Sofa_02" unique_id=599860879]
 texture = ExtResource("20_8jqp6")
 
-[node name="@StaticBody2D@389" type="StaticBody2D" parent="YSort/@Node2D@386" unique_id=135232536]
+[node name="Sofa_02_Collision" type="StaticBody2D" parent="YSort/Sofa_02" unique_id=1372152834]
 collision_mask = 0
 
-[node name="@CollisionShape2D@388" type="CollisionShape2D" parent="YSort/@Node2D@386/@StaticBody2D@389" unique_id=795908523]
+[node name="@CollisionShape2D@82" type="CollisionShape2D" parent="YSort/Sofa_02/Sofa_02_Collision" unique_id=74544474]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_x00f4")
 
-[node name="@Node2D@390" type="Node2D" parent="YSort" unique_id=893637406]
+[node name="Tanaman_10" type="Node2D" parent="YSort" unique_id=1661145267]
 position = Vector2(690, 840)
 
-[node name="@Sprite2D@391" type="Sprite2D" parent="YSort/@Node2D@390" unique_id=46868410]
+[node name="Tanaman_10_Gambar" type="Sprite2D" parent="YSort/Tanaman_10" unique_id=1862231013]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@393" type="StaticBody2D" parent="YSort/@Node2D@390" unique_id=1810131530]
+[node name="Tanaman_10_Collision" type="StaticBody2D" parent="YSort/Tanaman_10" unique_id=2035053314]
 collision_mask = 0
 
-[node name="@CollisionShape2D@392" type="CollisionShape2D" parent="YSort/@Node2D@390/@StaticBody2D@393" unique_id=2112767613]
+[node name="@CollisionShape2D@83" type="CollisionShape2D" parent="YSort/Tanaman_10/Tanaman_10_Collision" unique_id=139958602]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_5evb1")
 
-[node name="@Node2D@394" type="Node2D" parent="YSort" unique_id=811139064]
+[node name="Tanaman_11" type="Node2D" parent="YSort" unique_id=823618873]
 position = Vector2(910, 700)
 
-[node name="@Sprite2D@395" type="Sprite2D" parent="YSort/@Node2D@394" unique_id=1382815529]
+[node name="Tanaman_11_Gambar" type="Sprite2D" parent="YSort/Tanaman_11" unique_id=2056959492]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@397" type="StaticBody2D" parent="YSort/@Node2D@394" unique_id=807803776]
+[node name="Tanaman_11_Collision" type="StaticBody2D" parent="YSort/Tanaman_11" unique_id=1408367934]
 collision_mask = 0
 
-[node name="@CollisionShape2D@396" type="CollisionShape2D" parent="YSort/@Node2D@394/@StaticBody2D@397" unique_id=1223976115]
+[node name="@CollisionShape2D@84" type="CollisionShape2D" parent="YSort/Tanaman_11/Tanaman_11_Collision" unique_id=1733551496]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_5k42d")
 
-[node name="@Node2D@398" type="Node2D" parent="YSort" unique_id=1246617275]
+[node name="Meja_18" type="Node2D" parent="YSort" unique_id=1772521854]
 position = Vector2(1000, 760)
 
-[node name="@Sprite2D@399" type="Sprite2D" parent="YSort/@Node2D@398" unique_id=1897995101]
+[node name="Meja_18_Gambar" type="Sprite2D" parent="YSort/Meja_18" unique_id=628185568]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@401" type="StaticBody2D" parent="YSort/@Node2D@398" unique_id=211750168]
+[node name="Meja_18_Collision" type="StaticBody2D" parent="YSort/Meja_18" unique_id=1402461835]
 collision_mask = 0
 
-[node name="@CollisionShape2D@400" type="CollisionShape2D" parent="YSort/@Node2D@398/@StaticBody2D@401" unique_id=1003823678]
+[node name="@CollisionShape2D@85" type="CollisionShape2D" parent="YSort/Meja_18/Meja_18_Collision" unique_id=814933505]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_0hcie")
 
-[node name="@Node2D@402" type="Node2D" parent="YSort" unique_id=942936885]
+[node name="Kursi_28" type="Node2D" parent="YSort" unique_id=293872041]
 position = Vector2(1000, 830)
 
-[node name="@Sprite2D@403" type="Sprite2D" parent="YSort/@Node2D@402" unique_id=197996877]
+[node name="Kursi_28_Gambar" type="Sprite2D" parent="YSort/Kursi_28" unique_id=485057659]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@405" type="StaticBody2D" parent="YSort/@Node2D@402" unique_id=1951572240]
+[node name="Kursi_28_Collision" type="StaticBody2D" parent="YSort/Kursi_28" unique_id=327500365]
 collision_mask = 0
 
-[node name="@CollisionShape2D@404" type="CollisionShape2D" parent="YSort/@Node2D@402/@StaticBody2D@405" unique_id=319263750]
+[node name="@CollisionShape2D@86" type="CollisionShape2D" parent="YSort/Kursi_28/Kursi_28_Collision" unique_id=979433543]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_sbi56")
 
-[node name="@Node2D@406" type="Node2D" parent="YSort" unique_id=210391470]
+[node name="Komputer_10" type="Node2D" parent="YSort" unique_id=297546550]
 position = Vector2(985, 742)
 
-[node name="@Sprite2D@407" type="Sprite2D" parent="YSort/@Node2D@406" unique_id=2123178917]
+[node name="Komputer_10_Gambar" type="Sprite2D" parent="YSort/Komputer_10" unique_id=902942387]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@408" type="Node2D" parent="YSort" unique_id=27316305]
+[node name="Tanaman_12" type="Node2D" parent="YSort" unique_id=159535412]
 position = Vector2(1300, 700)
 
-[node name="@Sprite2D@409" type="Sprite2D" parent="YSort/@Node2D@408" unique_id=1237549490]
+[node name="Tanaman_12_Gambar" type="Sprite2D" parent="YSort/Tanaman_12" unique_id=2078466155]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@411" type="StaticBody2D" parent="YSort/@Node2D@408" unique_id=604348512]
+[node name="Tanaman_12_Collision" type="StaticBody2D" parent="YSort/Tanaman_12" unique_id=113311921]
 collision_mask = 0
 
-[node name="@CollisionShape2D@410" type="CollisionShape2D" parent="YSort/@Node2D@408/@StaticBody2D@411" unique_id=1913669853]
+[node name="@CollisionShape2D@87" type="CollisionShape2D" parent="YSort/Tanaman_12/Tanaman_12_Collision" unique_id=707012901]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ld3li")
 
-[node name="@Node2D@412" type="Node2D" parent="YSort" unique_id=86401464]
+[node name="Tanaman_13" type="Node2D" parent="YSort" unique_id=1543092325]
 position = Vector2(1300, 840)
 
-[node name="@Sprite2D@413" type="Sprite2D" parent="YSort/@Node2D@412" unique_id=1893259653]
+[node name="Tanaman_13_Gambar" type="Sprite2D" parent="YSort/Tanaman_13" unique_id=1803586718]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@415" type="StaticBody2D" parent="YSort/@Node2D@412" unique_id=1198365168]
+[node name="Tanaman_13_Collision" type="StaticBody2D" parent="YSort/Tanaman_13" unique_id=1251001966]
 collision_mask = 0
 
-[node name="@CollisionShape2D@414" type="CollisionShape2D" parent="YSort/@Node2D@412/@StaticBody2D@415" unique_id=1565735106]
+[node name="@CollisionShape2D@88" type="CollisionShape2D" parent="YSort/Tanaman_13/Tanaman_13_Collision" unique_id=141588827]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_yev4l")
 
-[node name="@Node2D@416" type="Node2D" parent="YSort" unique_id=1142004200]
+[node name="Rak_Buku_03" type="Node2D" parent="YSort" unique_id=53497367]
 position = Vector2(950, 700)
 
-[node name="@Sprite2D@417" type="Sprite2D" parent="YSort/@Node2D@416" unique_id=267207212]
+[node name="Rak_Buku_03_Gambar" type="Sprite2D" parent="YSort/Rak_Buku_03" unique_id=1266859305]
 position = Vector2(0, -8)
 texture = ExtResource("21_jscgt")
 
-[node name="@StaticBody2D@419" type="StaticBody2D" parent="YSort/@Node2D@416" unique_id=362177681]
+[node name="Rak_Buku_03_Collision" type="StaticBody2D" parent="YSort/Rak_Buku_03" unique_id=1627880973]
 collision_mask = 0
 
-[node name="@CollisionShape2D@418" type="CollisionShape2D" parent="YSort/@Node2D@416/@StaticBody2D@419" unique_id=1236636203]
+[node name="@CollisionShape2D@89" type="CollisionShape2D" parent="YSort/Rak_Buku_03/Rak_Buku_03_Collision" unique_id=2085671705]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ktps4")
 
-[node name="@Node2D@420" type="Node2D" parent="YSort" unique_id=1879325626]
+[node name="Komputer_11" type="Node2D" parent="YSort" unique_id=1243143415]
 position = Vector2(700, 340)
 
-[node name="@Sprite2D@421" type="Sprite2D" parent="YSort/@Node2D@420" unique_id=518880704]
+[node name="Komputer_11_Gambar" type="Sprite2D" parent="YSort/Komputer_11" unique_id=1335605483]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@422" type="Node2D" parent="YSort" unique_id=674532316]
+[node name="Komputer_12" type="Node2D" parent="YSort" unique_id=687099381]
 position = Vector2(760, 340)
 
-[node name="@Sprite2D@423" type="Sprite2D" parent="YSort/@Node2D@422" unique_id=872342496]
+[node name="Komputer_12_Gambar" type="Sprite2D" parent="YSort/Komputer_12" unique_id=1023133001]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@424" type="Node2D" parent="YSort" unique_id=1440358277]
+[node name="Lemari_19" type="Node2D" parent="YSort" unique_id=1488097677]
 position = Vector2(660, 310)
 
-[node name="@Sprite2D@425" type="Sprite2D" parent="YSort/@Node2D@424" unique_id=252738396]
+[node name="Lemari_19_Gambar" type="Sprite2D" parent="YSort/Lemari_19" unique_id=1044941202]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@427" type="StaticBody2D" parent="YSort/@Node2D@424" unique_id=21502910]
+[node name="Lemari_19_Collision" type="StaticBody2D" parent="YSort/Lemari_19" unique_id=1557875941]
 collision_mask = 0
 
-[node name="@CollisionShape2D@426" type="CollisionShape2D" parent="YSort/@Node2D@424/@StaticBody2D@427" unique_id=185145276]
+[node name="@CollisionShape2D@90" type="CollisionShape2D" parent="YSort/Lemari_19/Lemari_19_Collision" unique_id=785684453]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_sgffb")
 
-[node name="@Node2D@428" type="Node2D" parent="YSort" unique_id=1404791448]
+[node name="Lemari_20" type="Node2D" parent="YSort" unique_id=614143298]
 position = Vector2(800, 310)
 
-[node name="@Sprite2D@429" type="Sprite2D" parent="YSort/@Node2D@428" unique_id=2073057534]
+[node name="Lemari_20_Gambar" type="Sprite2D" parent="YSort/Lemari_20" unique_id=636344393]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@431" type="StaticBody2D" parent="YSort/@Node2D@428" unique_id=79651703]
+[node name="Lemari_20_Collision" type="StaticBody2D" parent="YSort/Lemari_20" unique_id=2140550251]
 collision_mask = 0
 
-[node name="@CollisionShape2D@430" type="CollisionShape2D" parent="YSort/@Node2D@428/@StaticBody2D@431" unique_id=1888126720]
+[node name="@CollisionShape2D@91" type="CollisionShape2D" parent="YSort/Lemari_20/Lemari_20_Collision" unique_id=598688874]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_w5plq")
 
-[node name="@Node2D@432" type="Node2D" parent="YSort" unique_id=130017274]
+[node name="Lemari_21" type="Node2D" parent="YSort" unique_id=107979441]
 position = Vector2(880, 350)
 
-[node name="@Sprite2D@433" type="Sprite2D" parent="YSort/@Node2D@432" unique_id=324386179]
+[node name="Lemari_21_Gambar" type="Sprite2D" parent="YSort/Lemari_21" unique_id=2019032860]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@435" type="StaticBody2D" parent="YSort/@Node2D@432" unique_id=38468087]
+[node name="Lemari_21_Collision" type="StaticBody2D" parent="YSort/Lemari_21" unique_id=622157646]
 collision_mask = 0
 
-[node name="@CollisionShape2D@434" type="CollisionShape2D" parent="YSort/@Node2D@432/@StaticBody2D@435" unique_id=558648048]
+[node name="@CollisionShape2D@92" type="CollisionShape2D" parent="YSort/Lemari_21/Lemari_21_Collision" unique_id=314192069]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_6kneo")
 
-[node name="@Node2D@436" type="Node2D" parent="YSort" unique_id=462667796]
+[node name="Tumpukan_Kertas_06" type="Node2D" parent="YSort" unique_id=1059274123]
 position = Vector2(900, 400)
 
-[node name="@Sprite2D@437" type="Sprite2D" parent="YSort/@Node2D@436" unique_id=29856763]
+[node name="Tumpukan_Kertas_06_Gambar" type="Sprite2D" parent="YSort/Tumpukan_Kertas_06" unique_id=442870675]
 position = Vector2(0, 1)
 texture = ExtResource("10_hg84p")
 
-[node name="@Node2D@438" type="Node2D" parent="YSort" unique_id=1161442277]
+[node name="Tanaman_14" type="Node2D" parent="YSort" unique_id=1694870927]
 position = Vector2(970, 450)
 
-[node name="@Sprite2D@439" type="Sprite2D" parent="YSort/@Node2D@438" unique_id=767333742]
+[node name="Tanaman_14_Gambar" type="Sprite2D" parent="YSort/Tanaman_14" unique_id=2097974467]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@441" type="StaticBody2D" parent="YSort/@Node2D@438" unique_id=1511560931]
+[node name="Tanaman_14_Collision" type="StaticBody2D" parent="YSort/Tanaman_14" unique_id=321702343]
 collision_mask = 0
 
-[node name="@CollisionShape2D@440" type="CollisionShape2D" parent="YSort/@Node2D@438/@StaticBody2D@441" unique_id=1115057759]
+[node name="@CollisionShape2D@93" type="CollisionShape2D" parent="YSort/Tanaman_14/Tanaman_14_Collision" unique_id=1007865446]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ml8j2")
 
-[node name="@Node2D@442" type="Node2D" parent="YSort" unique_id=174369860]
+[node name="Tempat_Sampah_04" type="Node2D" parent="YSort" unique_id=604382013]
 position = Vector2(850, 450)
 
-[node name="@Sprite2D@443" type="Sprite2D" parent="YSort/@Node2D@442" unique_id=1242767830]
+[node name="Tempat_Sampah_04_Gambar" type="Sprite2D" parent="YSort/Tempat_Sampah_04" unique_id=286434791]
 position = Vector2(0, 0.5)
 texture = ExtResource("19_bamb7")
 
-[node name="@StaticBody2D@445" type="StaticBody2D" parent="YSort/@Node2D@442" unique_id=743673526]
+[node name="Tempat_Sampah_04_Collision" type="StaticBody2D" parent="YSort/Tempat_Sampah_04" unique_id=2010756014]
 collision_mask = 0
 
-[node name="@CollisionShape2D@444" type="CollisionShape2D" parent="YSort/@Node2D@442/@StaticBody2D@445" unique_id=38965744]
+[node name="@CollisionShape2D@94" type="CollisionShape2D" parent="YSort/Tempat_Sampah_04/Tempat_Sampah_04_Collision" unique_id=795363425]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_n8axp")
 
-[node name="@Node2D@446" type="Node2D" parent="YSort" unique_id=1363418343]
+[node name="Meja_19" type="Node2D" parent="YSort" unique_id=804881143]
 position = Vector2(1060, 350)
 
-[node name="@Sprite2D@447" type="Sprite2D" parent="YSort/@Node2D@446" unique_id=1404703886]
+[node name="Meja_19_Gambar" type="Sprite2D" parent="YSort/Meja_19" unique_id=1193727944]
 position = Vector2(0, -10.5)
 texture = ExtResource("13_tdlki")
 
-[node name="@StaticBody2D@449" type="StaticBody2D" parent="YSort/@Node2D@446" unique_id=1810215573]
+[node name="Meja_19_Collision" type="StaticBody2D" parent="YSort/Meja_19" unique_id=97552281]
 collision_mask = 0
 
-[node name="@CollisionShape2D@448" type="CollisionShape2D" parent="YSort/@Node2D@446/@StaticBody2D@449" unique_id=75989506]
+[node name="@CollisionShape2D@95" type="CollisionShape2D" parent="YSort/Meja_19/Meja_19_Collision" unique_id=802887767]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_sy755")
 
-[node name="@Node2D@450" type="Node2D" parent="YSort" unique_id=503539316]
+[node name="Kursi_29" type="Node2D" parent="YSort" unique_id=736874970]
 position = Vector2(1060, 420)
 
-[node name="@Sprite2D@451" type="Sprite2D" parent="YSort/@Node2D@450" unique_id=1707373395]
+[node name="Kursi_29_Gambar" type="Sprite2D" parent="YSort/Kursi_29" unique_id=402141015]
 position = Vector2(0, -5)
 texture = ExtResource("6_iw4em")
 
-[node name="@StaticBody2D@453" type="StaticBody2D" parent="YSort/@Node2D@450" unique_id=186461239]
+[node name="Kursi_29_Collision" type="StaticBody2D" parent="YSort/Kursi_29" unique_id=337036477]
 collision_mask = 0
 
-[node name="@CollisionShape2D@452" type="CollisionShape2D" parent="YSort/@Node2D@450/@StaticBody2D@453" unique_id=1632926762]
+[node name="@CollisionShape2D@96" type="CollisionShape2D" parent="YSort/Kursi_29/Kursi_29_Collision" unique_id=1009059636]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_gh4wy")
 
-[node name="@Node2D@454" type="Node2D" parent="YSort" unique_id=1129699014]
+[node name="Komputer_13" type="Node2D" parent="YSort" unique_id=1523075806]
 position = Vector2(1045, 332)
 
-[node name="@Sprite2D@455" type="Sprite2D" parent="YSort/@Node2D@454" unique_id=202303116]
+[node name="Komputer_13_Gambar" type="Sprite2D" parent="YSort/Komputer_13" unique_id=637269784]
 position = Vector2(0, -1)
 texture = ExtResource("14_v8pws")
 
-[node name="@Node2D@456" type="Node2D" parent="YSort" unique_id=1336656140]
+[node name="Lemari_22" type="Node2D" parent="YSort" unique_id=958937271]
 position = Vector2(1120, 320)
 
-[node name="@Sprite2D@457" type="Sprite2D" parent="YSort/@Node2D@456" unique_id=627241314]
+[node name="Lemari_22_Gambar" type="Sprite2D" parent="YSort/Lemari_22" unique_id=575233617]
 position = Vector2(0, -13.5)
 texture = ExtResource("22_0bysi")
 
-[node name="@StaticBody2D@459" type="StaticBody2D" parent="YSort/@Node2D@456" unique_id=2041120533]
+[node name="Lemari_22_Collision" type="StaticBody2D" parent="YSort/Lemari_22" unique_id=827324781]
 collision_mask = 0
 
-[node name="@CollisionShape2D@458" type="CollisionShape2D" parent="YSort/@Node2D@456/@StaticBody2D@459" unique_id=1511798408]
+[node name="@CollisionShape2D@97" type="CollisionShape2D" parent="YSort/Lemari_22/Lemari_22_Collision" unique_id=29957807]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ensp4")
 
-[node name="@Node2D@460" type="Node2D" parent="YSort" unique_id=1356685670]
+[node name="Tanaman_15" type="Node2D" parent="YSort" unique_id=1359579902]
 position = Vector2(1160, 450)
 
-[node name="@Sprite2D@461" type="Sprite2D" parent="YSort/@Node2D@460" unique_id=1783733330]
+[node name="Tanaman_15_Gambar" type="Sprite2D" parent="YSort/Tanaman_15" unique_id=1785924047]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@463" type="StaticBody2D" parent="YSort/@Node2D@460" unique_id=426243362]
+[node name="Tanaman_15_Collision" type="StaticBody2D" parent="YSort/Tanaman_15" unique_id=276605035]
 collision_mask = 0
 
-[node name="@CollisionShape2D@462" type="CollisionShape2D" parent="YSort/@Node2D@460/@StaticBody2D@463" unique_id=1214061082]
+[node name="@CollisionShape2D@98" type="CollisionShape2D" parent="YSort/Tanaman_15/Tanaman_15_Collision" unique_id=633779942]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_jx4gr")
 
-[node name="@Node2D@464" type="Node2D" parent="YSort" unique_id=295866910]
+[node name="Tanaman_16" type="Node2D" parent="YSort" unique_id=999903358]
 position = Vector2(70, 100)
 
-[node name="@Sprite2D@465" type="Sprite2D" parent="YSort/@Node2D@464" unique_id=944134038]
+[node name="Tanaman_16_Gambar" type="Sprite2D" parent="YSort/Tanaman_16" unique_id=1441839779]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@467" type="StaticBody2D" parent="YSort/@Node2D@464" unique_id=982307664]
+[node name="Tanaman_16_Collision" type="StaticBody2D" parent="YSort/Tanaman_16" unique_id=2049194671]
 collision_mask = 0
 
-[node name="@CollisionShape2D@466" type="CollisionShape2D" parent="YSort/@Node2D@464/@StaticBody2D@467" unique_id=491256427]
+[node name="@CollisionShape2D@99" type="CollisionShape2D" parent="YSort/Tanaman_16/Tanaman_16_Collision" unique_id=1342048097]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_j0eh6")
 
-[node name="@Node2D@468" type="Node2D" parent="YSort" unique_id=211484634]
+[node name="Tanaman_Tinggi_01" type="Node2D" parent="YSort" unique_id=733781095]
 position = Vector2(1450, 100)
 
-[node name="@Sprite2D@469" type="Sprite2D" parent="YSort/@Node2D@468" unique_id=712482337]
+[node name="Tanaman_Tinggi_01_Gambar" type="Sprite2D" parent="YSort/Tanaman_Tinggi_01" unique_id=812142114]
 position = Vector2(0, -13.5)
 texture = ExtResource("23_y0ove")
 
-[node name="@StaticBody2D@471" type="StaticBody2D" parent="YSort/@Node2D@468" unique_id=1756531037]
+[node name="Tanaman_Tinggi_01_Collision" type="StaticBody2D" parent="YSort/Tanaman_Tinggi_01" unique_id=809488900]
 collision_mask = 0
 
-[node name="@CollisionShape2D@470" type="CollisionShape2D" parent="YSort/@Node2D@468/@StaticBody2D@471" unique_id=1977058496]
+[node name="@CollisionShape2D@100" type="CollisionShape2D" parent="YSort/Tanaman_Tinggi_01/Tanaman_Tinggi_01_Collision" unique_id=127686489]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_k6c4v")
 
-[node name="@Node2D@472" type="Node2D" parent="YSort" unique_id=550664756]
+[node name="Tanaman_17" type="Node2D" parent="YSort" unique_id=1218051929]
 position = Vector2(70, 860)
 
-[node name="@Sprite2D@473" type="Sprite2D" parent="YSort/@Node2D@472" unique_id=46487322]
+[node name="Tanaman_17_Gambar" type="Sprite2D" parent="YSort/Tanaman_17" unique_id=1414535876]
 position = Vector2(0, -12.5)
 texture = ExtResource("18_v0i6o")
 
-[node name="@StaticBody2D@475" type="StaticBody2D" parent="YSort/@Node2D@472" unique_id=1238808127]
+[node name="Tanaman_17_Collision" type="StaticBody2D" parent="YSort/Tanaman_17" unique_id=728321227]
 collision_mask = 0
 
-[node name="@CollisionShape2D@474" type="CollisionShape2D" parent="YSort/@Node2D@472/@StaticBody2D@475" unique_id=1560683969]
+[node name="@CollisionShape2D@101" type="CollisionShape2D" parent="YSort/Tanaman_17/Tanaman_17_Collision" unique_id=958706056]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_jie0a")
 
-[node name="@Node2D@476" type="Node2D" parent="YSort" unique_id=63480609]
+[node name="Tanaman_Tinggi_02" type="Node2D" parent="YSort" unique_id=1510558489]
 position = Vector2(1450, 860)
 
-[node name="@Sprite2D@477" type="Sprite2D" parent="YSort/@Node2D@476" unique_id=171667178]
+[node name="Tanaman_Tinggi_02_Gambar" type="Sprite2D" parent="YSort/Tanaman_Tinggi_02" unique_id=1399386822]
 position = Vector2(0, -13.5)
 texture = ExtResource("23_y0ove")
 
-[node name="@StaticBody2D@479" type="StaticBody2D" parent="YSort/@Node2D@476" unique_id=1967685201]
+[node name="Tanaman_Tinggi_02_Collision" type="StaticBody2D" parent="YSort/Tanaman_Tinggi_02" unique_id=2021929023]
 collision_mask = 0
 
-[node name="@CollisionShape2D@478" type="CollisionShape2D" parent="YSort/@Node2D@476/@StaticBody2D@479" unique_id=321582618]
+[node name="@CollisionShape2D@102" type="CollisionShape2D" parent="YSort/Tanaman_Tinggi_02/Tanaman_Tinggi_02_Collision" unique_id=498639108]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_a8j6k")
 
-[node name="@Node2D@480" type="Node2D" parent="YSort" unique_id=1403011611]
+[node name="Tempat_Sampah_05" type="Node2D" parent="YSort" unique_id=935585431]
 position = Vector2(1400, 620)
 
-[node name="@Sprite2D@481" type="Sprite2D" parent="YSort/@Node2D@480" unique_id=265431201]
+[node name="Tempat_Sampah_05_Gambar" type="Sprite2D" parent="YSort/Tempat_Sampah_05" unique_id=1305843931]
 position = Vector2(0, 0.5)
 texture = ExtResource("19_bamb7")
 
-[node name="@StaticBody2D@483" type="StaticBody2D" parent="YSort/@Node2D@480" unique_id=1543982112]
+[node name="Tempat_Sampah_05_Collision" type="StaticBody2D" parent="YSort/Tempat_Sampah_05" unique_id=15127783]
 collision_mask = 0
 
-[node name="@CollisionShape2D@482" type="CollisionShape2D" parent="YSort/@Node2D@480/@StaticBody2D@483" unique_id=622515502]
+[node name="@CollisionShape2D@103" type="CollisionShape2D" parent="YSort/Tempat_Sampah_05/Tempat_Sampah_05_Collision" unique_id=265807765]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_mcd2o")
 
-[node name="@Node2D@484" type="Node2D" parent="YSort" unique_id=1479013069]
+[node name="Tempat_Sampah_06" type="Node2D" parent="YSort" unique_id=549224695]
 position = Vector2(1400, 300)
 
-[node name="@Sprite2D@485" type="Sprite2D" parent="YSort/@Node2D@484" unique_id=126892524]
+[node name="Tempat_Sampah_06_Gambar" type="Sprite2D" parent="YSort/Tempat_Sampah_06" unique_id=519609023]
 position = Vector2(0, 0.5)
 texture = ExtResource("19_bamb7")
 
-[node name="@StaticBody2D@487" type="StaticBody2D" parent="YSort/@Node2D@484" unique_id=1967935710]
+[node name="Tempat_Sampah_06_Collision" type="StaticBody2D" parent="YSort/Tempat_Sampah_06" unique_id=922047133]
 collision_mask = 0
 
-[node name="@CollisionShape2D@486" type="CollisionShape2D" parent="YSort/@Node2D@484/@StaticBody2D@487" unique_id=75705004]
+[node name="@CollisionShape2D@104" type="CollisionShape2D" parent="YSort/Tempat_Sampah_06/Tempat_Sampah_06_Collision" unique_id=941122358]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_166xl")
 
-[node name="@Node2D@524" type="Node2D" parent="YSort" unique_id=736651124]
+[node name="Kursi_Terbalik" type="Node2D" parent="YSort" unique_id=1548574672]
 position = Vector2(1200, 500)
 rotation = 1.5707964
 
-[node name="@Sprite2D@525" type="Sprite2D" parent="YSort/@Node2D@524" unique_id=576843951]
+[node name="@Sprite2D@105" type="Sprite2D" parent="YSort/Kursi_Terbalik" unique_id=1619497380]
 texture = ExtResource("5_mbb35")
 
-[node name="@Node2D@527" type="Node2D" parent="YSort" unique_id=1338123986]
+[node name="Sel" type="Node2D" parent="YSort" unique_id=1757590422]
 position = Vector2(1080, 140)
 
-[node name="@Polygon2D@528" type="Polygon2D" parent="YSort/@Node2D@527" unique_id=1986904600]
+[node name="Jeruji_01" type="Polygon2D" parent="YSort/Sel" unique_id=1245117515]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(-32, -24, -28, -24, -28, 24, -32, 24)
 
-[node name="@Polygon2D@529" type="Polygon2D" parent="YSort/@Node2D@527" unique_id=686387708]
+[node name="Jeruji_02" type="Polygon2D" parent="YSort/Sel" unique_id=422647552]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(-17, -24, -13, -24, -13, 24, -17, 24)
 
-[node name="@Polygon2D@530" type="Polygon2D" parent="YSort/@Node2D@527" unique_id=1401118070]
+[node name="Jeruji_03" type="Polygon2D" parent="YSort/Sel" unique_id=1433395019]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(-2, -24, 2, -24, 2, 24, -2, 24)
 
-[node name="@Polygon2D@531" type="Polygon2D" parent="YSort/@Node2D@527" unique_id=1436157795]
+[node name="Jeruji_04" type="Polygon2D" parent="YSort/Sel" unique_id=141022389]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(13, -24, 17, -24, 17, 24, 13, 24)
 
-[node name="@Polygon2D@532" type="Polygon2D" parent="YSort/@Node2D@527" unique_id=705760705]
+[node name="Jeruji_05" type="Polygon2D" parent="YSort/Sel" unique_id=106069499]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(28, -24, 32, -24, 32, 24, 28, 24)
 
-[node name="@Polygon2D@533" type="Polygon2D" parent="YSort/@Node2D@527" unique_id=981872552]
+[node name="Jeruji_Atas" type="Polygon2D" parent="YSort/Sel" unique_id=1552552434]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(-32, -26, 32, -26, 32, -22, -32, -22)
 
-[node name="@Polygon2D@534" type="Polygon2D" parent="YSort/@Node2D@527" unique_id=613550776]
+[node name="Jeruji_Bawah" type="Polygon2D" parent="YSort/Sel" unique_id=580136179]
 color = Color(0.15, 0.15, 0.15, 1)
 polygon = PackedVector2Array(-32, 22, 32, 22, 32, 26, -32, 26)
 
-[node name="Spawner" type="MultiplayerSpawner" parent="." unique_id=1031697507]
+[node name="Spawner" type="MultiplayerSpawner" parent="." unique_id=873129517]
 spawn_path = NodePath("../YSort")
 
-[node name="Network" type="Node" parent="." unique_id=1019567199]
+[node name="Network" type="Node" parent="." unique_id=1760047646]
 script = ExtResource("24_awarj")
 
-[node name="FloorLayer" type="TileMapLayer" parent="." unique_id=1327444390]
+[node name="FloorLayer" type="TileMapLayer" parent="." unique_id=536118163]
 z_index = -2
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAABAAAAAAABAAAAAAACAAAAAAABAAAAAAADAAAAAAABAAAAAAAEAAAAAAABAAAAAAAFAAAAAAABAAAAAAAGAAAAAAABAAAAAAAHAAAAAAABAAAAAAAIAAAAAAABAAAAAAAJAAAAAAABAAAAAAAKAAAAAAABAAAAAAALAAAAAAABAAAAAAAMAAAAAAABAAAAAAANAAAAAAABAAAAAAAOAAAAAAABAAAAAAAPAAAAAAABAAAAAAAQAAAAAAABAAAAAAARAAAAAAABAAAAAAASAAAAAAABAAAAAAATAAAAAAABAAAAAAAUAAAAAAABAAAAAAAVAAAAAAABAAAAAAAWAAAAAAABAAAAAAAXAAAAAAABAAAAAAAYAAAAAAABAAAAAAAZAAAAAAABAAAAAAAaAAAAAAABAAAAAAAbAAAAAAABAAAAAAAcAAAAAAABAAAAAAAdAAAAAAABAAAAAAAeAAAAAAABAAAAAAAfAAAAAAABAAAAAAAgAAAAAAABAAAAAAAhAAAAAAABAAAAAAAiAAAAAAABAAAAAAAjAAAAAAABAAAAAAAkAAAAAAABAAAAAAAlAAAAAAABAAAAAAAmAAAAAAABAAAAAAAnAAAAAAABAAAAAAAoAAAAAAABAAAAAAApAAAAAAABAAAAAAAqAAAAAAACAAAAAAArAAAAAAABAAAAAAAsAAAAAAABAAAAAAAtAAAAAAABAAAAAAAuAAAAAAABAAAAAAAvAAAAAAABAAAAAAAAAAEAAAABAAAAAAABAAEAAAABAAAAAAACAAEAAAABAAAAAAADAAEAAAABAAAAAAAEAAEAAAABAAAAAAAFAAEAAAABAAAAAAAGAAEAAAABAAAAAAAHAAEAAAABAAAAAAAIAAEAAAABAAAAAAAJAAEAAAABAAAAAAAKAAEAAAABAAAAAAALAAEAAAABAAAAAAAMAAEAAAABAAAAAAANAAEAAAABAAAAAAAOAAEAAAABAAAAAAAPAAEAAAABAAAAAAAQAAEAAAABAAAAAAARAAEAAAABAAAAAAASAAEAAAABAAAAAAATAAEAAAABAAAAAAAUAAEAAAABAAAAAAAVAAEAAAABAAAAAAAWAAEAAAABAAAAAAAXAAEAAAABAAAAAAAYAAEAAAABAAAAAAAZAAEAAAABAAAAAAAaAAEAAAABAAAAAAAbAAEAAAABAAAAAAAcAAEAAAABAAAAAAAdAAEAAAABAAAAAAAeAAEAAAABAAAAAAAfAAEAAAABAAAAAAAgAAEAAAABAAAAAAAhAAEAAAABAAAAAAAiAAEAAAABAAAAAAAjAAEAAAABAAAAAAAkAAEAAAABAAAAAAAlAAEAAAABAAAAAAAmAAEAAAABAAAAAAAnAAEAAAABAAAAAAAoAAEAAAABAAAAAAApAAEAAAABAAAAAAAqAAEAAAACAAAAAAArAAEAAAABAAAAAAAsAAEAAAABAAAAAAAtAAEAAAABAAAAAAAuAAEAAAABAAAAAAAvAAEAAAABAAAAAAAAAAIAAAABAAAAAAABAAIAAAABAAAAAAACAAIAAAABAAAAAAADAAIAAAABAAAAAAAEAAIAAAABAAAAAAAFAAIAAAABAAAAAAAGAAIAAAABAAAAAAAHAAIAAAABAAAAAAAIAAIAAAABAAAAAAAJAAIAAAABAAAAAAAKAAIAAAABAAAAAAALAAIAAAABAAAAAAAMAAIAAAABAAAAAAANAAIAAAABAAAAAAAOAAIAAAABAAAAAAAPAAIAAAABAAAAAAAQAAIAAAABAAAAAAARAAIAAAABAAAAAAASAAIAAAABAAAAAAATAAIAAAABAAAAAAAUAAIAAAABAAAAAAAVAAIAAAABAAAAAAAWAAIAAAABAAAAAAAXAAIAAAABAAAAAAAYAAIAAAABAAAAAAAZAAIAAAABAAAAAAAaAAIAAAABAAAAAAAbAAIAAAABAAAAAAAcAAIAAAAAAAAAAAAdAAIAAAAAAAAAAAAeAAIAAAAAAAAAAAAfAAIAAAAAAAAAAAAgAAIAAAAAAAAAAAAhAAIAAAAAAAAAAAAiAAIAAAAAAAAAAAAjAAIAAAABAAAAAAAkAAIAAAABAAAAAAAlAAIAAAABAAAAAAAmAAIAAAABAAAAAAAnAAIAAAABAAAAAAAoAAIAAAABAAAAAAApAAIAAAABAAAAAAAqAAIAAAACAAAAAAArAAIAAAABAAAAAAAsAAIAAAABAAAAAAAtAAIAAAABAAAAAAAuAAIAAAABAAAAAAAvAAIAAAABAAAAAAAAAAMAAAABAAAAAAABAAMAAAABAAAAAAACAAMAAAABAAAAAAADAAMAAAABAAAAAAAEAAMAAAABAAAAAAAFAAMAAAABAAAAAAAGAAMAAAABAAAAAAAHAAMAAAABAAAAAAAIAAMAAAABAAAAAAAJAAMAAAABAAAAAAAKAAMAAAABAAAAAAALAAMAAAABAAAAAAAMAAMAAAABAAAAAAANAAMAAAABAAAAAAAOAAMAAAABAAAAAAAPAAMAAAABAAAAAAAQAAMAAAABAAAAAAARAAMAAAABAAAAAAASAAMAAAABAAAAAAATAAMAAAABAAAAAAAUAAMAAAABAAAAAAAVAAMAAAABAAAAAAAWAAMAAAABAAAAAAAXAAMAAAABAAAAAAAYAAMAAAABAAAAAAAZAAMAAAABAAAAAAAaAAMAAAABAAAAAAAbAAMAAAABAAAAAAAcAAMAAAAAAAAAAAAdAAMAAAAAAAAAAAAeAAMAAAAAAAAAAAAfAAMAAAAAAAAAAAAgAAMAAAAAAAAAAAAhAAMAAAAAAAAAAAAiAAMAAAAAAAAAAAAjAAMAAAABAAAAAAAkAAMAAAABAAAAAAAlAAMAAAABAAAAAAAmAAMAAAABAAAAAAAnAAMAAAABAAAAAAAoAAMAAAABAAAAAAApAAMAAAABAAAAAAAqAAMAAAACAAAAAAArAAMAAAABAAAAAAAsAAMAAAABAAAAAAAtAAMAAAABAAAAAAAuAAMAAAABAAAAAAAvAAMAAAABAAAAAAAAAAQAAAABAAAAAAABAAQAAAABAAAAAAACAAQAAAABAAAAAAADAAQAAAABAAAAAAAEAAQAAAABAAAAAAAFAAQAAAABAAAAAAAGAAQAAAABAAAAAAAHAAQAAAABAAAAAAAIAAQAAAABAAAAAAAJAAQAAAABAAAAAAAKAAQAAAABAAAAAAALAAQAAAABAAAAAAAMAAQAAAABAAAAAAANAAQAAAABAAAAAAAOAAQAAAABAAAAAAAPAAQAAAABAAAAAAAQAAQAAAABAAAAAAARAAQAAAABAAAAAAASAAQAAAABAAAAAAATAAQAAAABAAAAAAAUAAQAAAABAAAAAAAVAAQAAAABAAAAAAAWAAQAAAABAAAAAAAXAAQAAAABAAAAAAAYAAQAAAABAAAAAAAZAAQAAAABAAAAAAAaAAQAAAABAAAAAAAbAAQAAAABAAAAAAAcAAQAAAAAAAAAAAAdAAQAAAAAAAAAAAAeAAQAAAAAAAAAAAAfAAQAAAAAAAAAAAAgAAQAAAAAAAAAAAAhAAQAAAAAAAAAAAAiAAQAAAAAAAAAAAAjAAQAAAABAAAAAAAkAAQAAAABAAAAAAAlAAQAAAABAAAAAAAmAAQAAAABAAAAAAAnAAQAAAABAAAAAAAoAAQAAAABAAAAAAApAAQAAAABAAAAAAAqAAQAAAACAAAAAAArAAQAAAABAAAAAAAsAAQAAAABAAAAAAAtAAQAAAABAAAAAAAuAAQAAAABAAAAAAAvAAQAAAABAAAAAAAAAAUAAAABAAAAAAABAAUAAAABAAAAAAACAAUAAAABAAAAAAADAAUAAAABAAAAAAAEAAUAAAABAAAAAAAFAAUAAAABAAAAAAAGAAUAAAABAAAAAAAHAAUAAAABAAAAAAAIAAUAAAABAAAAAAAJAAUAAAABAAAAAAAKAAUAAAABAAAAAAALAAUAAAABAAAAAAAMAAUAAAABAAAAAAANAAUAAAABAAAAAAAOAAUAAAABAAAAAAAPAAUAAAABAAAAAAAQAAUAAAABAAAAAAARAAUAAAABAAAAAAASAAUAAAABAAAAAAATAAUAAAABAAAAAAAUAAUAAAABAAAAAAAVAAUAAAABAAAAAAAWAAUAAAABAAAAAAAXAAUAAAABAAAAAAAYAAUAAAABAAAAAAAZAAUAAAABAAAAAAAaAAUAAAABAAAAAAAbAAUAAAABAAAAAAAcAAUAAAAAAAAAAAAdAAUAAAAAAAAAAAAeAAUAAAAAAAAAAAAfAAUAAAAAAAAAAAAgAAUAAAAAAAAAAAAhAAUAAAAAAAAAAAAiAAUAAAAAAAAAAAAjAAUAAAABAAAAAAAkAAUAAAABAAAAAAAlAAUAAAABAAAAAAAmAAUAAAABAAAAAAAnAAUAAAABAAAAAAAoAAUAAAABAAAAAAApAAUAAAABAAAAAAAqAAUAAAACAAAAAAArAAUAAAABAAAAAAAsAAUAAAABAAAAAAAtAAUAAAABAAAAAAAuAAUAAAABAAAAAAAvAAUAAAABAAAAAAAAAAYAAAABAAAAAAABAAYAAAABAAAAAAACAAYAAAABAAAAAAADAAYAAAABAAAAAAAEAAYAAAABAAAAAAAFAAYAAAABAAAAAAAGAAYAAAABAAAAAAAHAAYAAAABAAAAAAAIAAYAAAABAAAAAAAJAAYAAAABAAAAAAAKAAYAAAABAAAAAAALAAYAAAABAAAAAAAMAAYAAAABAAAAAAANAAYAAAABAAAAAAAOAAYAAAABAAAAAAAPAAYAAAABAAAAAAAQAAYAAAABAAAAAAARAAYAAAABAAAAAAASAAYAAAABAAAAAAATAAYAAAABAAAAAAAUAAYAAAABAAAAAAAVAAYAAAABAAAAAAAWAAYAAAABAAAAAAAXAAYAAAABAAAAAAAYAAYAAAABAAAAAAAZAAYAAAABAAAAAAAaAAYAAAABAAAAAAAbAAYAAAABAAAAAAAcAAYAAAAAAAAAAAAdAAYAAAAAAAAAAAAeAAYAAAAAAAAAAAAfAAYAAAAAAAAAAAAgAAYAAAAAAAAAAAAhAAYAAAAAAAAAAAAiAAYAAAAAAAAAAAAjAAYAAAABAAAAAAAkAAYAAAABAAAAAAAlAAYAAAABAAAAAAAmAAYAAAABAAAAAAAnAAYAAAABAAAAAAAoAAYAAAABAAAAAAApAAYAAAABAAAAAAAqAAYAAAACAAAAAAArAAYAAAABAAAAAAAsAAYAAAABAAAAAAAtAAYAAAABAAAAAAAuAAYAAAABAAAAAAAvAAYAAAABAAAAAAAAAAcAAAACAAAAAAABAAcAAAACAAAAAAACAAcAAAACAAAAAAADAAcAAAACAAAAAAAEAAcAAAACAAAAAAAFAAcAAAACAAAAAAAGAAcAAAACAAAAAAAHAAcAAAACAAAAAAAIAAcAAAACAAAAAAAJAAcAAAACAAAAAAAKAAcAAAACAAAAAAALAAcAAAACAAAAAAAMAAcAAAACAAAAAAANAAcAAAACAAAAAAAOAAcAAAACAAAAAAAPAAcAAAACAAAAAAAQAAcAAAACAAAAAAARAAcAAAACAAAAAAASAAcAAAACAAAAAAATAAcAAAACAAAAAAAUAAcAAAACAAAAAAAVAAcAAAACAAAAAAAWAAcAAAACAAAAAAAXAAcAAAACAAAAAAAYAAcAAAACAAAAAAAZAAcAAAACAAAAAAAaAAcAAAACAAAAAAAbAAcAAAACAAAAAAAcAAcAAAACAAAAAAAdAAcAAAACAAAAAAAeAAcAAAACAAAAAAAfAAcAAAACAAAAAAAgAAcAAAACAAAAAAAhAAcAAAACAAAAAAAiAAcAAAACAAAAAAAjAAcAAAACAAAAAAAkAAcAAAACAAAAAAAlAAcAAAACAAAAAAAmAAcAAAACAAAAAAAnAAcAAAACAAAAAAAoAAcAAAACAAAAAAApAAcAAAACAAAAAAAqAAcAAAACAAAAAAArAAcAAAACAAAAAAAsAAcAAAACAAAAAAAtAAcAAAACAAAAAAAuAAcAAAACAAAAAAAvAAcAAAACAAAAAAAAAAgAAAABAAAAAAABAAgAAAABAAAAAAACAAgAAAABAAAAAAADAAgAAAABAAAAAAAEAAgAAAABAAAAAAAFAAgAAAABAAAAAAAGAAgAAAABAAAAAAAHAAgAAAABAAAAAAAIAAgAAAABAAAAAAAJAAgAAAABAAAAAAAKAAgAAAABAAAAAAALAAgAAAABAAAAAAAMAAgAAAABAAAAAAANAAgAAAABAAAAAAAOAAgAAAABAAAAAAAPAAgAAAABAAAAAAAQAAgAAAABAAAAAAARAAgAAAABAAAAAAASAAgAAAABAAAAAAATAAgAAAABAAAAAAAUAAgAAAABAAAAAAAVAAgAAAABAAAAAAAWAAgAAAABAAAAAAAXAAgAAAABAAAAAAAYAAgAAAABAAAAAAAZAAgAAAABAAAAAAAaAAgAAAABAAAAAAAbAAgAAAABAAAAAAAcAAgAAAABAAAAAAAdAAgAAAABAAAAAAAeAAgAAAABAAAAAAAfAAgAAAABAAAAAAAgAAgAAAABAAAAAAAhAAgAAAABAAAAAAAiAAgAAAABAAAAAAAjAAgAAAABAAAAAAAkAAgAAAABAAAAAAAlAAgAAAABAAAAAAAmAAgAAAABAAAAAAAnAAgAAAABAAAAAAAoAAgAAAABAAAAAAApAAgAAAABAAAAAAAqAAgAAAACAAAAAAArAAgAAAABAAAAAAAsAAgAAAABAAAAAAAtAAgAAAABAAAAAAAuAAgAAAABAAAAAAAvAAgAAAABAAAAAAAAAAkAAAABAAAAAAABAAkAAAACAAAAAAACAAkAAAACAAAAAAADAAkAAAACAAAAAAAEAAkAAAACAAAAAAAFAAkAAAACAAAAAAAGAAkAAAACAAAAAAAHAAkAAAABAAAAAAAIAAkAAAABAAAAAAAJAAkAAAABAAAAAAAKAAkAAAABAAAAAAALAAkAAAABAAAAAAAMAAkAAAABAAAAAAANAAkAAAABAAAAAAAOAAkAAAABAAAAAAAPAAkAAAABAAAAAAAQAAkAAAABAAAAAAARAAkAAAABAAAAAAASAAkAAAABAAAAAAATAAkAAAABAAAAAAAUAAkAAAABAAAAAAAVAAkAAAABAAAAAAAWAAkAAAABAAAAAAAXAAkAAAABAAAAAAAYAAkAAAABAAAAAAAZAAkAAAABAAAAAAAaAAkAAAABAAAAAAAbAAkAAAABAAAAAAAcAAkAAAABAAAAAAAdAAkAAAABAAAAAAAeAAkAAAABAAAAAAAfAAkAAAABAAAAAAAgAAkAAAABAAAAAAAhAAkAAAABAAAAAAAiAAkAAAABAAAAAAAjAAkAAAABAAAAAAAkAAkAAAABAAAAAAAlAAkAAAABAAAAAAAmAAkAAAABAAAAAAAnAAkAAAABAAAAAAAoAAkAAAABAAAAAAApAAkAAAABAAAAAAAqAAkAAAACAAAAAAArAAkAAAABAAAAAAAsAAkAAAABAAAAAAAtAAkAAAABAAAAAAAuAAkAAAABAAAAAAAvAAkAAAABAAAAAAAAAAoAAAABAAAAAAABAAoAAAACAAAAAAACAAoAAAACAAAAAAADAAoAAAACAAAAAAAEAAoAAAACAAAAAAAFAAoAAAACAAAAAAAGAAoAAAACAAAAAAAHAAoAAAABAAAAAAAIAAoAAAABAAAAAAAJAAoAAAABAAAAAAAKAAoAAAABAAAAAAALAAoAAAABAAAAAAAMAAoAAAABAAAAAAANAAoAAAABAAAAAAAOAAoAAAABAAAAAAAPAAoAAAABAAAAAAAQAAoAAAABAAAAAAARAAoAAAABAAAAAAASAAoAAAABAAAAAAATAAoAAAABAAAAAAAUAAoAAAABAAAAAAAVAAoAAAABAAAAAAAWAAoAAAABAAAAAAAXAAoAAAABAAAAAAAYAAoAAAABAAAAAAAZAAoAAAABAAAAAAAaAAoAAAABAAAAAAAbAAoAAAABAAAAAAAcAAoAAAABAAAAAAAdAAoAAAABAAAAAAAeAAoAAAABAAAAAAAfAAoAAAABAAAAAAAgAAoAAAABAAAAAAAhAAoAAAABAAAAAAAiAAoAAAABAAAAAAAjAAoAAAABAAAAAAAkAAoAAAABAAAAAAAlAAoAAAABAAAAAAAmAAoAAAABAAAAAAAnAAoAAAABAAAAAAAoAAoAAAABAAAAAAApAAoAAAABAAAAAAAqAAoAAAACAAAAAAArAAoAAAABAAAAAAAsAAoAAAABAAAAAAAtAAoAAAABAAAAAAAuAAoAAAABAAAAAAAvAAoAAAABAAAAAAAAAAsAAAABAAAAAAABAAsAAAACAAAAAAACAAsAAAACAAAAAAADAAsAAAACAAAAAAAEAAsAAAACAAAAAAAFAAsAAAACAAAAAAAGAAsAAAACAAAAAAAHAAsAAAABAAAAAAAIAAsAAAABAAAAAAAJAAsAAAABAAAAAAAKAAsAAAABAAAAAAALAAsAAAABAAAAAAAMAAsAAAABAAAAAAANAAsAAAABAAAAAAAOAAsAAAABAAAAAAAPAAsAAAABAAAAAAAQAAsAAAABAAAAAAARAAsAAAABAAAAAAASAAsAAAABAAAAAAATAAsAAAABAAAAAAAUAAsAAAABAAAAAAAVAAsAAAABAAAAAAAWAAsAAAABAAAAAAAXAAsAAAABAAAAAAAYAAsAAAABAAAAAAAZAAsAAAABAAAAAAAaAAsAAAABAAAAAAAbAAsAAAABAAAAAAAcAAsAAAABAAAAAAAdAAsAAAABAAAAAAAeAAsAAAABAAAAAAAfAAsAAAABAAAAAAAgAAsAAAABAAAAAAAhAAsAAAABAAAAAAAiAAsAAAABAAAAAAAjAAsAAAABAAAAAAAkAAsAAAABAAAAAAAlAAsAAAABAAAAAAAmAAsAAAABAAAAAAAnAAsAAAABAAAAAAAoAAsAAAABAAAAAAApAAsAAAABAAAAAAAqAAsAAAACAAAAAAArAAsAAAABAAAAAAAsAAsAAAABAAAAAAAtAAsAAAABAAAAAAAuAAsAAAABAAAAAAAvAAsAAAABAAAAAAAAAAwAAAABAAAAAAABAAwAAAACAAAAAAACAAwAAAACAAAAAAADAAwAAAACAAAAAAAEAAwAAAACAAAAAAAFAAwAAAACAAAAAAAGAAwAAAACAAAAAAAHAAwAAAABAAAAAAAIAAwAAAABAAAAAAAJAAwAAAABAAAAAAAKAAwAAAABAAAAAAALAAwAAAABAAAAAAAMAAwAAAABAAAAAAANAAwAAAABAAAAAAAOAAwAAAABAAAAAAAPAAwAAAABAAAAAAAQAAwAAAABAAAAAAARAAwAAAABAAAAAAASAAwAAAABAAAAAAATAAwAAAABAAAAAAAUAAwAAAABAAAAAAAVAAwAAAABAAAAAAAWAAwAAAABAAAAAAAXAAwAAAABAAAAAAAYAAwAAAABAAAAAAAZAAwAAAABAAAAAAAaAAwAAAABAAAAAAAbAAwAAAABAAAAAAAcAAwAAAABAAAAAAAdAAwAAAABAAAAAAAeAAwAAAABAAAAAAAfAAwAAAABAAAAAAAgAAwAAAABAAAAAAAhAAwAAAABAAAAAAAiAAwAAAABAAAAAAAjAAwAAAABAAAAAAAkAAwAAAABAAAAAAAlAAwAAAABAAAAAAAmAAwAAAABAAAAAAAnAAwAAAABAAAAAAAoAAwAAAABAAAAAAApAAwAAAABAAAAAAAqAAwAAAACAAAAAAArAAwAAAABAAAAAAAsAAwAAAABAAAAAAAtAAwAAAABAAAAAAAuAAwAAAABAAAAAAAvAAwAAAABAAAAAAAAAA0AAAABAAAAAAABAA0AAAACAAAAAAACAA0AAAACAAAAAAADAA0AAAACAAAAAAAEAA0AAAACAAAAAAAFAA0AAAACAAAAAAAGAA0AAAACAAAAAAAHAA0AAAABAAAAAAAIAA0AAAABAAAAAAAJAA0AAAABAAAAAAAKAA0AAAABAAAAAAALAA0AAAABAAAAAAAMAA0AAAABAAAAAAANAA0AAAABAAAAAAAOAA0AAAABAAAAAAAPAA0AAAABAAAAAAAQAA0AAAABAAAAAAARAA0AAAABAAAAAAASAA0AAAABAAAAAAATAA0AAAABAAAAAAAUAA0AAAABAAAAAAAVAA0AAAABAAAAAAAWAA0AAAABAAAAAAAXAA0AAAABAAAAAAAYAA0AAAABAAAAAAAZAA0AAAABAAAAAAAaAA0AAAABAAAAAAAbAA0AAAABAAAAAAAcAA0AAAABAAAAAAAdAA0AAAABAAAAAAAeAA0AAAABAAAAAAAfAA0AAAABAAAAAAAgAA0AAAABAAAAAAAhAA0AAAABAAAAAAAiAA0AAAABAAAAAAAjAA0AAAABAAAAAAAkAA0AAAABAAAAAAAlAA0AAAABAAAAAAAmAA0AAAABAAAAAAAnAA0AAAABAAAAAAAoAA0AAAABAAAAAAApAA0AAAABAAAAAAAqAA0AAAACAAAAAAArAA0AAAABAAAAAAAsAA0AAAABAAAAAAAtAA0AAAABAAAAAAAuAA0AAAABAAAAAAAvAA0AAAABAAAAAAAAAA4AAAABAAAAAAABAA4AAAACAAAAAAACAA4AAAACAAAAAAADAA4AAAACAAAAAAAEAA4AAAACAAAAAAAFAA4AAAACAAAAAAAGAA4AAAACAAAAAAAHAA4AAAABAAAAAAAIAA4AAAABAAAAAAAJAA4AAAABAAAAAAAKAA4AAAABAAAAAAALAA4AAAABAAAAAAAMAA4AAAABAAAAAAANAA4AAAABAAAAAAAOAA4AAAABAAAAAAAPAA4AAAABAAAAAAAQAA4AAAABAAAAAAARAA4AAAABAAAAAAASAA4AAAABAAAAAAATAA4AAAABAAAAAAAUAA4AAAABAAAAAAAVAA4AAAABAAAAAAAWAA4AAAABAAAAAAAXAA4AAAABAAAAAAAYAA4AAAABAAAAAAAZAA4AAAABAAAAAAAaAA4AAAABAAAAAAAbAA4AAAABAAAAAAAcAA4AAAABAAAAAAAdAA4AAAABAAAAAAAeAA4AAAABAAAAAAAfAA4AAAABAAAAAAAgAA4AAAABAAAAAAAhAA4AAAABAAAAAAAiAA4AAAABAAAAAAAjAA4AAAABAAAAAAAkAA4AAAABAAAAAAAlAA4AAAABAAAAAAAmAA4AAAABAAAAAAAnAA4AAAABAAAAAAAoAA4AAAABAAAAAAApAA4AAAABAAAAAAAqAA4AAAACAAAAAAArAA4AAAABAAAAAAAsAA4AAAABAAAAAAAtAA4AAAABAAAAAAAuAA4AAAABAAAAAAAvAA4AAAABAAAAAAAAAA8AAAABAAAAAAABAA8AAAABAAAAAAACAA8AAAABAAAAAAADAA8AAAABAAAAAAAEAA8AAAABAAAAAAAFAA8AAAABAAAAAAAGAA8AAAABAAAAAAAHAA8AAAABAAAAAAAIAA8AAAABAAAAAAAJAA8AAAABAAAAAAAKAA8AAAABAAAAAAALAA8AAAABAAAAAAAMAA8AAAABAAAAAAANAA8AAAABAAAAAAAOAA8AAAABAAAAAAAPAA8AAAABAAAAAAAQAA8AAAABAAAAAAARAA8AAAABAAAAAAASAA8AAAABAAAAAAATAA8AAAABAAAAAAAUAA8AAAABAAAAAAAVAA8AAAABAAAAAAAWAA8AAAABAAAAAAAXAA8AAAABAAAAAAAYAA8AAAABAAAAAAAZAA8AAAABAAAAAAAaAA8AAAABAAAAAAAbAA8AAAABAAAAAAAcAA8AAAABAAAAAAAdAA8AAAABAAAAAAAeAA8AAAABAAAAAAAfAA8AAAABAAAAAAAgAA8AAAABAAAAAAAhAA8AAAABAAAAAAAiAA8AAAABAAAAAAAjAA8AAAABAAAAAAAkAA8AAAABAAAAAAAlAA8AAAABAAAAAAAmAA8AAAABAAAAAAAnAA8AAAABAAAAAAAoAA8AAAABAAAAAAApAA8AAAABAAAAAAAqAA8AAAACAAAAAAArAA8AAAABAAAAAAAsAA8AAAABAAAAAAAtAA8AAAABAAAAAAAuAA8AAAABAAAAAAAvAA8AAAABAAAAAAAAABAAAAABAAAAAAABABAAAAABAAAAAAACABAAAAABAAAAAAADABAAAAABAAAAAAAEABAAAAABAAAAAAAFABAAAAABAAAAAAAGABAAAAABAAAAAAAHABAAAAABAAAAAAAIABAAAAABAAAAAAAJABAAAAABAAAAAAAKABAAAAABAAAAAAALABAAAAABAAAAAAAMABAAAAABAAAAAAANABAAAAABAAAAAAAOABAAAAABAAAAAAAPABAAAAABAAAAAAAQABAAAAABAAAAAAARABAAAAABAAAAAAASABAAAAABAAAAAAATABAAAAABAAAAAAAUABAAAAABAAAAAAAVABAAAAABAAAAAAAWABAAAAABAAAAAAAXABAAAAABAAAAAAAYABAAAAABAAAAAAAZABAAAAABAAAAAAAaABAAAAABAAAAAAAbABAAAAABAAAAAAAcABAAAAABAAAAAAAdABAAAAABAAAAAAAeABAAAAABAAAAAAAfABAAAAABAAAAAAAgABAAAAABAAAAAAAhABAAAAABAAAAAAAiABAAAAABAAAAAAAjABAAAAABAAAAAAAkABAAAAABAAAAAAAlABAAAAABAAAAAAAmABAAAAABAAAAAAAnABAAAAABAAAAAAAoABAAAAABAAAAAAApABAAAAABAAAAAAAqABAAAAACAAAAAAArABAAAAABAAAAAAAsABAAAAABAAAAAAAtABAAAAABAAAAAAAuABAAAAABAAAAAAAvABAAAAABAAAAAAAAABEAAAABAAAAAAABABEAAAABAAAAAAACABEAAAABAAAAAAADABEAAAABAAAAAAAEABEAAAABAAAAAAAFABEAAAABAAAAAAAGABEAAAABAAAAAAAHABEAAAABAAAAAAAIABEAAAABAAAAAAAJABEAAAABAAAAAAAKABEAAAABAAAAAAALABEAAAABAAAAAAAMABEAAAABAAAAAAANABEAAAABAAAAAAAOABEAAAABAAAAAAAPABEAAAABAAAAAAAQABEAAAABAAAAAAARABEAAAABAAAAAAASABEAAAABAAAAAAATABEAAAABAAAAAAAUABEAAAABAAAAAAAVABEAAAABAAAAAAAWABEAAAABAAAAAAAXABEAAAABAAAAAAAYABEAAAABAAAAAAAZABEAAAABAAAAAAAaABEAAAABAAAAAAAbABEAAAABAAAAAAAcABEAAAABAAAAAAAdABEAAAABAAAAAAAeABEAAAABAAAAAAAfABEAAAABAAAAAAAgABEAAAABAAAAAAAhABEAAAABAAAAAAAiABEAAAABAAAAAAAjABEAAAABAAAAAAAkABEAAAABAAAAAAAlABEAAAABAAAAAAAmABEAAAABAAAAAAAnABEAAAABAAAAAAAoABEAAAABAAAAAAApABEAAAABAAAAAAAqABEAAAACAAAAAAArABEAAAABAAAAAAAsABEAAAABAAAAAAAtABEAAAABAAAAAAAuABEAAAABAAAAAAAvABEAAAABAAAAAAAAABIAAAABAAAAAAABABIAAAABAAAAAAACABIAAAABAAAAAAADABIAAAABAAAAAAAEABIAAAABAAAAAAAFABIAAAABAAAAAAAGABIAAAABAAAAAAAHABIAAAABAAAAAAAIABIAAAABAAAAAAAJABIAAAABAAAAAAAKABIAAAABAAAAAAALABIAAAABAAAAAAAMABIAAAABAAAAAAANABIAAAABAAAAAAAOABIAAAABAAAAAAAPABIAAAABAAAAAAAQABIAAAABAAAAAAARABIAAAABAAAAAAASABIAAAABAAAAAAATABIAAAABAAAAAAAUABIAAAABAAAAAAAVABIAAAABAAAAAAAWABIAAAABAAAAAAAXABIAAAABAAAAAAAYABIAAAABAAAAAAAZABIAAAABAAAAAAAaABIAAAABAAAAAAAbABIAAAABAAAAAAAcABIAAAABAAAAAAAdABIAAAABAAAAAAAeABIAAAABAAAAAAAfABIAAAABAAAAAAAgABIAAAABAAAAAAAhABIAAAABAAAAAAAiABIAAAABAAAAAAAjABIAAAABAAAAAAAkABIAAAABAAAAAAAlABIAAAABAAAAAAAmABIAAAABAAAAAAAnABIAAAABAAAAAAAoABIAAAABAAAAAAApABIAAAABAAAAAAAqABIAAAACAAAAAAArABIAAAABAAAAAAAsABIAAAABAAAAAAAtABIAAAABAAAAAAAuABIAAAABAAAAAAAvABIAAAABAAAAAAAAABMAAAABAAAAAAABABMAAAABAAAAAAACABMAAAABAAAAAAADABMAAAABAAAAAAAEABMAAAABAAAAAAAFABMAAAABAAAAAAAGABMAAAABAAAAAAAHABMAAAABAAAAAAAIABMAAAABAAAAAAAJABMAAAABAAAAAAAKABMAAAABAAAAAAALABMAAAABAAAAAAAMABMAAAABAAAAAAANABMAAAABAAAAAAAOABMAAAABAAAAAAAPABMAAAABAAAAAAAQABMAAAABAAAAAAARABMAAAABAAAAAAASABMAAAABAAAAAAATABMAAAABAAAAAAAUABMAAAABAAAAAAAVABMAAAABAAAAAAAWABMAAAABAAAAAAAXABMAAAABAAAAAAAYABMAAAABAAAAAAAZABMAAAABAAAAAAAaABMAAAABAAAAAAAbABMAAAABAAAAAAAcABMAAAABAAAAAAAdABMAAAABAAAAAAAeABMAAAABAAAAAAAfABMAAAABAAAAAAAgABMAAAABAAAAAAAhABMAAAABAAAAAAAiABMAAAABAAAAAAAjABMAAAABAAAAAAAkABMAAAABAAAAAAAlABMAAAABAAAAAAAmABMAAAABAAAAAAAnABMAAAABAAAAAAAoABMAAAABAAAAAAApABMAAAABAAAAAAAqABMAAAACAAAAAAArABMAAAABAAAAAAAsABMAAAABAAAAAAAtABMAAAABAAAAAAAuABMAAAABAAAAAAAvABMAAAABAAAAAAAAABQAAAACAAAAAAABABQAAAACAAAAAAACABQAAAACAAAAAAADABQAAAACAAAAAAAEABQAAAACAAAAAAAFABQAAAACAAAAAAAGABQAAAACAAAAAAAHABQAAAACAAAAAAAIABQAAAACAAAAAAAJABQAAAACAAAAAAAKABQAAAACAAAAAAALABQAAAACAAAAAAAMABQAAAACAAAAAAANABQAAAACAAAAAAAOABQAAAACAAAAAAAPABQAAAACAAAAAAAQABQAAAACAAAAAAARABQAAAACAAAAAAASABQAAAACAAAAAAATABQAAAACAAAAAAAUABQAAAACAAAAAAAVABQAAAACAAAAAAAWABQAAAACAAAAAAAXABQAAAACAAAAAAAYABQAAAACAAAAAAAZABQAAAACAAAAAAAaABQAAAACAAAAAAAbABQAAAACAAAAAAAcABQAAAACAAAAAAAdABQAAAACAAAAAAAeABQAAAACAAAAAAAfABQAAAACAAAAAAAgABQAAAACAAAAAAAhABQAAAACAAAAAAAiABQAAAACAAAAAAAjABQAAAACAAAAAAAkABQAAAACAAAAAAAlABQAAAACAAAAAAAmABQAAAACAAAAAAAnABQAAAACAAAAAAAoABQAAAACAAAAAAApABQAAAACAAAAAAAqABQAAAACAAAAAAArABQAAAACAAAAAAAsABQAAAACAAAAAAAtABQAAAACAAAAAAAuABQAAAACAAAAAAAvABQAAAACAAAAAAAAABUAAAABAAAAAAABABUAAAABAAAAAAACABUAAAABAAAAAAADABUAAAABAAAAAAAEABUAAAABAAAAAAAFABUAAAABAAAAAAAGABUAAAABAAAAAAAHABUAAAABAAAAAAAIABUAAAABAAAAAAAJABUAAAABAAAAAAAKABUAAAABAAAAAAALABUAAAABAAAAAAAMABUAAAABAAAAAAANABUAAAABAAAAAAAOABUAAAACAAAAAAAPABUAAAACAAAAAAAQABUAAAACAAAAAAARABUAAAACAAAAAAASABUAAAACAAAAAAATABUAAAACAAAAAAAUABUAAAACAAAAAAAVABUAAAACAAAAAAAWABUAAAACAAAAAAAXABUAAAACAAAAAAAYABUAAAACAAAAAAAZABUAAAACAAAAAAAaABUAAAACAAAAAAAbABUAAAACAAAAAAAcABUAAAACAAAAAAAdABUAAAABAAAAAAAeABUAAAABAAAAAAAfABUAAAABAAAAAAAgABUAAAABAAAAAAAhABUAAAABAAAAAAAiABUAAAABAAAAAAAjABUAAAABAAAAAAAkABUAAAABAAAAAAAlABUAAAABAAAAAAAmABUAAAABAAAAAAAnABUAAAABAAAAAAAoABUAAAABAAAAAAApABUAAAABAAAAAAAqABUAAAACAAAAAAArABUAAAABAAAAAAAsABUAAAABAAAAAAAtABUAAAABAAAAAAAuABUAAAABAAAAAAAvABUAAAABAAAAAAAAABYAAAABAAAAAAABABYAAAABAAAAAAACABYAAAABAAAAAAADABYAAAABAAAAAAAEABYAAAABAAAAAAAFABYAAAABAAAAAAAGABYAAAABAAAAAAAHABYAAAABAAAAAAAIABYAAAABAAAAAAAJABYAAAABAAAAAAAKABYAAAABAAAAAAALABYAAAABAAAAAAAMABYAAAABAAAAAAANABYAAAABAAAAAAAOABYAAAACAAAAAAAPABYAAAACAAAAAAAQABYAAAACAAAAAAARABYAAAACAAAAAAASABYAAAACAAAAAAATABYAAAACAAAAAAAUABYAAAACAAAAAAAVABYAAAACAAAAAAAWABYAAAACAAAAAAAXABYAAAACAAAAAAAYABYAAAACAAAAAAAZABYAAAACAAAAAAAaABYAAAACAAAAAAAbABYAAAACAAAAAAAcABYAAAACAAAAAAAdABYAAAABAAAAAAAeABYAAAABAAAAAAAfABYAAAABAAAAAAAgABYAAAABAAAAAAAhABYAAAABAAAAAAAiABYAAAABAAAAAAAjABYAAAABAAAAAAAkABYAAAABAAAAAAAlABYAAAABAAAAAAAmABYAAAABAAAAAAAnABYAAAABAAAAAAAoABYAAAABAAAAAAApABYAAAABAAAAAAAqABYAAAACAAAAAAArABYAAAABAAAAAAAsABYAAAABAAAAAAAtABYAAAABAAAAAAAuABYAAAABAAAAAAAvABYAAAABAAAAAAAAABcAAAABAAAAAAABABcAAAABAAAAAAACABcAAAABAAAAAAADABcAAAABAAAAAAAEABcAAAABAAAAAAAFABcAAAABAAAAAAAGABcAAAABAAAAAAAHABcAAAABAAAAAAAIABcAAAABAAAAAAAJABcAAAABAAAAAAAKABcAAAABAAAAAAALABcAAAABAAAAAAAMABcAAAABAAAAAAANABcAAAABAAAAAAAOABcAAAACAAAAAAAPABcAAAACAAAAAAAQABcAAAACAAAAAAARABcAAAACAAAAAAASABcAAAACAAAAAAATABcAAAACAAAAAAAUABcAAAACAAAAAAAVABcAAAACAAAAAAAWABcAAAACAAAAAAAXABcAAAACAAAAAAAYABcAAAACAAAAAAAZABcAAAACAAAAAAAaABcAAAACAAAAAAAbABcAAAACAAAAAAAcABcAAAACAAAAAAAdABcAAAABAAAAAAAeABcAAAABAAAAAAAfABcAAAABAAAAAAAgABcAAAABAAAAAAAhABcAAAABAAAAAAAiABcAAAABAAAAAAAjABcAAAABAAAAAAAkABcAAAABAAAAAAAlABcAAAABAAAAAAAmABcAAAABAAAAAAAnABcAAAABAAAAAAAoABcAAAABAAAAAAApABcAAAABAAAAAAAqABcAAAACAAAAAAArABcAAAABAAAAAAAsABcAAAABAAAAAAAtABcAAAABAAAAAAAuABcAAAABAAAAAAAvABcAAAABAAAAAAAAABgAAAABAAAAAAABABgAAAABAAAAAAACABgAAAABAAAAAAADABgAAAABAAAAAAAEABgAAAABAAAAAAAFABgAAAABAAAAAAAGABgAAAABAAAAAAAHABgAAAABAAAAAAAIABgAAAABAAAAAAAJABgAAAABAAAAAAAKABgAAAABAAAAAAALABgAAAABAAAAAAAMABgAAAABAAAAAAANABgAAAABAAAAAAAOABgAAAACAAAAAAAPABgAAAACAAAAAAAQABgAAAACAAAAAAARABgAAAACAAAAAAASABgAAAACAAAAAAATABgAAAACAAAAAAAUABgAAAACAAAAAAAVABgAAAACAAAAAAAWABgAAAACAAAAAAAXABgAAAACAAAAAAAYABgAAAACAAAAAAAZABgAAAACAAAAAAAaABgAAAACAAAAAAAbABgAAAACAAAAAAAcABgAAAACAAAAAAAdABgAAAABAAAAAAAeABgAAAABAAAAAAAfABgAAAABAAAAAAAgABgAAAABAAAAAAAhABgAAAABAAAAAAAiABgAAAABAAAAAAAjABgAAAABAAAAAAAkABgAAAABAAAAAAAlABgAAAABAAAAAAAmABgAAAABAAAAAAAnABgAAAABAAAAAAAoABgAAAABAAAAAAApABgAAAABAAAAAAAqABgAAAACAAAAAAArABgAAAABAAAAAAAsABgAAAABAAAAAAAtABgAAAABAAAAAAAuABgAAAABAAAAAAAvABgAAAABAAAAAAAAABkAAAABAAAAAAABABkAAAABAAAAAAACABkAAAABAAAAAAADABkAAAABAAAAAAAEABkAAAABAAAAAAAFABkAAAABAAAAAAAGABkAAAABAAAAAAAHABkAAAABAAAAAAAIABkAAAABAAAAAAAJABkAAAABAAAAAAAKABkAAAABAAAAAAALABkAAAABAAAAAAAMABkAAAABAAAAAAANABkAAAABAAAAAAAOABkAAAACAAAAAAAPABkAAAACAAAAAAAQABkAAAACAAAAAAARABkAAAACAAAAAAASABkAAAACAAAAAAATABkAAAACAAAAAAAUABkAAAACAAAAAAAVABkAAAACAAAAAAAWABkAAAACAAAAAAAXABkAAAACAAAAAAAYABkAAAACAAAAAAAZABkAAAACAAAAAAAaABkAAAACAAAAAAAbABkAAAACAAAAAAAcABkAAAACAAAAAAAdABkAAAABAAAAAAAeABkAAAABAAAAAAAfABkAAAABAAAAAAAgABkAAAABAAAAAAAhABkAAAABAAAAAAAiABkAAAABAAAAAAAjABkAAAABAAAAAAAkABkAAAABAAAAAAAlABkAAAABAAAAAAAmABkAAAABAAAAAAAnABkAAAABAAAAAAAoABkAAAABAAAAAAApABkAAAABAAAAAAAqABkAAAACAAAAAAArABkAAAABAAAAAAAsABkAAAABAAAAAAAtABkAAAABAAAAAAAuABkAAAABAAAAAAAvABkAAAABAAAAAAAAABoAAAABAAAAAAABABoAAAABAAAAAAACABoAAAABAAAAAAADABoAAAABAAAAAAAEABoAAAABAAAAAAAFABoAAAABAAAAAAAGABoAAAABAAAAAAAHABoAAAABAAAAAAAIABoAAAABAAAAAAAJABoAAAABAAAAAAAKABoAAAABAAAAAAALABoAAAABAAAAAAAMABoAAAABAAAAAAANABoAAAABAAAAAAAOABoAAAACAAAAAAAPABoAAAACAAAAAAAQABoAAAACAAAAAAARABoAAAACAAAAAAASABoAAAACAAAAAAATABoAAAACAAAAAAAUABoAAAACAAAAAAAVABoAAAACAAAAAAAWABoAAAACAAAAAAAXABoAAAACAAAAAAAYABoAAAACAAAAAAAZABoAAAACAAAAAAAaABoAAAACAAAAAAAbABoAAAACAAAAAAAcABoAAAACAAAAAAAdABoAAAABAAAAAAAeABoAAAABAAAAAAAfABoAAAABAAAAAAAgABoAAAABAAAAAAAhABoAAAABAAAAAAAiABoAAAABAAAAAAAjABoAAAABAAAAAAAkABoAAAABAAAAAAAlABoAAAABAAAAAAAmABoAAAABAAAAAAAnABoAAAABAAAAAAAoABoAAAABAAAAAAApABoAAAABAAAAAAAqABoAAAACAAAAAAArABoAAAABAAAAAAAsABoAAAABAAAAAAAtABoAAAABAAAAAAAuABoAAAABAAAAAAAvABoAAAABAAAAAAAAABsAAAABAAAAAAABABsAAAABAAAAAAACABsAAAABAAAAAAADABsAAAABAAAAAAAEABsAAAABAAAAAAAFABsAAAABAAAAAAAGABsAAAABAAAAAAAHABsAAAABAAAAAAAIABsAAAABAAAAAAAJABsAAAABAAAAAAAKABsAAAABAAAAAAALABsAAAABAAAAAAAMABsAAAABAAAAAAANABsAAAABAAAAAAAOABsAAAABAAAAAAAPABsAAAABAAAAAAAQABsAAAABAAAAAAARABsAAAABAAAAAAASABsAAAABAAAAAAATABsAAAABAAAAAAAUABsAAAABAAAAAAAVABsAAAABAAAAAAAWABsAAAABAAAAAAAXABsAAAABAAAAAAAYABsAAAABAAAAAAAZABsAAAABAAAAAAAaABsAAAABAAAAAAAbABsAAAABAAAAAAAcABsAAAABAAAAAAAdABsAAAABAAAAAAAeABsAAAABAAAAAAAfABsAAAABAAAAAAAgABsAAAABAAAAAAAhABsAAAABAAAAAAAiABsAAAABAAAAAAAjABsAAAABAAAAAAAkABsAAAABAAAAAAAlABsAAAABAAAAAAAmABsAAAABAAAAAAAnABsAAAABAAAAAAAoABsAAAABAAAAAAApABsAAAABAAAAAAAqABsAAAACAAAAAAArABsAAAABAAAAAAAsABsAAAABAAAAAAAtABsAAAABAAAAAAAuABsAAAABAAAAAAAvABsAAAABAAAAAAA=")
 tile_set = ExtResource("25_uuj1x")
 
-[node name="WallLayer" type="TileMapLayer" parent="." unique_id=206004048]
+[node name="WallLayer" type="TileMapLayer" parent="." unique_id=567444309]
 z_index = -1
 tile_map_data = PackedByteArray("AAAAAAAAAQACAAEAAAAAAAEAAQABAAEAAAAAABsAAQADAAAAAAABAAAAAQAHAAMAAAABAAEAAQAEAAQAAAABABsAAQAHAAEAAAACAAAAAQAHAAMAAAACAAEAAQAEAAQAAAACABsAAQAHAAEAAAADAAAAAQAHAAMAAAADAAEAAQAEAAQAAAADABsAAQAHAAEAAAAEAAAAAQAHAAMAAAAEAAEAAQAEAAQAAAAEABsAAQAHAAEAAAAFAAAAAQAHAAMAAAAFAAEAAQAEAAQAAAAFABsAAQAHAAEAAAAGAAAAAQAHAAMAAAAGAAEAAQAEAAQAAAAGABsAAQAHAAEAAAAHAAAAAQAHAAMAAAAHAAEAAQAHAAQAAAAHABsAAQAHAAEAAAAIAAAAAQAHAAMAAAAIAAEAAQAEAAQAAAAIABsAAQAHAAEAAAAJAAAAAQAHAAMAAAAJAAEAAQAEAAQAAAAJABsAAQAHAAEAAAAKAAAAAQAHAAMAAAAKAAEAAQAEAAQAAAAKABsAAQAHAAEAAAALAAAAAQAHAAMAAAALAAEAAQAEAAQAAAALABsAAQAHAAEAAAAMAAAAAQAHAAMAAAAMAAEAAQAEAAQAAAAMABsAAQAHAAEAAAANAAAAAQAHAAMAAAANAAEAAQAHAAQAAAANABsAAQAHAAEAAAAOAAAAAQAHAAMAAAAOAAEAAQAEAAQAAAAOABsAAQAAAAIAAAAPAAAAAQAHAAMAAAAPAAEAAQAEAAQAAAAPABsAAQAHAAEAAAAQAAAAAQAHAAMAAAAQAAEAAQAEAAQAAAAQABsAAQAHAAEAAAARAAAAAQAHAAMAAAARAAEAAQAEAAQAAAARABsAAQAHAAEAAAASAAAAAQAHAAMAAAASAAEAAQAEAAQAAAASABsAAQAHAAEAAAATAAAAAQAHAAMAAAATAAEAAQAHAAQAAAATABsAAQAHAAEAAAAUAAAAAQAHAAMAAAAUAAEAAQAEAAQAAAAUABsAAQAHAAEAAAAVAAAAAQAHAAMAAAAVAAEAAQAEAAQAAAAVABsAAQAAAAIAAAAWAAAAAQAHAAMAAAAWAAEAAQAEAAQAAAAWABsAAQAHAAEAAAAXAAAAAQAHAAMAAAAXAAEAAQAEAAQAAAAXABsAAQAHAAEAAAAYAAAAAQAHAAMAAAAYAAEAAQAEAAQAAAAYABsAAQAHAAEAAAAZAAAAAQAHAAMAAAAZAAEAAQAEAAQAAAAZABsAAQAHAAEAAAAaAAAAAQAHAAMAAAAaAAEAAQAEAAQAAAAaABsAAQAHAAEAAAAbAAAAAQAHAAMAAAAbAAEAAQAEAAQAAAAbABsAAQAHAAEAAAAcAAAAAQAHAAMAAAAcAAEAAQAHAAQAAAAcABsAAQAHAAEAAAAdAAAAAQAHAAMAAAAdAAEAAQAEAAQAAAAdABsAAQAAAAIAAAAeAAAAAQAHAAMAAAAeAAEAAQAEAAQAAAAeABsAAQAHAAEAAAAfAAAAAQAHAAMAAAAfAAEAAQAEAAQAAAAfABsAAQAHAAEAAAAgAAAAAQAHAAMAAAAgAAEAAQAEAAQAAAAgABsAAQAHAAEAAAAhAAAAAQAHAAMAAAAhAAEAAQAEAAQAAAAhABsAAQAHAAEAAAAiAAAAAQAHAAMAAAAiAAEAAQAEAAQAAAAiABsAAQAHAAEAAAAjAAAAAQAHAAMAAAAjAAEAAQAHAAQAAAAjABsAAQAHAAEAAAAkAAAAAQAHAAMAAAAkAAEAAQAEAAQAAAAkABsAAQAHAAEAAAAlAAAAAQAHAAMAAAAlAAEAAQAEAAQAAAAlABsAAQAHAAEAAAAmAAAAAQAHAAMAAAAmAAEAAQAEAAQAAAAmABsAAQAHAAEAAAAnAAAAAQAHAAMAAAAnAAEAAQAEAAQAAAAnABsAAQAHAAEAAAAoAAAAAQAHAAMAAAAoAAEAAQAEAAQAAAAoABsAAQAHAAEAAAApAAAAAQAHAAMAAAApAAEAAQAEAAQAAAApABsAAQAHAAEAAAAqAAAAAQAHAAMAAAAqAAEAAQAHAAQAAAAqABsAAQAAAAIAAAArAAAAAQAHAAMAAAArAAEAAQAEAAQAAAArABsAAQAHAAEAAAAsAAAAAQAHAAMAAAAsAAEAAQAEAAQAAAAsABsAAQAHAAEAAAAtAAAAAQAHAAMAAAAtAAEAAQAEAAQAAAAtABsAAQAHAAEAAAAuAAAAAQAHAAMAAAAuAAEAAQAEAAQAAAAuABsAAQAHAAEAAAAvAAAAAQACAAMAAAAvAAEAAQAFAAQAAAAvABsAAQAGAAEAAAAAAAIAAQAGAAAAAAAvAAIAAQAGAAAAAAAAAAMAAQAGAAAAAAAvAAMAAQAGAAAAAAAAAAQAAQAGAAAAAAAvAAQAAQAGAAAAAAAAAAUAAQAGAAAAAAAvAAUAAQAGAAAAAAAAAAYAAQAGAAAAAAAvAAYAAQAGAAAAAAAAAAcAAQAGAAAAAAAvAAcAAQAGAAAAAAAAAAgAAQAGAAAAAAAvAAgAAQAGAAAAAAAAAAkAAQAAAAEAAAAvAAkAAQAGAAAAAAAAAAoAAQAGAAAAAAAvAAoAAQAGAAAAAAAAAAsAAQAGAAAAAAAvAAsAAQAGAAAAAAAAAAwAAQAGAAAAAAAvAAwAAQAGAAAAAAAAAA0AAQAGAAAAAAAvAA0AAQAGAAAAAAAAAA4AAQAGAAAAAAAvAA4AAQAGAAAAAAAAAA8AAQAAAAEAAAAvAA8AAQAGAAAAAAAAABAAAQAGAAAAAAAvABAAAQAGAAAAAAAAABEAAQAGAAAAAAAvABEAAQAGAAAAAAAAABIAAQAGAAAAAAAvABIAAQAGAAAAAAAAABMAAQAGAAAAAAAvABMAAQAGAAAAAAAAABQAAQAGAAAAAAAvABQAAQAGAAAAAAAAABUAAQAAAAEAAAAvABUAAQAGAAAAAAAAABYAAQAGAAAAAAAvABYAAQAGAAAAAAAAABcAAQAGAAAAAAAvABcAAQAGAAAAAAAAABgAAQAGAAAAAAAvABgAAQAGAAAAAAAAABkAAQAGAAAAAAAvABkAAQAGAAAAAAAAABoAAQAGAAAAAAAvABoAAQAGAAAAAAAHAAcAAQAHAAAAAAAIAAcAAQAFAAEAAAALAAcAAQACAAAAAAAMAAcAAQAHAAEAAAANAAcAAQAAAAIAAAAOAAcAAQAFAAEAAAARAAcAAQACAAAAAAASAAcAAQAHAAEAAAATAAcAAQAAAAIAAAAUAAcAAQAHAAEAAAAVAAcAAQAFAAEAAAAYAAcAAQACAAAAAAAZAAcAAQAHAAEAAAAaAAcAAQAHAAEAAAAbAAcAAQAHAAEAAAAcAAcAAQAAAAIAAAAdAAcAAQAFAAEAAAAgAAcAAQACAAAAAAAhAAcAAQAHAAEAAAAiAAcAAQAHAAEAAAAjAAcAAQAAAAIAAAAkAAcAAQAFAAEAAAAnAAcAAQACAAAAAAAoAAcAAQAHAAEAAAApAAcAAQAHAAEAAAABAAkAAQAHAAEAAAACAAkAAQAFAAEAAAAFAAkAAQACAAAAAAAGAAkAAQAHAAEAAAABAA8AAQAHAAEAAAACAA8AAQAHAAEAAAADAA8AAQAHAAEAAAAEAA8AAQAHAAEAAAAFAA8AAQAHAAEAAAAGAA8AAQAHAAEAAAABABUAAQAHAAEAAAACABUAAQAHAAEAAAADABUAAQAHAAEAAAAEABUAAQAHAAEAAAAFABUAAQAHAAEAAAAGABUAAQAHAAEAAAAHABUAAQAAAAIAAAAIABUAAQAFAAEAAAALABUAAQACAAAAAAAMABUAAQAHAAEAAAANABUAAQAHAAEAAAAOABUAAQAEAAIAAAAPABUAAQAFAAEAAAASABUAAQACAAAAAAATABUAAQAHAAEAAAAUABUAAQAHAAEAAAAVABUAAQAEAAIAAAAWABUAAQAHAAEAAAAXABUAAQAFAAEAAAAaABUAAQACAAAAAAAbABUAAQAHAAEAAAAcABUAAQAHAAEAAAAdABUAAQAEAAIAAAAeABUAAQAHAAEAAAAfABUAAQAHAAEAAAAgABUAAQAHAAEAAAAhABUAAQAFAAEAAAAkABUAAQACAAAAAAAlABUAAQAHAAEAAAAmABUAAQAHAAEAAAAnABUAAQAHAAEAAAAoABUAAQAHAAEAAAApABUAAQAHAAEAAAAUAAkAAQAHAAAAAAAVAAkAAQAHAAEAAAAWAAkAAQAHAAEAAAAXAAkAAQAHAAEAAAAYAAkAAQAHAAEAAAAZAAkAAQAHAAEAAAAUAA8AAQADAAAAAAAVAA8AAQAFAAEAAAAYAA8AAQACAAAAAAAZAA8AAQAHAAEAAAAaAAkAAQAEAAIAAAAbAAkAAQAHAAEAAAAcAAkAAQAHAAEAAAAdAAkAAQAHAAEAAAAeAAkAAQAHAAEAAAAaAA8AAQAGAAEAAAAdAA8AAQACAAAAAAAeAA8AAQAHAAEAAAAfAAkAAQAEAAIAAAAgAAkAAQAHAAEAAAAhAAkAAQAHAAEAAAAiAAkAAQAHAAEAAAAjAAkAAQAHAAEAAAAkAAkAAQAHAAEAAAAfAA8AAQAAAAIAAAAgAA8AAQAFAAEAAAAjAA8AAQACAAAAAAAkAA8AAQAFAAEAAAAHAAIAAQAGAAAAAAAHAAMAAQAGAAAAAAAHAAQAAQABAAAAAAAHAAgAAQAGAAAAAAAHAAkAAQADAAIAAAAHAAoAAQABAAAAAAAHAA0AAQAFAAAAAAAHAA4AAQAGAAAAAAAHAA8AAQADAAIAAAAHABAAAQABAAAAAAAHABMAAQAFAAAAAAAHABQAAQAGAAAAAAANAAIAAQAGAAAAAAANAAMAAQABAAAAAAANAAYAAQAFAAAAAAATAAIAAQAGAAAAAAATAAMAAQABAAAAAAATAAYAAQAFAAAAAAAcAAIAAQAGAAAAAAAcAAMAAQABAAAAAAAcAAYAAQAFAAAAAAAjAAIAAQAGAAAAAAAjAAMAAQABAAAAAAAjAAYAAQAFAAAAAAAUAAoAAQAGAAAAAAAUAAsAAQAGAAAAAAAUAAwAAQAGAAAAAAAUAA0AAQAGAAAAAAAUAA4AAQAGAAAAAAAaAAoAAQABAAAAAAAaAA0AAQAFAAAAAAAaAA4AAQAGAAAAAAAfAAoAAQABAAAAAAAfAA0AAQAFAAAAAAAfAA4AAQAGAAAAAAAlAAkAAQACAAIAAAAlAAoAAQABAAAAAAAlAA0AAQAFAAAAAAAlAA4AAQABAAAAAAAqAAIAAQAGAAAAAAAqAAMAAQABAAAAAAAqAAYAAQAFAAAAAAAqAAcAAQADAAIAAAAqAAgAAQAGAAAAAAAqAAkAAQAGAAAAAAAqAAoAAQABAAAAAAAqAA0AAQAFAAAAAAAqAA4AAQAGAAAAAAAqAA8AAQAGAAAAAAAqABAAAQABAAAAAAAqABMAAQAFAAAAAAAqABQAAQAGAAAAAAAqABUAAQADAAIAAAAqABYAAQAGAAAAAAAqABcAAQAGAAAAAAAqABgAAQAGAAAAAAAqABkAAQAGAAAAAAAqABoAAQAGAAAAAAAOABYAAQABAAAAAAAOABkAAQAFAAAAAAAOABoAAQAGAAAAAAAVABYAAQABAAAAAAAVABkAAQAFAAAAAAAVABoAAQAGAAAAAAAdABYAAQABAAAAAAAdABkAAQAFAAAAAAAdABoAAQAGAAAAAAA=")
 tile_set = ExtResource("25_uuj1x")
 
-[node name="@Polygon2D@488" type="Polygon2D" parent="." unique_id=1670570486]
+[node name="Darah_01" type="Polygon2D" parent="." unique_id=595784861]
 z_index = -1
 position = Vector2(400, 320)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(31.474342, 0, 19.860746, 16.665146, 5.559109, 31.527273, -12.481092, 21.617886, -30.526503, 11.110739, -22.519793, -8.196534, -16.444012, -28.481863, 3.9834638, -22.591345, 25.447123, -21.352673)
 
-[node name="@Polygon2D@489" type="Polygon2D" parent="." unique_id=867054334]
+[node name="Darah_02" type="Polygon2D" parent="." unique_id=1271920982]
 z_index = -1
 position = Vector2(440, 340)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(11.2792845, 0, 13.798036, 11.577927, 2.0581613, 11.672412, -8.934398, 15.474831, -11.666915, 4.24641, -16.619614, -6.049045, -6.483061, -11.228991, 3.0328054, -17.199894, 10.342479, -8.67837)
 
-[node name="@Polygon2D@490" type="Polygon2D" parent="." unique_id=269548774]
+[node name="Darah_03" type="Polygon2D" parent="." unique_id=681448917]
 z_index = -1
 position = Vector2(900, 560)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(38.96046, 0, 16.519674, 13.861653, 6.7722597, 38.407394, -10.845736, 18.785364, -36.602554, 13.322241, -21.560755, -7.8474736, -19.407951, -33.61556, 4.2002034, -23.820536, 29.564247, -24.80735)
 
-[node name="@Polygon2D@491" type="Polygon2D" parent="." unique_id=96108043]
+[node name="Darah_04" type="Polygon2D" parent="." unique_id=1552405033]
 z_index = -1
 position = Vector2(940, 590)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(12.836004, 0, 10.65788, 8.943024, 2.2957673, 13.019943, -6.7881937, 11.757496, -12.763002, 4.6453533, -12.417739, -4.5196877, -6.959082, -12.053484, 2.2278225, -12.63461, 10.898774, -9.145158)
 
-[node name="@Polygon2D@492" type="Polygon2D" parent="." unique_id=341635170]
+[node name="Darah_05" type="Polygon2D" parent="." unique_id=1202432348]
 z_index = -1
 position = Vector2(1300, 500)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(23.06277, 0, 20.230461, 16.975374, 3.8713741, 21.955654, -13.445106, 23.287605, -20.196201, 7.3508167, -25.668127, -9.342435, -10.330332, -17.89266, 4.80704, -27.262077, 15.170243, -12.729346)
 
-[node name="@Polygon2D@493" type="Polygon2D" parent="." unique_id=677579573]
+[node name="Darah_06" type="Polygon2D" parent="." unique_id=1369628545]
 z_index = -1
 position = Vector2(300, 620)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(23.397364, 0, 9.758122, 8.188037, 4.061233, 23.032396, -6.745648, 11.6838045, -21.918797, 7.97779, -13.381152, -4.8703413, -11.6055155, -20.101341, 2.6013477, -14.752975, 17.653395, -14.812958)
 
-[node name="@Polygon2D@494" type="Polygon2D" parent="." unique_id=1533089625]
+[node name="Darah_07" type="Polygon2D" parent="." unique_id=1918223935]
 z_index = -1
 position = Vector2(760, 300)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(13.71824, 0, 15.739202, 13.2067585, 2.2688687, 12.8673935, -10.338153, 17.906206, -11.656377, 4.242574, -19.508371, -7.100467, -5.8685765, -10.164673, 3.611512, -20.481901, 8.681404, -7.2845635)
 
-[node name="@Polygon2D@495" type="Polygon2D" parent="." unique_id=881427248]
+[node name="Darah_08" type="Polygon2D" parent="." unique_id=901888412]
 z_index = -1
 position = Vector2(600, 300)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(10.897642, 0, 14.937569, 12.534109, 1.8633356, 10.567501, -9.74176, 16.873224, -10.672618, 3.8845155, -18.252274, -6.643285, -5.9902124, -10.375352, 3.3549404, -19.026812, 9.649154, -8.0966015)
 
-[node name="@Polygon2D@496" type="Polygon2D" parent="." unique_id=746785937]
+[node name="Darah_09" type="Polygon2D" parent="." unique_id=554516698]
 z_index = -1
 position = Vector2(1200, 600)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(15.059343, 0, 19.904009, 16.701448, 2.4697897, 14.006874, -12.999201, 22.515276, -13.733159, 4.9984612, -24.390198, -8.877307, -7.7245026, -13.3792305, 4.489564, -25.461582, 12.468468, -10.462287)
 
-[node name="@Polygon2D@497" type="Polygon2D" parent="." unique_id=234352231]
+[node name="Darah_10" type="Polygon2D" parent="." unique_id=61554633]
 z_index = -1
 position = Vector2(1400, 250)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(16.220589, 0, 9.598892, 8.054427, 2.775097, 15.738356, -6.5053806, 11.26765, -14.7608595, 5.372514, -12.659544, -4.6076975, -7.7015085, -13.339404, 2.4157848, -13.700596, 11.542105, -9.684977)
 
-[node name="@Polygon2D@498" type="Polygon2D" parent="." unique_id=1786261086]
+[node name="Darah_11" type="Polygon2D" parent="." unique_id=702957399]
 z_index = -1
 position = Vector2(500, 700)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(16.671272, 0, 15.890256, 13.3335085, 3.0021205, 17.025871, -10.183571, 17.638462, -16.801254, 6.115156, -18.746658, -6.823226, -9.220694, -15.97071, 3.3849578, -19.197048, 14.532924, -12.1945715)
 
-[node name="@Polygon2D@499" type="Polygon2D" parent="." unique_id=1508332993]
+[node name="Darah_12" type="Polygon2D" parent="." unique_id=896945438]
 z_index = -1
 position = Vector2(100, 200)
 color = Color(0.35, 0.02, 0.02, 0.75)
 polygon = PackedVector2Array(15.057291, 0, 14.1068535, 11.837056, 2.5187354, 14.284458, -9.347361, 16.190104, -13.092583, 4.765311, -17.79245, -6.4759226, -6.672064, -11.556354, 3.322384, -18.842175, 9.760604, -8.19012)
 
-[node name="@Polygon2D@500" type="Polygon2D" parent="." unique_id=1231480241]
+[node name="Kertas_01" type="Polygon2D" parent="." unique_id=269992597]
 z_index = -1
 position = Vector2(500, 380)
 rotation = 0.4
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@501" type="Polygon2D" parent="." unique_id=602858224]
+[node name="Kertas_02" type="Polygon2D" parent="." unique_id=1262146858]
 z_index = -1
 position = Vector2(540, 400)
 rotation = -0.7
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@502" type="Polygon2D" parent="." unique_id=978985168]
+[node name="Kertas_03" type="Polygon2D" parent="." unique_id=1115165967]
 z_index = -1
 position = Vector2(700, 580)
 rotation = 1.1
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@503" type="Polygon2D" parent="." unique_id=470484075]
+[node name="Kertas_04" type="Polygon2D" parent="." unique_id=1487375426]
 z_index = -1
 position = Vector2(1100, 300)
 rotation = 0.2
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@504" type="Polygon2D" parent="." unique_id=1905118182]
+[node name="Kertas_05" type="Polygon2D" parent="." unique_id=1496909545]
 z_index = -1
 position = Vector2(1140, 340)
 rotation = -1.2
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@505" type="Polygon2D" parent="." unique_id=345313576]
+[node name="Kertas_06" type="Polygon2D" parent="." unique_id=1006183257]
 z_index = -1
 position = Vector2(400, 660)
 rotation = 0.9
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@506" type="Polygon2D" parent="." unique_id=2102345609]
+[node name="Kertas_07" type="Polygon2D" parent="." unique_id=2138739228]
 z_index = -1
 position = Vector2(1300, 300)
 rotation = -0.4
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@507" type="Polygon2D" parent="." unique_id=1257034357]
+[node name="Kertas_08" type="Polygon2D" parent="." unique_id=741460627]
 z_index = -1
 position = Vector2(800, 700)
 rotation = 0.6
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@508" type="Polygon2D" parent="." unique_id=710466777]
+[node name="Kertas_09" type="Polygon2D" parent="." unique_id=1956988553]
 z_index = -1
 position = Vector2(450, 550)
 rotation = 1.4
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@509" type="Polygon2D" parent="." unique_id=435231370]
+[node name="Kertas_10" type="Polygon2D" parent="." unique_id=1007013624]
 z_index = -1
 position = Vector2(1000, 200)
 rotation = -0.5
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@510" type="Polygon2D" parent="." unique_id=486187536]
+[node name="Kertas_11" type="Polygon2D" parent="." unique_id=306408248]
 z_index = -1
 position = Vector2(1350, 550)
 rotation = 0.8
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@511" type="Polygon2D" parent="." unique_id=91397646]
+[node name="Kertas_12" type="Polygon2D" parent="." unique_id=1366449464]
 z_index = -1
 position = Vector2(300, 500)
 rotation = -1.0
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@512" type="Polygon2D" parent="." unique_id=2117064525]
+[node name="Kertas_13" type="Polygon2D" parent="." unique_id=2093390979]
 z_index = -1
 position = Vector2(900, 260)
 rotation = 0.3
 color = Color(0.85, 0.85, 0.8, 0.9)
 polygon = PackedVector2Array(-9, -6, 9, -6, 9, 6, -9, 6)
 
-[node name="@Polygon2D@513" type="Polygon2D" parent="." unique_id=502801111]
+[node name="Karpet_01_Tepi" type="Polygon2D" parent="." unique_id=1921034466]
 z_index = -1
 position = Vector2(1008, 180)
 color = Color(0.1, 0.07, 0.07, 0.9)
 polygon = PackedVector2Array(-81, -36, 81, -36, 81, 36, -81, 36)
 
-[node name="@Polygon2D@514" type="Polygon2D" parent="." unique_id=657082305]
+[node name="Karpet_01_Isi" type="Polygon2D" parent="." unique_id=2116192195]
 z_index = -1
 position = Vector2(1008, 180)
 color = Color(0.35, 0.08, 0.1, 0.85)
 polygon = PackedVector2Array(-75, -30, 75, -30, 75, 30, -75, 30)
 
-[node name="@Polygon2D@515" type="Polygon2D" parent="." unique_id=669323163]
+[node name="Karpet_02_Tepi" type="Polygon2D" parent="." unique_id=1237937651]
 z_index = -1
 position = Vector2(752, 160)
 color = Color(0.1, 0.07, 0.07, 0.9)
 polygon = PackedVector2Array(-136, -66, 136, -66, 136, 66, -136, 66)
 
-[node name="@Polygon2D@516" type="Polygon2D" parent="." unique_id=1675646936]
+[node name="Karpet_02_Isi" type="Polygon2D" parent="." unique_id=1624395728]
 z_index = -1
 position = Vector2(752, 160)
 color = Color(0.15, 0.18, 0.28, 0.85)
 polygon = PackedVector2Array(-130, -60, 130, -60, 130, 60, -130, 60)
 
-[node name="@Polygon2D@517" type="Polygon2D" parent="." unique_id=874076812]
+[node name="Karpet_03_Tepi" type="Polygon2D" parent="." unique_id=269699585]
 z_index = -1
 position = Vector2(800, 780)
 color = Color(0.1, 0.07, 0.07, 0.9)
 polygon = PackedVector2Array(-96, -46, 96, -46, 96, 46, -96, 46)
 
-[node name="@Polygon2D@518" type="Polygon2D" parent="." unique_id=845344933]
+[node name="Karpet_03_Isi" type="Polygon2D" parent="." unique_id=978983860]
 z_index = -1
 position = Vector2(800, 780)
 color = Color(0.4, 0.28, 0.15, 0.85)
 polygon = PackedVector2Array(-90, -40, 90, -40, 90, 40, -90, 40)
 
-[node name="@Polygon2D@519" type="Polygon2D" parent="." unique_id=1440556648]
+[node name="Karpet_04_Tepi" type="Polygon2D" parent="." unique_id=1273953437]
 z_index = -1
 position = Vector2(1100, 780)
 color = Color(0.1, 0.07, 0.07, 0.9)
 polygon = PackedVector2Array(-106, -51, 106, -51, 106, 51, -106, 51)
 
-[node name="@Polygon2D@520" type="Polygon2D" parent="." unique_id=1059051965]
+[node name="Karpet_04_Isi" type="Polygon2D" parent="." unique_id=1386532705]
 z_index = -1
 position = Vector2(1100, 780)
 color = Color(0.2, 0.2, 0.3, 0.85)
 polygon = PackedVector2Array(-100, -45, 100, -45, 100, 45, -100, 45)
 
-[node name="@Line2D@521" type="Line2D" parent="." unique_id=720925772]
+[node name="Kabel_01" type="Line2D" parent="." unique_id=1607394760]
 z_index = -1
 points = PackedVector2Array(400, 400, 400, 340, 400, 300)
 width = 2.0
 default_color = Color(0.05, 0.05, 0.06, 0.9)
 
-[node name="@Line2D@522" type="Line2D" parent="." unique_id=909391916]
+[node name="Kabel_02" type="Line2D" parent="." unique_id=1999123545]
 z_index = -1
 points = PackedVector2Array(736, 400, 736, 340, 736, 300)
 width = 2.0
 default_color = Color(0.05, 0.05, 0.06, 0.9)
 
-[node name="@Line2D@523" type="Line2D" parent="." unique_id=2052746433]
+[node name="Kabel_03" type="Line2D" parent="." unique_id=1693424962]
 z_index = -1
 points = PackedVector2Array(752, 160, 752, 120, 752, 80)
 width = 2.0
 default_color = Color(0.05, 0.05, 0.06, 0.9)
 
-[node name="@Polygon2D@526" type="Polygon2D" parent="." unique_id=851219969]
+[node name="Bayangan_Ruang_Bos" type="Polygon2D" parent="." unique_id=440422718]
 z_index = 5
 color = Color(0, 0, 0, 0.35)
 polygon = PackedVector2Array(896, 64, 1120, 64, 1120, 224, 896, 224)
