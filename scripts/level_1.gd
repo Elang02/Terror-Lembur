@@ -515,15 +515,6 @@ func _rug(center: Vector2, size: Vector2, color: Color) -> void:
 	fill.position = center
 	add_child(fill)
 
-func _cable(points: PackedVector2Array) -> void:
-	var l := Line2D.new()
-	l.name = _prop_name("Kabel")
-	l.points = points
-	l.width = 2.0
-	l.default_color = Color(0.05, 0.05, 0.06, 0.9)
-	l.z_index = -1
-	add_child(l)
-
 func _build_horror_static() -> void:
 	_blood_spot(Vector2(400, 320), 26.0)
 	_blood_spot(Vector2(440, 340), 14.0)
@@ -554,9 +545,6 @@ func _build_horror_static() -> void:
 	_rug(Vector2(752, 160), Vector2(260, 120), Color(0.15, 0.18, 0.28, 0.85))
 	_rug(Vector2(800, 780), Vector2(180, 80), Color(0.4, 0.28, 0.15, 0.85))
 	_rug(Vector2(1100, 780), Vector2(200, 90), Color(0.2, 0.2, 0.3, 0.85))
-	_cable(PackedVector2Array([Vector2(400, 400), Vector2(400, 340), Vector2(400, 300)]))
-	_cable(PackedVector2Array([Vector2(736, 400), Vector2(736, 340), Vector2(736, 300)]))
-	_cable(PackedVector2Array([Vector2(752, 160), Vector2(752, 120), Vector2(752, 80)]))
 	var chair_scene := load("res://scenes/props/kursi_depan.tscn") as PackedScene
 	if chair_scene != null:
 		var root := chair_scene.instantiate() as Prop

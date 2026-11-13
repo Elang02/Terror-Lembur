@@ -884,24 +884,6 @@ position = Vector2(1100, 780)
 color = Color(0.2, 0.2, 0.3, 0.85)
 polygon = PackedVector2Array(-100, -45, 100, -45, 100, 45, -100, 45)
 
-[node name="Kabel_01" type="Line2D" parent="." unique_id=457306766]
-z_index = -1
-points = PackedVector2Array(400, 400, 400, 340, 400, 300)
-width = 2.0
-default_color = Color(0.05, 0.05, 0.06, 0.9)
-
-[node name="Kabel_02" type="Line2D" parent="." unique_id=2071557760]
-z_index = -1
-points = PackedVector2Array(736, 400, 736, 340, 736, 300)
-width = 2.0
-default_color = Color(0.05, 0.05, 0.06, 0.9)
-
-[node name="Kabel_03" type="Line2D" parent="." unique_id=1333189436]
-z_index = -1
-points = PackedVector2Array(752, 160, 752, 120, 752, 80)
-width = 2.0
-default_color = Color(0.05, 0.05, 0.06, 0.9)
-
 [node name="Bayangan_Ruang_Bos" type="Polygon2D" parent="." unique_id=795028213]
 z_index = 5
 color = Color(0, 0, 0, 0.35)
