@@ -41,6 +41,15 @@ const PATROL_LOOP := [
 ]
 const INTERACT_RANGE := 80.0
 const LOCKED_DOORS := [[Vector2i(3, 15), Vector2i(4, 15)], [Vector2i(42, 23), Vector2i(42, 24)]]
+const HIDE_SPOTS := [
+	Vector2(320, 320), Vector2(420, 320), Vector2(320, 520), Vector2(420, 520),
+	Vector2(1150, 320), Vector2(1250, 320), Vector2(1150, 520), Vector2(1250, 520),
+	Vector2(560, 560), Vector2(660, 560), Vector2(800, 260), Vector2(900, 260),
+	Vector2(320, 140), Vector2(940, 110), Vector2(1200, 140), Vector2(320, 760),
+	Vector2(720, 720), Vector2(1000, 760), Vector2(1060, 350), Vector2(752, 160),
+	Vector2(80, 100), Vector2(120, 100), Vector2(80, 180), Vector2(80, 520),
+	Vector2(120, 520), Vector2(80, 600), Vector2(500, 700), Vector2(580, 700),
+]
 const WALL_TILE := {
 	0: Vector2i(0, 0), 1: Vector2i(1, 0), 4: Vector2i(2, 0), 5: Vector2i(3, 0),
 	7: Vector2i(4, 0), 16: Vector2i(5, 0), 17: Vector2i(6, 0), 20: Vector2i(7, 0),
@@ -127,9 +136,13 @@ func _ready() -> void:
 		_create_locked_door_markers()
 	ysort = $"YSort"
 	spawner = $"Spawner"
-	_build_props()
-	_build_horror()
-	_build_cell()
+	var baked_props := ysort.get_child_count() > 0
+	if not baked_props:
+		_build_props()
+		_build_horror_static()
+		_build_cell()
+	_build_horror_lights()
+	_init_desk_positions()
 	_build_tasks()
 	if Engine.is_editor_hint():
 		return
@@ -257,6 +270,11 @@ func _create_locked_door_markers() -> void:
 		add_child(mark)
 		locked_door_marks.append(mark)
 
+func _init_desk_positions() -> void:
+	desk_positions.clear()
+	for s in HIDE_SPOTS:
+		desk_positions.append(s)
+
 func _open_locked_doors() -> void:
 	if wall_layer_ref == null:
 		return
@@ -347,7 +365,7 @@ func _cable(points: PackedVector2Array) -> void:
 	l.z_index = -1
 	add_child(l)
 
-func _build_horror() -> void:
+func _build_horror_static() -> void:
 	_blood_spot(Vector2(400, 320), 26.0)
 	_blood_spot(Vector2(440, 340), 14.0)
 	_blood_spot(Vector2(900, 560), 30.0)
@@ -380,6 +398,18 @@ func _build_horror() -> void:
 	_cable(PackedVector2Array([Vector2(400, 400), Vector2(400, 340), Vector2(400, 300)]))
 	_cable(PackedVector2Array([Vector2(736, 400), Vector2(736, 340), Vector2(736, 300)]))
 	_cable(PackedVector2Array([Vector2(752, 160), Vector2(752, 120), Vector2(752, 80)]))
+	var chair_tex := load(PROP_BASE + "Seating/office_chair/office_chair_front.png") as Texture2D
+	if chair_tex != null:
+		var root := Node2D.new()
+		root.position = Vector2(1200, 500)
+		root.rotation = PI / 2.0
+		ysort.add_child(root)
+		var spr := Sprite2D.new()
+		spr.texture = chair_tex
+		root.add_child(spr)
+
+
+func _build_horror_lights() -> void:
 	for pos in [Vector2(500, 360), Vector2(1100, 420), Vector2(800, 700)]:
 		var fl := PointLight2D.new()
 		fl.position = pos
@@ -395,16 +425,6 @@ func _build_horror() -> void:
 	red.energy = 0.5
 	red.texture_scale = 2.0
 	add_child(red)
-	var chair_tex := load(PROP_BASE + "Seating/office_chair/office_chair_front.png") as Texture2D
-	if chair_tex != null:
-		var root := Node2D.new()
-		root.position = Vector2(1200, 500)
-		root.rotation = PI / 2.0
-		ysort.add_child(root)
-		var spr := Sprite2D.new()
-		spr.texture = chair_tex
-		root.add_child(spr)
-
 func _build_cell() -> void:
 	var room := Polygon2D.new()
 	room.color = Color(0, 0, 0, 0.35)
@@ -1183,7 +1203,6 @@ func _build_props() -> void:
 	_place_prop(clock, Vector2(752, 40), false, Vector2.ZERO)
 	_place_prop(screen, Vector2(752, 40), false, Vector2.ZERO)
 	_place_prop(conf, Vector2(752, 160), true, Vector2(96, 40))
-	desk_positions.append(Vector2(752, 160))
 	_place_prop(chair_f, Vector2(700, 90), true, Vector2(26, 20))
 	_place_prop(chair_f, Vector2(752, 90), true, Vector2(26, 20))
 	_place_prop(chair_f, Vector2(804, 90), true, Vector2(26, 20))
@@ -1265,9 +1284,6 @@ func _build_props() -> void:
 	_place_prop(cab, Vector2(160, 100), true, Vector2(28, 24))
 	_place_prop(cab, Vector2(80, 180), true, Vector2(28, 24))
 	_place_prop(cab, Vector2(120, 180), true, Vector2(28, 24))
-	desk_positions.append(Vector2(80, 100))
-	desk_positions.append(Vector2(120, 100))
-	desk_positions.append(Vector2(80, 180))
 	_place_prop(plant, Vector2(200, 260), true, Vector2(26, 16))
 	_place_prop(trash, Vector2(60, 260), true, Vector2(16, 12))
 	_place_prop(plant, Vector2(60, 320), true, Vector2(26, 16))
@@ -1278,9 +1294,6 @@ func _build_props() -> void:
 	_place_prop(cab, Vector2(160, 520), true, Vector2(28, 24))
 	_place_prop(cab, Vector2(80, 600), true, Vector2(28, 24))
 	_place_prop(cab, Vector2(120, 600), true, Vector2(28, 24))
-	desk_positions.append(Vector2(80, 520))
-	desk_positions.append(Vector2(120, 520))
-	desk_positions.append(Vector2(80, 600))
 	_place_prop(paper, Vector2(180, 560), false, Vector2.ZERO)
 	_place_prop(paper, Vector2(190, 580), false, Vector2.ZERO)
 	_place_prop(plant, Vector2(200, 640), true, Vector2(26, 16))
@@ -1294,8 +1307,6 @@ func _build_props() -> void:
 	_place_prop(cab, Vector2(540, 700), true, Vector2(28, 24))
 	_place_prop(cab, Vector2(580, 700), true, Vector2(28, 24))
 	_place_prop(cab, Vector2(620, 700), true, Vector2(28, 24))
-	desk_positions.append(Vector2(500, 700))
-	desk_positions.append(Vector2(580, 700))
 	_place_prop(cab, Vector2(500, 820), true, Vector2(28, 24))
 	_place_prop(cab, Vector2(540, 820), true, Vector2(28, 24))
 	_place_prop(desk, Vector2(720, 720), true, Vector2(64, 24))
@@ -1352,8 +1363,6 @@ func _place_prop(rel: String, pos: Vector2, solid: bool, col_size: Vector2) -> v
 		shape.position = Vector2(0, 8)
 		body.add_child(shape)
 		root.add_child(body)
-	if rel.begins_with("Desks/"):
-		desk_positions.append(pos)
 
 func _place_modern(rel: String, pos: Vector2, solid: bool, col_size: Vector2) -> void:
 	var tex := load(MODERN_BASE + rel) as Texture2D

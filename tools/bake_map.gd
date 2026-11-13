@@ -1,13 +1,18 @@
 extends SceneTree
 
-# One-off tool: bakes the code-built TileMapLayers (FloorLayer + WallLayer)
-# into scenes/level_1.tscn as real nodes, so the map is editable in the
-# Godot editor's TileMap editor. Run:
+# One-off tool: bakes the code-built map content (TileMapLayers, props,
+# horror dressing, cell) into scenes/level_1.tscn as real nodes, so the map
+# is editable in the Godot editor. Run:
 #   godot --headless --path . --script res://tools/bake_map.gd
-# After baking, level_1.gd _ready() uses the baked layers and no longer
-# rebuilds floor/walls/partitions at runtime.
+# After baking, level_1.gd _ready() uses the baked nodes and no longer
+# rebuilds them at runtime (tasks/pickups/HUD/boss stay code-built).
 
 const OUT_PATH := "res://scenes/level_1.tscn"
+
+func _set_owner_recursive(node: Node, owner: Node) -> void:
+	for child in node.get_children():
+		child.owner = owner
+		_set_owner_recursive(child, owner)
 
 func _init() -> void:
 	var level_script := load("res://scripts/level_1.gd") as GDScript
@@ -17,16 +22,6 @@ func _init() -> void:
 		return
 	var lvl := level_script.new() as Node2D
 	lvl.name = "Level1"
-	lvl._build_tilemap_layers()
-	var floor_layer := lvl.get_node("FloorLayer") as TileMapLayer
-	var wall_layer := lvl.get_node("WallLayer") as TileMapLayer
-	if floor_layer == null or wall_layer == null:
-		push_error("tilemap layers not built")
-		quit(1)
-		return
-	print("floor cells: ", floor_layer.get_used_cells().size())
-	print("wall cells: ", wall_layer.get_used_cells().size())
-
 	var ysort := Node2D.new()
 	ysort.name = "YSort"
 	ysort.y_sort_enabled = true
@@ -39,8 +34,22 @@ func _init() -> void:
 	network.name = "Network"
 	network.set_script(load("res://scripts/network.gd"))
 	lvl.add_child(network)
-	for child in lvl.get_children():
-		child.owner = lvl
+	lvl.ysort = ysort
+	lvl._build_tilemap_layers()
+	lvl._build_props()
+	lvl._build_horror_static()
+	lvl._build_cell()
+	var floor_layer := lvl.get_node("FloorLayer") as TileMapLayer
+	var wall_layer := lvl.get_node("WallLayer") as TileMapLayer
+	if floor_layer == null or wall_layer == null:
+		push_error("tilemap layers not built")
+		quit(1)
+		return
+	print("floor cells: ", floor_layer.get_used_cells().size())
+	print("wall cells: ", wall_layer.get_used_cells().size())
+	print("ysort children (props+cell): ", ysort.get_child_count())
+	print("level children: ", lvl.get_child_count())
+	_set_owner_recursive(lvl, lvl)
 
 	var packed := PackedScene.new()
 	var err := packed.pack(lvl)
