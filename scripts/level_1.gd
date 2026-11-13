@@ -41,7 +41,7 @@ const PATROL_LOOP := [
 ]
 const INTERACT_RANGE := 80.0
 const LOCKED_DOORS := [[Vector2i(3, 15), Vector2i(4, 15)], [Vector2i(42, 23), Vector2i(42, 24)]]
-const HIDE_SPOTS := [
+const _HIDE_SPOT_POSITIONS := [
 	Vector2(320, 320), Vector2(420, 320), Vector2(320, 520), Vector2(420, 520),
 	Vector2(1150, 320), Vector2(1250, 320), Vector2(1150, 520), Vector2(1250, 520),
 	Vector2(560, 560), Vector2(660, 560), Vector2(800, 260), Vector2(900, 260),
@@ -50,6 +50,30 @@ const HIDE_SPOTS := [
 	Vector2(80, 100), Vector2(120, 100), Vector2(80, 180), Vector2(80, 520),
 	Vector2(120, 520), Vector2(80, 600), Vector2(500, 700), Vector2(580, 700),
 ]
+const PROP_SCENES := {
+	"Desks/office_desk/office_desk_front.png": "res://scenes/props/meja.tscn",
+	"Seating/office_chair/office_chair_front.png": "res://scenes/props/kursi_depan.tscn",
+	"Seating/office_chair/office_chair_back.png": "res://scenes/props/kursi_belakang.tscn",
+	"Seating/office_chair/office_chair_left.png": "res://scenes/props/kursi_kiri.tscn",
+	"Seating/office_chair/office_chair_right.png": "res://scenes/props/kursi_kanan.tscn",
+	"Tech/computer/computer_front.png": "res://scenes/props/komputer.tscn",
+	"Tech/laptop/laptop_front.png": "res://scenes/props/laptop.tscn",
+	"Storage/filing_cabinet/filing_cabinet_front.png": "res://scenes/props/lemari.tscn",
+	"Decor/office_plant/office_plant_front.png": "res://scenes/props/tanaman.tscn",
+	"Decor/tall_plant/tall_plant_front.png": "res://scenes/props/tanaman_tinggi.tscn",
+	"Decor/wall_clock/wall_clock_front.png": "res://scenes/props/jam_dinding.tscn",
+	"Kitchen/water_cooler/water_cooler_left.png": "res://scenes/props/dispenser.tscn",
+	"Kitchen/trash_bin/trash_bin_front.png": "res://scenes/props/tempat_sampah.tscn",
+	"Desk_Items/desk_lamp/desk_lamp_front.png": "res://scenes/props/lampu_meja.tscn",
+	"Desk_Items/coffee_mug/coffee_mug_front.png": "res://scenes/props/mug.tscn",
+	"Desk_Items/paper_stack/paper_stack_front.png": "res://scenes/props/tumpukan_kertas.tscn",
+	"Meeting/conference_table/conference_table_front.png": "res://scenes/props/meja_rapat.tscn",
+	"Meeting/flip_chart/flip_chart_right.png": "res://scenes/props/flipchart.tscn",
+	"Meeting/projector_screen/projector_screen_front.png": "res://scenes/props/layar_proyektor.tscn",
+	"whiteboard.png": "res://scenes/props/papan_tulis.tscn",
+	"sofa.png": "res://scenes/props/sofa.tscn",
+	"bookshelf.png": "res://scenes/props/rak_buku.tscn",
+}
 const WALL_TILE := {
 	0: Vector2i(0, 0), 1: Vector2i(1, 0), 4: Vector2i(2, 0), 5: Vector2i(3, 0),
 	7: Vector2i(4, 0), 16: Vector2i(5, 0), 17: Vector2i(6, 0), 20: Vector2i(7, 0),
@@ -320,8 +344,9 @@ func _create_locked_door_markers() -> void:
 
 func _init_desk_positions() -> void:
 	desk_positions.clear()
-	for s in HIDE_SPOTS:
-		desk_positions.append(s)
+	for n in get_tree().get_nodes_in_group("hide_spot"):
+		if n is Node2D:
+			desk_positions.append((n as Node2D).global_position)
 
 func _open_locked_doors() -> void:
 	if wall_layer_ref == null:
@@ -1406,53 +1431,21 @@ func _build_props() -> void:
 	_place_prop(trash, Vector2(1400, 300), true, Vector2(16, 12))
 
 func _place_prop(rel: String, pos: Vector2, solid: bool, col_size: Vector2) -> void:
-	var tex := load(PROP_BASE + rel) as Texture2D
-	if tex == null:
-		return
-	var root := Node2D.new()
-	root.name = _prop_name(_indo_name(rel))
-	root.position = pos
-	ysort.add_child(root)
-	var spr := Sprite2D.new()
-	spr.name = root.name + "_Gambar"
-	spr.texture = tex
-	spr.position = Vector2(0, -tex.get_height() / 2.0 + 16)
-	root.add_child(spr)
-	if solid:
-		var body := StaticBody2D.new()
-		body.name = root.name + "_Collision"
-		body.collision_layer = 1
-		body.collision_mask = 0
-		var shape := CollisionShape2D.new()
-		var rect := RectangleShape2D.new()
-		rect.size = col_size
-		shape.shape = rect
-		shape.position = Vector2(0, 8)
-		body.add_child(shape)
-		root.add_child(body)
+	_place_prop_scene(rel, pos)
 
 func _place_modern(rel: String, pos: Vector2, solid: bool, col_size: Vector2) -> void:
-	var tex := load(MODERN_BASE + rel) as Texture2D
-	if tex == null:
+	_place_prop_scene(rel, pos)
+
+func _place_prop_scene(rel: String, pos: Vector2) -> void:
+	var scene_path: String = PROP_SCENES.get(rel, "")
+	if scene_path == "":
 		return
-	var root := Node2D.new()
-	root.name = _prop_name(_indo_name(rel))
-	root.position = pos
-	ysort.add_child(root)
-	var spr := Sprite2D.new()
-	spr.name = root.name + "_Gambar"
-	spr.texture = tex
-	spr.position = Vector2(0, -tex.get_height() / 2.0 + 16)
-	root.add_child(spr)
-	if solid:
-		var body := StaticBody2D.new()
-		body.name = root.name + "_Collision"
-		body.collision_layer = 1
-		body.collision_mask = 0
-		var shape := CollisionShape2D.new()
-		var rect := RectangleShape2D.new()
-		rect.size = col_size
-		shape.shape = rect
-		shape.position = Vector2(0, 8)
-		body.add_child(shape)
-		root.add_child(body)
+	var scene := load(scene_path) as PackedScene
+	if scene == null:
+		return
+	var inst := scene.instantiate() as Prop
+	inst.name = _prop_name(_indo_name(rel))
+	inst.position = pos
+	if _HIDE_SPOT_POSITIONS.has(pos):
+		inst.is_hide_spot = true
+	ysort.add_child(inst)

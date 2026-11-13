@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=4]
+
+[ext_resource type="Script" path="res://scripts/prop.gd" id="1_prop"]
+[ext_resource type="Texture2D" path="res://assets/office_assets/main/Office_Pixel_Art_Free_v1.0/Props/Desk_Items/paper_stack/paper_stack_front.png" id="2_tex"]
+
+[node name="Tumpukan_Kertas" type="Node2D"]
+script = ExtResource("1_prop")
+
+[node name="Gambar" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+position = Vector2(0, 1)

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=4]
+
+[ext_resource type="Script" path="res://scripts/prop.gd" id="1_prop"]
+[ext_resource type="Texture2D" path="res://assets/office_assets/main/Office_Pixel_Art_Free_v1.0/Props/Seating/office_chair/office_chair_right.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_col"]
+size = Vector2(20, 14)
+
+[node name="Kursi_Kanan" type="Node2D"]
+script = ExtResource("1_prop")
+
+[node name="Gambar" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+position = Vector2(0, -11.5)
+
+[node name="Collision" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision"]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_col")
