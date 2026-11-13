@@ -1,3 +1,4 @@
+@tool
 extends CharacterBody2D
 
 const SPEED_PATROL := 90.0
@@ -46,22 +47,33 @@ func _enter_tree() -> void:
 	set_multiplayer_authority(1)
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		_build_visual()
+		return
 	rng.randomize()
 	level = get_parent().get_parent()
 	_build_visual()
 	teleport_timer = rng.randf_range(TELEPORT_MIN, TELEPORT_MAX)
 	_pick_waypoint()
 
+func _get_or_create(parent: Node, node_name: String, type: Variant) -> Node:
+	var existing := get_node_or_null(node_name)
+	if existing != null:
+		return existing
+	var n: Node = type.new()
+	n.name = node_name
+	parent.add_child(n)
+	return n
+
 func _build_visual() -> void:
-	smoke_poly = Polygon2D.new()
+	smoke_poly = _get_or_create(self, "Asap", Polygon2D) as Polygon2D
 	smoke_poly.color = Color(0, 0, 0, 0.25)
 	smoke_poly.polygon = PackedVector2Array([
 		Vector2(-26, -30), Vector2(-20, -38), Vector2(0, -44), Vector2(20, -38),
 		Vector2(26, -30), Vector2(24, 10), Vector2(28, 34), Vector2(0, 40),
 		Vector2(-28, 34), Vector2(-24, 10),
 	])
-	add_child(smoke_poly)
-	body_poly = Polygon2D.new()
+	body_poly = _get_or_create(self, "Jubah", Polygon2D) as Polygon2D
 	body_poly.color = Color(0, 0, 0, 1)
 	body_poly.polygon = PackedVector2Array([
 		Vector2(0, -34), Vector2(10, -28), Vector2(14, -12), Vector2(16, 8),
@@ -69,29 +81,24 @@ func _build_visual() -> void:
 		Vector2(-6, 26), Vector2(-12, 32), Vector2(-20, 28), Vector2(-16, 8),
 		Vector2(-14, -12), Vector2(-10, -28),
 	])
-	add_child(body_poly)
-	eye_l = Polygon2D.new()
+	eye_l = _get_or_create(self, "Mata_Kiri", Polygon2D) as Polygon2D
 	eye_l.color = Color(1, 1, 1, 1)
 	eye_l.polygon = _circle_points(Vector2(-6, -20), 3.0)
-	add_child(eye_l)
-	eye_r = Polygon2D.new()
+	eye_r = _get_or_create(self, "Mata_Kanan", Polygon2D) as Polygon2D
 	eye_r.color = Color(1, 1, 1, 1)
 	eye_r.polygon = _circle_points(Vector2(6, -20), 3.0)
-	add_child(eye_r)
-	state_mark = Label.new()
+	state_mark = _get_or_create(self, "Tanda", Label) as Label
 	state_mark.text = ""
 	state_mark.position = Vector2(-14, -74)
 	state_mark.add_theme_font_size_override("font_size", 30)
 	state_mark.add_theme_color_override("font_color", Color(1, 0.9, 0.3, 1))
 	state_mark.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
 	state_mark.add_theme_constant_override("outline_size", 8)
-	add_child(state_mark)
-	boss_light = PointLight2D.new()
+	boss_light = _get_or_create(self, "Senter_Merah", PointLight2D) as PointLight2D
 	boss_light.texture = CONE_TEX
 	boss_light.texture_scale = 2.0
 	boss_light.energy = 2.0
 	boss_light.color = Color(1.0, 0.15, 0.15, 1.0)
-	add_child(boss_light)
 
 func _process(_delta: float) -> void:
 	if boss_light != null:
@@ -106,6 +113,8 @@ func _circle_points(center: Vector2, r: float) -> PackedVector2Array:
 	return pts
 
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
 	if not multiplayer.is_server():
 		return
 	if blind_timer > 0.0:

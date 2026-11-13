@@ -1,3 +1,4 @@
+@tool
 extends Node2D
 
 var direction := Vector2.RIGHT
@@ -11,13 +12,21 @@ func _enter_tree() -> void:
 	set_multiplayer_authority(1)
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
 	level = get_parent().get_parent()
 
 func launch(pos: Vector2, dir: Vector2) -> void:
 	global_position = pos
 	direction = dir.normalized()
 
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		queue_redraw()
+
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
 	if not multiplayer.is_server():
 		return
 	if landed:
