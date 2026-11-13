@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0ss00terror1"]
+[gd_scene load_steps=5 format=3 uid="uid://b0ss00terror1"]
 
 [ext_resource type="Script" path="res://scripts/boss.gd" id="1_boss"]
+[ext_resource type="Texture2D" path="res://assets/flashlight_cone.png" id="2_neq0i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boss"]
 size = Vector2(24, 48)
@@ -13,14 +14,43 @@ properties/1/path = NodePath(".:facing")
 properties/1/spawn = true
 properties/1/replication_mode = 2
 
-[node name="Boss" type="CharacterBody2D"]
+[node name="Boss" type="CharacterBody2D" unique_id=1734073541]
 collision_layer = 2
-collision_mask = 1
 script = ExtResource("1_boss")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=566249774]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_boss")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=923842628]
 replication_config = SubResource("SceneReplicationConfig_boss")
+
+[node name="Asap" type="Polygon2D" parent="." unique_id=634858157]
+color = Color(0, 0, 0, 0.25)
+polygon = PackedVector2Array(-26, -30, -20, -38, 0, -44, 20, -38, 26, -30, 24, 10, 28, 34, 0, 40, -28, 34, -24, 10)
+
+[node name="Jubah" type="Polygon2D" parent="." unique_id=1051077814]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, -34, 10, -28, 14, -12, 16, 8, 20, 28, 12, 32, 6, 26, 0, 32, -6, 26, -12, 32, -20, 28, -16, 8, -14, -12, -10, -28)
+
+[node name="Mata_Kiri" type="Polygon2D" parent="." unique_id=2108105260]
+polygon = PackedVector2Array(-3, -20, -3.8786798, -17.87868, -6, -17, -8.121321, -17.87868, -9, -20, -8.121321, -22.12132, -6, -23, -3.8786798, -22.12132)
+
+[node name="Mata_Kanan" type="Polygon2D" parent="." unique_id=734138189]
+polygon = PackedVector2Array(9, -20, 8.121321, -17.87868, 6, -17, 3.8786798, -17.87868, 3, -20, 3.8786798, -22.12132, 6, -23, 8.121321, -22.12132)
+
+[node name="Tanda" type="Label" parent="." unique_id=1771041033]
+offset_left = -14.0
+offset_top = -74.0
+offset_right = -14.0
+offset_bottom = -74.0
+theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+
+[node name="Senter_Merah" type="PointLight2D" parent="." unique_id=2069871192]
+color = Color(1, 0.15, 0.15, 1)
+energy = 2.0
+texture = ExtResource("2_neq0i")
+texture_scale = 2.0

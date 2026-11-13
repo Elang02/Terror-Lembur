@@ -1,4 +1,3 @@
-@tool
 extends CharacterBody2D
 
 const SPEED_PATROL := 90.0
@@ -47,9 +46,6 @@ func _enter_tree() -> void:
 	set_multiplayer_authority(1)
 
 func _ready() -> void:
-	if Engine.is_editor_hint():
-		_build_visual()
-		return
 	rng.randomize()
 	level = get_parent().get_parent()
 	_build_visual()
@@ -113,8 +109,6 @@ func _circle_points(center: Vector2, r: float) -> PackedVector2Array:
 	return pts
 
 func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		return
 	if not multiplayer.is_server():
 		return
 	if blind_timer > 0.0:

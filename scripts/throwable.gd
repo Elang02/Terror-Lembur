@@ -1,4 +1,3 @@
-@tool
 extends Node2D
 
 var direction := Vector2.RIGHT
@@ -12,21 +11,13 @@ func _enter_tree() -> void:
 	set_multiplayer_authority(1)
 
 func _ready() -> void:
-	if Engine.is_editor_hint():
-		return
 	level = get_parent().get_parent()
 
 func launch(pos: Vector2, dir: Vector2) -> void:
 	global_position = pos
 	direction = dir.normalized()
 
-func _process(_delta: float) -> void:
-	if Engine.is_editor_hint():
-		queue_redraw()
-
 func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint():
-		return
 	if not multiplayer.is_server():
 		return
 	if landed:
@@ -45,5 +36,3 @@ func _physics_process(delta: float) -> void:
 func _draw() -> void:
 	if landed:
 		draw_arc(Vector2.ZERO, 10 + land_timer * 30.0, 0, TAU, 20, Color(1, 1, 1, maxf(0.0, 0.8 - land_timer)), 2.0)
-	draw_circle(Vector2.ZERO, 5, Color(0.1, 0.1, 0.1, 1))
-	draw_arc(Vector2.ZERO, 5, 0, TAU, 12, Color(1, 1, 1, 0.9), 1.5)
