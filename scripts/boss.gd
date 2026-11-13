@@ -26,6 +26,9 @@ var search_center := Vector2.ZERO
 var waypoint_timer := 0.0
 var patrol_index := 0
 var speed_mult := 1.0
+var path: PackedVector2Array = []
+var path_index := 0
+var repath_timer := 0.0
 var level: Node2D
 var rng := RandomNumberGenerator.new()
 
@@ -156,6 +159,29 @@ func _pick_waypoint() -> void:
 	target = loop[patrol_index % loop.size()]
 	patrol_index += 1
 	waypoint_timer = 0.0
+	_request_path(target)
+
+func _request_path(dest: Vector2) -> void:
+	path = []
+	path_index = 0
+	if level == null or not level.has_method("find_path"):
+		return
+	path = level.find_path(global_position, dest)
+	if path.size() > 0 and global_position.distance_to(path[0]) < 20.0:
+		path_index = 1
+
+func _steer_to(dest: Vector2, speed: float) -> void:
+	if path_index < path.size():
+		var wp: Vector2 = path[path_index]
+		if global_position.distance_to(wp) < 16.0:
+			path_index += 1
+			if path_index >= path.size():
+				_move_toward(dest, speed)
+				return
+			wp = path[path_index]
+		_move_toward(wp, speed)
+		return
+	_move_toward(dest, speed)
 
 func _in_other_room(p: Vector2) -> bool:
 	for room in level.ALL_ROOMS:
@@ -168,9 +194,10 @@ func _update_patrol(_delta: float) -> void:
 	if global_position.distance_to(target) < 24.0 or waypoint_timer > 8.0:
 		if rng.randf() < 0.25:
 			target = level.boss_room_center()
+			_request_path(target)
 		else:
 			_pick_waypoint()
-	_move_toward(target, SPEED_PATROL * speed_mult)
+	_steer_to(target, SPEED_PATROL * speed_mult)
 
 func _update_suspicious(delta: float) -> void:
 	velocity = Vector2.ZERO
@@ -178,26 +205,33 @@ func _update_suspicious(delta: float) -> void:
 		state = State.SEARCH
 		search_center = target
 		state_timer = 0.0
+		_request_path(search_center)
 
 func _update_chase(delta: float) -> void:
 	chase_timer += delta
+	repath_timer -= delta
 	var p := _nearest_visible_player()
 	if p == null:
 		state = State.SEARCH
 		search_center = target
 		state_timer = 0.0
+		_request_path(search_center)
 		return
 	target = p.global_position
-	_move_toward(target, SPEED_CHASE * speed_mult)
+	if repath_timer <= 0.0:
+		repath_timer = 0.4
+		_request_path(target)
+	_steer_to(target, SPEED_CHASE * speed_mult)
 	if chase_timer > CHASE_TIRED:
 		state = State.SEARCH
 		search_center = target
 		state_timer = 0.0
 		chase_timer = 0.0
+		_request_path(search_center)
 
 func _update_search(delta: float) -> void:
 	if global_position.distance_to(search_center) > 30.0:
-		_move_toward(search_center, SPEED_SEARCH * speed_mult)
+		_steer_to(search_center, SPEED_SEARCH * speed_mult)
 	else:
 		velocity = Vector2.ZERO
 		var orbit := Vector2(cos(state_timer * 1.2), sin(state_timer * 1.2)) * 60.0
@@ -205,6 +239,7 @@ func _update_search(delta: float) -> void:
 	if state_timer > 5.0:
 		state = State.RETURN
 		state_timer = 0.0
+		_request_path(level.boss_room_center())
 
 func _update_return(_delta: float) -> void:
 	if state_timer > 8.0:
@@ -214,7 +249,7 @@ func _update_return(_delta: float) -> void:
 		state_timer = 0.0
 		_pick_waypoint()
 		return
-	_move_toward(level.boss_room_center(), SPEED_RETURN * speed_mult)
+	_steer_to(level.boss_room_center(), SPEED_RETURN * speed_mult)
 	if global_position.distance_to(level.boss_room_center()) < 40.0:
 		state = State.PATROL
 		state_timer = 0.0
@@ -239,6 +274,7 @@ func _update_detection() -> void:
 			state = State.CHASE
 			chase_timer = 0.0
 			state_timer = 0.0
+			repath_timer = 0.0
 			level.rpc("on_boss_chase")
 		target = p.global_position
 		return

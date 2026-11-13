@@ -92,6 +92,7 @@ const WALL_TILE := {
 var locked_door_cells: Array[Vector2i] = []
 var locked_door_marks: Array[Polygon2D] = []
 var wall_layer_ref: TileMapLayer = null
+var astar: AStarGrid2D = null
 
 var ysort: Node2D
 var spawner: MultiplayerSpawner
@@ -214,6 +215,7 @@ func _ready() -> void:
 		_build_cell()
 	_build_horror_lights()
 	_init_desk_positions()
+	_build_astar()
 	_build_tasks()
 	if Engine.is_editor_hint():
 		return
@@ -348,6 +350,83 @@ func _init_desk_positions() -> void:
 		if n is Node2D:
 			desk_positions.append((n as Node2D).global_position)
 
+func _build_astar() -> void:
+	if wall_layer_ref == null or ysort == null:
+		return
+	astar = AStarGrid2D.new()
+	astar.region = Rect2i(0, 0, ROOM_W, ROOM_H)
+	astar.cell_size = Vector2(32, 32)
+	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
+	astar.default_estimate_heuristic = AStarGrid2D.HEURISTIC_EUCLIDEAN
+	astar.update()
+	for cell in wall_layer_ref.get_used_cells():
+		astar.set_point_solid(cell, true)
+	for child in ysort.get_children():
+		if not (child is Prop):
+			continue
+		var rect := _prop_collision_aabb(child as Node2D)
+		if rect.size.x <= 0.0 or rect.size.y <= 0.0:
+			continue
+		_mark_rect_solid(rect)
+
+func _prop_collision_aabb(prop: Node2D) -> Rect2:
+	var col := prop.get_node_or_null("Collision")
+	if col == null:
+		return Rect2()
+	var shape_node := col.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if shape_node == null or not (shape_node.shape is RectangleShape2D):
+		return Rect2()
+	var size := (shape_node.shape as RectangleShape2D).size
+	var local_rect := Rect2(-size / 2.0, size)
+	var xf := shape_node.get_global_transform()
+	var a: Vector2 = xf * local_rect.position
+	var b: Vector2 = xf * (local_rect.position + Vector2(local_rect.size.x, 0.0))
+	var c: Vector2 = xf * (local_rect.position + Vector2(0.0, local_rect.size.y))
+	var d: Vector2 = xf * local_rect.end
+	var min_x := minf(minf(a.x, b.x), minf(c.x, d.x))
+	var max_x := maxf(maxf(a.x, b.x), maxf(c.x, d.x))
+	var min_y := minf(minf(a.y, b.y), minf(c.y, d.y))
+	var max_y := maxf(maxf(a.y, b.y), maxf(c.y, d.y))
+	return Rect2(min_x, min_y, max_x - min_x, max_y - min_y)
+
+func _mark_rect_solid(rect: Rect2) -> void:
+	var x0 := int(floor(rect.position.x / 32.0))
+	var y0 := int(floor(rect.position.y / 32.0))
+	var x1 := int(floor((rect.position.x + rect.size.x - 1.0) / 32.0))
+	var y1 := int(floor((rect.position.y + rect.size.y - 1.0) / 32.0))
+	for y in range(maxi(y0, 0), mini(y1, ROOM_H - 1) + 1):
+		for x in range(maxi(x0, 0), mini(x1, ROOM_W - 1) + 1):
+			astar.set_point_solid(Vector2i(x, y), true)
+
+func _nearest_walkable(cell: Vector2i) -> Vector2i:
+	if astar == null:
+		return cell
+	var c := Vector2i(clampi(cell.x, 0, ROOM_W - 1), clampi(cell.y, 0, ROOM_H - 1))
+	if not astar.is_point_solid(c):
+		return c
+	for r in range(1, 6):
+		for dy in range(-r, r + 1):
+			for dx in range(-r, r + 1):
+				if maxi(absi(dx), absi(dy)) != r:
+					continue
+				var n := Vector2i(c.x + dx, c.y + dy)
+				if n.x < 0 or n.y < 0 or n.x >= ROOM_W or n.y >= ROOM_H:
+					continue
+				if not astar.is_point_solid(n):
+					return n
+	return c
+
+func find_path(from_world: Vector2, to_world: Vector2) -> PackedVector2Array:
+	if astar == null:
+		return PackedVector2Array()
+	var from_cell := _nearest_walkable(Vector2i(int(from_world.x / 32.0), int(from_world.y / 32.0)))
+	var to_cell := _nearest_walkable(Vector2i(int(to_world.x / 32.0), int(to_world.y / 32.0)))
+	var cells := astar.get_id_path(from_cell, to_cell)
+	var out := PackedVector2Array()
+	for cell in cells:
+		out.append(Vector2(cell.x * 32 + 16, cell.y * 32 + 16))
+	return out
+
 func _open_locked_doors() -> void:
 	if wall_layer_ref == null:
 		return
@@ -358,6 +437,7 @@ func _open_locked_doors() -> void:
 		m.queue_free()
 	locked_door_marks.clear()
 	_autotile_walls(wall_layer_ref)
+	_build_astar()
 
 func _build_partitions(layer: TileMapLayer) -> void:
 	wall_layer_ref = layer
