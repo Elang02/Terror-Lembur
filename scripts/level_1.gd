@@ -1,3 +1,4 @@
+@tool
 extends Node2D
 
 const ROOM_W := 48
@@ -100,8 +101,8 @@ var end_detail: Label
 var end_stars: Array[Label] = []
 
 func _ready() -> void:
-	sfx = SFX.new()
-	add_child(sfx)
+	if has_node("FloorLayer"):
+		return
 	var tile_set := load(TILESET_PATH) as TileSet
 	var floor_layer := TileMapLayer.new()
 	floor_layer.name = "FloorLayer"
@@ -128,10 +129,14 @@ func _ready() -> void:
 	ysort = $"YSort"
 	spawner = $"Spawner"
 	_build_props()
-	_build_darkness()
 	_build_horror()
 	_build_cell()
 	_build_tasks()
+	if Engine.is_editor_hint():
+		return
+	sfx = SFX.new()
+	add_child(sfx)
+	_build_darkness()
 	_build_pickups()
 	_build_hud()
 	if not (multiplayer.multiplayer_peer is OfflineMultiplayerPeer):
@@ -620,6 +625,8 @@ func _build_hud() -> void:
 	vb.add_child(again_btn)
 
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
 	if not game_over:
 		elapsed += delta
 	if warn_timer > 0.0:
