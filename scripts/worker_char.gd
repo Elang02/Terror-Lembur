@@ -12,6 +12,14 @@ const SHOUT_RADIUS := 500.0
 var facing := Vector2.DOWN
 var bot_mode := false
 var bot_time := 0.0
+var demo_mode := false
+var demo_waypoints: Array[Vector2] = []
+var demo_wp_index := 0
+var demo_path: PackedVector2Array = []
+var demo_path_index := 0
+var demo_repath_timer := 0.0
+var demo_task_id := -1
+var demo_wait_timer := 0.0
 var locked := false
 var hiding := false
 var interacting := false
@@ -36,6 +44,12 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	bot_mode = "--bot" in OS.get_cmdline_user_args()
+	demo_mode = "--demo" in OS.get_cmdline_user_args()
+	if demo_mode:
+		demo_waypoints = [Vector2(400, 400), Vector2(190, 560), Vector2(736, 400), Vector2(800, 760)]
+		demo_task_id = 1
+		demo_wp_index = 0
+		demo_repath_timer = 0.0
 	camera.enabled = is_multiplayer_authority()
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 6.0
@@ -71,7 +85,9 @@ func _physics_process(delta: float) -> void:
 	if shout_timer > 0.0:
 		shout_timer -= delta
 	var input_dir := Vector2.ZERO
-	if bot_mode:
+	if demo_mode:
+		input_dir = _demo_update(delta)
+	elif bot_mode:
 		bot_time += delta
 		var phase := int(bot_time / 2.0) % 4
 		match phase:
@@ -100,6 +116,58 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_actions(input_dir)
 
+func _demo_update(delta: float) -> Vector2:
+	if locked:
+		interacting = true
+		interact_target = 99
+		return Vector2.ZERO
+	var lvl := get_parent().get_parent()
+	if lvl == null or demo_wp_index >= demo_waypoints.size():
+		return Vector2.ZERO
+	var target: Vector2 = demo_waypoints[demo_wp_index]
+	var dist := global_position.distance_to(target)
+	if dist < 70.0:
+		var task_done := false
+		if demo_task_id >= 0 and lvl.has_method("get"):
+			for tp in lvl.get("tasks"):
+				if tp.get("task_id") == demo_task_id and tp.get("done"):
+					task_done = true
+		if demo_wp_index == 3:
+			return Vector2.ZERO
+		if task_done:
+			demo_wp_index += 1
+			if demo_wp_index == 1:
+				demo_task_id = 2
+			elif demo_wp_index == 2:
+				demo_task_id = 0
+			elif demo_wp_index == 3:
+				demo_task_id = 3
+			demo_path = []
+			demo_path_index = 0
+			return Vector2.ZERO
+		interacting = true
+		interact_target = demo_task_id
+		return Vector2.ZERO
+	interacting = false
+	interact_target = -1
+	demo_repath_timer -= delta
+	if demo_path.is_empty() or demo_repath_timer <= 0.0:
+		demo_repath_timer = 1.0
+		if lvl.has_method("find_path"):
+			demo_path = lvl.find_path(global_position, target)
+			demo_path_index = 0
+			if demo_path.size() > 0 and global_position.distance_to(demo_path[0]) < 20.0:
+				demo_path_index = 1
+	if demo_path_index < demo_path.size():
+		var wp: Vector2 = demo_path[demo_path_index]
+		if global_position.distance_to(wp) < 16.0:
+			demo_path_index += 1
+			if demo_path_index >= demo_path.size():
+				return (target - global_position).normalized()
+			wp = demo_path[demo_path_index]
+		return (wp - global_position).normalized()
+	return (target - global_position).normalized()
+
 func _update_actions(input_dir: Vector2) -> void:
 	if bot_mode:
 		return
@@ -122,6 +190,8 @@ func _update_actions(input_dir: Vector2) -> void:
 	_update_interact()
 
 func _update_interact() -> void:
+	if demo_mode:
+		return
 	var lvl := get_parent().get_parent()
 	if lvl == null or not lvl.has_method("nearest_interactable"):
 		interacting = false
