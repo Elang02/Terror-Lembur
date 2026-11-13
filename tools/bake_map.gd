@@ -12,7 +12,11 @@ const OUT_PATH := "res://scenes/level_1.tscn"
 func _set_owner_recursive(node: Node, owner: Node) -> void:
 	for child in node.get_children():
 		child.owner = owner
-		_set_owner_recursive(child, owner)
+		# Do not recurse into instanced scenes: their children belong to the
+		# sub-scene file, not to this scene. Recursing duplicates them into
+		# level_1.tscn and causes name clashes (140x Gambar/Collision).
+		if child.scene_file_path == "":
+			_set_owner_recursive(child, owner)
 
 func _init() -> void:
 	var level_script := load("res://scripts/level_1.gd") as GDScript
