@@ -32,14 +32,14 @@ var repath_timer := 0.0
 var level: Node2D
 var rng := RandomNumberGenerator.new()
 
-var body_poly: Polygon2D
-var smoke_poly: Polygon2D
+var boss_sprite: Sprite2D
 var eye_l: Polygon2D
 var eye_r: Polygon2D
 var state_mark: Label
 var boss_light: PointLight2D
 
 const CONE_TEX := preload("res://assets/flashlight_cone.png")
+const PALE_TEX := preload("res://assets/monster/pale_figure.png")
 var _last_mark := ""
 
 func _enter_tree() -> void:
@@ -62,27 +62,16 @@ func _get_or_create(parent: Node, node_name: String, type: Variant) -> Node:
 	return n
 
 func _build_visual() -> void:
-	smoke_poly = _get_or_create(self, "Asap", Polygon2D) as Polygon2D
-	smoke_poly.color = Color(0, 0, 0, 0.25)
-	smoke_poly.polygon = PackedVector2Array([
-		Vector2(-26, -30), Vector2(-20, -38), Vector2(0, -44), Vector2(20, -38),
-		Vector2(26, -30), Vector2(24, 10), Vector2(28, 34), Vector2(0, 40),
-		Vector2(-28, 34), Vector2(-24, 10),
-	])
-	body_poly = _get_or_create(self, "Jubah", Polygon2D) as Polygon2D
-	body_poly.color = Color(0, 0, 0, 1)
-	body_poly.polygon = PackedVector2Array([
-		Vector2(0, -34), Vector2(10, -28), Vector2(14, -12), Vector2(16, 8),
-		Vector2(20, 28), Vector2(12, 32), Vector2(6, 26), Vector2(0, 32),
-		Vector2(-6, 26), Vector2(-12, 32), Vector2(-20, 28), Vector2(-16, 8),
-		Vector2(-14, -12), Vector2(-10, -28),
-	])
+	boss_sprite = _get_or_create(self, "Gambar", Sprite2D) as Sprite2D
+	boss_sprite.texture = PALE_TEX
+	boss_sprite.position = Vector2(0, -22)
+	boss_sprite.scale = Vector2(1.25, 1.25)
 	eye_l = _get_or_create(self, "Mata_Kiri", Polygon2D) as Polygon2D
 	eye_l.color = Color(1, 1, 1, 1)
-	eye_l.polygon = _circle_points(Vector2(-6, -20), 3.0)
+	eye_l.polygon = _circle_points(Vector2(-6, -54), 3.5)
 	eye_r = _get_or_create(self, "Mata_Kanan", Polygon2D) as Polygon2D
 	eye_r.color = Color(1, 1, 1, 1)
-	eye_r.polygon = _circle_points(Vector2(6, -20), 3.0)
+	eye_r.polygon = _circle_points(Vector2(6, -54), 3.5)
 	state_mark = _get_or_create(self, "Tanda", Label) as Label
 	state_mark.text = ""
 	state_mark.position = Vector2(-14, -74)

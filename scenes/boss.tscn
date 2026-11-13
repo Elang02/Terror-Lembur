@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0ss00terror1"]
+[gd_scene load_steps=6 format=3 uid="uid://b0ss00terror1"]
 
 [ext_resource type="Script" path="res://scripts/boss.gd" id="1_boss"]
 [ext_resource type="Texture2D" path="res://assets/flashlight_cone.png" id="2_neq0i"]
+[ext_resource type="Texture2D" path="res://assets/monster/pale_figure.png" id="3_pale"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boss"]
 size = Vector2(24, 48)
@@ -25,19 +26,16 @@ shape = SubResource("RectangleShape2D_boss")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=923842628]
 replication_config = SubResource("SceneReplicationConfig_boss")
 
-[node name="Asap" type="Polygon2D" parent="." unique_id=634858157]
-color = Color(0, 0, 0, 0.25)
-polygon = PackedVector2Array(-26, -30, -20, -38, 0, -44, 20, -38, 26, -30, 24, 10, 28, 34, 0, 40, -28, 34, -24, 10)
-
-[node name="Jubah" type="Polygon2D" parent="." unique_id=1051077814]
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(0, -34, 10, -28, 14, -12, 16, 8, 20, 28, 12, 32, 6, 26, 0, 32, -6, 26, -12, 32, -20, 28, -16, 8, -14, -12, -10, -28)
+[node name="Gambar" type="Sprite2D" parent="." unique_id=445566778]
+position = Vector2(0, -22)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("3_pale")
 
 [node name="Mata_Kiri" type="Polygon2D" parent="." unique_id=2108105260]
-polygon = PackedVector2Array(-3, -20, -3.8786798, -17.87868, -6, -17, -8.121321, -17.87868, -9, -20, -8.121321, -22.12132, -6, -23, -3.8786798, -22.12132)
+polygon = PackedVector2Array(-2.5, -54, -3.53, -51.53, -6, -50.5, -8.47, -51.53, -9.5, -54, -8.47, -56.47, -6, -57.5, -3.53, -56.47)
 
 [node name="Mata_Kanan" type="Polygon2D" parent="." unique_id=734138189]
-polygon = PackedVector2Array(9, -20, 8.121321, -17.87868, 6, -17, 3.8786798, -17.87868, 3, -20, 3.8786798, -22.12132, 6, -23, 8.121321, -22.12132)
+polygon = PackedVector2Array(9.5, -54, 8.47, -51.53, 6, -50.5, 3.53, -51.53, 2.5, -54, 3.53, -56.47, 6, -57.5, 8.47, -56.47)
 
 [node name="Tanda" type="Label" parent="." unique_id=1771041033]
 offset_left = -14.0

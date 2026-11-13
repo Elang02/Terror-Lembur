@@ -49,12 +49,22 @@ dan hanya di dalam proyek ini (tidak dijual atau disebar ulang sebagai aset).
   - (Sisa 25 piece sample ada di `assets/office_assets/modern/` dan belum dipakai)
 - **Teks kredit:** "Modern Office Tileset by Rubber Studio"
 
-## 4. Font
+## 4. Nasha's Horror Tales Forest Cabin — Nasha (nanasha)
+
+- **Paket:** Nasha's Horror Tales Forest Cabin
+- **Pembuat:** Nasha
+- **Link:** https://nanasha.itch.io/nashas-horror-tales-forest-cabin
+- **Lisensi:** Gratis untuk proyek personal dan komersial. Dilarang menjual
+  atau menyebar ulang asetnya, dan dilarang melatih AI.
+- **Yang dipakai di game:**
+  - Pale Forest Figure (39x80) — sprite bos hantu — `assets/monster/pale_figure.png`
+- **Teks kredit:** "Monster art by Nasha"
+
+## 5. Font
 
 - **Creepster** (judul horor) dan **Special Elite** (mesin ketik) — Google Fonts,
   SIL Open Font License 1.1. Dipakai untuk menu, HUD, dan layar akhir.
 
 ## Catatan
 
-- Aset monster/bos masih dalam pemilihan (bukan dari tiga paket di atas).
-- Kredit di atas juga tampil di footer menu utama game.
+- Aset monster/bos sudah dipilih: Nasha Pale Figure (lihat atas). Bukan aset AI.
