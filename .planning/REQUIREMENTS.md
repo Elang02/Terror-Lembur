@@ -264,6 +264,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **HARD-02**: Tugas lebih panjang: Excel 7 soal, Simon 4 ronde, Fotokopi 7 lembar, Tuas Sel lebih berat
 - [ ] **HARD-03**: Bos solo lebih cepat (speed_mult 0.9 jadi 1.0, lebih cepat dari jalan kaki, harus sprint buat kabur) dan bisa menggagalkan tugas (popup ketutup kalau ketangkep pas lagi kerja)
 - [ ] **HARD-04**: Demo bot + semua test tetap hijau, video baru yang lebih tegang
+- [ ] **BOSS-01**: Bos lebih agresif: patrol 120, chase 240, search 140, teleport tiap 14-20 dtk (dulu 20-30), chase 8 dtk (dulu 6), vision 300 (dulu 260)
+- [ ] **BOSS-02**: Bos bisa lihat pemain dari dekat walau gelap (150px dalam cone, tanpa senter), jadi senter mati bukan lagi invisibilitas gratis
+- [ ] **BOSS-03**: Bos datang ke tugas yang lagi dikerjain (popup buka = bos dengar suara dari 700px dan menyelidiki), jadi tugas itu momen paling berbahaya
+- [ ] **BOSS-04**: Teleport lebih dekat ke pemain (120px, dulu 150px)
+- [ ] **BOSS-05**: Demo bot + semua test tetap hijau, video baru yang menunjukkan bos ketemu pemain
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -282,6 +287,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HARD-02 | Phase 18 | Done |
 | HARD-03 | Phase 18 | Done |
 | HARD-04 | Phase 18 | Done |
+| BOSS-01 | Phase 19 | Done |
+| BOSS-02 | Phase 19 | Done |
+| BOSS-03 | Phase 19 | Done |
+| BOSS-04 | Phase 19 | Done |
+| BOSS-05 | Phase 19 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -292,7 +302,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v7 requirements: 5 total
 - v8 requirements: 2 total
 - v9 requirements: 4 total
-- Mapped to phases: 88
+- v10 requirements: 5 total
+- Mapped to phases: 93
 - Unmapped: 0 ✓
 
 ---

@@ -330,6 +330,25 @@ Plans:
 
 **Status: Complete.** Committed `1848467` (14 Nov 2026). test_popup 23/23, solo 13/13, win 6/6, flow 3/3. Video v11 180 dtk: menu -> intro -> gameplay -> HAPPY ENDING 3 bintang, kode 2141, 0x ketangkep, 0:49. Catatan: bot adalah pemain sempurna (tahu peta, auto-main tugas instan), jadi videonya tetap kelihatan cepat; untuk pemain manusia tantangannya jauh lebih besar (harus hafal kode, tugas lebih lama, bos lebih cepat dan bisa menggagalkan tugas).
 
+## Phase 19: Bos Lebih Agresif
+
+**Goal:** Pemain ketemu bos jauh lebih sering; bos aktif berburu, bukan sekadar patrol pasif.
+**Requirements**: BOSS-01, BOSS-02, BOSS-03, BOSS-04, BOSS-05
+**Success Criteria** (what must be TRUE):
+  1. Bos lebih cepat (patrol 120, chase 240, search 140), teleport tiap 14-20 dtk, chase 8 dtk, vision 300
+  2. Bos bisa lihat pemain dari dekat walau gelap (150px dalam cone)
+  3. Bos datang ke tugas yang lagi dikerjain (popup buka = bos menyelidiki dari 700px)
+  4. Teleport lebih dekat ke pemain (120px)
+  5. Demo bot + semua test tetap hijau; video baru yang menunjukkan bos ketemu pemain
+**Plans**:
+- [x] 19-01: Konstanta bos lebih agresif + vision gelap jarak dekat
+- [x] 19-02: Bos menyelidiki tugas + teleport lebih dekat
+- [x] 19-03: Update test + full regression + video baru
+
+**Status: Complete.** Committed `cc93df4` (14 Nov 2026). test_bossaggro 9/9, popup 23/23, solo 13/13, win 6/6, flow 3/3, bosspol 6/6. Video v12 180 dtk: bot ketangkep 1x (pertama kali di video), HAPPY ENDING 2 bintang, 1:12 (v11: 0:49, 0x ketangkep, 3 bintang). Frame tengah video: bos berdiri di sebelah pemain yang dikurung di sel, "BOS SANGAT DEKAT!", self-rescue 69%.
+
+## Progress
+
 ## Progress
 
 ## Progress
@@ -357,5 +376,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 16. Task Popups v2 | 4/4 | Complete | 14 Nov 2026 |
 | 17. Intro Story + Video dari Menu | 3/3 | Complete | 14 Nov 2026 |
 | 18. Kode Hafalan + Game Lebih Menantang | 3/3 | Complete | 14 Nov 2026 |
+| 19. Bos Lebih Agresif | 3/3 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
