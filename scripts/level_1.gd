@@ -1301,6 +1301,11 @@ func try_open_task_popup(task_id: int) -> void:
 	popup_open = true
 	popup_task_id = task_id
 	popup.open_popup(self, task_id, tp, _popup_kind(task_id), _popup_title(task_id), is_demo)
+	if boss != null:
+		if multiplayer.is_server():
+			report_noise(tp.global_position, 700.0)
+		else:
+			rpc_id(1, "report_noise", tp.global_position, 700.0)
 
 @rpc("any_peer", "call_local")
 func popup_set_progress(task_id: int, progress: float) -> void:
@@ -1666,7 +1671,7 @@ func teleport_destination() -> Vector2:
 		dest.y = clampf(dest.y, 100, 830)
 		var ok := true
 		for p in players:
-			if dest.distance_to(p) < 150.0:
+			if dest.distance_to(p) < 120.0:
 				ok = false
 				break
 		if ok:

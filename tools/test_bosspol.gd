@@ -51,6 +51,8 @@ func _run() -> void:
 	# 2. Rest: when the boss stops, sprite returns to y=-22 and no rotation
 	# NOTE: SUSPICIOUS lasts 1.5s then auto-transitions to SEARCH (boss walks).
 	# Wait only 10 frames (~0.95s sandbox game time) so it stays still.
+	# Also freeze the teleport timer so the boss does not teleport mid-check.
+	boss.set("teleport_timer", 99999.0)
 	boss.set("state", 1)
 	boss.set("state_timer", 0.0)
 	boss.set("velocity", Vector2.ZERO)

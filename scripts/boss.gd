@@ -1,18 +1,18 @@
 extends CharacterBody2D
 
-const SPEED_PATROL := 90.0
-const SPEED_CHASE := 220.0
-const SPEED_SEARCH := 120.0
+const SPEED_PATROL := 120.0
+const SPEED_CHASE := 240.0
+const SPEED_SEARCH := 140.0
 const SPEED_RETURN := 100.0
-const VISION_RANGE := 260.0
+const VISION_RANGE := 300.0
 const VISION_ANGLE := 1.2
 const CATCH_DIST := 30.0
-const TELEPORT_MIN := 20.0
-const TELEPORT_MAX := 30.0
+const TELEPORT_MIN := 14.0
+const TELEPORT_MAX := 20.0
 const FIRST_TELEPORT_MIN := 8.0
 const FIRST_TELEPORT_MAX := 12.0
 const BLIND_TIME := 1.5
-const CHASE_TIRED := 6.0
+const CHASE_TIRED := 8.0
 
 enum State { PATROL, SUSPICIOUS, CHASE, SEARCH, RETURN }
 
@@ -399,7 +399,7 @@ func _nearest_visible_player() -> Node2D:
 		var to_p: Vector2 = (child.global_position - global_position).normalized()
 		if facing.dot(to_p) < cos(VISION_ANGLE):
 			continue
-		if not child.get("flashlight_on") and not level.is_lit(child.global_position):
+		if not child.get("flashlight_on") and not level.is_lit(child.global_position) and d >= 150.0:
 			continue
 		if not _has_line_of_sight(child):
 			continue

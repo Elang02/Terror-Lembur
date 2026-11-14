@@ -42,11 +42,11 @@ func _run() -> void:
 		var d := minf(d1, d2)
 		if d < min_dist:
 			min_dist = d
-		if d < 150.0:
+		if d < 120.0:
 			_fail("teleport landed " + str(d) + "px from a player (attempt " + str(i) + ")")
 			_report()
 			return
-	_ok("teleport never lands within 150px of a player (20 tries, min dist " + str(min_dist) + "px)")
+	_ok("teleport never lands within 120px of a player (20 tries, min dist " + str(min_dist) + "px)")
 	var boss: Node2D = null
 	for child in ysort.get_children():
 		if child.name == "Boss":
