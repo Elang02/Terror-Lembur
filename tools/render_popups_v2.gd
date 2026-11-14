@@ -37,13 +37,14 @@ func _run() -> void:
 	if intro_panel != null:
 		intro_panel.visible = false
 	var pop: Node = lvl.get("popup")
-	# Excel (Komputer) - CRT terminal, with a typed digit in C2
+	# Excel (Komputer) - CRT terminal, with the CORRECT answer typed in HASIL
 	pop.call("open_popup", lvl, 1, _task(1), "excel", "Laporan Excel", false)
 	for i in range(10):
 		await process_frame
-	pop.call("press_digit", 4)
-	await process_frame
-	pop.call("press_digit", 2)
+	var correct_answer: int = int(pop.get("excel_answer"))
+	for ch in str(correct_answer):
+		pop.call("press_digit", int(ch))
+		await process_frame
 	for i in range(5):
 		await process_frame
 	await _shot("/tmp/pop_excel.png")
