@@ -31,6 +31,8 @@ var path: PackedVector2Array = []
 var path_index := 0
 var repath_timer := 0.0
 var search_repath_timer := 0.0
+var stuck_timer := 0.0
+var stuck_last_pos := Vector2.ZERO
 var level: Node2D
 var rng := RandomNumberGenerator.new()
 
@@ -132,6 +134,26 @@ func _physics_process(delta: float) -> void:
 	_refresh_mark()
 	move_and_slide()
 	_check_catch()
+	_update_stuck(delta)
+
+func _update_stuck(delta: float) -> void:
+	# A* waypoints are cell centres, but the boss capsule can clip a prop
+	# corner between two waypoints and wedge. If it barely moves while it
+	# has a path, jump it to the next path point instead of grinding the wall.
+	if path.is_empty() or path_index >= path.size():
+		stuck_timer = 0.0
+		stuck_last_pos = global_position
+		return
+	if global_position.distance_to(stuck_last_pos) > 5.0:
+		stuck_timer = 0.0
+		stuck_last_pos = global_position
+		return
+	stuck_timer += delta
+	if stuck_timer >= 2.0:
+		stuck_timer = 0.0
+		global_position = path[path_index]
+		stuck_last_pos = global_position
+		velocity = Vector2.ZERO
 
 func _refresh_mark() -> void:
 	var m := ""
@@ -150,8 +172,16 @@ func _set_mark(t: String) -> void:
 
 func _pick_waypoint() -> void:
 	var loop: Array = level.PATROL_LOOP
-	target = loop[patrol_index % loop.size()]
-	patrol_index += 1
+	# Try each waypoint in turn and skip any A* cannot reach, so the boss
+	# never stalls pushing into a wall toward an unreachable point.
+	for _i in range(loop.size()):
+		target = loop[patrol_index % loop.size()]
+		patrol_index += 1
+		waypoint_timer = 0.0
+		_request_path(target)
+		if not path.is_empty():
+			return
+	target = level.boss_room_center()
 	waypoint_timer = 0.0
 	_request_path(target)
 
@@ -165,6 +195,11 @@ func _request_path(dest: Vector2) -> void:
 		path_index = 1
 
 func _steer_to(dest: Vector2, speed: float) -> void:
+	if path.is_empty():
+		# No route: wait for the next repath instead of pushing straight
+		# into a wall toward an unreachable point.
+		velocity = velocity.move_toward(Vector2.ZERO, 900.0 * get_physics_process_delta_time())
+		return
 	if path_index < path.size():
 		var wp: Vector2 = path[path_index]
 		if global_position.distance_to(wp) < 16.0:
@@ -185,7 +220,9 @@ func _in_other_room(p: Vector2) -> bool:
 
 func _update_patrol(_delta: float) -> void:
 	waypoint_timer += _delta
-	if global_position.distance_to(target) < 24.0 or waypoint_timer > 8.0:
+	# Long cross-map legs take ~10-22s at patrol speed, so the timeout must
+	# be generous or the boss skips the far waypoints forever.
+	if global_position.distance_to(target) < 24.0 or waypoint_timer > 30.0:
 		if rng.randf() < 0.25:
 			target = level.boss_room_center()
 			_request_path(target)
@@ -248,7 +285,9 @@ func _update_return(_delta: float) -> void:
 		_pick_waypoint()
 		return
 	_steer_to(level.boss_room_center(), SPEED_RETURN * speed_mult)
-	if global_position.distance_to(level.boss_room_center()) < 40.0:
+	# Stay in the room while the post-teleport blind lasts (3s), so the boss
+	# does not patrol straight past the cell right after a self-rescue.
+	if state_timer > 3.0 and global_position.distance_to(level.boss_room_center()) < 40.0:
 		state = State.PATROL
 		state_timer = 0.0
 		_pick_waypoint()
