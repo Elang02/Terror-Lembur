@@ -55,7 +55,7 @@ func _run() -> void:
 		_ok("boss sees player in the open corridor (control)")
 	else:
 		_fail("boss blind in the open corridor (control failed)")
-	# --- HEARING: player sprinting within 300px ---
+	# --- HEARING: player sprinting within 360px ---
 	# Put the player out of the vision cone (behind the boss) so only
 	# hearing can trigger the FSM, not vision.
 	boss.global_position = Vector2(400, 656)
@@ -71,7 +71,7 @@ func _run() -> void:
 		_ok("boss hears sprinting player 200px away (PATROL -> SUSPICIOUS)")
 	else:
 		_fail("boss ignores sprinting player 200px away (state=" + str(boss.get("state")) + ")")
-	# --- HEARING: player walking within 120px ---
+	# --- HEARING: player walking within 160px ---
 	boss.set("state", 0)
 	boss.set("state_timer", 0.0)
 	player.global_position = Vector2(300, 656)
@@ -82,7 +82,18 @@ func _run() -> void:
 		_ok("boss hears walking player 100px away (PATROL -> SUSPICIOUS)")
 	else:
 		_fail("boss ignores walking player 100px away (state=" + str(boss.get("state")) + ")")
-	# --- HEARING: player walking at 200px (beyond walk range 120) ---
+	# --- HEARING: player walking at 140px (within new 160px range, beyond old 120px) ---
+	boss.set("state", 0)
+	boss.set("state_timer", 0.0)
+	player.global_position = Vector2(260, 656)
+	player.velocity = Vector2(-200, 0)
+	player.set("sprinting", false)
+	boss.call("_update_detection")
+	if int(boss.get("state")) == 1:
+		_ok("boss hears walking player 140px away (PATROL -> SUSPICIOUS)")
+	else:
+		_fail("boss ignores walking player 140px away (state=" + str(boss.get("state")) + ")")
+	# --- HEARING: player walking at 200px (beyond walk range 160) ---
 	boss.set("state", 0)
 	boss.set("state_timer", 0.0)
 	player.global_position = Vector2(200, 656)
@@ -90,10 +101,10 @@ func _run() -> void:
 	player.set("sprinting", false)
 	boss.call("_update_detection")
 	if int(boss.get("state")) == 0:
-		_ok("boss does NOT hear walking player 200px away (beyond 120px)")
+		_ok("boss does NOT hear walking player 200px away (beyond 160px)")
 	else:
 		_fail("boss hears walking player 200px away (state=" + str(boss.get("state")) + ")")
-	# --- HEARING: player standing still within 120px (silent) ---
+	# --- HEARING: player standing still within 160px (silent) ---
 	boss.set("state", 0)
 	boss.set("state_timer", 0.0)
 	player.global_position = Vector2(300, 656)

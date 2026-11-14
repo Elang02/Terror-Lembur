@@ -4,8 +4,8 @@ const SPEED := 200.0
 const ACCEL := 1400.0
 const FRICTION := 1600.0
 const SPRINT_MULT := 1.5
-const STAMINA_DRAIN := 30.0
-const STAMINA_REGEN := 22.0
+const STAMINA_DRAIN := 50.0
+const STAMINA_REGEN := 8.0
 const SHOUT_COOLDOWN := 5.0
 const SHOUT_RADIUS := 500.0
 

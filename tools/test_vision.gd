@@ -59,20 +59,28 @@ func _run() -> void:
 		_ok("boss sees player 100px ahead in the dark (dark vision)")
 	else:
 		_fail("boss BLIND to player 100px ahead in the dark")
-	# 4. Player 250px ahead, flashlight OFF, dark area: should NOT see (by design, d>=200)
+	# 4. Player 250px ahead, flashlight OFF, dark area: should NOT see (by design, d>=240)
 	player.global_position = Vector2(650, 656)
 	seen = boss.call("_nearest_visible_player")
 	if seen == null:
 		_ok("boss cannot see player 250px ahead in the dark (by design)")
 	else:
 		_fail("boss sees player 250px ahead in the dark (should be blind by design)")
-	# 4b. Player 180px ahead, flashlight OFF, dark area: dark vision now reaches 200px
-	player.global_position = Vector2(580, 656)
+	# 4b. Player 220px ahead, flashlight OFF, dark area: dark vision now reaches 240px
+	player.global_position = Vector2(620, 656)
 	seen = boss.call("_nearest_visible_player")
 	if seen == player:
-		_ok("boss sees player 180px ahead in the dark (dark vision 200px)")
+		_ok("boss sees player 220px ahead in the dark (dark vision 240px)")
 	else:
-		_fail("boss BLIND to player 180px ahead in the dark")
+		_fail("boss BLIND to player 220px ahead in the dark")
+	# 5. Player 320px ahead, flashlight ON: within the new 340px vision range
+	player.global_position = Vector2(720, 656)
+	player.set("flashlight_on", true)
+	seen = boss.call("_nearest_visible_player")
+	if seen == player:
+		_ok("boss sees player 320px ahead, flashlight on (vision range 340px)")
+	else:
+		_fail("boss BLIND to player 320px ahead, flashlight on")
 	# 5. CATCH: boss directly ABOVE the player, touching (vertical contact ~36px)
 	player.set("flashlight_on", true)
 	player.global_position = Vector2(400, 656)

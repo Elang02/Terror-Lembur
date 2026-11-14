@@ -31,16 +31,16 @@ func _run() -> void:
 	player.global_position = Vector2(740, 760)
 	boss = lvl.get("boss")
 	# 1. Constants are aggressive
-	if absf(float(boss.get("SPEED_PATROL")) - 120.0) < 0.01:
-		_ok("patrol speed 120")
+	if absf(float(boss.get("SPEED_PATROL")) - 130.0) < 0.01:
+		_ok("patrol speed 130")
 	else:
 		_fail("patrol speed is " + str(boss.get("SPEED_PATROL")))
-	if absf(float(boss.get("SPEED_CHASE")) - 240.0) < 0.01:
-		_ok("chase speed 240")
+	if absf(float(boss.get("SPEED_CHASE")) - 270.0) < 0.01:
+		_ok("chase speed 270")
 	else:
 		_fail("chase speed is " + str(boss.get("SPEED_CHASE")))
-	if absf(float(boss.get("VISION_RANGE")) - 300.0) < 0.01:
-		_ok("vision range 300")
+	if absf(float(boss.get("VISION_RANGE")) - 340.0) < 0.01:
+		_ok("vision range 340")
 	else:
 		_fail("vision range is " + str(boss.get("VISION_RANGE")))
 	if absf(float(boss.get("TELEPORT_MIN")) - 14.0) < 0.01 and absf(float(boss.get("TELEPORT_MAX")) - 20.0) < 0.01:

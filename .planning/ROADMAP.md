@@ -485,7 +485,24 @@ Plans:
 - [x] 28-02: Tabel 4 baris + 7 rumus Excel asli (SUM/AVERAGE/MAX/MIN/kali/tambah) + sel HASIL (Phase 28 v2)
 - [x] 28-03: test_popup + render verifikasi + commit + rebuild
 
-**Status: Complete.** Committed (14 Nov 2026). test_popup 23/23. Render Excel diverifikasi: formula bar "=SUM(A2:A5)", tabel A/B/C baris 2-5, sel HASIL nunjukin "42▌".
+**Status: Complete.** Committed (14 Nov 2026). test_popup 23/23. Render Excel diverifikasi: formula bar "=SUM(A2:A5)", tabel A/B/C baris 2-5, sel HASIL nunjukin jawaban bener (render script sempet hardcode "42", diperbaiki jadi baca jawaban bener dari game; commit 7200706).
+
+## Phase 29: Bos Lebih Cepat + Sensitif, Sprint Terbatas
+
+**Goal:** Bos ngejar lebih kencang dan lebih sensitif; sprint jadi sumber daya terbatas (bar penuh pun cuma ~2 detik, refill pelan).
+**Requirements**: BAL-06, BAL-07
+**Success Criteria** (what must be TRUE):
+  1. Bos chase 240 -> 270 (player sprint 300, jadi sprint masih bisa kabur tipis; jalan 200 ketangkep cepat)
+  2. Bos patrol 120 -> 130, search 140 -> 160
+  3. Bos vision 300 -> 340px, cone 1.2 -> 1.35 rad, dark vision 200 -> 240px
+  4. Bos dengar jalan 120 -> 160px, dengar lari 300 -> 360px
+  5. Sprint drain 30 -> 50/detik (bar penuh = ~2 detik sprint), regen 22 -> 8/detik (~12.5 detik buat penuh)
+  6. test_bossaggro 9/9, test_vision 9/9, test_hearing 8/8, test_stamina 4/4 (baru), regresi hijau
+**Plans**:
+- [x] 29-01: Konstanta bos + stamina + update test (bossaggro/vision/hearing) + test_stamina baru
+- [x] 29-02: Regresi penuh + commit + rebuild
+
+**Status: Complete.** Committed (14 Nov 2026). test_bossaggro 9/9, test_vision 9/9, test_hearing 8/8, test_stamina 4/4. Regresi penuh hijau kecuali 1 assert flaky di test_bosspol (rest-pose, y=-20.067) yang lolos 6/6 pas di-run ulang sendiri.
 
 ## Progress
 
@@ -526,5 +543,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 26. Kabur dari Sel Tidak Lagi Gratis | 2/2 | Complete | 14 Nov 2026 |
 | 27. Popup Tugas Nyatu Sama Tema Horor | 4/4 | Complete | 14 Nov 2026 |
 | 28. Excel Interaktif Kayak Spreadsheet Beneran | 1/1 | Complete | 14 Nov 2026 |
+| 29. Bos Lebih Cepat + Sensitif, Sprint Terbatas | 2/2 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
