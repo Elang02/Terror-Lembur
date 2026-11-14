@@ -65,6 +65,19 @@ dan hanya di dalam proyek ini (tidak dijual atau disebar ulang sebagai aset).
 - **Creepster** (judul horor) dan **Special Elite** (mesin ketik) — Google Fonts,
   SIL Open Font License 1.1. Dipakai untuk menu, HUD, dan layar akhir.
 
+## 6. Empty Thresholds Vol. 1 — Dark Ambient & Drone Elements — Diego Montenegro
+
+- **Paket:** Empty Thresholds Vol. 1 — Free Dark Ambient & Drone Elements
+- **Pembuat:** Diego Montenegro
+- **Link:** https://diego-montenegro.itch.io/empty-thresholds-vol-1-free-dark-ambient-drone-elements
+- **Lisensi:** 100% royalty-free, boleh dipakai di game komersial dan non-komersial,
+  boleh dimodifikasi/dipotong. Dilarang menjual atau menyebar ulang file audionya.
+  Atribusi dihargai tapi tidak wajib. Bukan aset AI.
+- **Yang dipakai di game:**
+  - 02_Texture_Static_Loop (60 detik, seamless) — ambient tenang — `assets/audio/ambient_calm.ogg`
+  - 03_Unsettling_Loop (60 detik, seamless) — ambient tegang — `assets/audio/ambient_tense.ogg`
+- **Teks kredit:** "Audio by Diego Montenegro"
+
 ## Catatan
 
 - Aset monster/bos sudah dipilih: Nasha Pale Figure (lihat atas). Bukan aset AI.

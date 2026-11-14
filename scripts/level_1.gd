@@ -97,6 +97,9 @@ var astar: AStarGrid2D = null
 var ysort: Node2D
 var spawner: MultiplayerSpawner
 var boss: CharacterBody2D
+var music_calm: AudioStreamPlayer
+var music_tense: AudioStreamPlayer
+var music_tense_level := 0.0
 var tasks: Array = []
 var pickups: Array = []
 var desk_positions: Array[Vector2] = []
@@ -227,6 +230,7 @@ func _ready() -> void:
 		return
 	sfx = SFX.new()
 	add_child(sfx)
+	_setup_music()
 	_build_darkness()
 	_build_pickups()
 	_build_hud()
@@ -251,6 +255,40 @@ func set_solo_mode(value: bool) -> void:
 		boss_speed_mult = 0.9
 		if boss != null:
 			boss.speed_mult = boss_speed_mult
+
+const MUSIC_CALM := preload("res://assets/audio/ambient_calm.ogg")
+const MUSIC_TENSE := preload("res://assets/audio/ambient_tense.ogg")
+
+func _setup_music() -> void:
+	music_calm = AudioStreamPlayer.new()
+	music_calm.stream = MUSIC_CALM
+	music_calm.stream.loop = true
+	music_calm.volume_db = -18.0
+	add_child(music_calm)
+	music_calm.play()
+	music_tense = AudioStreamPlayer.new()
+	music_tense.stream = MUSIC_TENSE
+	music_tense.stream.loop = true
+	music_tense.volume_db = -60.0
+	add_child(music_tense)
+	music_tense.play()
+
+func _update_music(delta: float) -> void:
+	if music_calm == null or music_tense == null:
+		return
+	var target := 0.0
+	if boss != null and not game_over:
+		var st: int = boss.get("state")
+		if st == 2:
+			target = 1.0
+		elif st == 1 or st == 3:
+			target = 0.6
+		var d := _boss_distance()
+		if d >= 0.0 and d < 150.0:
+			target = maxf(target, 0.8)
+	music_tense_level = move_toward(music_tense_level, target, delta / 1.5)
+	music_tense.volume_db = lerpf(-60.0, -12.0, music_tense_level)
+	music_calm.volume_db = lerpf(-18.0, -26.0, music_tense_level)
 
 func _build_tilemap_layers() -> void:
 	var tile_set := load(TILESET_PATH) as TileSet
@@ -892,6 +930,7 @@ func _process(delta: float) -> void:
 			if heartbeat_timer <= 0.0:
 				heartbeat_timer = lerpf(0.45, 1.0, clampf(bd / 320.0, 0.0, 1.0))
 				play_sfx("heartbeat", -8.0)
+	_update_music(delta)
 	var me2 := _my_player()
 	if me2 != null and me2.get("interacting") and not game_over:
 		tick_timer -= delta
