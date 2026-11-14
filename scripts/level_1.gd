@@ -126,7 +126,6 @@ var popup_open := false
 var popup_task_id := -1
 var code_digits: Array[int] = [1, 2, 3, 4]
 var code_found: Array[bool] = [false, false, false, false]
-var hud_code_label: Label = null
 var intro_open := false
 var intro_panel: PanelContainer = null
 var intro_timer := 0.0
@@ -271,7 +270,7 @@ func _ready() -> void:
 func set_solo_mode(value: bool) -> void:
 	solo_mode = value
 	if solo_mode:
-		boss_speed_mult = 0.9
+		boss_speed_mult = 1.0
 		if boss != null:
 			boss.speed_mult = boss_speed_mult
 
@@ -953,13 +952,6 @@ func _build_hud() -> void:
 		UITheme.apply_progress_bar(bar)
 		tvb.add_child(bar)
 		hud_task_bars.append(bar)
-	var code_div := ColorRect.new()
-	code_div.color = Color(0.62, 0.5, 0.22, 0.9)
-	code_div.custom_minimum_size = Vector2(0, 2)
-	tvb.add_child(code_div)
-	hud_code_label = UITheme.make_label("KODE PINTU: _ _ _ _", UITheme.body_font(), 15, UITheme.COL_GOLD)
-	tvb.add_child(hud_code_label)
-	_refresh_code_label()
 	var status_panel := PanelContainer.new()
 	UITheme.apply_panel(status_panel, Color(0.05, 0.05, 0.06, 0.85), Color(0.42, 0.36, 0.3), 1, 8)
 	status_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
@@ -1220,31 +1212,17 @@ func _generate_code() -> void:
 		code_digits.append(rng.randi_range(1, 4))
 		code_found.append(false)
 
-func _code_text() -> String:
-	var parts: Array[String] = []
-	for i in range(4):
-		if code_found[i]:
-			parts.append(str(code_digits[i]))
-		else:
-			parts.append("_")
-	return " ".join(parts)
-
-func _refresh_code_label() -> void:
-	if hud_code_label != null:
-		hud_code_label.text = "KODE PINTU: " + _code_text()
-
 func _reveal_code_digit(idx: int) -> void:
 	if idx < 0 or idx >= 4:
 		return
 	if code_found[idx]:
 		return
 	code_found[idx] = true
-	_refresh_code_label()
 	if idx < 3:
-		hud_warn_label.text = "Kode pintu ditemukan! Digit ke-" + str(idx + 1) + " = " + str(code_digits[idx])
+		hud_warn_label.text = "Kode pintu ditemukan! Digit ke-" + str(idx + 1) + " = " + str(code_digits[idx]) + "  (INGAT BAIK-BAIK!)"
 	else:
-		hud_warn_label.text = "Catatan di pintu: digit terakhir = " + str(code_digits[idx])
-	warn_timer = 3.0
+		hud_warn_label.text = "Catatan di pintu: digit terakhir = " + str(code_digits[idx]) + "  (INGAT BAIK-BAIK!)"
+	warn_timer = 5.0
 	play_sfx("complete", -6.0)
 
 func _popup_kind(task_id: int) -> String:
@@ -1725,6 +1703,10 @@ func on_player_caught(player: Node2D) -> void:
 	player.global_position = CELL_POS
 	player.rpc_id(int(player.name), "set_locked", true)
 	rpc("_fx_caught")
+	if popup_open and popup != null:
+		popup.close_popup(false)
+		hud_warn_label.text = "KAMU DITANGKAP! Tugasmu gagal, bos menggagalkan kerjamu."
+		warn_timer = 3.0
 	if solo_mode:
 		solo_catches += 1
 		if solo_catches >= SOLO_MAX_CATCHES:

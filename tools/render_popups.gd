@@ -41,7 +41,6 @@ func _run() -> void:
 	# Keypad popup (Pintu Keluar) with a known code
 	lvl.set("code_digits", [2, 3, 2, 4])
 	lvl.set("code_found", [true, true, true, true])
-	lvl.call("_refresh_code_label")
 	pop.call("open_popup", lvl, 3, _task(3), "keypad", "Keypad Pintu", false)
 	for i in range(10):
 		await process_frame

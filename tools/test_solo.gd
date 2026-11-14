@@ -33,8 +33,8 @@ func _run() -> void:
 		_ok("solo_mode set true")
 	else:
 		_fail("solo_mode not true")
-	if absf(float(lvl.get("boss_speed_mult")) - 0.9) < 0.01:
-		_ok("boss_speed_mult 0.9 in solo")
+	if absf(float(lvl.get("boss_speed_mult")) - 1.0) < 0.01:
+		_ok("boss_speed_mult 1.0 in solo")
 	else:
 		_fail("boss_speed_mult is " + str(lvl.get("boss_speed_mult")))
 	var ysort: Node = lvl.get_node_or_null("YSort")

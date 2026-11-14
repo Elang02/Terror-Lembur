@@ -171,7 +171,7 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 	demo_timer = 0.0
 	match kind:
 		"excel":
-			instr_label.text = "Hitung cepat! Jawab 5 soal dengan tombol 1, 2, atau 3."
+			instr_label.text = "Hitung cepat! Jawab 7 soal dengan tombol 1, 2, atau 3."
 			excel_q = 0
 			_next_excel()
 		"simon":
@@ -179,7 +179,7 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 			simon_round = 1
 			_start_simon_round()
 		"fotokopi":
-			instr_label.text = "Tekan SPASI tepat saat penanda masuk zona hijau. Salin 5 lembar!"
+			instr_label.text = "Tekan SPASI tepat saat penanda masuk zona hijau. Salin 7 lembar!"
 			foto_sheets = 0
 			foto_marker = 0.0
 			foto_dir = 1.0
@@ -187,7 +187,7 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 			foto_zone = 0.5
 			_build_foto()
 		"keypad":
-			instr_label.text = "Ketik kode pintu 4 digit dengan tombol 1-4. (Kode dari tugas, lihat panel TUGAS)"
+			instr_label.text = "Ketik kode pintu 4 digit dengan tombol 1-4. Ingat kode dari tugas-tugasmu!"
 			key_code.clear()
 			key_entered.clear()
 			if level != null and level.get("code_digits") != null:
@@ -225,11 +225,11 @@ func _refresh_progress() -> void:
 	var p := 0.0
 	match kind:
 		"excel":
-			p = float(excel_q) / 5.0
+			p = float(excel_q) / 7.0
 		"simon":
-			p = float(simon_round - 1) / 3.0
+			p = float(simon_round - 1) / 4.0
 		"fotokopi":
-			p = float(foto_sheets) / 5.0
+			p = float(foto_sheets) / 7.0
 		"keypad":
 			p = float(key_entered.size()) / 4.0
 		"mash":
@@ -268,11 +268,11 @@ func _grid_cell(text: String, size: int, bg: Color, fg: Color, min_w: float = 0.
 	return cell
 
 func _next_excel() -> void:
-	if excel_q >= 5:
+	if excel_q >= 7:
 		close_popup(true)
 		return
 	excel_q += 1
-	status_label.text = "Soal " + str(excel_q) + "/5"
+	status_label.text = "Soal " + str(excel_q) + "/7"
 	excel_a = rng.randi_range(2, 9)
 	excel_b = rng.randi_range(2, 9)
 	var correct: int = excel_a * excel_b
@@ -322,7 +322,7 @@ func _next_excel() -> void:
 	_refresh_progress()
 
 func _start_simon_round() -> void:
-	status_label.text = "Ronde " + str(simon_round) + "/3 — hafalkan " + str(simon_round + 2) + " lampu"
+	status_label.text = "Ronde " + str(simon_round) + "/4 — hafalkan " + str(simon_round + 2) + " lampu"
 	simon_seq.clear()
 	for i in range(simon_round + 2):
 		simon_seq.append(rng.randi_range(1, 4))
@@ -384,7 +384,7 @@ func _simon_light(idx: int, on: bool) -> void:
 		glow.visible = false
 
 func _build_foto() -> void:
-	status_label.text = "Lembar: " + str(foto_sheets) + "/5"
+	status_label.text = "Lembar: " + str(foto_sheets) + "/7"
 	_clear_content()
 	var machine := _panel(Color(0.16, 0.17, 0.2), 8, Color(0.4, 0.42, 0.45), 2)
 	machine.custom_minimum_size = Vector2(720, 150)
@@ -409,7 +409,7 @@ func _refresh_foto_papers() -> void:
 		return
 	for c in foto_papers.get_children():
 		c.queue_free()
-	for i in range(5):
+	for i in range(7):
 		var sheet := _panel(Color(1, 1, 1) if i < foto_sheets else Color(0.35, 0.37, 0.4), 2, Color(0.6, 0.62, 0.65), 1)
 		sheet.custom_minimum_size = Vector2(48, 32)
 		foto_papers.add_child(sheet)
@@ -453,6 +453,8 @@ func _build_keypad() -> void:
 		btns.add_child(b)
 	var hint := _make_label("Kode didapat dari tugas satu persatu. Ingat baik-baik!", 18, Color(0.8, 0.8, 0.8), true)
 	content.add_child(hint)
+	var hint2 := _make_label("Lupa? Tidak ada yang bisa mengingatkanmu.", 15, Color(0.65, 0.65, 0.65), true)
+	content.add_child(hint2)
 	_refresh_keypad()
 
 func _refresh_keypad() -> void:
@@ -531,7 +533,7 @@ func press_number(n: int) -> void:
 					if simon_input_idx >= simon_seq.size():
 						_right("Ronde selesai!")
 						simon_round += 1
-						if simon_round > 3:
+						if simon_round > 4:
 							_refresh_progress()
 							close_popup(true)
 						else:
@@ -565,17 +567,17 @@ func press_space() -> void:
 			var half := foto_zone_size * 0.5
 			if foto_marker >= foto_zone - half and foto_marker <= foto_zone + half:
 				foto_sheets += 1
-				_right("Lembar tersalin! (" + str(foto_sheets) + "/5)")
+				_right("Lembar tersalin! (" + str(foto_sheets) + "/7)")
 				foto_zone = randf_range(half + 0.05, 1.0 - half - 0.05)
-				status_label.text = "Lembar: " + str(foto_sheets) + "/5"
+				status_label.text = "Lembar: " + str(foto_sheets) + "/7"
 				_refresh_foto_papers()
 				_refresh_progress()
-				if foto_sheets >= 5:
+				if foto_sheets >= 7:
 					close_popup(true)
 			else:
 				_wrong("Miss! Penanda di luar zona hijau.")
 		"mash":
-			mash_prog = minf(1.0, mash_prog + 0.09)
+			mash_prog = minf(1.0, mash_prog + 0.07)
 			_refresh_mash_handle()
 			_refresh_progress()
 			if mash_prog >= 1.0:

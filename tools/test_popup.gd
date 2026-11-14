@@ -59,7 +59,7 @@ func _run() -> void:
 		_report()
 		return
 	_ok("popup node exists")
-	# Excel (Komputer, id 1): 5 soal, jawab benar semua
+	# Excel (Komputer, id 1): 7 soal, jawab benar semua
 	if await _open_popup(1, Vector2(400, 400)):
 		if str(pop.get("kind")) == "excel":
 			_ok("Komputer opens Excel popup")
@@ -69,26 +69,26 @@ func _run() -> void:
 			_ok("Excel title is Laporan Excel")
 		else:
 			_fail("Excel title is " + str(pop.get("title_label").text))
-		for q in range(5):
+		for q in range(7):
 			var correct: int = int(pop.get("excel_correct"))
 			pop.call("press_number", correct + 1)
 			await process_frame
 		var komp: Node = _task(1)
 		if komp != null and bool(komp.get("done")):
-			_ok("Excel: 5 correct answers complete the Komputer task")
+			_ok("Excel: 7 correct answers complete the Komputer task")
 		else:
-			_fail("Komputer not done after 5 correct answers")
+			_fail("Komputer not done after 7 correct answers")
 		if not bool(pop.get("open")):
 			_ok("popup closed after Excel completes")
 		else:
 			_fail("popup still open after Excel completes")
-	# Simon (Generator, id 0): 3 ronde, ulangi urutan
+	# Simon (Generator, id 0): 4 ronde, ulangi urutan
 	if await _open_popup(0, Vector2(736, 400)):
 		if str(pop.get("kind")) == "simon":
 			_ok("Generator opens Panel Listrik popup")
 		else:
 			_fail("Generator kind is " + str(pop.get("kind")) + " expected simon")
-		for r in range(3):
+		for r in range(4):
 			pop.set("simon_phase", "input")
 			pop.set("simon_input_idx", 0)
 			var seq: Array = pop.get("simon_seq")
@@ -97,24 +97,24 @@ func _run() -> void:
 				await process_frame
 		var gen: Node = _task(0)
 		if gen != null and bool(gen.get("done")):
-			_ok("Simon: 3 rounds complete the Generator task")
+			_ok("Simon: 4 rounds complete the Generator task")
 		else:
-			_fail("Generator not done after 3 Simon rounds")
-	# Fotokopi (Arsip, id 2): timing SPASI 5 lembar
+			_fail("Generator not done after 4 Simon rounds")
+	# Fotokopi (Arsip, id 2): timing SPASI 7 lembar
 	if await _open_popup(2, Vector2(190, 560)):
 		if str(pop.get("kind")) == "fotokopi":
 			_ok("Arsip opens Fotokopi popup")
 		else:
 			_fail("Arsip kind is " + str(pop.get("kind")) + " expected fotokopi")
-		for s in range(5):
+		for s in range(7):
 			pop.set("foto_marker", float(pop.get("foto_zone")))
 			pop.call("press_space")
 			await process_frame
 		var arsip: Node = _task(2)
 		if arsip != null and bool(arsip.get("done")):
-			_ok("Fotokopi: 5 sheets complete the Arsip task")
+			_ok("Fotokopi: 7 sheets complete the Arsip task")
 		else:
-			_fail("Arsip not done after 5 Fotokopi sheets")
+			_fail("Arsip not done after 7 Fotokopi sheets")
 	# Keypad (Pintu Keluar, id 3): kode 4 digit
 	if await _open_popup(3, Vector2(800, 760)):
 		if str(pop.get("kind")) == "keypad":
@@ -173,14 +173,14 @@ func _run() -> void:
 			_ok("Tuas Sel opens Mash popup")
 		else:
 			_fail("Tuas Sel kind is " + str(pop.get("kind")) + " expected mash")
-		for i in range(14):
+		for i in range(20):
 			pop.call("press_space")
 			await process_frame
 		var lever: Node = _task(4)
 		if lever != null and bool(lever.get("done")):
-			_ok("Mash: 14 SPACE presses complete the Tuas Sel task")
+			_ok("Mash: 20 SPACE presses complete the Tuas Sel task")
 		else:
-			_fail("Tuas Sel not done after 14 mash presses (progress=" + str(lever.get("progress")) + ")")
+			_fail("Tuas Sel not done after 20 mash presses (progress=" + str(lever.get("progress")) + ")")
 	else:
 		_fail("player not locked for Mash test setup")
 	# Code digits: keypad code comes from the tasks, not random
@@ -207,12 +207,12 @@ func _run() -> void:
 		_ok("all 4 code digits revealed after the 3 main tasks")
 	else:
 		_fail("code_found not all true after main tasks: " + str(found))
-	# HUD code label shows the collected code
+	# HUD does NOT show the code (pure memory: the player must remember it)
 	var code_label: Label = lvl.get("hud_code_label")
-	if code_label != null and str(code_label.text).contains(str(digits[0])):
-		_ok("HUD shows the collected code digits")
+	if code_label == null:
+		_ok("HUD has no code label (code is memory-only)")
 	else:
-		_fail("HUD code label missing or wrong: " + (str(code_label.text) if code_label != null else "null"))
+		_fail("HUD still shows a code label: " + str(code_label.text))
 	# Keypad uses the level code (reopen exit popup and compare)
 	pop.call("open_popup", lvl, 3, _task(3), "keypad", "Keypad Pintu", false)
 	await process_frame
