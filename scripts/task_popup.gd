@@ -47,6 +47,8 @@ var content: VBoxContainer
 var feedback_label: Label
 var progress_bar: ProgressBar
 var progress_label: Label
+var boss_warn_label: Label
+var boss_warn_timer := 0.0
 
 var rng := RandomNumberGenerator.new()
 
@@ -153,6 +155,10 @@ func _build_ui() -> void:
 	title_label = _make_label("", 38, COL_BLOOD_BRIGHT, true)
 	title_label.add_theme_font_override("font", _title_f())
 	vb.add_child(title_label)
+	boss_warn_label = _make_label("", 22, COL_BLOOD_BRIGHT, true)
+	boss_warn_label.add_theme_font_override("font", _title_f())
+	boss_warn_label.visible = false
+	vb.add_child(boss_warn_label)
 	instr_label = _make_label("", 17, COL_PAPER, true)
 	instr_label.add_theme_font_override("font", _body_f())
 	instr_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -215,6 +221,8 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 	open = true
 	visible = true
 	feedback_label.text = ""
+	boss_warn_label.visible = false
+	boss_warn_timer = 0.0
 	title_label.text = p_title
 	demo_timer = 0.0
 	match kind:
@@ -723,6 +731,21 @@ func press_space() -> void:
 func _process(delta: float) -> void:
 	if not open:
 		return
+	boss_warn_timer += delta
+	if level != null:
+		var bd := float(level.call("_boss_distance"))
+		if bd >= 0.0 and bd < 200.0:
+			boss_warn_label.text = "BOS SUDAH SANGAT DEKAT! Esc buat kabur!"
+			boss_warn_label.add_theme_color_override("font_color", COL_BLOOD_BRIGHT)
+			boss_warn_label.visible = true
+			boss_warn_label.modulate.a = 0.75 + 0.25 * sin(boss_warn_timer * 8.0)
+		elif bd >= 0.0 and bd < 350.0:
+			boss_warn_label.text = "Bos mendekat..."
+			boss_warn_label.add_theme_color_override("font_color", COL_AMBER)
+			boss_warn_label.visible = true
+			boss_warn_label.modulate.a = 1.0
+		else:
+			boss_warn_label.visible = false
 	match kind:
 		"excel":
 			excel_cursor_timer += delta

@@ -292,6 +292,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **POPUP-03**: Layout rapih: panel ngikutin tinggi isi (CenterContainer, bukan fix 540px), tidak ada ruang kosong gede di dalam popup; jarak antar elemen konsisten 8px
 - [ ] **POPUP-04**: Tidak ada teks yang keluar kotak: semua panel dalam pakai PanelContainer dengan content margin (12px kiri/kanan, 6px atas/bawah), teks strip BAHAYA dipendekin biar muat
 - [ ] **POPUP-05**: Excel interaktif kayak spreadsheet beneran: tabel data 3 kolom (A,B,C) x 4 baris (2-5) + nomor baris, formula bar nunjukin rumus Excel asli (SUM, AVERAGE, MAX, MIN, kali, tambah), player hitung hasilnya dan ketik ke sel HASIL (tombol 0-9, Backspace hapus, ENTER/SPASI submit); sel HASIL ke-highlight border fosfor + kursor blok berkedip; salah = noise + input kehapus, ulang soal yang sama; 7 soal, 7 rumus beda, 1 tabel yang sama
+- [ ] **POPUP-06**: Peringatan bos LANGSUNG di dalam popup tugas: label di bawah judul, update tiap frame dari jarak bos ke pemain; bos <200px = merah berkedip "BOS SUDAH SANGAT DEKAT! Esc buat kabur!", bos 200-350px = amber "Bos mendekat...", bos >=350px = sembunyi; alpha denyut tidak pernah di bawah 0.5 biar selalu terbaca; pemain yang lagi kerja jadi bisa mutusin Esc atau nekat lanjut
 - [ ] **BAL-06**: Bos lebih cepat + lebih sensitif: chase 240 -> 270, patrol 120 -> 130, search 140 -> 160, vision 300 -> 340px + cone 1.2 -> 1.35 rad, dark vision 200 -> 240px, dengar jalan 120 -> 160px, dengar lari 300 -> 360px
 - [ ] **BAL-07**: Sprint jadi sumber daya terbatas: drain 30 -> 50/detik (bar penuh cuma ~2 detik sprint), regen 22 -> 8/detik (isi pelan, ~12.5 detik buat penuh)
 
@@ -342,6 +343,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | POPUP-05 | Phase 28 | Done |
 | BAL-06 | Phase 29 | Done |
 | BAL-07 | Phase 29 | Done |
+| POPUP-06 | Phase 30 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total

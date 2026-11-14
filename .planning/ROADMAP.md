@@ -504,6 +504,23 @@ Plans:
 
 **Status: Complete.** Committed (14 Nov 2026). test_bossaggro 9/9, test_vision 9/9, test_hearing 8/8, test_stamina 4/4. Regresi penuh hijau kecuali 1 assert flaky di test_bosspol (rest-pose, y=-20.067) yang lolos 6/6 pas di-run ulang sendiri.
 
+## Phase 30: Peringatan Bos di Dalam Popup Tugas
+
+**Goal:** Pemain yang lagi kerja di dalam popup tidak buta lagi: dia lihat bos mendekat secara live dan bisa mutusin Esc atau nekat lanjut. Bos tetap secepat dan sesensitif Phase 29; yang berubah adalah pemain dikasih informasi, bukan bos dilemahkan.
+**Requirements**: POPUP-06
+**Success Criteria** (what must be TRUE):
+  1. Label peringatan di bawah judul popup, update tiap frame dari jarak bos ke pemain
+  2. Bos <200px = merah berkedip "BOS SUDAH SANGAT DEKAT! Esc buat kabur!"
+  3. Bos 200-350px = amber "Bos mendekat..."
+  4. Bos >=350px = label sembunyi
+  5. Alpha denyut tidak pernah di bawah 0.5 biar selalu terbaca
+  6. test_bosswarn 4/4 (baru), test_popup 23/23, render visual terverifikasi
+**Plans**:
+- [x] 30-01: boss_warn_label di task_popup.gd + _process update tiap frame + test_bosswarn baru
+- [x] 30-02: Render visual (peringatan merah terbaca), regresi + commit + rebuild + video v20
+
+**Status: Complete.** Committed (14 Nov 2026). test_bosswarn 4/4, test_popup 23/23. Render terverifikasi: peringatan merah Creepster terbaca di bawah judul popup.
+
 ## Progress
 
 ## Progress
