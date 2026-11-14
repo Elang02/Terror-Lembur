@@ -30,6 +30,10 @@ func _run() -> void:
 		_fail("boss null")
 		_report()
 		return
+	# Disable teleports for this test: the boss teleports every 20-30s and
+	# each teleport abandons the current waypoint, so a full loop would
+	# never complete. This test is about pathfinding, not teleporting.
+	boss.set("teleport_timer", 99999.0)
 	# Boss starts in PATROL. Track which PATROL_LOOP waypoints it comes within 40px of.
 	var loop: Array = lvl.get("PATROL_LOOP")
 	var start_pos := boss.global_position
