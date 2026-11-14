@@ -372,7 +372,7 @@ func _build_menu() -> void:
 	how.add_theme_font_override("normal_font", UITheme.body_font())
 	how.add_theme_font_size_override("normal_font_size", 15)
 	how.add_theme_color_override("default_color", UITheme.COL_PAPER)
-	how.text = "[center][color=#ffd34d]WASD[/color] gerak   [color=#ffd34d]E[/color] kerjain tugas (Excel, Panel Listrik, Fotokopi, Keypad, Tuas Sel)   [color=#ffd34d]Q[/color] lempar barang\n[color=#ffd34d]F[/color] teriak   [color=#ffd34d]R[/color] senter   [color=#ffd34d]C[/color] ngumpet di bawah meja   [color=#ffd34d]M[/color] bisukan\nTiap tugas kasih 1 digit kode pintu. Hafalkan 4 digitnya, lalu buka [color=#ff5555]PINTU KELUAR[/color].\nBos datang kalau kamu berisik. Tutorial muncul pas pertama main, tekan [color=#ffd34d]T[/color] buat lewati.[/center]"
+	how.text = "[center][color=#ffd34d]WASD[/color] gerak   [color=#ffd34d]E[/color] kerjain tugas (Excel, Panel Listrik, Fotokopi, Cari Berkas, Catatan Rapat, Keypad, Tuas Sel)   [color=#ffd34d]Q[/color] lempar barang\n[color=#ffd34d]F[/color] teriak   [color=#ffd34d]R[/color] senter   [color=#ffd34d]C[/color] ngumpet di bawah meja   [color=#ffd34d]M[/color] bisukan\nTiap tugas kasih 1 digit kode pintu. Hafalkan 5 digitnya, lalu buka [color=#ff5555]PINTU KELUAR[/color].\nBos datang kalau kamu berisik. Tutorial muncul pas pertama main, tekan [color=#ffd34d]T[/color] buat lewati.[/center]"
 	pvb.add_child(how)
 	var sep := HSeparator.new()
 	pvb.add_child(sep)

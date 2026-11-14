@@ -295,6 +295,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **POPUP-06**: Peringatan bos LANGSUNG di dalam popup tugas: label di bawah judul, update tiap frame dari jarak bos ke pemain; bos <200px = merah berkedip "BOS SUDAH SANGAT DEKAT! Esc buat kabur!", bos 200-350px = amber "Bos mendekat...", bos >=350px = sembunyi; alpha denyut tidak pernah di bawah 0.5 biar selalu terbaca; pemain yang lagi kerja jadi bisa mutusin Esc atau nekat lanjut
 - [ ] **BAL-06**: Bos lebih cepat + lebih sensitif: chase 240 -> 270, patrol 120 -> 130, search 140 -> 160, vision 300 -> 340px + cone 1.2 -> 1.35 rad, dark vision 200 -> 240px, dengar jalan 120 -> 160px, dengar lari 300 -> 360px
 - [ ] **BAL-07**: Sprint jadi sumber daya terbatas: drain 30 -> 50/detik (bar penuh cuma ~2 detik sprint), regen 22 -> 8/detik (isi pelan, ~12.5 detik buat penuh)
+- [ ] **TASK-01**: Dua tugas utama baru di area atas peta supaya pemain explore seluruh map, bukan cuma bawah: Gudang (128,176, kiri atas) dan Rapat (700,128, atas tengah); total tugas utama jadi 5, semuanya nyambung sama cerita lembur (berkas + catatan rapat buat nyelesain laporan)
+- [ ] **TASK-02**: Minigame baru beda mekanik: Gudang = Cari Berkas (grid 3x3 kotak, cari item target, tekan angka 1-9, 3 ronde, salah = noise); Rapat = Catatan Rapat (urutkan 5 tanggal dari paling lama, tekan angka 1-5, salah urutan = noise + ulang dari awal)
+- [ ] **TASK-03**: Kode pintu jadi 5 digit (tiap tugas utama kasih 1 digit, catatan pintu dihapus); keypad 5 digit, menu CARA BERMAIN update (5 digit + daftar 7 tugas); demo bot rutenya nambah Gudang + Rapat (Komputer, Arsip, Generator, Gudang, Rapat, Pintu Keluar)
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -344,6 +347,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BAL-06 | Phase 29 | Done |
 | BAL-07 | Phase 29 | Done |
 | POPUP-06 | Phase 30 | Done |
+| TASK-01 | Phase 31 | Done |
+| TASK-02 | Phase 31 | Done |
+| TASK-03 | Phase 31 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -365,7 +371,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v18 requirements: 1 total
 - v19 requirements: 1 total
 - v20 requirements: 2 total
-- Mapped to phases: 118
+- Mapped to phases: 121
 - Unmapped: 0 ✓
 
 ---

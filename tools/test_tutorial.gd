@@ -77,6 +77,8 @@ func _run() -> void:
 	# Step 4 -> done: all main tasks done
 	_set_task_done(0)
 	_set_task_done(2)
+	_set_task_done(5)
+	_set_task_done(6)
 	lvl.call("_update_tutorial")
 	if int(lvl.get("tutorial_step")) == 5:
 		_ok("step 4 -> done when all main tasks done")

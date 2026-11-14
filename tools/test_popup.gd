@@ -118,7 +118,41 @@ func _run() -> void:
 			_ok("Fotokopi: 7 sheets complete the Arsip task")
 		else:
 			_fail("Arsip not done after 7 Fotokopi sheets")
-	# Keypad (Pintu Keluar, id 3): kode 4 digit
+	# Cari (Gudang, id 5): 3 ronde cari berkas
+	if await _open_popup(5, Vector2(128, 176)):
+		if str(pop.get("kind")) == "cari":
+			_ok("Gudang opens Cari Berkas popup")
+		else:
+			_fail("Gudang kind is " + str(pop.get("kind")) + " expected cari")
+		for r in range(3):
+			var tpos: int = int(pop.get("cari_target_pos"))
+			pop.call("press_number", tpos)
+			await process_frame
+		var gudang: Node = _task(5)
+		if gudang != null and bool(gudang.get("done")):
+			_ok("Cari: 3 rounds complete the Gudang task")
+		else:
+			_fail("Gudang not done after 3 Cari rounds")
+	# Urut (Rapat, id 6): urutkan 5 tanggal
+	if await _open_popup(6, Vector2(700, 128)):
+		if str(pop.get("kind")) == "urut":
+			_ok("Rapat opens Catatan Rapat popup")
+		else:
+			_fail("Rapat kind is " + str(pop.get("kind")) + " expected urut")
+		for p in range(5):
+			var dates: Array = pop.get("urut_dates")
+			var disp: Array = pop.get("urut_display")
+			var nxt: int = int(pop.get("urut_next"))
+			var target_date: int = int(dates[nxt])
+			var pos := disp.find(target_date) + 1
+			pop.call("press_number", pos)
+			await process_frame
+		var rapat: Node = _task(6)
+		if rapat != null and bool(rapat.get("done")):
+			_ok("Urut: 5 dates in order complete the Rapat task")
+		else:
+			_fail("Rapat not done after 5 Urut picks")
+	# Keypad (Pintu Keluar, id 3): kode 5 digit
 	if await _open_popup(3, Vector2(800, 760)):
 		if str(pop.get("kind")) == "keypad":
 			_ok("Pintu Keluar opens Keypad popup")
@@ -130,7 +164,7 @@ func _run() -> void:
 			await process_frame
 		var ext: Node = _task(3)
 		if ext != null and bool(ext.get("done")):
-			_ok("Keypad: correct 4-digit code completes the Exit task")
+			_ok("Keypad: correct 5-digit code completes the Exit task")
 		else:
 			_fail("Exit not done after correct keypad code")
 	# Esc cancels and resets progress (test on a fresh task: use Tuas Sel needs locked, so use a wrong-answer check instead)
@@ -189,10 +223,10 @@ func _run() -> void:
 	# Code digits: keypad code comes from the tasks, not random
 	var digits: Array = lvl.get("code_digits")
 	var found: Array = lvl.get("code_found")
-	if digits.size() == 4:
-		_ok("code has 4 digits")
+	if digits.size() == 5:
+		_ok("code has 5 digits")
 	else:
-		_fail("code has " + str(digits.size()) + " digits, expected 4")
+		_fail("code has " + str(digits.size()) + " digits, expected 5")
 	var all_in_range := true
 	for d in digits:
 		if int(d) < 1 or int(d) > 4:
@@ -201,13 +235,13 @@ func _run() -> void:
 		_ok("all code digits are 1-4")
 	else:
 		_fail("code digit out of range: " + str(digits))
-	# All 3 main tasks are done by now, so all 4 digits must be revealed
+	# All 5 main tasks are done by now, so all 5 digits must be revealed
 	var all_found := true
 	for f in found:
 		if not bool(f):
 			all_found = false
 	if all_found:
-		_ok("all 4 code digits revealed after the 3 main tasks")
+		_ok("all 5 code digits revealed after the 5 main tasks")
 	else:
 		_fail("code_found not all true after main tasks: " + str(found))
 	# HUD does NOT show the code (pure memory: the player must remember it)
@@ -221,8 +255,8 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	var kcode: Array = pop.get("key_code")
-	var same := kcode.size() == 4
-	for i in range(4):
+	var same := kcode.size() == 5
+	for i in range(5):
 		if int(kcode[i]) != int(digits[i]):
 			same = false
 	if same:
@@ -233,12 +267,12 @@ func _run() -> void:
 	var wrong_digit := 1
 	if int(kcode[0]) == 1:
 		wrong_digit = 2
-	for i in range(4):
+	for i in range(5):
 		pop.call("press_number", wrong_digit)
 		await process_frame
 	var kcode_after: Array = pop.get("key_code")
 	var unchanged := true
-	for i in range(4):
+	for i in range(5):
 		if int(kcode_after[i]) != int(digits[i]):
 			unchanged = false
 	if unchanged:

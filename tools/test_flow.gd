@@ -58,7 +58,7 @@ func _run() -> void:
 		return
 	var speed_before := float(lvl.get("boss_speed_mult"))
 	for tp in lvl.get("tasks"):
-		if tp.get("task_id") < 3:
+		if int(tp.get("task_id")) != 3 and int(tp.get("task_id")) != 4:
 			tp.set("done", true)
 	lvl.call("_on_task_done", lvl.get("tasks")[0])
 	await process_frame

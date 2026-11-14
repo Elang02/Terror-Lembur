@@ -15,6 +15,8 @@ const TASK_DEFS := [
 	{"id": 2, "label": "ARSIP", "pos": Vector2(190, 560), "need": 1, "time": 6.0, "noise": 150.0},
 	{"id": 3, "label": "PINTU KELUAR", "pos": Vector2(800, 760), "need": 2, "time": 5.0, "noise": 400.0},
 	{"id": 4, "label": "TUAS SEL", "pos": Vector2(960, 140), "need": 1, "time": 3.0, "noise": 150.0},
+	{"id": 5, "label": "GUDANG", "pos": Vector2(128, 176), "need": 1, "time": 6.0, "noise": 150.0},
+	{"id": 6, "label": "RAPAT", "pos": Vector2(700, 128), "need": 1, "time": 6.0, "noise": 150.0},
 ]
 const CELL_POS := Vector2(1080, 140)
 const GUDANG_ROOM := Rect2(32, 64, 192, 224)
@@ -125,8 +127,8 @@ var debug_timer := 0.0
 var popup: TaskPopup = null
 var popup_open := false
 var popup_task_id := -1
-var code_digits: Array[int] = [1, 2, 3, 4]
-var code_found: Array[bool] = [false, false, false, false]
+var code_digits: Array[int] = [1, 2, 3, 4, 1]
+var code_found: Array[bool] = [false, false, false, false, false]
 var intro_open := false
 var intro_panel: PanelContainer = null
 var intro_timer := 0.0
@@ -1209,20 +1211,17 @@ func _generate_code() -> void:
 	rng.seed = Time.get_ticks_usec() % 1000000 + multiplayer.get_unique_id() * 7919
 	code_digits.clear()
 	code_found.clear()
-	for i in range(4):
+	for i in range(5):
 		code_digits.append(rng.randi_range(1, 4))
 		code_found.append(false)
 
 func _reveal_code_digit(idx: int) -> void:
-	if idx < 0 or idx >= 4:
+	if idx < 0 or idx >= 5:
 		return
 	if code_found[idx]:
 		return
 	code_found[idx] = true
-	if idx < 3:
-		hud_warn_label.text = "Kode pintu ditemukan! Digit ke-" + str(idx + 1) + " = " + str(code_digits[idx]) + "  (INGAT BAIK-BAIK!)"
-	else:
-		hud_warn_label.text = "Catatan di pintu: digit terakhir = " + str(code_digits[idx]) + "  (INGAT BAIK-BAIK!)"
+	hud_warn_label.text = "Kode pintu ditemukan! Digit ke-" + str(idx + 1) + " = " + str(code_digits[idx]) + "  (INGAT BAIK-BAIK!)"
 	warn_timer = 5.0
 	play_sfx("complete", -6.0)
 
@@ -1238,6 +1237,10 @@ func _popup_kind(task_id: int) -> String:
 			return "keypad"
 		4:
 			return "mash"
+		5:
+			return "cari"
+		6:
+			return "urut"
 	return "excel"
 
 func _popup_title(task_id: int) -> String:
@@ -1252,6 +1255,10 @@ func _popup_title(task_id: int) -> String:
 			return "Keypad Pintu"
 		4:
 			return "Tuas Sel"
+		5:
+			return "Cari Berkas"
+		6:
+			return "Catatan Rapat"
 	return "Tugas"
 
 func _task_ready(task_id: int) -> bool:
@@ -1410,13 +1417,16 @@ func _on_task_done(tp) -> void:
 			_reveal_code_digit(1)
 		0:
 			_reveal_code_digit(2)
+		5:
+			_reveal_code_digit(3)
+		6:
+			_reveal_code_digit(4)
 	boss_speed_mult += 0.1
 	if boss != null:
 		boss.speed_mult = boss_speed_mult
 	if _main_tasks_done():
 		_open_locked_doors()
 		_enrage_boss()
-		_reveal_code_digit(3)
 	lit_areas.append(tp.global_position)
 	var light := PointLight2D.new()
 	light.position = tp.global_position
@@ -1445,7 +1455,7 @@ func _unlock_all() -> void:
 
 func _main_tasks_done() -> bool:
 	for tp in tasks:
-		if tp.task_id < 3 and not tp.done:
+		if tp.task_id != 3 and tp.task_id != 4 and not tp.done:
 			return false
 	return true
 

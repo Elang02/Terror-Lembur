@@ -93,6 +93,18 @@ var mash_bar: ProgressBar = null
 var mash_handle: Panel = null
 var mash_track: Control = null
 
+var cari_round := 1
+var cari_items: Array = []
+var cari_target := ""
+var cari_target_pos := 1
+var cari_boxes: Array = []
+var cari_pool: Array = ["MAP MERAH", "STAPLER", "PULPEN", "GUNTING", "KALKULATOR", "PENGGARIS", "KLIP", "AMPLOP", "BUKU", "MAP BIRU", "MAP KUNING", "FLASHDISK"]
+
+var urut_dates: Array = []
+var urut_display: Array = []
+var urut_next := 0
+var urut_slots: Array = []
+
 var demo_timer := 0.0
 
 func _ready() -> void:
@@ -244,20 +256,29 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 			foto_zone = 0.5
 			_build_foto()
 		"keypad":
-			instr_label.text = "Pintu keluar terkunci. Kode 4 digit itu ada di tugas-tugasmu. Ingat baik-baik!"
+			instr_label.text = "Pintu keluar terkunci. Kode 5 digit itu ada di tugas-tugasmu. Ingat baik-baik!"
 			key_code.clear()
 			key_entered.clear()
 			if level != null and level.get("code_digits") != null:
 				for d in level.get("code_digits"):
 					key_code.append(int(d))
 			else:
-				for i in range(4):
+				for i in range(5):
 					key_code.append(rng.randi_range(1, 4))
 			_build_keypad()
 		"mash":
 			instr_label.text = "Tuas selnya macet. Tarik sekuat tenaga, sebelum dia kembali."
 			mash_prog = 0.0
 			_build_mash()
+		"cari":
+			instr_label.text = "Berkas penting buat laporan lemburmu ada di gudang ini. Cari kotaknya, tekan angka 1-9. Salah, dia dengar."
+			cari_round = 1
+			_next_cari()
+		"urut":
+			instr_label.text = "Catatan rapatnya berantakan. Urutkan dari tanggal paling lama, tekan angka 1-5. Salah urutan, ulang dari awal."
+			urut_next = 0
+			_gen_urut()
+			_build_urut()
 	_refresh_progress()
 
 func close_popup(finished: bool) -> void:
@@ -288,9 +309,13 @@ func _refresh_progress() -> void:
 		"fotokopi":
 			p = float(foto_sheets) / 7.0
 		"keypad":
-			p = float(key_entered.size()) / 4.0
+			p = float(key_entered.size()) / 5.0
 		"mash":
 			p = mash_prog
+		"cari":
+			p = float(cari_round - 1) / 3.0
+		"urut":
+			p = float(urut_next) / 5.0
 	progress_bar.value = p * 100.0
 	progress_label.text = str(int(p * 100.0)) + "%"
 	if task_node != null:
@@ -575,7 +600,7 @@ func _draw_foto_bar() -> void:
 	foto_bar.draw_rect(Rect2(mx - 2, -4, 4, h + 8), Color(1.0, 0.85, 0.4, 1.0))
 
 func _build_keypad() -> void:
-	status_label.text = "Masukkan 4 digit kodenya."
+	status_label.text = "Masukkan 5 digit kodenya."
 	_clear_content()
 	var body := _panelc(COL_IRON, 10, Color(0.3, 0.24, 0.16), 2)
 	body.custom_minimum_size = Vector2(720, 170)
@@ -586,7 +611,7 @@ func _build_keypad() -> void:
 	var lcd := _panelc(Color(0.02, 0.07, 0.02), 4, Color(0.15, 0.3, 0.15), 2)
 	lcd.custom_minimum_size = Vector2(680, 56)
 	bvb.add_child(lcd)
-	key_label = _make_label("_ _ _ _", 36, COL_PHOSPHOR, true)
+	key_label = _make_label("_ _ _ _ _", 36, COL_PHOSPHOR, true)
 	key_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	lcd.add_child(key_label)
 	var btns := HBoxContainer.new()
@@ -611,7 +636,7 @@ func _refresh_keypad() -> void:
 	if key_label == null:
 		return
 	var txt := ""
-	for i in range(4):
+	for i in range(5):
 		if i < key_entered.size():
 			txt += str(key_entered[i]) + " "
 		else:
@@ -661,6 +686,83 @@ func _refresh_mash_handle() -> void:
 	if mash_bar != null:
 		mash_bar.value = mash_prog * 100.0
 
+func _next_cari() -> void:
+	var pool: Array = cari_pool.duplicate()
+	pool.shuffle()
+	cari_items.clear()
+	for i in range(9):
+		cari_items.append(pool[i])
+	cari_target = cari_items[rng.randi_range(0, 8)]
+	cari_target_pos = cari_items.find(cari_target) + 1
+	_build_cari()
+
+func _build_cari() -> void:
+	status_label.text = "Ronde " + str(cari_round) + "/3  —  Cari: " + cari_target
+	_clear_content()
+	cari_boxes.clear()
+	var grid := GridContainer.new()
+	grid.columns = 3
+	grid.add_theme_constant_override("h_separation", 10)
+	grid.add_theme_constant_override("v_separation", 10)
+	content.add_child(grid)
+	for i in range(9):
+		var box := _panelc(COL_IRON, 6, Color(0.3, 0.24, 0.16), 2)
+		box.custom_minimum_size = Vector2(226, 64)
+		grid.add_child(box)
+		var bv := VBoxContainer.new()
+		bv.add_theme_constant_override("separation", 2)
+		box.add_child(bv)
+		var num := _make_label(str(i + 1), 16, COL_GOLD, true)
+		bv.add_child(num)
+		var item := _make_label(str(cari_items[i]), 18, COL_PAPER, true)
+		item.add_theme_font_override("font", _body_f())
+		bv.add_child(item)
+		cari_boxes.append(box)
+	_refresh_progress()
+
+func _gen_urut() -> void:
+	var start := rng.randi_range(3, 9)
+	urut_dates.clear()
+	for i in range(5):
+		urut_dates.append(start + i * rng.randi_range(2, 4))
+	urut_display.clear()
+	for d in urut_dates:
+		urut_display.append(d)
+	urut_display.shuffle()
+
+func _build_urut() -> void:
+	status_label.text = "Klik dari tanggal paling lama. Benar: " + str(urut_next) + "/5"
+	_clear_content()
+	urut_slots.clear()
+	var row := HBoxContainer.new()
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("separation", 10)
+	content.add_child(row)
+	for i in range(5):
+		var slot := _panelc(COL_IRON, 6, Color(0.3, 0.24, 0.16), 2)
+		slot.custom_minimum_size = Vector2(132, 80)
+		row.add_child(slot)
+		var sv := VBoxContainer.new()
+		sv.add_theme_constant_override("separation", 2)
+		slot.add_child(sv)
+		var num := _make_label(str(i + 1), 16, COL_GOLD, true)
+		sv.add_child(num)
+		var date := _make_label(str(urut_display[i]) + " Okt", 22, COL_PAPER, true)
+		date.add_theme_font_override("font", _body_f())
+		sv.add_child(date)
+		urut_slots.append(slot)
+	_refresh_progress()
+
+func _urut_mark_done(pos: int) -> void:
+	if pos < 0 or pos >= urut_slots.size():
+		return
+	var slot: PanelContainer = urut_slots[pos]
+	slot.add_theme_stylebox_override("panel", _stylebox(Color(0.1, 0.3, 0.12), 6, COL_PHOSPHOR, 2))
+
+func _urut_reset_marks() -> void:
+	for slot in urut_slots:
+		slot.add_theme_stylebox_override("panel", _stylebox(COL_IRON, 6, Color(0.3, 0.24, 0.16), 2))
+
 func press_number(n: int) -> void:
 	if not open:
 		return
@@ -690,9 +792,9 @@ func press_number(n: int) -> void:
 			if n >= 1 and n <= 4:
 				key_entered.append(n)
 				_refresh_keypad()
-				if key_entered.size() >= 4:
+				if key_entered.size() >= 5:
 					var ok := true
-					for i in range(4):
+					for i in range(5):
 						if key_entered[i] != key_code[i]:
 							ok = false
 					if ok:
@@ -702,6 +804,38 @@ func press_number(n: int) -> void:
 						_wrong("Kode salah! Coba lagi, ingat kodenya.")
 						key_entered.clear()
 						_refresh_keypad()
+		"cari":
+			if n >= 1 and n <= 9:
+				if n == cari_target_pos:
+					_right("Ketemu! (" + str(cari_round) + "/3)")
+					cari_round += 1
+					if cari_round > 3:
+						_refresh_progress()
+						close_popup(true)
+					else:
+						_refresh_progress()
+						_next_cari()
+				else:
+					_wrong("Bukan itu! Cari lagi.")
+		"urut":
+			if n >= 1 and n <= 5:
+				var picked: int = urut_display[n - 1]
+				if picked == urut_dates[urut_next]:
+					_urut_mark_done(n - 1)
+					urut_next += 1
+					if urut_next >= 5:
+						_right("Catatan rapi! (5/5)")
+						_refresh_progress()
+						close_popup(true)
+					else:
+						_right("Benar! (" + str(urut_next) + "/5)")
+						status_label.text = "Klik dari tanggal paling lama. Benar: " + str(urut_next) + "/5"
+						_refresh_progress()
+				else:
+					_wrong("Urutan salah! Mulai dari awal.")
+					urut_next = 0
+					_urut_reset_marks()
+					status_label.text = "Klik dari tanggal paling lama. Benar: 0/5"
 
 func press_space() -> void:
 	if not open:
@@ -818,12 +952,21 @@ func _demo_step(delta: float) -> void:
 				press_space()
 			demo_timer = 0.05
 		"keypad":
-			if key_entered.size() < 4:
+			if key_entered.size() < 5:
 				press_number(int(key_code[key_entered.size()]))
 				demo_timer = 0.35
 		"mash":
 			press_space()
 			demo_timer = 0.12
+		"cari":
+			press_number(cari_target_pos)
+			demo_timer = 0.4
+		"urut":
+			var target_date: int = urut_dates[urut_next]
+			var pos := urut_display.find(target_date) + 1
+			if pos >= 1:
+				press_number(pos)
+			demo_timer = 0.4
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not open:
@@ -886,6 +1029,21 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_4:
 				get_viewport().set_input_as_handled()
 				press_number(4)
+			KEY_5:
+				get_viewport().set_input_as_handled()
+				press_number(5)
+			KEY_6:
+				get_viewport().set_input_as_handled()
+				press_number(6)
+			KEY_7:
+				get_viewport().set_input_as_handled()
+				press_number(7)
+			KEY_8:
+				get_viewport().set_input_as_handled()
+				press_number(8)
+			KEY_9:
+				get_viewport().set_input_as_handled()
+				press_number(9)
 			KEY_SPACE:
 				get_viewport().set_input_as_handled()
 				press_space()

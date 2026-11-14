@@ -52,7 +52,7 @@ func _ready() -> void:
 	bot_mode = "--bot" in OS.get_cmdline_user_args()
 	demo_mode = "--demo" in OS.get_cmdline_user_args()
 	if demo_mode:
-		demo_waypoints = [Vector2(400, 400), Vector2(190, 560), Vector2(736, 400), Vector2(800, 760)]
+		demo_waypoints = [Vector2(400, 400), Vector2(190, 560), Vector2(736, 400), Vector2(128, 176), Vector2(700, 128), Vector2(800, 760)]
 		demo_task_id = 1
 		demo_wp_index = 0
 		demo_repath_timer = 0.0
@@ -152,7 +152,7 @@ func _demo_update(delta: float) -> Vector2:
 				if tp.get("task_id") == demo_task_id and tp.get("done"):
 					task_done = true
 		if task_done:
-			if demo_wp_index == 3:
+			if demo_wp_index == 5:
 				return Vector2.ZERO
 			demo_wp_index += 1
 			if demo_wp_index == 1:
@@ -160,6 +160,10 @@ func _demo_update(delta: float) -> Vector2:
 			elif demo_wp_index == 2:
 				demo_task_id = 0
 			elif demo_wp_index == 3:
+				demo_task_id = 5
+			elif demo_wp_index == 4:
+				demo_task_id = 6
+			elif demo_wp_index == 5:
 				demo_task_id = 3
 			demo_path = []
 			demo_path_index = 0

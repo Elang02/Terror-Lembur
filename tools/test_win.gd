@@ -39,14 +39,14 @@ func _run() -> void:
 	var tps := {}
 	for tp in tasks:
 		tps[int(tp.get("task_id"))] = tp
-	for tid in [0, 1, 2]:
+	for tid in [0, 1, 2, 5, 6]:
 		var tp = tps[tid]
 		tp.set("done", true)
 		tp.set("progress", 1.0)
 		lvl.call("_on_task_done", tp)
 		await process_frame
 	if lvl.call("_main_tasks_done") == true:
-		_ok("all 3 main tasks done, exit unlocked")
+		_ok("all 5 main tasks done, exit unlocked")
 	else:
 		_fail("main tasks not all done")
 	if lvl.get("boss_speed_mult") >= 1.3:
