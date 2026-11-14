@@ -9,6 +9,8 @@ const VISION_ANGLE := 1.2
 const CATCH_DIST := 30.0
 const TELEPORT_MIN := 20.0
 const TELEPORT_MAX := 30.0
+const FIRST_TELEPORT_MIN := 8.0
+const FIRST_TELEPORT_MAX := 12.0
 const BLIND_TIME := 1.5
 const CHASE_TIRED := 6.0
 
@@ -24,7 +26,7 @@ var blind_timer := 0.0
 var telegraph_timer := 0.0
 var search_center := Vector2.ZERO
 var waypoint_timer := 0.0
-var patrol_index := 0
+var patrol_index := 7
 var speed_mult := 1.0
 var teleport_mult := 1.0
 var path: PackedVector2Array = []
@@ -53,7 +55,7 @@ func _ready() -> void:
 	rng.randomize()
 	level = get_parent().get_parent()
 	_build_visual()
-	teleport_timer = rng.randf_range(TELEPORT_MIN, TELEPORT_MAX)
+	teleport_timer = rng.randf_range(FIRST_TELEPORT_MIN, FIRST_TELEPORT_MAX)
 	_pick_waypoint()
 
 func _get_or_create(parent: Node, node_name: String, type: Variant) -> Node:
