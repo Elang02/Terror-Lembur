@@ -3,10 +3,10 @@ gsd_state_version: '1.0'
 status: executing
 progress:
   total_phases: 10
-  completed_phases: 5
+  completed_phases: 9
   total_plans: 0
   completed_plans: 0
-  percent: 50
+  percent: 90
 ---
 
 # Project State
@@ -16,16 +16,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-14)
 
 **Core value:** A solo curator can play the game start to finish, feel fear and tension, and reach an ending.
-**Current focus:** Phase 7 — Audio & Suasana (improvement round, mentor evaluation 14 Nov 2026)
+**Current focus:** Phase 5 — Final Submission (improvement round Phases 7-10 complete)
 
 ## Current Position
 
-Phase: 7 of 10 (Audio & Suasana)
+Phase: 5 of 10 (Final Submission)
 Plan: 0 of 3 in current phase
-Status: Executing (Elang approved all 6 phases 14 Nov 2026 00:56 WIB, roadmap approval gate lifted; improvement round added 14 Nov 2026 ~10:55 WIB on Elang's order "buat phase phasenya dulu")
-Last activity: 2026-11-14 — Phase 1 (solo mode), Phase 2 (Pale Figure boss), Phase 3 (flow fixes + docs + art + progress report), Phase 4 (WebGL + Windows builds, itch.io zip, paragraph) complete; Phase 5 prep complete (submission docs + 3 screenshots + 100s gameplay video); Phase 6 partial: win-path test 6/6, cell-camp fix verified, demo bot full route verified, patrol test 2/2. Boss AI evaluation round 2 fixed: SEARCH orbit wall-bump, patrol waypoint on a desk, stuck detector, patrol timeout 8s to 30s, RETURN hold 3s after self-rescue. BLOCKED on Elang: outsider playtest, real-LAN test, GitHub push (token), itch.io page (login)
+Status: Executing (Elang approved all 6 phases 14 Nov 2026 00:56 WIB, roadmap approval gate lifted; improvement round added 14 Nov 2026 ~10:55 WIB and completed 14 Nov 2026 ~11:30 WIB on Elang's order "benar benar dilengkapin ya, bukan seadanya buat formalitas")
+Last activity: 2026-11-14 — Improvement round DONE: Phase 7 (ambient music, 2 free loops + intensity crossfade, test_music 7/7), Phase 8 (in-game 4-step tutorial, skippable, saved to user://tutorial.cfg, test_tutorial 11/11), Phase 9 (first teleport 8-12s + first patrol waypoint closest to Computer, test_tension 5/5), Phase 10 (boss walk bobbing + SEARCH desk-check, test_bosspol 6/6). Full suite green: flow 3/3, solo 11/11, win 6/6, search 2/2, patrol 2/2, music 7/7, tutorial 11/11, tension 5/5, bosspol 6/6. BLOCKED on Elang: outsider playtest, real-LAN test, GitHub push (token), itch.io page (login), 2 representatives data
 
-Progress: [█████░░░░░] 50%
+Progress: [█████████░] 90%
 
 ## Performance Metrics
 
@@ -61,16 +61,13 @@ Recent decisions affecting current work:
 - 14 Nov 2026: Flow fixes implemented (boss enrage on exit unlock, teleport min 150px from players).
 - 14 Nov 2026: Art keywords locked (Mencekam / Pixel Gelap Kontras / Dingin + Aksen Hangat). Grayscale test passed. Asset consistency passed.
 - 14 Nov 2026 ~10:55 WIB: Elang ordered new GSD phases for the mentor-video evaluation (audio, tutorial, early tension, boss polish + FSM). Improvement round = Phases 7-10, executed BEFORE Phase 5 (submission) and Phase 6 (testing). Execution order now: 7 → 8 → 9 → 10 → 5 → 6.
+- 14 Nov 2026 ~11:30 WIB: Improvement round COMPLETE (Elang: "benar benar dilengkapin, bukan seadanya buat formalitas"). Phase 7 audio, Phase 8 tutorial, Phase 9 early tension, Phase 10 boss polish + FSM all done + tested. Full suite green (9 test files, 56 assertions).
 
 ### Pending Todos
 
-- Phase 7: Find free non-AI horror ambient loop + wire intensity scaling by boss state.
-- Phase 8: In-game step-by-step tutorial (Gimersia rule).
-- Phase 9: First boss contact within ~12s, fair early tension.
-- Phase 10: Boss walk animation/bobbing + SEARCH desk-check.
 - Phase 5: Submission form itself (needs 2 representatives data + Elang).
 - Phase 6: Playtest outsiders, LAN test on real PCs, push to GitHub (needs token).
-- Phase 4: itch.io page (needs Elang's login).
+- Phase 4: itch.io page (needs Elang's login). Re-export Web + Windows + rebuild zip before upload (builds predate Phases 7-10).
 
 ### Blockers/Concerns
 

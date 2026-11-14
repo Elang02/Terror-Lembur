@@ -98,26 +98,26 @@ Each maps to roadmap Phases 7-10, which run BEFORE Phase 5 (submission) and Phas
 
 ### Audio & Suasana (Production: audio is the unsung hero)
 
-- [ ] **AUDIO-01**: Ambient/BGM loop plays during gameplay (free license, non-AI, declared in submission)
-- [ ] **AUDIO-02**: Music intensity scales with boss state (calm in patrol, tense in chase)
-- [ ] **AUDIO-03**: Ambient does not drown procedural SFX (heartbeat, footsteps, whispers stay audible)
+- [x] **AUDIO-01**: Ambient/BGM loop plays during gameplay (free license, non-AI, declared in submission)
+- [x] **AUDIO-02**: Music intensity scales with boss state (calm in patrol, tense in chase)
+- [x] **AUDIO-03**: Ambient does not drown procedural SFX (heartbeat, footsteps, whispers stay audible)
 
 ### Tutorial In-Game (Gimersia rule: tutorial wajib ada di dalam game)
 
-- [ ] **TUT-01**: In-game tutorial guides a first-time player step by step (not just menu text)
-- [ ] **TUT-02**: Tutorial covers: walk to first task, hold E to work, hide when boss is near, reach the exit
-- [ ] **TUT-03**: Tutorial does not block experienced players (skippable, or only on first run)
+- [x] **TUT-01**: In-game tutorial guides a first-time player step by step (not just menu text)
+- [x] **TUT-02**: Tutorial covers: walk to first task, hold E to work, hide when boss is near, reach the exit
+- [x] **TUT-03**: Tutorial does not block experienced players (skippable, or only on first run)
 
 ### Ketegangan Awal (Game Design: risk of losing must be felt from the start)
 
-- [ ] **TENSE-01**: First boss contact happens within ~12s of game start (faster first teleport and/or patrol start closer to first task)
-- [ ] **TENSE-02**: Early tension is fair (boss does not spawn-camp the first task, player still has room to learn)
+- [x] **TENSE-01**: First boss contact happens within ~12s of game start (faster first teleport and/or patrol start closer to first task)
+- [x] **TENSE-02**: Early tension is fair (boss does not spawn-camp the first task, player still has room to learn)
 
 ### Polish Bos & FSM (Art: boss must not glide; Game Design: SEARCH should threaten hiding)
 
-- [ ] **BOSSPOL-01**: Boss has a walk animation or procedural bobbing so it does not glide (2-4 frames or bob)
-- [ ] **BOSSPOL-02**: Walk animation reads clearly at ~2x player height, keeps the Pale Figure silhouette
-- [ ] **FSM-01**: SEARCH state occasionally checks a nearby desk/hide spot (boss walks to nearest desk, pauses briefly) so hiding is not 100% safe
+- [x] **BOSSPOL-01**: Boss has a walk animation or procedural bobbing so it does not glide (2-4 frames or bob)
+- [x] **BOSSPOL-02**: Walk animation reads clearly at ~2x player height, keeps the Pale Figure silhouette
+- [x] **FSM-01**: SEARCH state occasionally checks a nearby desk/hide spot (boss walks to nearest desk, pauses briefly) so hiding is not 100% safe
 
 ## Out of Scope
 

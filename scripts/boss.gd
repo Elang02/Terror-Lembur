@@ -35,6 +35,10 @@ var repath_timer := 0.0
 var search_repath_timer := 0.0
 var stuck_timer := 0.0
 var stuck_last_pos := Vector2.ZERO
+var search_desk_checked := false
+var search_desk_target := Vector2.ZERO
+var search_desk_pause := 0.0
+var bob_phase := 0.0
 var level: Node2D
 var rng := RandomNumberGenerator.new()
 
@@ -137,6 +141,18 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_check_catch()
 	_update_stuck(delta)
+	_update_bob(delta)
+
+func _update_bob(delta: float) -> void:
+	if boss_sprite == null:
+		return
+	if velocity.length() > 10.0:
+		bob_phase += velocity.length() * delta * 0.06
+		boss_sprite.position.y = -22.0 + sin(bob_phase) * 2.0
+		boss_sprite.rotation = clampf(velocity.x * 0.00015, -0.04, 0.04)
+	else:
+		boss_sprite.position.y = -22.0
+		boss_sprite.rotation = 0.0
 
 func _update_stuck(delta: float) -> void:
 	# A* waypoints are cell centres, but the boss capsule can clip a prop
@@ -235,20 +251,14 @@ func _update_patrol(_delta: float) -> void:
 func _update_suspicious(delta: float) -> void:
 	velocity = Vector2.ZERO
 	if state_timer > 1.5:
-		state = State.SEARCH
-		search_center = target
-		state_timer = 0.0
-		_request_path(search_center)
+		_enter_search(target)
 
 func _update_chase(delta: float) -> void:
 	chase_timer += delta
 	repath_timer -= delta
 	var p := _nearest_visible_player()
 	if p == null:
-		state = State.SEARCH
-		search_center = target
-		state_timer = 0.0
-		_request_path(search_center)
+		_enter_search(target)
 		return
 	target = p.global_position
 	if repath_timer <= 0.0:
@@ -256,16 +266,53 @@ func _update_chase(delta: float) -> void:
 		_request_path(target)
 	_steer_to(target, SPEED_CHASE * speed_mult)
 	if chase_timer > CHASE_TIRED:
-		state = State.SEARCH
-		search_center = target
-		state_timer = 0.0
+		_enter_search(target)
 		chase_timer = 0.0
-		_request_path(search_center)
+
+func _enter_search(center: Vector2) -> void:
+	state = State.SEARCH
+	search_center = center
+	state_timer = 0.0
+	search_desk_checked = false
+	search_desk_target = Vector2.ZERO
+	search_desk_pause = 0.0
+	_request_path(search_center)
+
+func _nearest_desk_in_range(center: Vector2, max_dist: float) -> Vector2:
+	var best := Vector2.INF
+	var best_d := max_dist
+	for d in level.desk_positions:
+		var dist := center.distance_to(d)
+		if dist < best_d:
+			best_d = dist
+			best = d
+	return best
 
 func _update_search(delta: float) -> void:
+	if search_desk_pause > 0.0:
+		search_desk_pause -= delta
+		velocity = Vector2.ZERO
+		return
+	# Walking to a desk: keep going there, do not get pulled back to the
+	# search center while en route.
+	if search_desk_target != Vector2.ZERO:
+		if global_position.distance_to(search_desk_target) > 45.0:
+			_steer_to(search_desk_target, SPEED_SEARCH * speed_mult)
+			return
+		search_desk_target = Vector2.ZERO
+		search_desk_pause = 1.5
+		velocity = Vector2.ZERO
+		return
 	if global_position.distance_to(search_center) > 30.0:
 		_steer_to(search_center, SPEED_SEARCH * speed_mult)
 	else:
+		if not search_desk_checked:
+			var desk := _nearest_desk_in_range(search_center, 300.0)
+			search_desk_checked = true
+			if desk != Vector2.INF:
+				search_desk_target = desk
+				_request_path(desk)
+				return
 		var orbit := Vector2(cos(state_timer * 1.2), sin(state_timer * 1.2)) * 60.0
 		var orbit_target := search_center + orbit
 		search_repath_timer -= delta
@@ -273,7 +320,11 @@ func _update_search(delta: float) -> void:
 			search_repath_timer = 1.0
 			_request_path(orbit_target)
 		_steer_to(orbit_target, SPEED_SEARCH * speed_mult * 0.5)
-	if state_timer > 5.0:
+	if state_timer > 5.0 and search_desk_target == Vector2.ZERO:
+		state = State.RETURN
+		state_timer = 0.0
+		_request_path(level.boss_room_center())
+	elif state_timer > 10.0:
 		state = State.RETURN
 		state_timer = 0.0
 		_request_path(level.boss_room_center())

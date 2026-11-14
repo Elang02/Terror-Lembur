@@ -206,9 +206,9 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 2. Monster & Boss Visual | 3/3 | Complete | 14 Nov 2026 |
 | 3. Flow Fixes & Design Docs | 5/5 | Complete | 14 Nov 2026 |
 | 4. Checkpoint Package | 2/3 | Complete (itch.io page needs Elang's login) | 14 Nov 2026 |
-| 7. Audio & Suasana | 0/3 | Not started | - |
-| 8. Tutorial In-Game | 0/3 | Not started | - |
-| 9. Ketegangan Awal | 0/2 | Not started | - |
-| 10. Polish Bos & FSM | 0/3 | Not started | - |
+| 7. Audio & Suasana | 3/3 | Complete | 14 Nov 2026 |
+| 8. Tutorial In-Game | 3/3 | Complete | 14 Nov 2026 |
+| 9. Ketegangan Awal | 2/2 | Complete | 14 Nov 2026 |
+| 10. Polish Bos & FSM | 3/3 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
