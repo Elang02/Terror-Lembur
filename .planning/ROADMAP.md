@@ -450,6 +450,24 @@ Plans:
 
 **Status: Complete.** Committed (14 Nov 2026). test_rescue 4/4, solo 13/13, bossaggro 9/9, hearing 7/7, vision 8/8, popup 23/23, patrolbias 3/3. Video v18: 297 dtk, ada suara (mean -32.3 dB), 0 script error, bot GAME OVER (ketangkep 3x) tapi sempat kabur dari sel dan lanjut ke Generator.
 
+## Phase 27: Popup Tugas Nyatu Sama Tema Horor
+
+**Goal:** Popup tugas tidak lagi kelihatan AI slop: pakai font dan warna game, tiap popup jadi artefak kantor tua yang berhantu, bukan aplikasi bersih generik.
+**Requirements**: POPUP-01, POPUP-02
+**Success Criteria** (what must be TRUE):
+  1. Semua teks popup pakai font game (Creepster judul, Special Elite isi)
+  2. Excel jadi terminal CRT hijau fosfor di layar hitam (tidak ada sel putih / hijau Excel terang)
+  3. Panel Listrik jadi panel tua berkarat + strip BAHAYA merah darah, lampu redup
+  4. Fotokopi jadi mesin tua + zona amber + kertas kuning tua
+  5. Keypad jadi keypad karatan + LCD fosfor redup, tombol angka di tengah
+  6. Tuas Sel jadi tuas besi berkarat, tanpa judul ganda
+  7. test_popup 23/23; render 5 popup diverifikasi visual
+**Plans**:
+- [x] 27-01: Font game + warna tema + redesign 5 popup + teks instruksi suara game
+- [x] 27-02: Render verifikasi + test_popup + commit + rebuild
+
+**Status: Complete.** Committed (14 Nov 2026). test_popup 23/23. Render 5 popup diverifikasi: CRT fosfor hijau, panel berkarat strip BAHAYA, fotokopi amber + kertas tua, keypad karatan LCD fosfor, tuas besi berkarat.
+
 ## Progress
 
 ## Progress
@@ -487,5 +505,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 24. Bos Tidak Lihat Nembus Tembok + Bisa Dengar Langkah | 2/2 | Complete | 14 Nov 2026 |
 | 25. Bos Patroli Dekat Pemain + Video Berhenti Pas Game Selesai | 2/2 | Complete | 14 Nov 2026 |
 | 26. Kabur dari Sel Tidak Lagi Gratis | 2/2 | Complete | 14 Nov 2026 |
+| 27. Popup Tugas Nyatu Sama Tema Horor | 2/2 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

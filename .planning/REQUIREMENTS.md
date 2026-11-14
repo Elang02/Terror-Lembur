@@ -287,6 +287,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **VID-01**: Video rekaman berhenti sendiri 5 dtk setelah game selesai (marker DEMO_END + tools/record_demo.sh), bukan jalan terus 180 dtk pas layar akhir
 - [ ] **RESCUE-01**: Bos menjaga sel: kalau bos dalam 150px dari sel pas pemain self-rescue, kabur melambat jadi 30% (tidak beku total, pemain tidak bisa terjebak selamanya); peringatan "BOS MENJAGA SEL! Kaburmu melambat, tunggu dia pergi!"
 - [ ] **RESCUE-02**: Waktu self-rescue 15 dtk → 10 dtk, supaya kabur tidak kelamaan
+- [ ] **POPUP-01**: Popup tugas pakai font game (Creepster judul, Special Elite isi), bukan font default Godot
+- [ ] **POPUP-02**: Tiap popup nyatu sama tema horor kantor: Excel jadi terminal CRT hijau fosfor di layar hitam, Panel Listrik jadi panel tua berkarat + strip BAHAYA merah darah, Fotokopi jadi mesin tua + zona amber + kertas kuning tua, Keypad jadi keypad karatan + LCD fosfor redup, Tuas Sel jadi tuas besi berkarat; progress bar merah darah; teks instruksi pakai suara game (bukan instruksi minigame generik)
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -328,6 +330,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VID-01 | Phase 25 | Done |
 | RESCUE-01 | Phase 26 | Done |
 | RESCUE-02 | Phase 26 | Done |
+| POPUP-01 | Phase 27 | Done |
+| POPUP-02 | Phase 27 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -345,7 +349,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v14 requirements: 2 total
 - v15 requirements: 2 total
 - v16 requirements: 2 total
-- Mapped to phases: 111
+- v17 requirements: 2 total
+- Mapped to phases: 113
 - Unmapped: 0 ✓
 
 ---

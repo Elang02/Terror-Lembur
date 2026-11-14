@@ -1,12 +1,35 @@
 class_name TaskPopup
 extends CanvasLayer
 
-const COL_GOLD := Color(1.0, 0.85, 0.4)
+const COL_GOLD := Color(1.0, 0.8, 0.25)
+const COL_BLOOD := Color(0.78, 0.12, 0.12)
+const COL_BLOOD_BRIGHT := Color(0.92, 0.18, 0.18)
+const COL_PAPER := Color(0.93, 0.89, 0.78)
 const COL_GREEN := Color(0.2, 0.9, 0.3)
 const COL_RED := Color(1.0, 0.3, 0.3)
-const COL_PANEL := Color(0.07, 0.07, 0.09, 0.97)
-const COL_EXCEL_GREEN := Color(0.13, 0.45, 0.27)
-const COL_EXCEL_GREEN_DARK := Color(0.09, 0.35, 0.2)
+const COL_PANEL := Color(0.05, 0.05, 0.06, 0.98)
+const COL_PANEL_BORDER := Color(0.55, 0.1, 0.1)
+const COL_PHOSPHOR := Color(0.45, 0.85, 0.45)
+const COL_PHOSPHOR_DIM := Color(0.25, 0.55, 0.28)
+const COL_RUST := Color(0.32, 0.24, 0.16)
+const COL_IRON := Color(0.16, 0.16, 0.18)
+const COL_AMBER := Color(0.85, 0.62, 0.2)
+
+const TITLE_FONT_PATH := "res://assets/fonts/Creepster-Regular.ttf"
+const BODY_FONT_PATH := "res://assets/fonts/SpecialElite-Regular.ttf"
+
+var _title_font: Font = null
+var _body_font: Font = null
+
+func _title_f() -> Font:
+	if _title_font == null:
+		_title_font = load(TITLE_FONT_PATH) as Font
+	return _title_font
+
+func _body_f() -> Font:
+	if _body_font == null:
+		_body_font = load(BODY_FONT_PATH) as Font
+	return _body_font
 
 var level: Node = null
 var task_id := -1
@@ -43,7 +66,7 @@ var simon_flash_idx := -1
 var simon_flash_timer := 0.0
 var simon_lamps: Array = []
 var simon_glows: Array = []
-var simon_lamp_colors: Array = [Color(0.85, 0.2, 0.2), Color(0.15, 0.45, 0.75), Color(0.15, 0.7, 0.25), Color(0.85, 0.7, 0.15)]
+var simon_lamp_colors: Array = [Color(0.55, 0.16, 0.14), Color(0.16, 0.32, 0.5), Color(0.16, 0.45, 0.22), Color(0.6, 0.48, 0.14)]
 var simon_lamp_names: Array = ["MERAH", "BIRU", "HIJAU", "KUNING"]
 
 var foto_sheets := 0
@@ -100,30 +123,37 @@ func _build_ui() -> void:
 	panel.offset_bottom = 270
 	var style := StyleBoxFlat.new()
 	style.bg_color = COL_PANEL
-	style.border_color = Color(0.5, 0.45, 0.2)
+	style.border_color = COL_PANEL_BORDER
 	style.set_border_width_all(2)
-	style.set_corner_radius_all(8)
+	style.set_corner_radius_all(4)
 	style.content_margin_left = 26
 	style.content_margin_right = 26
 	style.content_margin_top = 18
 	style.content_margin_bottom = 18
+	style.shadow_color = Color(0, 0, 0, 0.7)
+	style.shadow_size = 12
+	style.shadow_offset = Vector2(0, 4)
 	panel.add_theme_stylebox_override("panel", style)
 	add_child(panel)
 	var vb := VBoxContainer.new()
 	vb.add_theme_constant_override("separation", 12)
 	panel.add_child(vb)
-	title_label = _make_label("", 34, COL_GOLD, true)
+	title_label = _make_label("", 38, COL_BLOOD_BRIGHT, true)
+	title_label.add_theme_font_override("font", _title_f())
 	vb.add_child(title_label)
-	instr_label = _make_label("", 17, Color(0.92, 0.92, 0.92), true)
+	instr_label = _make_label("", 17, COL_PAPER, true)
+	instr_label.add_theme_font_override("font", _body_f())
 	instr_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vb.add_child(instr_label)
 	status_label = _make_label("", 20, COL_GOLD, true)
+	status_label.add_theme_font_override("font", _body_f())
 	vb.add_child(status_label)
 	content = VBoxContainer.new()
 	content.add_theme_constant_override("separation", 10)
 	content.custom_minimum_size = Vector2(720, 220)
 	vb.add_child(content)
 	feedback_label = _make_label("", 18, COL_GREEN, true)
+	feedback_label.add_theme_font_override("font", _body_f())
 	vb.add_child(feedback_label)
 	progress_bar = ProgressBar.new()
 	progress_bar.min_value = 0
@@ -131,15 +161,20 @@ func _build_ui() -> void:
 	progress_bar.value = 0
 	progress_bar.custom_minimum_size = Vector2(720, 14)
 	progress_bar.show_percentage = false
+	progress_bar.add_theme_stylebox_override("background", _stylebox(Color(0.12, 0.08, 0.08), 2))
+	progress_bar.add_theme_stylebox_override("fill", _stylebox(COL_BLOOD, 2))
 	vb.add_child(progress_bar)
-	progress_label = _make_label("0%", 18, Color(0.92, 0.92, 0.92), true)
+	progress_label = _make_label("0%", 18, COL_PAPER, true)
+	progress_label.add_theme_font_override("font", _body_f())
 	vb.add_child(progress_label)
-	var foot := _make_label("Esc = batalkan tugas (progres hilang)  |  Musuh tetap bergerak selagi kamu kerja!", 14, Color(0.7, 0.7, 0.7), true)
+	var foot := _make_label("Esc = batalkan tugas (progres hilang)  |  Dia tetap bergerak selagi kamu kerja!", 14, Color(0.55, 0.5, 0.45), true)
+	foot.add_theme_font_override("font", _body_f())
 	vb.add_child(foot)
 
 func _make_label(text: String, size: int, color: Color, center: bool) -> Label:
 	var l := Label.new()
 	l.text = text
+	l.add_theme_font_override("font", _body_f())
 	l.add_theme_font_size_override("font_size", size)
 	l.add_theme_color_override("font_color", color)
 	if center:
@@ -171,15 +206,15 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 	demo_timer = 0.0
 	match kind:
 		"excel":
-			instr_label.text = "Hitung cepat! Jawab 7 soal dengan tombol 1, 2, atau 3."
+			instr_label.text = "Laporan lembur harus selesai malam ini. Hitung cepat, jangan sampai salah."
 			excel_q = 0
 			_next_excel()
 		"simon":
-			instr_label.text = "Perhatikan urutan lampu menyala, lalu ulangi dengan tombol 1-4."
+			instr_label.text = "Panel listriknya tua. Hafalkan urutan lampunya, lalu ulangi. Salah, dia dengar."
 			simon_round = 1
 			_start_simon_round()
 		"fotokopi":
-			instr_label.text = "Tekan SPASI tepat saat penanda masuk zona hijau. Salin 7 lembar!"
+			instr_label.text = "Arsip lama harus disalin. Tekan SPASI tepat saat penanda masuk zona. Salin 7 lembar!"
 			foto_sheets = 0
 			foto_marker = 0.0
 			foto_dir = 1.0
@@ -187,7 +222,7 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 			foto_zone = 0.5
 			_build_foto()
 		"keypad":
-			instr_label.text = "Ketik kode pintu 4 digit dengan tombol 1-4. Ingat kode dari tugas-tugasmu!"
+			instr_label.text = "Pintu keluar terkunci. Kode 4 digit itu ada di tugas-tugasmu. Ingat baik-baik!"
 			key_code.clear()
 			key_entered.clear()
 			if level != null and level.get("code_digits") != null:
@@ -198,7 +233,7 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 					key_code.append(rng.randi_range(1, 4))
 			_build_keypad()
 		"mash":
-			instr_label.text = "Tarik tuasnya! Tekan SPASI berulang kali secepat mungkin."
+			instr_label.text = "Tuas selnya macet. Tarik sekuat tenaga, sebelum dia kembali."
 			mash_prog = 0.0
 			_build_mash()
 	_refresh_progress()
@@ -243,7 +278,7 @@ func _refresh_progress() -> void:
 
 func _wrong(msg: String) -> void:
 	feedback_label.text = msg
-	feedback_label.add_theme_color_override("font_color", COL_RED)
+	feedback_label.add_theme_color_override("font_color", COL_BLOOD_BRIGHT)
 	if level != null:
 		var me: Node = level.call("_my_player")
 		if me != null:
@@ -253,13 +288,13 @@ func _wrong(msg: String) -> void:
 
 func _right(msg: String) -> void:
 	feedback_label.text = msg
-	feedback_label.add_theme_color_override("font_color", COL_GREEN)
+	feedback_label.add_theme_color_override("font_color", COL_PHOSPHOR)
 	if level != null and level.has_method("play_sfx"):
 		level.play_sfx("tick", -8.0, 1.4)
 
 func _grid_cell(text: String, size: int, bg: Color, fg: Color, min_w: float = 0.0) -> PanelContainer:
 	var cell := PanelContainer.new()
-	cell.add_theme_stylebox_override("panel", _stylebox(bg, 0, Color(0.78, 0.8, 0.82), 1))
+	cell.add_theme_stylebox_override("panel", _stylebox(bg, 0, Color(0.15, 0.3, 0.15), 1))
 	var l := _make_label(text, size, fg, true)
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	cell.add_child(l)
@@ -285,25 +320,25 @@ func _next_excel() -> void:
 	excel_opts.shuffle()
 	excel_correct = excel_opts.find(correct)
 	_clear_content()
-	var header := _panel(COL_EXCEL_GREEN, 4)
-	header.custom_minimum_size = Vector2(720, 36)
-	content.add_child(header)
+	var crt := _panel(Color(0.02, 0.05, 0.02), 4, Color(0.15, 0.3, 0.15), 2)
+	crt.custom_minimum_size = Vector2(720, 36)
+	content.add_child(crt)
 	var hrow := HBoxContainer.new()
 	hrow.add_theme_constant_override("separation", 10)
-	header.add_child(hrow)
-	var hicon := _make_label("▦", 20, Color(1, 1, 1), false)
+	crt.add_child(hrow)
+	var hicon := _make_label("▣", 20, COL_PHOSPHOR_DIM, false)
 	hrow.add_child(hicon)
-	var htitle := _make_label("Laporan.xlsx  —  Lembar Kerja", 17, Color(1, 1, 1), false)
+	var htitle := _make_label("LAPORAN LEMBUR  —  TERMINAL", 17, COL_PHOSPHOR, false)
 	hrow.add_child(htitle)
-	var formula := _panel(Color(0.93, 0.94, 0.94), 3, Color(0.78, 0.8, 0.82), 1)
+	var formula := _panel(Color(0.03, 0.08, 0.03), 3, Color(0.15, 0.3, 0.15), 1)
 	formula.custom_minimum_size = Vector2(720, 40)
 	content.add_child(formula)
 	var frow := HBoxContainer.new()
 	frow.add_theme_constant_override("separation", 10)
 	formula.add_child(frow)
-	var fx := _make_label("fx", 18, Color(0.4, 0.45, 0.5), false)
+	var fx := _make_label(">", 18, COL_PHOSPHOR_DIM, false)
 	frow.add_child(fx)
-	var ftext := _make_label(str(excel_a) + " x " + str(excel_b) + " = ?", 24, Color(0.1, 0.1, 0.12), false)
+	var ftext := _make_label(str(excel_a) + " x " + str(excel_b) + " = ?", 24, COL_PHOSPHOR, false)
 	frow.add_child(ftext)
 	var grid := GridContainer.new()
 	grid.columns = 3
@@ -311,12 +346,9 @@ func _next_excel() -> void:
 	grid.add_theme_constant_override("v_separation", 0)
 	content.add_child(grid)
 	for col in ["A", "B", "C"]:
-		grid.add_child(_grid_cell(col, 14, Color(0.88, 0.9, 0.91), Color(0.35, 0.4, 0.45), 236.0))
+		grid.add_child(_grid_cell(col, 14, Color(0.05, 0.1, 0.05), COL_PHOSPHOR_DIM, 236.0))
 	for i in range(3):
-		var bg := Color(1, 1, 1)
-		if i == 0:
-			bg = Color(0.95, 0.98, 0.95)
-		var cell := _grid_cell("[" + str(i + 1) + "]  " + str(excel_opts[i]), 26, bg, Color(0.1, 0.1, 0.12), 236.0)
+		var cell := _grid_cell("[" + str(i + 1) + "]  " + str(excel_opts[i]), 26, Color(0.03, 0.07, 0.03), COL_PHOSPHOR, 236.0)
 		cell.custom_minimum_size = Vector2(236, 56)
 		grid.add_child(cell)
 	_refresh_progress()
@@ -331,15 +363,17 @@ func _start_simon_round() -> void:
 	simon_show_timer = 0.8
 	simon_input_idx = 0
 	_clear_content()
-	var warn := _panel(Color(0.95, 0.75, 0.2), 4)
+	var warn := _panel(COL_BLOOD, 4)
 	warn.custom_minimum_size = Vector2(720, 30)
 	content.add_child(warn)
 	var wrow := HBoxContainer.new()
 	wrow.alignment = BoxContainer.ALIGNMENT_CENTER
 	warn.add_child(wrow)
-	wrow.add_child(_make_label("⚡  TEGANGAN TINGGI  —  PANEL LISTRIK  ⚡", 15, Color(0.15, 0.12, 0.05), true))
-	var metal := _panel(Color(0.22, 0.23, 0.26), 8, Color(0.45, 0.47, 0.5), 2)
-	metal.custom_minimum_size = Vector2(720, 160)
+	var wlabel := _make_label("BAHAYA  —  TEGANGAN TINGGI  —  PANEL LISTRIK TUA", 15, COL_PAPER, true)
+	wlabel.add_theme_font_override("font", _title_f())
+	wrow.add_child(wlabel)
+	var metal := _panel(COL_RUST, 8, Color(0.2, 0.15, 0.1), 2)
+	metal.custom_minimum_size = Vector2(720, 180)
 	content.add_child(metal)
 	var mrow := HBoxContainer.new()
 	mrow.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -358,17 +392,17 @@ func _start_simon_round() -> void:
 		glow.visible = false
 		lamp_wrap.add_child(glow)
 		simon_glows.append(glow)
-		var lamp := _panel(simon_lamp_colors[i] * 0.4, 60, Color(0.1, 0.1, 0.1), 3)
+		var lamp := _panel(simon_lamp_colors[i] * 0.45, 60, Color(0.12, 0.1, 0.08), 3)
 		lamp.position = Vector2(0, 0)
 		lamp.custom_minimum_size = Vector2(120, 120)
 		lamp_wrap.add_child(lamp)
 		simon_lamps.append(lamp)
-		var num := _make_label("[" + str(i + 1) + "]", 16, Color(0.85, 0.85, 0.88), true)
+		var num := _make_label("[" + str(i + 1) + "]", 16, Color(0.75, 0.7, 0.62), true)
 		slot.add_child(num)
-		var nm := _make_label(simon_lamp_names[i], 13, Color(0.6, 0.62, 0.65), true)
+		var nm := _make_label(simon_lamp_names[i], 13, Color(0.55, 0.5, 0.44), true)
 		slot.add_child(nm)
 	feedback_label.text = "Perhatikan lampunya..."
-	feedback_label.add_theme_color_override("font_color", Color(0.92, 0.92, 0.92))
+	feedback_label.add_theme_color_override("font_color", COL_PAPER)
 
 func _simon_light(idx: int, on: bool) -> void:
 	if idx < 0 or idx >= simon_lamps.size():
@@ -376,23 +410,27 @@ func _simon_light(idx: int, on: bool) -> void:
 	var lamp: Panel = simon_lamps[idx]
 	var glow: Panel = simon_glows[idx]
 	if on:
-		lamp.add_theme_stylebox_override("panel", _stylebox(simon_lamp_colors[idx], 60, Color(1, 1, 1), 2))
+		var bright: Color = simon_lamp_colors[idx] * 1.8
+		bright.r = minf(bright.r, 1.0)
+		bright.g = minf(bright.g, 1.0)
+		bright.b = minf(bright.b, 1.0)
+		lamp.add_theme_stylebox_override("panel", _stylebox(bright, 60, Color(1, 1, 1), 2))
 		glow.visible = true
 		glow.add_theme_stylebox_override("panel", _stylebox(Color(simon_lamp_colors[idx], 0.35), 70))
 	else:
-		lamp.add_theme_stylebox_override("panel", _stylebox(simon_lamp_colors[idx] * 0.4, 60, Color(0.1, 0.1, 0.1), 3))
+		lamp.add_theme_stylebox_override("panel", _stylebox(simon_lamp_colors[idx] * 0.45, 60, Color(0.12, 0.1, 0.08), 3))
 		glow.visible = false
 
 func _build_foto() -> void:
 	status_label.text = "Lembar: " + str(foto_sheets) + "/7"
 	_clear_content()
-	var machine := _panel(Color(0.16, 0.17, 0.2), 8, Color(0.4, 0.42, 0.45), 2)
+	var machine := _panel(COL_IRON, 8, Color(0.3, 0.24, 0.16), 2)
 	machine.custom_minimum_size = Vector2(720, 150)
 	content.add_child(machine)
 	var mvb := VBoxContainer.new()
 	mvb.add_theme_constant_override("separation", 8)
 	machine.add_child(mvb)
-	var mhead := _make_label("⎙  MESIN FOTOKOPI  —  PINDAI", 16, Color(0.85, 0.87, 0.9), true)
+	var mhead := _make_label("MESIN FOTOKOPI  —  ARSIP LAMA", 16, COL_PAPER, true)
 	mvb.add_child(mhead)
 	foto_bar = Control.new()
 	foto_bar.custom_minimum_size = Vector2(680, 44)
@@ -410,7 +448,7 @@ func _refresh_foto_papers() -> void:
 	for c in foto_papers.get_children():
 		c.queue_free()
 	for i in range(7):
-		var sheet := _panel(Color(1, 1, 1) if i < foto_sheets else Color(0.35, 0.37, 0.4), 2, Color(0.6, 0.62, 0.65), 1)
+		var sheet := _panel(COL_PAPER if i < foto_sheets else Color(0.22, 0.2, 0.17), 2, Color(0.45, 0.4, 0.3), 1)
 		sheet.custom_minimum_size = Vector2(48, 32)
 		foto_papers.add_child(sheet)
 
@@ -419,25 +457,25 @@ func _draw_foto_bar() -> void:
 		return
 	var w := foto_bar.size.x
 	var h := foto_bar.size.y
-	foto_bar.draw_rect(Rect2(0, 0, w, h), Color(0.08, 0.09, 0.12, 1.0))
+	foto_bar.draw_rect(Rect2(0, 0, w, h), Color(0.05, 0.05, 0.06, 1.0))
 	var zx0 := (foto_zone - foto_zone_size * 0.5) * w
-	foto_bar.draw_rect(Rect2(zx0, 0, foto_zone_size * w, h), Color(0.2, 0.9, 0.3, 1.0))
+	foto_bar.draw_rect(Rect2(zx0, 0, foto_zone_size * w, h), Color(COL_AMBER, 0.85))
 	var mx := foto_marker * w
-	foto_bar.draw_rect(Rect2(mx - 2, -4, 4, h + 8), Color(1.0, 0.85, 0.2, 1.0))
+	foto_bar.draw_rect(Rect2(mx - 2, -4, 4, h + 8), Color(1.0, 0.85, 0.4, 1.0))
 
 func _build_keypad() -> void:
 	status_label.text = "Masukkan 4 digit kodenya."
 	_clear_content()
-	var body := _panel(Color(0.1, 0.11, 0.13), 10, Color(0.4, 0.42, 0.46), 2)
+	var body := _panel(COL_IRON, 10, Color(0.3, 0.24, 0.16), 2)
 	body.custom_minimum_size = Vector2(720, 170)
 	content.add_child(body)
 	var bvb := VBoxContainer.new()
 	bvb.add_theme_constant_override("separation", 10)
 	body.add_child(bvb)
-	var lcd := _panel(Color(0.04, 0.16, 0.07), 4, Color(0.2, 0.35, 0.22), 2)
+	var lcd := _panel(Color(0.02, 0.07, 0.02), 4, Color(0.15, 0.3, 0.15), 2)
 	lcd.custom_minimum_size = Vector2(680, 56)
 	bvb.add_child(lcd)
-	key_label = _make_label("_ _ _ _", 36, Color(0.5, 1.0, 0.62), true)
+	key_label = _make_label("_ _ _ _", 36, COL_PHOSPHOR, true)
 	key_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	lcd.add_child(key_label)
 	var btns := HBoxContainer.new()
@@ -445,15 +483,16 @@ func _build_keypad() -> void:
 	btns.add_theme_constant_override("separation", 16)
 	bvb.add_child(btns)
 	for i in range(4):
-		var b := _panel(Color(0.24, 0.25, 0.29), 6, Color(0.55, 0.57, 0.6), 2)
+		var b := PanelContainer.new()
+		b.add_theme_stylebox_override("panel", _stylebox(Color(0.2, 0.18, 0.15), 6, Color(0.4, 0.34, 0.26), 2))
 		b.custom_minimum_size = Vector2(72, 52)
-		var bl := _make_label(str(i + 1), 26, Color(0.92, 0.93, 0.95), true)
+		var bl := _make_label(str(i + 1), 26, COL_PAPER, true)
 		bl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		b.add_child(bl)
 		btns.add_child(b)
-	var hint := _make_label("Kode didapat dari tugas satu persatu. Ingat baik-baik!", 18, Color(0.8, 0.8, 0.8), true)
+	var hint := _make_label("Kode itu ada di tugas-tugasmu. Jangan sampai lupa.", 18, COL_PAPER, true)
 	content.add_child(hint)
-	var hint2 := _make_label("Lupa? Tidak ada yang bisa mengingatkanmu.", 15, Color(0.65, 0.65, 0.65), true)
+	var hint2 := _make_label("Lupa? Tidak ada yang bisa mengingatkanmu.", 15, Color(0.55, 0.5, 0.45), true)
 	content.add_child(hint2)
 	_refresh_keypad()
 
@@ -480,26 +519,27 @@ func _build_mash() -> void:
 	track_wrap.custom_minimum_size = Vector2(60, 170)
 	frame.add_child(track_wrap)
 	mash_track = track_wrap
-	var track := _panel(Color(0.14, 0.15, 0.18), 30, Color(0.45, 0.47, 0.5), 2)
+	var track := _panel(Color(0.1, 0.1, 0.11), 30, Color(0.3, 0.24, 0.16), 2)
 	track.position = Vector2(0, 0)
 	track.custom_minimum_size = Vector2(60, 170)
 	track_wrap.add_child(track)
-	mash_handle = _panel(Color(0.85, 0.25, 0.2), 22, Color(0.4, 0.1, 0.08), 2)
+	mash_handle = _panel(Color(0.45, 0.14, 0.1), 22, Color(0.25, 0.08, 0.06), 2)
 	mash_handle.position = Vector2(8, 8)
 	mash_handle.custom_minimum_size = Vector2(44, 44)
 	track_wrap.add_child(mash_handle)
 	var side := VBoxContainer.new()
 	side.add_theme_constant_override("separation", 8)
 	frame.add_child(side)
-	side.add_child(_make_label("TUAS SEL", 26, Color(1, 1, 1), false))
-	side.add_child(_make_label("Tekan SPASI berulang", 18, Color(0.8, 0.8, 0.8), false))
-	side.add_child(_make_label("buat narik tuasnya!", 18, Color(0.8, 0.8, 0.8), false))
+	side.add_child(_make_label("Tekan SPASI berulang", 18, COL_PAPER, false))
+	side.add_child(_make_label("buat narik tuasnya!", 18, COL_PAPER, false))
 	mash_bar = ProgressBar.new()
 	mash_bar.min_value = 0
 	mash_bar.max_value = 100
 	mash_bar.value = 0
 	mash_bar.custom_minimum_size = Vector2(300, 16)
 	mash_bar.show_percentage = false
+	mash_bar.add_theme_stylebox_override("background", _stylebox(Color(0.12, 0.08, 0.08), 2))
+	mash_bar.add_theme_stylebox_override("fill", _stylebox(COL_BLOOD, 2))
 	side.add_child(mash_bar)
 
 func _refresh_mash_handle() -> void:
