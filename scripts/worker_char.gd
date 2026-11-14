@@ -264,18 +264,22 @@ func _toggle_hide() -> void:
 		return
 	hiding = true
 	hide_spot = spot
-	global_position = spot + Vector2(0, 8)
-	sprite.modulate.a = 0.3
+	global_position = spot + Vector2(0, -6)
+	sprite.scale = Vector2(1.0, 0.6)
+	sprite.modulate.a = 0.5
 	if name_label != null:
-		name_label.modulate.a = 0.3
+		name_label.modulate.a = 0.0
+	light.enabled = false
 	if lvl.has_method("play_sfx"):
 		lvl.play_sfx("hide", -6.0)
 
 func _unhide() -> void:
 	hiding = false
+	sprite.scale = Vector2.ONE
 	sprite.modulate.a = 1.0
 	if name_label != null:
 		name_label.modulate.a = 1.0
+	light.enabled = flashlight_on
 	var lvl := get_parent().get_parent()
 	if lvl != null and lvl.has_method("play_sfx"):
 		lvl.play_sfx("hide", -8.0, 1.3)
@@ -306,7 +310,8 @@ func _process(_delta: float) -> void:
 	var w := clampf(LIGHT_SMOOTH * _delta, 0.0, 1.0)
 	light.rotation = lerp_angle(light.rotation, aim_dir.angle(), w)
 	light.position = light.position.lerp(aim_dir * 12.0, w)
-	light.energy = move_toward(light.energy, LIGHT_ENERGY if flashlight_on else 0.0, LIGHT_FADE * _delta)
+	var want_energy := 0.0 if hiding else (LIGHT_ENERGY if flashlight_on else 0.0)
+	light.energy = move_toward(light.energy, want_energy, LIGHT_FADE * _delta)
 	light.enabled = light.energy > 0.05
 
 func _dir_name(dir: Vector2) -> String:

@@ -269,6 +269,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **BOSS-03**: Bos datang ke tugas yang lagi dikerjain (popup buka = bos dengar suara dari 700px dan menyelidiki), jadi tugas itu momen paling berbahaya
 - [ ] **BOSS-04**: Teleport lebih dekat ke pemain (120px, dulu 150px)
 - [ ] **BOSS-05**: Demo bot + semua test tetap hijau, video baru yang menunjukkan bos ketemu pemain
+- [ ] **HIDE-01**: Ngumpet beneran di bawah meja: pemain nempel ke meja (di atas titik tengah meja, jadi meja ketutupin dia di YSort), sprite jongkok (scale y 0.6) + transparan (alpha 0.5), nama hilang, senter mati
+- [ ] **HIDE-02**: Unhide balikin semua (scale, alpha, nama, senter); test_hide 10/10; regression hijau
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -292,6 +294,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BOSS-03 | Phase 19 | Done |
 | BOSS-04 | Phase 19 | Done |
 | BOSS-05 | Phase 19 | Done |
+| HIDE-01 | Phase 20 | Done |
+| HIDE-02 | Phase 20 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -303,7 +307,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v8 requirements: 2 total
 - v9 requirements: 4 total
 - v10 requirements: 5 total
-- Mapped to phases: 93
+- v11 requirements: 2 total
+- Mapped to phases: 95
 - Unmapped: 0 ✓
 
 ---

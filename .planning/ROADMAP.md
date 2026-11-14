@@ -347,6 +347,19 @@ Plans:
 
 **Status: Complete.** Committed `cc93df4` (14 Nov 2026). test_bossaggro 9/9, popup 23/23, solo 13/13, win 6/6, flow 3/3, bosspol 6/6. Video v12 180 dtk: bot ketangkep 1x (pertama kali di video), HAPPY ENDING 2 bintang, 1:12 (v11: 0:49, 0x ketangkep, 3 bintang). Frame tengah video: bos berdiri di sebelah pemain yang dikurung di sel, "BOS SANGAT DEKAT!", self-rescue 69%.
 
+## Phase 20: Ngumpet Beneran di Bawah Meja
+
+**Goal:** Pas ngumpet, pemain kelihatan beneran sembunyi di bawah meja (bukan berdiri di lantai biasa).
+**Requirements**: HIDE-01, HIDE-02
+**Success Criteria** (what must be TRUE):
+  1. Pemain nempel ke meja (di atas titik tengah meja, jadi meja ketutupin dia di YSort), sprite jongkok (scale y 0.6) + transparan (alpha 0.5), nama hilang, senter mati
+  2. Unhide balikin semua; test_hide 10/10; regression hijau
+**Plans**:
+- [x] 20-01: Posisi + visual ngumpet (nempel meja, jongkok, transparan, nama hilang, senter mati)
+- [x] 20-02: Test hide + render verifikasi + regression
+
+**Status: Complete.** Committed (14 Nov 2026). test_hide 10/10, tutorial 11/11, solo 13/13, win 6/6, bossaggro 9/9. Render terverifikasi: pemain di bawah meja, badan ketutup meja, cuma kaki yang kelihatan di bawah meja. Senter mati pas ngumpet (bug: `_process` nyalain lagi, diperbaiki).
+
 ## Progress
 
 ## Progress
@@ -377,5 +390,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 17. Intro Story + Video dari Menu | 3/3 | Complete | 14 Nov 2026 |
 | 18. Kode Hafalan + Game Lebih Menantang | 3/3 | Complete | 14 Nov 2026 |
 | 19. Bos Lebih Agresif | 3/3 | Complete | 14 Nov 2026 |
+| 20. Ngumpet Beneran di Bawah Meja | 2/2 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
