@@ -241,11 +241,31 @@ Plans:
 - [ ] 13-01: Re-export Web + Windows, rebuild itch.io zip + PC zip
 - [ ] 13-02: Full playthrough check + fresh video recording
 
+## Phase 14: Task Minigames
+
+**Goal:** Tugas bukan lagi tahan E, tapi timing skill-check yang benar-benar dimainkan; tiap tugas terasa beda.
+**Requirements**: TASK-01, TASK-02, TASK-03, TASK-04, TASK-05, TASK-06
+**Success Criteria** (what must be TRUE):
+  1. Tiap tugas (0-4) selesai lewat hit timing (tekan E pas penanda di zona hijau), bukan tahan E
+  2. Tiap tugas beda: jumlah hit, kecepatan penanda, dan lebar zona beda; kecepatan naik tiap hit
+  3. Miss bikin berisik (bos dengar) dan progress berkurang setengah hit
+  4. Penanda dan zona tersinkron ke semua pemain (MultiplayerSynchronizer) sehingga klien bisa main
+  5. Tutorial, HUD prompt, dan menu menjelaskan cara baru
+  6. Demo bot menyelesaikan tugas lewat minigame; semua test lama tetap hijau
+**Plans**: TBD
+
+Plans:
+- [x] 14-01: task_point minigame state + gambar timing bar + replikasi (task_point.gd + task_point.tscn)
+- [x] 14-02: Hit logic di level_1.gd + hook tekan E di worker_char.gd + update demo bot
+- [x] 14-03: Tutorial + HUD + menu text untuk cara main baru
+- [x] 14-04: test_taskminigame.gd + full regression + video baru
+
 ## Progress
 
 **Execution Order:**
 Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (submission) → 6 (testing).
 **Production round (Elang, 14 Nov 2026 ~11:54 WIB: "improve terus pake GSD, sampe production grade"): 11 → 12 → 13, then 5 (submission) → 6 (testing).**
+**Task minigames (Elang, 14 Nov 2026: tugas jangan cuma mencet tombol): Phase 14, then 5 (submission) → 6 (testing).**
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -260,5 +280,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 11. Senter Smooth | 3/3 | Complete | 14 Nov 2026 |
 | 12. Audio Production | 2/2 | Complete | 14 Nov 2026 |
 | 13. Production Build | 2/2 | Complete | 14 Nov 2026 |
+| 14. Task Minigames | 4/4 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

@@ -10,11 +10,11 @@ const TASK_SCENE := "res://scenes/task_point.tscn"
 const PICKUP_SCENE := "res://scenes/pickup_item.tscn"
 
 const TASK_DEFS := [
-	{"id": 0, "label": "GENERATOR", "pos": Vector2(736, 400), "need": 2, "time": 8.0, "noise": 400.0},
-	{"id": 1, "label": "KOMPUTER", "pos": Vector2(400, 400), "need": 1, "time": 10.0, "noise": 150.0},
-	{"id": 2, "label": "ARSIP", "pos": Vector2(190, 560), "need": 1, "time": 6.0, "noise": 150.0},
-	{"id": 3, "label": "PINTU KELUAR", "pos": Vector2(800, 760), "need": 2, "time": 5.0, "noise": 400.0},
-	{"id": 4, "label": "TUAS SEL", "pos": Vector2(960, 140), "need": 1, "time": 3.0, "noise": 150.0},
+	{"id": 0, "label": "GENERATOR", "pos": Vector2(736, 400), "need": 2, "time": 8.0, "noise": 400.0, "hits": 4, "speed": 1.5, "zone": 0.26},
+	{"id": 1, "label": "KOMPUTER", "pos": Vector2(400, 400), "need": 1, "time": 10.0, "noise": 150.0, "hits": 3, "speed": 1.0, "zone": 0.28},
+	{"id": 2, "label": "ARSIP", "pos": Vector2(190, 560), "need": 1, "time": 6.0, "noise": 150.0, "hits": 2, "speed": 0.8, "zone": 0.2},
+	{"id": 3, "label": "PINTU KELUAR", "pos": Vector2(800, 760), "need": 2, "time": 5.0, "noise": 400.0, "hits": 3, "speed": 1.2, "zone": 0.24},
+	{"id": 4, "label": "TUAS SEL", "pos": Vector2(960, 140), "need": 1, "time": 3.0, "noise": 150.0, "hits": 2, "speed": 1.8, "zone": 0.3},
 ]
 const CELL_POS := Vector2(1080, 140)
 const GUDANG_ROOM := Rect2(32, 64, 192, 224)
@@ -322,7 +322,7 @@ func _toggle_mute() -> void:
 
 const TUTORIAL_TEXTS := {
 	1: "1/4  Gerak pakai WASD  (T: lewati tutorial)",
-	2: "2/4  Jalan ke Komputer, tahan E buat ngerjain  (T: lewati)",
+	2: "2/4  Jalan ke Komputer, tekan E pas penanda di zona hijau  (T: lewati)",
 	3: "3/4  Tekan C di dekat meja buat ngumpet  (T: lewati)",
 	4: "4/4  Selesaikan semua tugas, lalu kabur lewat Pintu Keluar  (T: lewati)",
 }
@@ -356,6 +356,12 @@ func _task_done(task_id: int) -> bool:
 			return bool(tp.get("done"))
 	return false
 
+func _task_hits(task_id: int) -> int:
+	for tp in tasks:
+		if int(tp.get("task_id")) == task_id:
+			return int(tp.get("hits"))
+	return 0
+
 func _update_tutorial() -> void:
 	if tutorial_step == 5:
 		return
@@ -384,7 +390,7 @@ func _update_tutorial() -> void:
 				tutorial_step = 2
 				_refresh_tutorial_label()
 		2:
-			if (bool(me.get("interacting")) and int(me.get("interact_target")) == 1) or _task_done(1):
+			if _task_hits(1) > 0 or _task_done(1):
 				tutorial_step = 3
 				_refresh_tutorial_label()
 		3:
@@ -772,7 +778,7 @@ func _build_tasks() -> void:
 	for def in TASK_DEFS:
 		var tp := scene.instantiate() as Node2D
 		tp.name = "Task_" + str(def["label"]).replace(" ", "_")
-		tp.setup(def["id"], def["label"], def["need"], def["time"], def["noise"])
+		tp.setup(def["id"], def["label"], def["need"], def["time"], def["noise"], def["hits"], def["speed"], def["zone"])
 		tp.position = def["pos"]
 		add_child(tp)
 		tasks.append(tp)
@@ -1116,7 +1122,7 @@ func _update_tasks(delta: float) -> void:
 		if id == 3 and not _main_tasks_done():
 			continue
 		if id == 4 and not _any_locked():
-			tp.progress = maxf(0.0, tp.progress - delta * 0.05)
+			tp.set("active", false)
 			continue
 		var workers := 0
 		for child in ysort.get_children():
@@ -1127,40 +1133,54 @@ func _update_tasks(delta: float) -> void:
 			if child.get("interacting") and child.get("interact_target") == id:
 				if child.global_position.distance_to(tp.global_position) < INTERACT_RANGE + 20.0:
 					workers += 1
-		var advancing := false
+		var ready := false
 		if id == 0:
-			if workers >= 2:
-				tp.progress += delta / tp.time_needed
-				advancing = true
-			elif workers == 1 and solo_mode:
-				tp.progress += delta / (tp.time_needed * 2.0)
-				advancing = true
+			ready = workers >= 2 or (workers == 1 and solo_mode)
 		elif id == 3:
-			if workers >= 2:
-				tp.progress += delta / 5.0
-				advancing = true
-			elif workers == 1 and (_any_locked() or solo_mode):
-				tp.progress += delta / 10.0
-				advancing = true
-		elif id == 4:
-			if workers >= 1:
-				tp.progress += delta / tp.time_needed
-				advancing = true
-			else:
-				tp.progress = maxf(0.0, tp.progress - delta * 0.05)
+			ready = workers >= 2 or (workers == 1 and (_any_locked() or solo_mode))
 		else:
-			if workers >= 1:
-				tp.progress += delta / tp.time_needed
-				advancing = true
-		if advancing:
-			noise_emit_timer += delta
-			if noise_emit_timer > 0.5:
-				noise_emit_timer = 0.0
-				report_noise(tp.global_position, tp.noise_radius)
-		if tp.progress >= 1.0:
-			tp.progress = 1.0
-			tp.done = true
-			_on_task_done(tp)
+			ready = workers >= 1
+		tp.set("active", ready)
+		if not ready:
+			continue
+		var mp: float = tp.get("marker_pos")
+		var md: float = tp.get("marker_dir")
+		mp += md * float(tp.get("marker_speed")) * delta
+		if mp >= 1.0:
+			mp = 1.0
+			md = -1.0
+		elif mp <= 0.0:
+			mp = 0.0
+			md = 1.0
+		tp.set("marker_pos", mp)
+		tp.set("marker_dir", md)
+		noise_emit_timer += delta
+		if noise_emit_timer > 0.5:
+			noise_emit_timer = 0.0
+			report_noise(tp.global_position, tp.noise_radius)
+
+@rpc("any_peer", "call_local")
+func try_task_hit(task_id: int) -> void:
+	if not multiplayer.is_server():
+		return
+	for tp in tasks:
+		if int(tp.get("task_id")) != task_id:
+			continue
+		if bool(tp.get("done")):
+			return
+		if not bool(tp.get("active")):
+			return
+		if bool(tp.call("try_hit")):
+			play_sfx("tick", -8.0, 1.4)
+			if float(tp.get("progress")) >= 1.0:
+				tp.set("done", true)
+				_on_task_done(tp)
+		else:
+			play_sfx("thud", -4.0, 0.8)
+			report_noise(tp.global_position, float(tp.get("noise_radius")))
+			hud_warn_label.text = "MISS! Bos dengar suaramu!"
+			warn_timer = 1.5
+		return
 
 func _update_self_rescue(delta: float) -> void:
 	if not solo_mode:
@@ -1367,7 +1387,7 @@ func _update_hud() -> void:
 		if solo_mode:
 			hud_status_label.text = locked_names + "Tahan E buat kabur dari sel (15 detik, berisik!)."
 		else:
-			hud_status_label.text = locked_names + "Tahan E di TUAS SEL buat bebaskan (3 detik)."
+			hud_status_label.text = locked_names + "Tekan E pas zona hijau di TUAS SEL buat bebaskan."
 		hud_status_pill.visible = true
 	else:
 		hud_status_label.text = ""
@@ -1384,19 +1404,15 @@ func _update_hud() -> void:
 			else:
 				var tp = tasks[tid] if tid < tasks.size() else null
 				if tp != null:
-					prompt_txt = "Mengerjakan " + tp.label_text + "... " + str(int(tp.progress * 100.0)) + "%"
+					var need_txt := ""
+					if tp.task_id == 0:
+						need_txt = " (sendiri)" if solo_mode else " (butuh 2 orang)"
+					elif tp.task_id == 3:
+						need_txt = " (sendiri)" if solo_mode else " (butuh 2 orang)"
+					prompt_txt = "Tekan E pas zona hijau: " + tp.label_text + " " + str(int(tp.get("hits"))) + "/" + str(int(tp.get("hits_needed"))) + need_txt
 					prompt_prog = tp.progress
 		else:
-			var nid := nearest_interactable(me.global_position)
-			if nid >= 0:
-				var tp = tasks[nid]
-				var need_txt := ""
-				if tp.task_id == 0:
-					need_txt = " (sendiri: 16 detik)" if solo_mode else " (butuh 2 orang)"
-				elif tp.task_id == 3:
-					need_txt = " (sendiri: 10 detik)" if solo_mode else " (butuh 2 orang, atau 1 orang 10 detik kalau teman dikurung)"
-				prompt_txt = "Tahan E: " + tp.label_text + need_txt
-			elif me.get("hiding"):
+			if me.get("hiding"):
 				prompt_txt = "NGUMPET, gerak atau tekan C buat keluar"
 			elif nearest_desk(me.global_position) != Vector2.INF:
 				prompt_txt = "C: ngumpet di bawah meja"

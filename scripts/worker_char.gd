@@ -170,6 +170,13 @@ func _demo_update(delta: float) -> Vector2:
 			return Vector2.ZERO
 		interacting = true
 		interact_target = demo_task_id
+		for tp in lvl.get("tasks"):
+			if int(tp.get("task_id")) == demo_task_id and bool(tp.get("active")):
+				var half: float = float(tp.get("zone_size")) * 0.5
+				var mp: float = float(tp.get("marker_pos"))
+				var zc: float = float(tp.get("zone_center"))
+				if mp >= zc - half and mp <= zc + half:
+					lvl.rpc_id(1, "try_task_hit", demo_task_id)
 		return Vector2.ZERO
 	interacting = false
 	interact_target = -1
@@ -210,6 +217,10 @@ func _update_actions(input_dir: Vector2) -> void:
 	if input_dir.length() > 0.1 and hiding:
 		_unhide()
 	_update_interact()
+	if Input.is_action_just_pressed("interact") and interacting and interact_target >= 0 and interact_target < 90:
+		var lvl := get_parent().get_parent()
+		if lvl != null and lvl.has_method("try_task_hit"):
+			lvl.rpc_id(1, "try_task_hit", interact_target)
 
 func _update_interact() -> void:
 	if demo_mode:
@@ -224,10 +235,6 @@ func _update_interact() -> void:
 			interacting = true
 			interact_target = 99
 			return
-		interacting = false
-		interact_target = -1
-		return
-	if not Input.is_action_pressed("interact"):
 		interacting = false
 		interact_target = -1
 		return

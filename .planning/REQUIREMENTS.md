@@ -210,6 +210,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BOSSPOL-01 | Phase 10 | Pending |
 | BOSSPOL-02 | Phase 10 | Pending |
 | FSM-01 | Phase 10 | Pending |
+### Task Minigames (Elang 14 Nov 2026: tugas jangan cuma mencet tombol, benar-benar ngerjakan sesuatu)
+
+- [x] **TASK-01**: Tiap tugas utama (Generator, Komputer, Arsip, Pintu Keluar, Tuas Sel) pakai timing skill-check: penanda bergerak, tekan E pas di zona hijau buat dapat hit
+- [x] **TASK-02**: Tiap tugas terasa beda (jumlah hit, kecepatan penanda, lebar zona beda per tugas; kecepatan naik tiap hit)
+- [x] **TASK-03**: Miss ada konsekuensi (bunyi berisik yang manggil bos + progress berkurang setengah hit)
+- [x] **TASK-04**: Minigame kelihatan dan bisa dimainkan di multiplayer (state penanda/zona tersinkron ke semua pemain)
+- [x] **TASK-05**: Tutorial, HUD, dan menu menjelaskan cara main yang baru (bukan lagi "tahan E")
+- [x] **TASK-06**: Demo bot bisa menyelesaikan tugas dengan minigame (buat video), dan semua test lama tetap hijau
+
 | LIGHT-01 | Phase 11 | Pending |
 | LIGHT-02 | Phase 11 | Pending |
 | LIGHT-03 | Phase 11 | Pending |
@@ -218,12 +227,19 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROD-01 | Phase 13 | Pending |
 | PROD-02 | Phase 13 | Pending |
 | PROD-03 | Phase 13 | Pending |
+| TASK-01 | Phase 14 | Done |
+| TASK-02 | Phase 14 | Done |
+| TASK-03 | Phase 14 | Done |
+| TASK-04 | Phase 14 | Done |
+| TASK-05 | Phase 14 | Done |
+| TASK-06 | Phase 14 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
 - v3 requirements: 11 total
 - v4 requirements: 8 total
-- Mapped to phases: 65
+- v5 requirements: 6 total
+- Mapped to phases: 71
 - Unmapped: 0 ✓
 
 ---

@@ -2,11 +2,11 @@
 gsd_state_version: '1.0'
 status: executing
 progress:
-  total_phases: 13
-  completed_phases: 12
+  total_phases: 14
+  completed_phases: 13
   total_plans: 0
   completed_plans: 0
-  percent: 92
+  percent: 93
 ---
 
 # Project State
@@ -16,7 +16,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-14)
 
 **Core value:** A solo curator can play the game start to finish, feel fear and tension, and reach an ending.
-**Current focus:** Phase 5 — Final Submission (production round Phases 11-13 complete)
+**Current focus:** Phase 5 — Final Submission (Phase 14 task minigames complete)
 
 ## Current Position
 

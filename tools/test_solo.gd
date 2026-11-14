@@ -50,10 +50,11 @@ func _run() -> void:
 	await process_frame
 	player.global_position = Vector2(736, 400)
 	Input.action_press("interact")
-	var gen_prog_before := 0.0
+	var gen: Node = null
 	for tp in lvl.get("tasks"):
 		if tp.get("task_id") == 0:
-			gen_prog_before = float(tp.get("progress"))
+			gen = tp
+	var gen_marker_before: float = gen.get("marker_pos")
 	await process_frame
 	await process_frame
 	await process_frame
@@ -64,14 +65,18 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	await process_frame
-	var gen_prog_after := 0.0
-	for tp in lvl.get("tasks"):
-		if tp.get("task_id") == 0:
-			gen_prog_after = float(tp.get("progress"))
-	if gen_prog_after > gen_prog_before + 0.005:
-		_ok("Generator progress advances with 1 worker in solo (" + str(gen_prog_before) + " -> " + str(gen_prog_after) + ")")
+	var gen_marker_after: float = gen.get("marker_pos")
+	if bool(gen.get("active")) and absf(gen_marker_after - gen_marker_before) > 0.01:
+		_ok("Generator active with 1 worker in solo, marker moves (" + str(gen_marker_before) + " -> " + str(gen_marker_after) + ")")
 	else:
-		_fail("Generator progress stuck at " + str(gen_prog_after) + " with 1 worker in solo")
+		_fail("Generator not active with 1 worker in solo (active=" + str(gen.get("active")) + ")")
+	gen.set("marker_pos", float(gen.get("zone_center")))
+	lvl.call("try_task_hit", 0)
+	var gen_prog_after := float(gen.get("progress"))
+	if absf(gen_prog_after - 0.25) < 0.01:
+		_ok("Generator hit registers in solo (progress 0.25 = 1/4 hits)")
+	else:
+		_fail("Generator hit did not register (progress=" + str(gen_prog_after) + ")")
 	Input.action_release("interact")
 	player.set("interacting", false)
 	player.set("interact_target", -1)
