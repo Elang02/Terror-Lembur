@@ -4,7 +4,9 @@ extends CanvasLayer
 const COL_GOLD := Color(1.0, 0.85, 0.4)
 const COL_GREEN := Color(0.2, 0.9, 0.3)
 const COL_RED := Color(1.0, 0.3, 0.3)
-const COL_PANEL := Color(0.08, 0.08, 0.1, 0.97)
+const COL_PANEL := Color(0.07, 0.07, 0.09, 0.97)
+const COL_EXCEL_GREEN := Color(0.13, 0.45, 0.27)
+const COL_EXCEL_GREEN_DARK := Color(0.09, 0.35, 0.2)
 
 var level: Node = null
 var task_id := -1
@@ -40,7 +42,9 @@ var simon_input_idx := 0
 var simon_flash_idx := -1
 var simon_flash_timer := 0.0
 var simon_lamps: Array = []
+var simon_glows: Array = []
 var simon_lamp_colors: Array = [Color(0.85, 0.2, 0.2), Color(0.15, 0.45, 0.75), Color(0.15, 0.7, 0.25), Color(0.85, 0.7, 0.15)]
+var simon_lamp_names: Array = ["MERAH", "BIRU", "HIJAU", "KUNING"]
 
 var foto_sheets := 0
 var foto_marker := 0.0
@@ -49,6 +53,7 @@ var foto_speed := 1.1
 var foto_zone := 0.5
 var foto_zone_size := 0.3
 var foto_bar: Control = null
+var foto_papers: HBoxContainer = null
 
 var key_code: Array = []
 var key_entered: Array = []
@@ -56,6 +61,8 @@ var key_label: Label = null
 
 var mash_prog := 0.0
 var mash_bar: ProgressBar = null
+var mash_handle: Panel = null
+var mash_track: Control = null
 
 var demo_timer := 0.0
 
@@ -65,6 +72,20 @@ func _ready() -> void:
 	visible = false
 	_build_ui()
 
+func _stylebox(bg: Color, radius: int, border: Color = Color(0, 0, 0, 0), border_w: int = 0) -> StyleBoxFlat:
+	var s := StyleBoxFlat.new()
+	s.bg_color = bg
+	s.set_corner_radius_all(radius)
+	if border_w > 0:
+		s.border_color = border
+		s.set_border_width_all(border_w)
+	return s
+
+func _panel(bg: Color, radius: int, border: Color = Color(0, 0, 0, 0), border_w: int = 0) -> Panel:
+	var p := Panel.new()
+	p.add_theme_stylebox_override("panel", _stylebox(bg, radius, border, border_w))
+	return p
+
 func _build_ui() -> void:
 	dim = ColorRect.new()
 	dim.color = Color(0, 0, 0, 0.78)
@@ -72,24 +93,24 @@ func _build_ui() -> void:
 	add_child(dim)
 	panel = PanelContainer.new()
 	panel.set_anchors_preset(Control.PRESET_CENTER)
-	panel.custom_minimum_size = Vector2(760, 520)
-	panel.offset_left = -380
-	panel.offset_top = -260
-	panel.offset_right = 380
-	panel.offset_bottom = 260
+	panel.custom_minimum_size = Vector2(780, 540)
+	panel.offset_left = -390
+	panel.offset_top = -270
+	panel.offset_right = 390
+	panel.offset_bottom = 270
 	var style := StyleBoxFlat.new()
 	style.bg_color = COL_PANEL
 	style.border_color = Color(0.5, 0.45, 0.2)
 	style.set_border_width_all(2)
-	style.set_corner_radius_all(6)
-	style.content_margin_left = 28
-	style.content_margin_right = 28
-	style.content_margin_top = 20
-	style.content_margin_bottom = 20
+	style.set_corner_radius_all(8)
+	style.content_margin_left = 26
+	style.content_margin_right = 26
+	style.content_margin_top = 18
+	style.content_margin_bottom = 18
 	panel.add_theme_stylebox_override("panel", style)
 	add_child(panel)
 	var vb := VBoxContainer.new()
-	vb.add_theme_constant_override("separation", 14)
+	vb.add_theme_constant_override("separation", 12)
 	panel.add_child(vb)
 	title_label = _make_label("", 34, COL_GOLD, true)
 	vb.add_child(title_label)
@@ -100,7 +121,7 @@ func _build_ui() -> void:
 	vb.add_child(status_label)
 	content = VBoxContainer.new()
 	content.add_theme_constant_override("separation", 10)
-	content.custom_minimum_size = Vector2(700, 190)
+	content.custom_minimum_size = Vector2(720, 220)
 	vb.add_child(content)
 	feedback_label = _make_label("", 18, COL_GREEN, true)
 	vb.add_child(feedback_label)
@@ -108,7 +129,7 @@ func _build_ui() -> void:
 	progress_bar.min_value = 0
 	progress_bar.max_value = 100
 	progress_bar.value = 0
-	progress_bar.custom_minimum_size = Vector2(700, 14)
+	progress_bar.custom_minimum_size = Vector2(720, 14)
 	progress_bar.show_percentage = false
 	vb.add_child(progress_bar)
 	progress_label = _make_label("0%", 18, Color(0.92, 0.92, 0.92), true)
@@ -129,9 +150,13 @@ func _clear_content() -> void:
 	for c in content.get_children():
 		c.queue_free()
 	simon_lamps.clear()
+	simon_glows.clear()
 	foto_bar = null
+	foto_papers = null
 	key_label = null
 	mash_bar = null
+	mash_handle = null
+	mash_track = null
 
 func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String, p_title: String, p_demo: bool) -> void:
 	level = p_level
@@ -162,11 +187,15 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 			foto_zone = 0.5
 			_build_foto()
 		"keypad":
-			instr_label.text = "Ketik kode pintu 4 digit dengan tombol 1-4."
+			instr_label.text = "Ketik kode pintu 4 digit dengan tombol 1-4. (Kode dari tugas, lihat panel TUGAS)"
 			key_code.clear()
 			key_entered.clear()
-			for i in range(4):
-				key_code.append(rng.randi_range(1, 4))
+			if level != null and level.get("code_digits") != null:
+				for d in level.get("code_digits"):
+					key_code.append(int(d))
+			else:
+				for i in range(4):
+					key_code.append(rng.randi_range(1, 4))
 			_build_keypad()
 		"mash":
 			instr_label.text = "Tarik tuasnya! Tekan SPASI berulang kali secepat mungkin."
@@ -228,6 +257,16 @@ func _right(msg: String) -> void:
 	if level != null and level.has_method("play_sfx"):
 		level.play_sfx("tick", -8.0, 1.4)
 
+func _grid_cell(text: String, size: int, bg: Color, fg: Color, min_w: float = 0.0) -> PanelContainer:
+	var cell := PanelContainer.new()
+	cell.add_theme_stylebox_override("panel", _stylebox(bg, 0, Color(0.78, 0.8, 0.82), 1))
+	var l := _make_label(text, size, fg, true)
+	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	cell.add_child(l)
+	if min_w > 0.0:
+		cell.custom_minimum_size = Vector2(min_w, 0)
+	return cell
+
 func _next_excel() -> void:
 	if excel_q >= 5:
 		close_popup(true)
@@ -246,10 +285,40 @@ func _next_excel() -> void:
 	excel_opts.shuffle()
 	excel_correct = excel_opts.find(correct)
 	_clear_content()
-	var q := _make_label(str(excel_a) + " x " + str(excel_b) + " = ?", 44, Color(1, 1, 1), true)
-	content.add_child(q)
-	var opts := _make_label("[1] " + str(excel_opts[0]) + "    [2] " + str(excel_opts[1]) + "    [3] " + str(excel_opts[2]), 26, Color(0.6, 0.85, 1.0), true)
-	content.add_child(opts)
+	var header := _panel(COL_EXCEL_GREEN, 4)
+	header.custom_minimum_size = Vector2(720, 36)
+	content.add_child(header)
+	var hrow := HBoxContainer.new()
+	hrow.add_theme_constant_override("separation", 10)
+	header.add_child(hrow)
+	var hicon := _make_label("▦", 20, Color(1, 1, 1), false)
+	hrow.add_child(hicon)
+	var htitle := _make_label("Laporan.xlsx  —  Lembar Kerja", 17, Color(1, 1, 1), false)
+	hrow.add_child(htitle)
+	var formula := _panel(Color(0.93, 0.94, 0.94), 3, Color(0.78, 0.8, 0.82), 1)
+	formula.custom_minimum_size = Vector2(720, 40)
+	content.add_child(formula)
+	var frow := HBoxContainer.new()
+	frow.add_theme_constant_override("separation", 10)
+	formula.add_child(frow)
+	var fx := _make_label("fx", 18, Color(0.4, 0.45, 0.5), false)
+	frow.add_child(fx)
+	var ftext := _make_label(str(excel_a) + " x " + str(excel_b) + " = ?", 24, Color(0.1, 0.1, 0.12), false)
+	frow.add_child(ftext)
+	var grid := GridContainer.new()
+	grid.columns = 3
+	grid.add_theme_constant_override("h_separation", 0)
+	grid.add_theme_constant_override("v_separation", 0)
+	content.add_child(grid)
+	for col in ["A", "B", "C"]:
+		grid.add_child(_grid_cell(col, 14, Color(0.88, 0.9, 0.91), Color(0.35, 0.4, 0.45), 236.0))
+	for i in range(3):
+		var bg := Color(1, 1, 1)
+		if i == 0:
+			bg = Color(0.95, 0.98, 0.95)
+		var cell := _grid_cell("[" + str(i + 1) + "]  " + str(excel_opts[i]), 26, bg, Color(0.1, 0.1, 0.12), 236.0)
+		cell.custom_minimum_size = Vector2(236, 56)
+		grid.add_child(cell)
 	_refresh_progress()
 
 func _start_simon_round() -> void:
@@ -262,55 +331,127 @@ func _start_simon_round() -> void:
 	simon_show_timer = 0.8
 	simon_input_idx = 0
 	_clear_content()
-	var row := HBoxContainer.new()
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation", 18)
-	content.add_child(row)
+	var warn := _panel(Color(0.95, 0.75, 0.2), 4)
+	warn.custom_minimum_size = Vector2(720, 30)
+	content.add_child(warn)
+	var wrow := HBoxContainer.new()
+	wrow.alignment = BoxContainer.ALIGNMENT_CENTER
+	warn.add_child(wrow)
+	wrow.add_child(_make_label("⚡  TEGANGAN TINGGI  —  PANEL LISTRIK  ⚡", 15, Color(0.15, 0.12, 0.05), true))
+	var metal := _panel(Color(0.22, 0.23, 0.26), 8, Color(0.45, 0.47, 0.5), 2)
+	metal.custom_minimum_size = Vector2(720, 160)
+	content.add_child(metal)
+	var mrow := HBoxContainer.new()
+	mrow.alignment = BoxContainer.ALIGNMENT_CENTER
+	mrow.add_theme_constant_override("separation", 24)
+	metal.add_child(mrow)
 	for i in range(4):
-		var lamp := ColorRect.new()
-		lamp.custom_minimum_size = Vector2(110, 110)
-		lamp.color = simon_lamp_colors[i] * 0.45
-		row.add_child(lamp)
+		var slot := VBoxContainer.new()
+		slot.add_theme_constant_override("separation", 6)
+		mrow.add_child(slot)
+		var lamp_wrap := Control.new()
+		lamp_wrap.custom_minimum_size = Vector2(120, 120)
+		slot.add_child(lamp_wrap)
+		var glow := _panel(Color(simon_lamp_colors[i], 0.25), 70)
+		glow.position = Vector2(-10, -10)
+		glow.custom_minimum_size = Vector2(140, 140)
+		glow.visible = false
+		lamp_wrap.add_child(glow)
+		simon_glows.append(glow)
+		var lamp := _panel(simon_lamp_colors[i] * 0.4, 60, Color(0.1, 0.1, 0.1), 3)
+		lamp.position = Vector2(0, 0)
+		lamp.custom_minimum_size = Vector2(120, 120)
+		lamp_wrap.add_child(lamp)
 		simon_lamps.append(lamp)
-	var keys := _make_label("[1]        [2]        [3]        [4]", 18, Color(0.8, 0.8, 0.8), true)
-	content.add_child(keys)
+		var num := _make_label("[" + str(i + 1) + "]", 16, Color(0.85, 0.85, 0.88), true)
+		slot.add_child(num)
+		var nm := _make_label(simon_lamp_names[i], 13, Color(0.6, 0.62, 0.65), true)
+		slot.add_child(nm)
 	feedback_label.text = "Perhatikan lampunya..."
 	feedback_label.add_theme_color_override("font_color", Color(0.92, 0.92, 0.92))
 
 func _simon_light(idx: int, on: bool) -> void:
 	if idx < 0 or idx >= simon_lamps.size():
 		return
-	var lamp: ColorRect = simon_lamps[idx]
-	lamp.color = simon_lamp_colors[idx] if on else simon_lamp_colors[idx] * 0.45
+	var lamp: Panel = simon_lamps[idx]
+	var glow: Panel = simon_glows[idx]
+	if on:
+		lamp.add_theme_stylebox_override("panel", _stylebox(simon_lamp_colors[idx], 60, Color(1, 1, 1), 2))
+		glow.visible = true
+		glow.add_theme_stylebox_override("panel", _stylebox(Color(simon_lamp_colors[idx], 0.35), 70))
+	else:
+		lamp.add_theme_stylebox_override("panel", _stylebox(simon_lamp_colors[idx] * 0.4, 60, Color(0.1, 0.1, 0.1), 3))
+		glow.visible = false
 
 func _build_foto() -> void:
 	status_label.text = "Lembar: " + str(foto_sheets) + "/5"
 	_clear_content()
+	var machine := _panel(Color(0.16, 0.17, 0.2), 8, Color(0.4, 0.42, 0.45), 2)
+	machine.custom_minimum_size = Vector2(720, 150)
+	content.add_child(machine)
+	var mvb := VBoxContainer.new()
+	mvb.add_theme_constant_override("separation", 8)
+	machine.add_child(mvb)
+	var mhead := _make_label("⎙  MESIN FOTOKOPI  —  PINDAI", 16, Color(0.85, 0.87, 0.9), true)
+	mvb.add_child(mhead)
 	foto_bar = Control.new()
-	foto_bar.custom_minimum_size = Vector2(700, 44)
+	foto_bar.custom_minimum_size = Vector2(680, 44)
 	foto_bar.draw.connect(_draw_foto_bar)
-	content.add_child(foto_bar)
+	mvb.add_child(foto_bar)
+	foto_papers = HBoxContainer.new()
+	foto_papers.alignment = BoxContainer.ALIGNMENT_CENTER
+	foto_papers.add_theme_constant_override("separation", 6)
+	mvb.add_child(foto_papers)
+	_refresh_foto_papers()
+
+func _refresh_foto_papers() -> void:
+	if foto_papers == null:
+		return
+	for c in foto_papers.get_children():
+		c.queue_free()
+	for i in range(5):
+		var sheet := _panel(Color(1, 1, 1) if i < foto_sheets else Color(0.35, 0.37, 0.4), 2, Color(0.6, 0.62, 0.65), 1)
+		sheet.custom_minimum_size = Vector2(48, 32)
+		foto_papers.add_child(sheet)
 
 func _draw_foto_bar() -> void:
 	if foto_bar == null:
 		return
 	var w := foto_bar.size.x
 	var h := foto_bar.size.y
-	foto_bar.draw_rect(Rect2(0, 0, w, h), Color(0.12, 0.12, 0.2, 1.0))
+	foto_bar.draw_rect(Rect2(0, 0, w, h), Color(0.08, 0.09, 0.12, 1.0))
 	var zx0 := (foto_zone - foto_zone_size * 0.5) * w
 	foto_bar.draw_rect(Rect2(zx0, 0, foto_zone_size * w, h), Color(0.2, 0.9, 0.3, 1.0))
 	var mx := foto_marker * w
 	foto_bar.draw_rect(Rect2(mx - 2, -4, 4, h + 8), Color(1.0, 0.85, 0.2, 1.0))
 
 func _build_keypad() -> void:
-	var code_txt := ""
-	for d in key_code:
-		code_txt += str(d)
-	status_label.text = "Kode: " + code_txt
+	status_label.text = "Masukkan 4 digit kodenya."
 	_clear_content()
-	key_label = _make_label("_ _ _ _", 44, Color(1, 1, 1), true)
-	content.add_child(key_label)
-	var hint := _make_label("Ketik 4 digit kodenya.", 18, Color(0.8, 0.8, 0.8), true)
+	var body := _panel(Color(0.1, 0.11, 0.13), 10, Color(0.4, 0.42, 0.46), 2)
+	body.custom_minimum_size = Vector2(720, 170)
+	content.add_child(body)
+	var bvb := VBoxContainer.new()
+	bvb.add_theme_constant_override("separation", 10)
+	body.add_child(bvb)
+	var lcd := _panel(Color(0.04, 0.16, 0.07), 4, Color(0.2, 0.35, 0.22), 2)
+	lcd.custom_minimum_size = Vector2(680, 56)
+	bvb.add_child(lcd)
+	key_label = _make_label("_ _ _ _", 36, Color(0.5, 1.0, 0.62), true)
+	key_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	lcd.add_child(key_label)
+	var btns := HBoxContainer.new()
+	btns.alignment = BoxContainer.ALIGNMENT_CENTER
+	btns.add_theme_constant_override("separation", 16)
+	bvb.add_child(btns)
+	for i in range(4):
+		var b := _panel(Color(0.24, 0.25, 0.29), 6, Color(0.55, 0.57, 0.6), 2)
+		b.custom_minimum_size = Vector2(72, 52)
+		var bl := _make_label(str(i + 1), 26, Color(0.92, 0.93, 0.95), true)
+		bl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		b.add_child(bl)
+		btns.add_child(b)
+	var hint := _make_label("Kode didapat dari tugas satu persatu. Ingat baik-baik!", 18, Color(0.8, 0.8, 0.8), true)
 	content.add_child(hint)
 	_refresh_keypad()
 
@@ -329,15 +470,43 @@ func _refresh_keypad() -> void:
 func _build_mash() -> void:
 	status_label.text = "Tarik tuasnya!"
 	_clear_content()
+	var frame := HBoxContainer.new()
+	frame.alignment = BoxContainer.ALIGNMENT_CENTER
+	frame.add_theme_constant_override("separation", 20)
+	content.add_child(frame)
+	var track_wrap := Control.new()
+	track_wrap.custom_minimum_size = Vector2(60, 170)
+	frame.add_child(track_wrap)
+	mash_track = track_wrap
+	var track := _panel(Color(0.14, 0.15, 0.18), 30, Color(0.45, 0.47, 0.5), 2)
+	track.position = Vector2(0, 0)
+	track.custom_minimum_size = Vector2(60, 170)
+	track_wrap.add_child(track)
+	mash_handle = _panel(Color(0.85, 0.25, 0.2), 22, Color(0.4, 0.1, 0.08), 2)
+	mash_handle.position = Vector2(8, 8)
+	mash_handle.custom_minimum_size = Vector2(44, 44)
+	track_wrap.add_child(mash_handle)
+	var side := VBoxContainer.new()
+	side.add_theme_constant_override("separation", 8)
+	frame.add_child(side)
+	side.add_child(_make_label("TUAS SEL", 26, Color(1, 1, 1), false))
+	side.add_child(_make_label("Tekan SPASI berulang", 18, Color(0.8, 0.8, 0.8), false))
+	side.add_child(_make_label("buat narik tuasnya!", 18, Color(0.8, 0.8, 0.8), false))
 	mash_bar = ProgressBar.new()
 	mash_bar.min_value = 0
 	mash_bar.max_value = 100
 	mash_bar.value = 0
-	mash_bar.custom_minimum_size = Vector2(700, 30)
+	mash_bar.custom_minimum_size = Vector2(300, 16)
 	mash_bar.show_percentage = false
-	content.add_child(mash_bar)
-	var hint := _make_label("SPASI SPASI SPASI!", 26, Color(1, 1, 1), true)
-	content.add_child(hint)
+	side.add_child(mash_bar)
+
+func _refresh_mash_handle() -> void:
+	if mash_handle == null:
+		return
+	var y := 8.0 + mash_prog * 110.0
+	mash_handle.position = Vector2(8, y)
+	if mash_bar != null:
+		mash_bar.value = mash_prog * 100.0
 
 func press_number(n: int) -> void:
 	if not open:
@@ -384,12 +553,9 @@ func press_number(n: int) -> void:
 						_right("Kode benar! Pintu terbuka.")
 						close_popup(true)
 					else:
-						_wrong("Kode salah! Kode baru dibuat.")
-						key_code.clear()
+						_wrong("Kode salah! Coba lagi, ingat kodenya.")
 						key_entered.clear()
-						for i in range(4):
-							key_code.append(rng.randi_range(1, 4))
-						_build_keypad()
+						_refresh_keypad()
 
 func press_space() -> void:
 	if not open:
@@ -402,6 +568,7 @@ func press_space() -> void:
 				_right("Lembar tersalin! (" + str(foto_sheets) + "/5)")
 				foto_zone = randf_range(half + 0.05, 1.0 - half - 0.05)
 				status_label.text = "Lembar: " + str(foto_sheets) + "/5"
+				_refresh_foto_papers()
 				_refresh_progress()
 				if foto_sheets >= 5:
 					close_popup(true)
@@ -409,8 +576,7 @@ func press_space() -> void:
 				_wrong("Miss! Penanda di luar zona hijau.")
 		"mash":
 			mash_prog = minf(1.0, mash_prog + 0.09)
-			if mash_bar != null:
-				mash_bar.value = mash_prog * 100.0
+			_refresh_mash_handle()
 			_refresh_progress()
 			if mash_prog >= 1.0:
 				_right("Tuas berhasil ditarik!")
@@ -432,13 +598,14 @@ func _process(delta: float) -> void:
 					if simon_show_idx < simon_seq.size():
 						var idx: int = simon_seq[simon_show_idx] - 1
 						_simon_light(idx, true)
+						simon_flash_idx = idx
+						simon_flash_timer = 0.45
 						simon_show_timer = 0.55
 						simon_show_idx += 1
-						if simon_show_idx > 0:
-							_simon_light(simon_seq[simon_show_idx - 1] - 1, false)
 					else:
 						for i in range(4):
 							_simon_light(i, false)
+						simon_flash_idx = -1
 						simon_phase = "input"
 						simon_input_idx = 0
 						feedback_label.text = "Giliranmu! Ulangi urutannya."
@@ -455,8 +622,7 @@ func _process(delta: float) -> void:
 				foto_bar.queue_redraw()
 		"mash":
 			mash_prog = maxf(0.0, mash_prog - 0.12 * delta)
-			if mash_bar != null:
-				mash_bar.value = mash_prog * 100.0
+			_refresh_mash_handle()
 	if demo:
 		_demo_step(delta)
 

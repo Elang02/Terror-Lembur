@@ -124,6 +124,9 @@ var debug_timer := 0.0
 var popup: TaskPopup = null
 var popup_open := false
 var popup_task_id := -1
+var code_digits: Array[int] = [1, 2, 3, 4]
+var code_found: Array[bool] = [false, false, false, false]
+var hud_code_label: Label = null
 
 var flicker_lights: Array[PointLight2D] = []
 var flicker_base: Array[float] = []
@@ -237,6 +240,7 @@ func _ready() -> void:
 	_build_astar()
 	_build_tasks()
 	_build_popup()
+	_generate_code()
 	if Engine.is_editor_hint():
 		return
 	sfx = SFX.new()
@@ -868,6 +872,13 @@ func _build_hud() -> void:
 		UITheme.apply_progress_bar(bar)
 		tvb.add_child(bar)
 		hud_task_bars.append(bar)
+	var code_div := ColorRect.new()
+	code_div.color = Color(0.62, 0.5, 0.22, 0.9)
+	code_div.custom_minimum_size = Vector2(0, 2)
+	tvb.add_child(code_div)
+	hud_code_label = UITheme.make_label("KODE PINTU: _ _ _ _", UITheme.body_font(), 15, UITheme.COL_GOLD)
+	tvb.add_child(hud_code_label)
+	_refresh_code_label()
 	var status_panel := PanelContainer.new()
 	UITheme.apply_panel(status_panel, Color(0.05, 0.05, 0.06, 0.85), Color(0.42, 0.36, 0.3), 1, 8)
 	status_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
@@ -1114,6 +1125,42 @@ func _process(delta: float) -> void:
 func _is_player(node: Node) -> bool:
 	return node is CharacterBody2D and node.has_method("set_locked")
 
+func _generate_code() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = Time.get_ticks_usec() % 1000000 + multiplayer.get_unique_id() * 7919
+	code_digits.clear()
+	code_found.clear()
+	for i in range(4):
+		code_digits.append(rng.randi_range(1, 4))
+		code_found.append(false)
+
+func _code_text() -> String:
+	var parts: Array[String] = []
+	for i in range(4):
+		if code_found[i]:
+			parts.append(str(code_digits[i]))
+		else:
+			parts.append("_")
+	return " ".join(parts)
+
+func _refresh_code_label() -> void:
+	if hud_code_label != null:
+		hud_code_label.text = "KODE PINTU: " + _code_text()
+
+func _reveal_code_digit(idx: int) -> void:
+	if idx < 0 or idx >= 4:
+		return
+	if code_found[idx]:
+		return
+	code_found[idx] = true
+	_refresh_code_label()
+	if idx < 3:
+		hud_warn_label.text = "Kode pintu ditemukan! Digit ke-" + str(idx + 1) + " = " + str(code_digits[idx])
+	else:
+		hud_warn_label.text = "Catatan di pintu: digit terakhir = " + str(code_digits[idx])
+	warn_timer = 3.0
+	play_sfx("complete", -6.0)
+
 func _popup_kind(task_id: int) -> String:
 	match task_id:
 		0:
@@ -1260,12 +1307,20 @@ func _on_task_done(tp) -> void:
 	if tp.task_id == 4:
 		_unlock_all()
 		return
+	match tp.task_id:
+		1:
+			_reveal_code_digit(0)
+		2:
+			_reveal_code_digit(1)
+		0:
+			_reveal_code_digit(2)
 	boss_speed_mult += 0.1
 	if boss != null:
 		boss.speed_mult = boss_speed_mult
 	if _main_tasks_done():
 		_open_locked_doors()
 		_enrage_boss()
+		_reveal_code_digit(3)
 	lit_areas.append(tp.global_position)
 	var light := PointLight2D.new()
 	light.position = tp.global_position

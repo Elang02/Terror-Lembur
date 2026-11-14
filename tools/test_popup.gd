@@ -183,6 +183,67 @@ func _run() -> void:
 			_fail("Tuas Sel not done after 14 mash presses (progress=" + str(lever.get("progress")) + ")")
 	else:
 		_fail("player not locked for Mash test setup")
+	# Code digits: keypad code comes from the tasks, not random
+	var digits: Array = lvl.get("code_digits")
+	var found: Array = lvl.get("code_found")
+	if digits.size() == 4:
+		_ok("code has 4 digits")
+	else:
+		_fail("code has " + str(digits.size()) + " digits, expected 4")
+	var all_in_range := true
+	for d in digits:
+		if int(d) < 1 or int(d) > 4:
+			all_in_range = false
+	if all_in_range:
+		_ok("all code digits are 1-4")
+	else:
+		_fail("code digit out of range: " + str(digits))
+	# All 3 main tasks are done by now, so all 4 digits must be revealed
+	var all_found := true
+	for f in found:
+		if not bool(f):
+			all_found = false
+	if all_found:
+		_ok("all 4 code digits revealed after the 3 main tasks")
+	else:
+		_fail("code_found not all true after main tasks: " + str(found))
+	# HUD code label shows the collected code
+	var code_label: Label = lvl.get("hud_code_label")
+	if code_label != null and str(code_label.text).contains(str(digits[0])):
+		_ok("HUD shows the collected code digits")
+	else:
+		_fail("HUD code label missing or wrong: " + (str(code_label.text) if code_label != null else "null"))
+	# Keypad uses the level code (reopen exit popup and compare)
+	pop.call("open_popup", lvl, 3, _task(3), "keypad", "Keypad Pintu", false)
+	await process_frame
+	await process_frame
+	var kcode: Array = pop.get("key_code")
+	var same := kcode.size() == 4
+	for i in range(4):
+		if int(kcode[i]) != int(digits[i]):
+			same = false
+	if same:
+		_ok("keypad code equals the level code from tasks")
+	else:
+		_fail("keypad code " + str(kcode) + " != level code " + str(digits))
+	# Wrong code does NOT regenerate the code (player must remember it)
+	var wrong_digit := 1
+	if int(kcode[0]) == 1:
+		wrong_digit = 2
+	for i in range(4):
+		pop.call("press_number", wrong_digit)
+		await process_frame
+	var kcode_after: Array = pop.get("key_code")
+	var unchanged := true
+	for i in range(4):
+		if int(kcode_after[i]) != int(digits[i]):
+			unchanged = false
+	if unchanged:
+		_ok("wrong code does not regenerate the code")
+	else:
+		_fail("code changed after wrong entry: " + str(kcode_after))
+	pop.call("close_popup", false)
+	await process_frame
 	_report()
 
 func _report() -> void:

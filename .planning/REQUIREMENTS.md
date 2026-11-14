@@ -251,12 +251,25 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TASK-04 | Phase 14 | Done |
 | TASK-05 | Phase 14 | Done |
 | TASK-06 | Phase 14 | Done |
+### Task Popups v2 — Kode dari tugas + visual kayak aplikasi beneran (Elang 14 Nov 2026: keypad didapat dari tugas satu persatu dan harus diingat; popup jangan AI slop)
+
+- [ ] **POP2-01**: Kode pintu 4 digit didapat dari tugas: Komputer = digit 1, Arsip = digit 2, Generator = digit 3, digit 4 dari catatan di pintu pas semua tugas selesai; pemain harus ingat, keypad tidak menampilkan kodenya (kode tampil di panel TUGAS sebagai referensi)
+- [ ] **POP2-02**: Excel tampil kayak spreadsheet beneran (header hijau, formula bar, grid sel dengan garis, kolom A B C, opsi di dalam sel)
+- [ ] **POP2-03**: Panel Listrik tampil kayak panel beneran (lampu BULAT dengan glow, panel metal + sekrup, bukan kotak warna)
+- [ ] **POP2-04**: Keypad tampil kayak keypad pintu beneran (layar LCD, tombol digit); Fotokopi kayak mesin fotokopi (kertas keluar); Tuas Sel kayak tuas beneran (gagang geser)
+- [ ] **POP2-05**: Demo bot + semua test tetap hijau, video baru
+
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
 | POP-03 | Phase 15 | Done |
 | POP-04 | Phase 15 | Done |
 | POP-05 | Phase 15 | Done |
 | POP-06 | Phase 15 | Done |
+| POP2-01 | Phase 16 | Pending |
+| POP2-02 | Phase 16 | Pending |
+| POP2-03 | Phase 16 | Pending |
+| POP2-04 | Phase 16 | Pending |
+| POP2-05 | Phase 16 | Pending |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -264,7 +277,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v4 requirements: 8 total
 - v5 requirements: 6 total
 - v6 requirements: 6 total
-- Mapped to phases: 77
+- v7 requirements: 5 total
+- Mapped to phases: 82
 - Unmapped: 0 ✓
 
 ---

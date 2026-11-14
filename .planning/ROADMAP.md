@@ -278,6 +278,23 @@ Plans:
 - [x] 15-03: Fotokopi (Arsip) + Keypad (Pintu Keluar) + Mash tuas (Tuas Sel)
 - [x] 15-04: Demo bot mainkan popup + test_popup.gd + full regression + video baru
 
+## Phase 16: Task Popups v2 — Kode dari Tugas + Visual Realistis
+
+**Goal:** Kode pintu 4 digit didapat dari tugas satu persatu (harus diingat), dan tiap popup tampil kayak perangkat beneran (bukan panel generik AI slop).
+**Requirements**: POP2-01, POP2-02, POP2-03, POP2-04, POP2-05
+**Success Criteria** (what must be TRUE):
+  1. Kode pintu 4 digit: digit 1-3 dari Komputer/Arsip/Generator, digit 4 dari catatan pintu pas semua tugas selesai; keypad tidak menampilkan kode (referensi di panel TUGAS)
+  2. Excel tampil kayak spreadsheet (header hijau, formula bar, grid sel); Panel Listrik lampu bulat + glow + panel metal + sekrup
+  3. Keypad tampil kayak keypad beneran (LCD); Fotokopi kayak mesin (kertas keluar); Tuas Sel kayak tuas (gagang geser)
+  4. Demo bot + semua test tetap hijau; video baru
+**Plans**: TBD
+
+Plans:
+- [ ] 16-01: Sistem kode pintu dari tugas (level code_digits, reveal per tugas, HUD tampilkan kode, keypad pakai kode level)
+- [ ] 16-02: Visual Excel + Panel Listrik kayak perangkat beneran
+- [ ] 16-03: Visual Keypad + Fotokopi + Tuas Sel kayak perangkat beneran
+- [ ] 16-04: Test + full regression + video baru
+
 ## Progress
 
 **Execution Order:**
@@ -300,5 +317,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 13. Production Build | 2/2 | Complete | 14 Nov 2026 |
 | 14. Task Minigames | 4/4 | Complete | 14 Nov 2026 |
 | 15. Task Popups | 4/4 | Complete | 14 Nov 2026 |
+| 16. Task Popups v2 | 0/4 | Not started | - |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

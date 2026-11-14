@@ -49,9 +49,12 @@ func _run() -> void:
 	else:
 		_fail("bob amplitude out of range (y " + str(min_y) + " to " + str(max_y) + ")")
 	# 2. Rest: when the boss stops, sprite returns to y=-22 and no rotation
+	# NOTE: SUSPICIOUS lasts 1.5s then auto-transitions to SEARCH (boss walks).
+	# Wait only 10 frames (~0.95s sandbox game time) so it stays still.
 	boss.set("state", 1)
+	boss.set("state_timer", 0.0)
 	boss.set("velocity", Vector2.ZERO)
-	for i in range(30):
+	for i in range(10):
 		await process_frame
 	if absf(sprite.position.y - (-22.0)) < 0.01 and absf(sprite.rotation) < 0.001:
 		_ok("boss sprite returns to rest pose when still")
