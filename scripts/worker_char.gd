@@ -139,30 +139,17 @@ func _demo_update(delta: float) -> Vector2:
 		return Vector2.ZERO
 	var target: Vector2 = demo_waypoints[demo_wp_index]
 	var dist := global_position.distance_to(target)
-	if global_position.distance_to(demo_last_pos) > 5.0:
+	if dist < 70.0:
 		demo_stuck_timer = 0.0
 		demo_last_pos = global_position
-	else:
-		demo_stuck_timer += delta
-		if demo_stuck_timer > 2.0:
-			demo_stuck_timer = 0.0
-			demo_last_pos = global_position
-			if demo_path_index < demo_path.size():
-				global_position = demo_path[demo_path_index]
-				demo_path_index += 1
-				print("DEMO unstuck: jumped to path point " + str(demo_path_index))
-			else:
-				global_position = global_position.move_toward(target, 60.0)
-				print("DEMO unstuck: nudged toward target")
-	if dist < 70.0:
 		var task_done := false
 		if demo_task_id >= 0 and lvl.has_method("get"):
 			for tp in lvl.get("tasks"):
 				if tp.get("task_id") == demo_task_id and tp.get("done"):
 					task_done = true
-		if demo_wp_index == 3:
-			return Vector2.ZERO
 		if task_done:
+			if demo_wp_index == 3:
+				return Vector2.ZERO
 			demo_wp_index += 1
 			if demo_wp_index == 1:
 				demo_task_id = 2
@@ -178,6 +165,21 @@ func _demo_update(delta: float) -> Vector2:
 		if lvl.has_method("try_open_task_popup"):
 			lvl.try_open_task_popup(demo_task_id)
 		return Vector2.ZERO
+	if global_position.distance_to(demo_last_pos) > 5.0:
+		demo_stuck_timer = 0.0
+		demo_last_pos = global_position
+	else:
+		demo_stuck_timer += delta
+		if demo_stuck_timer > 2.0:
+			demo_stuck_timer = 0.0
+			demo_last_pos = global_position
+			if demo_path_index < demo_path.size():
+				global_position = demo_path[demo_path_index]
+				demo_path_index += 1
+				print("DEMO unstuck: jumped to path point " + str(demo_path_index))
+			else:
+				global_position = global_position.move_toward(target, 60.0)
+				print("DEMO unstuck: nudged toward target")
 	interacting = false
 	interact_target = -1
 	demo_repath_timer -= delta
