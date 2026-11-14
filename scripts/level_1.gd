@@ -127,6 +127,9 @@ var popup_task_id := -1
 var code_digits: Array[int] = [1, 2, 3, 4]
 var code_found: Array[bool] = [false, false, false, false]
 var hud_code_label: Label = null
+var intro_open := false
+var intro_panel: PanelContainer = null
+var intro_timer := 0.0
 
 var flicker_lights: Array[PointLight2D] = []
 var flicker_base: Array[float] = []
@@ -820,6 +823,84 @@ func _update_pickups() -> void:
 func show_hud() -> void:
 	if hud_layer != null:
 		hud_layer.visible = true
+	_show_intro()
+
+const INTRO_LINES := [
+	"Jam 23.00. Kantor sudah sepi. Semua orang sudah pulang.",
+	"Kecuali kamu. Laporan terakhir harus selesai malam ini.",
+	"Tapi ada yang salah. Hantu bos lama masih bergentayangan di gedung ini.",
+	"Dia tidak suka ada yang pulang sebelum tugas selesai.",
+	"Selesaikan semua tugasmu. Lalu kabur lewat pintu keluar.",
+	"Dan pulang.",
+]
+
+func _build_intro() -> void:
+	if hud_layer == null:
+		return
+	var dim := ColorRect.new()
+	dim.name = "IntroDim"
+	dim.color = Color(0, 0, 0, 0.85)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	dim.visible = false
+	hud_layer.add_child(dim)
+	intro_panel = PanelContainer.new()
+	intro_panel.name = "IntroPanel"
+	UITheme.apply_panel(intro_panel, Color(0.05, 0.05, 0.06, 0.95), Color(0.42, 0.36, 0.3), 2, 8)
+	intro_panel.set_anchors_preset(Control.PRESET_CENTER)
+	intro_panel.custom_minimum_size = Vector2(760, 0)
+	intro_panel.offset_left = -380
+	intro_panel.offset_top = -200
+	intro_panel.offset_right = 380
+	intro_panel.offset_bottom = 200
+	intro_panel.visible = false
+	dim.add_child(intro_panel)
+	var vb := VBoxContainer.new()
+	vb.add_theme_constant_override("separation", 14)
+	intro_panel.add_child(vb)
+	var title := UITheme.make_label("TERROR LEMBUR", UITheme.title_font(), 40, UITheme.COL_BLOOD_BRIGHT)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vb.add_child(title)
+	for line in INTRO_LINES:
+		var l := UITheme.make_label(line, UITheme.body_font(), 18, UITheme.COL_PAPER)
+		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		vb.add_child(l)
+	var hint := UITheme.make_label("Tekan tombol apa saja untuk mulai", UITheme.body_font(), 16, UITheme.COL_GOLD)
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vb.add_child(hint)
+
+func _show_intro() -> void:
+	if intro_panel == null:
+		return
+	if _tutorial_is_done():
+		return
+	if intro_open:
+		return
+	intro_open = true
+	intro_timer = 4.0
+	intro_panel.visible = true
+	var dim := hud_layer.get_node_or_null("IntroDim")
+	if dim != null:
+		dim.visible = true
+
+func _dismiss_intro() -> void:
+	if not intro_open:
+		return
+	intro_open = false
+	if intro_panel != null:
+		intro_panel.visible = false
+	var dim := hud_layer.get_node_or_null("IntroDim")
+	if dim != null:
+		dim.visible = false
+	if tutorial_step == 0:
+		tutorial_step = 1
+		_refresh_tutorial_label()
+
+func _is_demo() -> bool:
+	for child in ysort.get_children():
+		if _is_player(child) and bool(child.get("demo_mode")):
+			return true
+	return false
 
 func play_sfx(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
 	if sfx != null:
@@ -1045,10 +1126,15 @@ func _build_hud() -> void:
 	UITheme.apply_button(again_btn, 18)
 	again_btn.pressed.connect(func() -> void: rpc("_restart_game"))
 	vb.add_child(again_btn)
+	_build_intro()
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
+	if intro_open:
+		intro_timer -= delta
+		if intro_timer <= 0.0 and _is_demo():
+			_dismiss_intro()
 	if not game_over:
 		elapsed += delta
 	if warn_timer > 0.0:
@@ -1423,6 +1509,14 @@ func _show_end(title: String, detail: String, s: int) -> void:
 		tw.tween_property(end_stars[i], "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if intro_open:
+		if event is InputEventKey and event.pressed and not event.echo:
+			_dismiss_intro()
+			get_viewport().set_input_as_handled()
+		elif event is InputEventMouseButton and event.pressed:
+			_dismiss_intro()
+			get_viewport().set_input_as_handled()
+		return
 	if game_over and event.is_action_pressed("flashlight"):
 		rpc("_restart_game")
 

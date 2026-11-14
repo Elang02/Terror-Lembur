@@ -29,6 +29,7 @@ var is_hosting := false
 var is_listening := false
 var menu_title: Label
 var menu_flicker_t := 0.0
+var demo_menu_timer := -1.0
 
 func _ready() -> void:
 	spawner.add_spawnable_scene(player_scene.resource_path)
@@ -58,8 +59,15 @@ func _ready() -> void:
 		join(ip)
 	else:
 		_build_menu()
+		if "--demo" in args:
+			demo_menu_timer = 3.0
 
 func _process(delta: float) -> void:
+	if demo_menu_timer > 0.0:
+		demo_menu_timer -= delta
+		if demo_menu_timer <= 0.0:
+			demo_menu_timer = -1.0
+			solo()
 	if is_hosting and discover_udp:
 		discover_timer += delta
 		if discover_timer >= 1.0:

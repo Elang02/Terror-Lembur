@@ -95,6 +95,10 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 		move_and_slide()
 		return
+	if lvl0 != null and bool(lvl0.get("intro_open")):
+		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+		move_and_slide()
+		return
 	var input_dir := Vector2.ZERO
 	if demo_mode:
 		input_dir = _demo_update(delta)
