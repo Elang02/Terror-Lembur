@@ -13,6 +13,8 @@ const FIRST_TELEPORT_MIN := 15.0
 const FIRST_TELEPORT_MAX := 20.0
 const BLIND_TIME := 1.5
 const CHASE_TIRED := 8.0
+const HEARING_WALK := 120.0
+const HEARING_SPRINT := 300.0
 
 enum State { PATROL, SUSPICIOUS, CHASE, SEARCH, RETURN }
 
@@ -378,6 +380,46 @@ func _update_detection() -> void:
 			state = State.SUSPICIOUS
 			target = noise
 			state_timer = 0.0
+		return
+	# Hearing: a moving player makes noise. Walking is quiet, sprinting is
+	# loud. Sound goes through walls (like the noise queue), but the range
+	# is short, so the boss must be close to hear it. The FSM treats a
+	# heard player exactly like a heard noise: SUSPICIOUS, then SEARCH.
+	var heard := _nearest_audible_player()
+	if heard != null:
+		if state == State.PATROL or state == State.RETURN:
+			state = State.SUSPICIOUS
+			target = heard.global_position
+			state_timer = 0.0
+		elif state == State.SEARCH:
+			search_center = heard.global_position
+			target = heard.global_position
+			search_desk_checked = false
+			search_desk_target = Vector2.ZERO
+			_request_path(search_center)
+
+func _nearest_audible_player() -> Node2D:
+	var best: Node2D = null
+	var best_d := 1e9
+	for child in level.ysort.get_children():
+		if not (child is CharacterBody2D):
+			continue
+		if not child.has_method("set_locked"):
+			continue
+		if child.get("locked"):
+			continue
+		if child.get("hiding"):
+			continue
+		if child.velocity.length() < 50.0:
+			continue
+		var hear_range := HEARING_SPRINT if bool(child.get("sprinting")) else HEARING_WALK
+		var d := global_position.distance_to(child.global_position)
+		if d > hear_range:
+			continue
+		if d < best_d:
+			best = child
+			best_d = d
+	return best
 
 func _nearest_visible_player() -> Node2D:
 	var best: Node2D = null

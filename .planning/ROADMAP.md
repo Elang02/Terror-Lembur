@@ -406,6 +406,22 @@ Plans:
 
 **Status: Complete.** Committed (14 Nov 2026). test_vision 8/8, test_hide 11/11, bossaggro 9/9, solo 13/13, popup 23/23. Render ngumpet: pemain sepenuhnya ketutup meja, posisi persis (320, 314).
 
+## Phase 24: Bos Tidak Lihat Nembus Tembok + Bisa Dengar Langkah
+
+**Goal:** Bos tidak bisa lihat nembus tembok (verifikasi LOS), dan bos bisa dengar langkah kaki pemain lewat FSM (jalan sunyi, lari berisik).
+**Requirements**: LOS-01, HEAR-01
+**Success Criteria** (what must be TRUE):
+  1. Tembok blokir penglihatan bos (raycast sudah ada, dibuktikan tes)
+  2. Bos dengar pemain lari (sprint) sampai 300px, jalan kaki sampai 120px
+  3. Dengar → FSM PATROL/RETURN → SUSPICIOUS ("?") → SEARCH; di SEARCH, dengar baru update titik pencarian
+  4. Diam dan ngumpet itu sunyi (bos tidak dengar)
+  5. test_hearing 7/7; regression hijau
+**Plans**:
+- [x] 24-01: Verifikasi LOS tembok + implementasi _nearest_audible_player + FSM
+- [x] 24-02: Test hearing + regression
+
+**Status: Complete.** Committed (14 Nov 2026). test_hearing 7/7, vision 8/8, bossaggro 9/9, solo 13/13.
+
 ## Progress
 
 ## Progress
@@ -440,5 +456,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 21. Evaluasi Menyeluruh + Balance | 3/3 | Complete | 14 Nov 2026 |
 | 22. Peringatan Bos Datang ke Tugas | 2/2 | Complete | 14 Nov 2026 |
 | 23. Bos Tidak Buta, Tidak Nyangkut, Ngumpet Beneran | 3/3 | Complete | 14 Nov 2026 |
+| 24. Bos Tidak Lihat Nembus Tembok + Bisa Dengar Langkah | 2/2 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

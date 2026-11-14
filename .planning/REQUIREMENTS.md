@@ -281,6 +281,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **BOSS-02**: Penglihatan bos dalam gelap 150px → 200px (pemain nggak bisa seenaknya lewat dalam gelap)
 - [ ] **BOSS-03**: Bos lepas dari nyangkut di meja/tembok lebih cepat (stuck detector 2.0 dtk → 1.0 dtk + repath baru pas lepas)
 - [ ] **HIDE-01**: Ngumpet bener-bener di bawah meja: collision pemain mati pas ngumpet (fisika nggak bisa dorong keluar), alpha 0.5 → 0.35
+- [ ] **LOS-01**: Bos TIDAK bisa lihat nembus tembok (raycast garis pandang sudah ada, dibuktikan tes: tembok blokir, koridor terbuka kelihatan)
+- [ ] **HEAR-01**: Bos bisa DENGAR pemain lewat FSM: jalan kaki kedengeran 120px, lari (sprint) kedengeran 300px; dengar → SUSPICIOUS ("?") → SEARCH; diam dan ngumpet itu sunyi (tidak kedengeran); suara nembus tembok (kayak noise queue)
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -316,6 +318,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BOSS-02 | Phase 23 | Done |
 | BOSS-03 | Phase 23 | Done |
 | HIDE-01 | Phase 23 | Done |
+| LOS-01 | Phase 24 | Done |
+| HEAR-01 | Phase 24 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -330,7 +334,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v11 requirements: 2 total
 - v12 requirements: 5 total
 - v13 requirements: 4 total
-- Mapped to phases: 105
+- v14 requirements: 2 total
+- Mapped to phases: 107
 - Unmapped: 0 ✓
 
 ---
