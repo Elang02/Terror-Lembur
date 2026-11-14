@@ -1494,6 +1494,8 @@ func _show_end(title: String, detail: String, s: int) -> void:
 	end_dim.visible = true
 	end_center.visible = true
 	end_panel.visible = true
+	if _is_demo():
+		print("DEMO_END: " + title + " " + str(s) + " stars")
 	for i in range(end_stars.size()):
 		var tw := create_tween()
 		tw.tween_interval(0.12 * float(i))

@@ -422,6 +422,20 @@ Plans:
 
 **Status: Complete.** Committed (14 Nov 2026). test_hearing 7/7, vision 8/8, bossaggro 9/9, solo 13/13.
 
+## Phase 25: Bos Patroli Dekat Pemain + Video Berhenti Pas Game Selesai
+
+**Goal:** Bos terasa hadir (patroli di dekat pemain, bukan jalan jauh sendirian) dan video rekaman berhenti sendiri pas game selesai, bukan jalan terus setelah dapat bintang.
+**Requirements**: PATROL-01, VID-01
+**Success Criteria** (what must be TRUE):
+  1. Bos pilih waypoint terdekat ke pemain (bukan urutan loop), tetap di area pemain
+  2. Video berhenti 5 dtk setelah layar akhir muncul (marker DEMO_END + record_demo.sh)
+  3. test_patrolbias 3/3; regression hijau; video v17 berhenti sendiri pas GAME OVER
+**Plans**:
+- [x] 25-01: _pick_waypoint bias ke pemain + DEMO_END marker + record_demo.sh
+- [x] 25-02: Test patrolbias + regression + rekam v17
+
+**Status: Complete.** Committed (14 Nov 2026). test_patrolbias 3/3, patrol 2/2, bossaggro 9/9, solo 13/13, hearing 7/7. Video v17: 196 dtk, ada suara (mean -29.7 dB), 0 script error, bot GAME OVER (ketangkep 3x) dan video berhenti sendiri 5 dtk setelah layar akhir.
+
 ## Progress
 
 ## Progress
@@ -457,5 +471,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 22. Peringatan Bos Datang ke Tugas | 2/2 | Complete | 14 Nov 2026 |
 | 23. Bos Tidak Buta, Tidak Nyangkut, Ngumpet Beneran | 3/3 | Complete | 14 Nov 2026 |
 | 24. Bos Tidak Lihat Nembus Tembok + Bisa Dengar Langkah | 2/2 | Complete | 14 Nov 2026 |
+| 25. Bos Patroli Dekat Pemain + Video Berhenti Pas Game Selesai | 2/2 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

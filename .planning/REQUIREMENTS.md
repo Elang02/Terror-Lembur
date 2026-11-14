@@ -283,6 +283,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **HIDE-01**: Ngumpet bener-bener di bawah meja: collision pemain mati pas ngumpet (fisika nggak bisa dorong keluar), alpha 0.5 → 0.35
 - [ ] **LOS-01**: Bos TIDAK bisa lihat nembus tembok (raycast garis pandang sudah ada, dibuktikan tes: tembok blokir, koridor terbuka kelihatan)
 - [ ] **HEAR-01**: Bos bisa DENGAR pemain lewat FSM: jalan kaki kedengeran 120px, lari (sprint) kedengeran 300px; dengar → SUSPICIOUS ("?") → SEARCH; diam dan ngumpet itu sunyi (tidak kedengeran); suara nembus tembok (kayak noise queue)
+- [ ] **PATROL-01**: Bos patroli di dekat pemain (pilih waypoint terdekat ke pemain, bukan keliling peta berurutan), jadi ketemu pemain beneran, bukan jalan jauh sendirian
+- [ ] **VID-01**: Video rekaman berhenti sendiri 5 dtk setelah game selesai (marker DEMO_END + tools/record_demo.sh), bukan jalan terus 180 dtk pas layar akhir
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -320,6 +322,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HIDE-01 | Phase 23 | Done |
 | LOS-01 | Phase 24 | Done |
 | HEAR-01 | Phase 24 | Done |
+| PATROL-01 | Phase 25 | Done |
+| VID-01 | Phase 25 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -335,7 +339,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v12 requirements: 5 total
 - v13 requirements: 4 total
 - v14 requirements: 2 total
-- Mapped to phases: 107
+- v15 requirements: 2 total
+- Mapped to phases: 109
 - Unmapped: 0 ✓
 
 ---

@@ -194,10 +194,47 @@ func _refresh_mark() -> void:
 func _set_mark(t: String) -> void:
 	state_mark.text = t
 
+func _nearest_player_pos() -> Vector2:
+	var best := Vector2.INF
+	var best_d := 1e9
+	for child in level.ysort.get_children():
+		if not (child is CharacterBody2D):
+			continue
+		if not child.has_method("set_locked"):
+			continue
+		if child.get("locked"):
+			continue
+		var d := global_position.distance_to(child.global_position)
+		if d < best_d:
+			best_d = d
+			best = child.global_position
+	return best
+
 func _pick_waypoint() -> void:
 	var loop: Array = level.PATROL_LOOP
-	# Try each waypoint in turn and skip any A* cannot reach, so the boss
-	# never stalls pushing into a wall toward an unreachable point.
+	# Patrol near the player, not across the map: pick the waypoint
+	# nearest to the nearest player, skipping the one the boss is
+	# already standing on. This keeps the boss in the player's area so
+	# encounters actually happen, instead of the boss wandering far away
+	# while the player does tasks undisturbed.
+	var anchor := _nearest_player_pos()
+	if anchor != Vector2.INF:
+		var best: Vector2 = Vector2.INF
+		var best_d := 1e9
+		for wp in loop:
+			if global_position.distance_to(wp) < 50.0:
+				continue
+			var d := anchor.distance_to(wp)
+			if d < best_d:
+				best_d = d
+				best = wp
+		if best != Vector2.INF:
+			target = best
+			waypoint_timer = 0.0
+			_request_path(target)
+			if not path.is_empty():
+				return
+	# Fallback: sequential loop.
 	for _i in range(loop.size()):
 		target = loop[patrol_index % loop.size()]
 		patrol_index += 1
