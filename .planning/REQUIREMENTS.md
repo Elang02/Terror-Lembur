@@ -271,6 +271,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **BOSS-05**: Demo bot + semua test tetap hijau, video baru yang menunjukkan bos ketemu pemain
 - [ ] **HIDE-01**: Ngumpet beneran di bawah meja: pemain nempel ke meja (di atas titik tengah meja, jadi meja ketutupin dia di YSort), sprite jongkok (scale y 0.6) + transparan (alpha 0.5), nama hilang, senter mati
 - [ ] **HIDE-02**: Unhide balikin semua (scale, alpha, nama, senter); test_hide 10/10; regression hijau
+- [ ] **BAL-01**: Bos cuma menyelidiki tugas kalau sudah dalam 350px (dulu 700px, terlalu jauh, bos datang dari seberang peta)
+- [ ] **BAL-02**: Teleport pertama bos ditunda ke 15-20 dtk (dulu 8-12 dtk, pemain baru mulai tugas pertama langsung ketemu bos)
+- [ ] **BAL-03**: Teks menu CARA BERMAIN sebut semua 5 tugas + mekanik kode pintu (dulu cuma 3 popup, kode tidak disebut)
+- [ ] **BAL-04**: Teks ENDING PAHIT tanpa "level berikut" (cuma ada 1 level)
+- [ ] **BAL-05**: Timer tidak jalan selama intro cerita (dulu intro 4 dtk ikut kehitung, tidak adil buat bintang)
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -296,6 +301,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BOSS-05 | Phase 19 | Done |
 | HIDE-01 | Phase 20 | Done |
 | HIDE-02 | Phase 20 | Done |
+| BAL-01 | Phase 21 | Done |
+| BAL-02 | Phase 21 | Done |
+| BAL-03 | Phase 21 | Done |
+| BAL-04 | Phase 21 | Done |
+| BAL-05 | Phase 21 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -308,7 +318,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v9 requirements: 4 total
 - v10 requirements: 5 total
 - v11 requirements: 2 total
-- Mapped to phases: 95
+- v12 requirements: 5 total
+- Mapped to phases: 100
 - Unmapped: 0 ✓
 
 ---

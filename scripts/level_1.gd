@@ -1127,7 +1127,7 @@ func _process(delta: float) -> void:
 		intro_timer -= delta
 		if intro_timer <= 0.0 and _is_demo():
 			_dismiss_intro()
-	if not game_over:
+	if not game_over and not intro_open:
 		elapsed += delta
 	if warn_timer > 0.0:
 		warn_timer -= delta
@@ -1303,9 +1303,9 @@ func try_open_task_popup(task_id: int) -> void:
 	popup.open_popup(self, task_id, tp, _popup_kind(task_id), _popup_title(task_id), is_demo)
 	if boss != null:
 		if multiplayer.is_server():
-			report_noise(tp.global_position, 700.0)
+			report_noise(tp.global_position, 350.0)
 		else:
-			rpc_id(1, "report_noise", tp.global_position, 700.0)
+			rpc_id(1, "report_noise", tp.global_position, 350.0)
 
 @rpc("any_peer", "call_local")
 func popup_set_progress(task_id: int, progress: float) -> void:
@@ -1453,7 +1453,7 @@ func _check_endings() -> void:
 
 func _finish_level() -> void:
 	if _any_locked():
-		rpc("_show_end", "ENDING PAHIT", "Pintu terbuka, tapi satu teman masih dikurung di ruang bos. Yang bebas kabur sendiri. Yang dikurung kena nerf di level berikut.", 1)
+		rpc("_show_end", "ENDING PAHIT", "Pintu terbuka, tapi satu teman masih dikurung di ruang bos. Yang bebas kabur sendiri.", 1)
 	else:
 		var s := 3 if not ever_caught else 2
 		if solo_mode:

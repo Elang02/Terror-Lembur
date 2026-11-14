@@ -84,11 +84,12 @@ func _run() -> void:
 		_fail("boss did NOT see player with flashlight on at 250px")
 	# 5. Opening a popup alerts the boss toward the task
 	# Check the noise queue immediately (before the boss consumes it on its next physics frame)
+	# Boss 250px from the task: inside the 350px task-noise radius, so it hears it.
 	player.set("flashlight_on", false)
 	player.global_position = Vector2(400, 400)
 	player.set("interacting", true)
 	player.set("interact_target", 1)
-	boss.global_position = Vector2(800, 400)
+	boss.global_position = Vector2(650, 400)
 	boss.set("state", 0)
 	lvl.call("try_open_task_popup", 1)
 	var noise: Vector2 = lvl.call("consume_noise")

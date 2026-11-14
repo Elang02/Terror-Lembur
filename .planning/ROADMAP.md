@@ -360,6 +360,21 @@ Plans:
 
 **Status: Complete.** Committed (14 Nov 2026). test_hide 10/10, tutorial 11/11, solo 13/13, win 6/6, bossaggro 9/9. Render terverifikasi: pemain di bawah meja, badan ketutup meja, cuma kaki yang kelihatan di bawah meja. Senter mati pas ngumpet (bug: `_process` nyalain lagi, diperbaiki).
 
+## Phase 21: Evaluasi Menyeluruh + Balance (2 Jam)
+
+**Goal:** Evaluasi semua detail game dari menu sampai ending, perbaiki yang janggal, balance bos supaya tegang tapi adil.
+**Requirements**: BAL-01..BAL-05
+**Success Criteria** (what must be TRUE):
+  1. Bos cuma menyelidiki tugas dalam 350px; teleport pertama 15-20 dtk
+  2. Teks menu sebut semua tugas + kode; ENDING PAHIT tanpa "level berikut"; timer tidak jalan pas intro
+  3. Full regression hijau; video baru bot bisa progres tanpa ketangkep berulang
+**Plans**:
+- [x] 21-01: Evaluasi video v13 frame demi frame, catat masalah
+- [x] 21-02: Perbaiki balance + teks + timer
+- [x] 21-03: Update test + full regression + video v14 verifikasi
+
+**Status: Complete.** Committed (14 Nov 2026). test_bossaggro 9/9, test_tension 5/5, test_hide 10/10, popup 23/23, solo 13/13, win 6/6, flow 3/3, search 2/2, patrol 2/2, music 7/7, tutorial 11/11, bosspol 6/6, light 7/7, mute 9/9, intro 6/6. Video v13: bot ketangkep 2x, tidak selesai dalam 180 dtk (terlalu agresif). Video v14: bot ketangkep 1x, progres 2/3 di 0:51, balance membaik.
+
 ## Progress
 
 ## Progress
@@ -391,5 +406,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 18. Kode Hafalan + Game Lebih Menantang | 3/3 | Complete | 14 Nov 2026 |
 | 19. Bos Lebih Agresif | 3/3 | Complete | 14 Nov 2026 |
 | 20. Ngumpet Beneran di Bawah Meja | 2/2 | Complete | 14 Nov 2026 |
+| 21. Evaluasi Menyeluruh + Balance | 3/3 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

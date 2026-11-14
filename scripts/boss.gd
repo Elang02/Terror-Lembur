@@ -9,8 +9,8 @@ const VISION_ANGLE := 1.2
 const CATCH_DIST := 30.0
 const TELEPORT_MIN := 14.0
 const TELEPORT_MAX := 20.0
-const FIRST_TELEPORT_MIN := 8.0
-const FIRST_TELEPORT_MAX := 12.0
+const FIRST_TELEPORT_MIN := 15.0
+const FIRST_TELEPORT_MAX := 20.0
 const BLIND_TIME := 1.5
 const CHASE_TIRED := 8.0
 

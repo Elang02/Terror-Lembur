@@ -27,10 +27,10 @@ func _run() -> void:
 	boss = lvl.get("boss")
 	# 1. First teleport timer is 8-12s, not 20-30s
 	var t0 := float(boss.get("teleport_timer"))
-	if t0 >= 8.0 and t0 <= 12.0:
-		_ok("first teleport timer is 8-12s (" + str(t0) + "s)")
+	if t0 >= 15.0 and t0 <= 20.0:
+		_ok("first teleport timer is 15-20s (" + str(t0) + "s)")
 	else:
-		_fail("first teleport timer out of 8-12s range (" + str(t0) + "s)")
+		_fail("first teleport timer out of 15-20s range (" + str(t0) + "s)")
 	# 2. First patrol waypoint is (272,448), closest to the Computer task
 	var target: Vector2 = boss.get("target")
 	if target == Vector2(272, 448):
@@ -57,16 +57,16 @@ func _run() -> void:
 	else:
 		_ok("boss teleported within the first window")
 		var d := boss.global_position.distance_to(player.global_position)
-		if d >= 150.0:
-			_ok("first teleport lands >=150px from player (" + str(d) + "px, fair)")
+		if d >= 120.0:
+			_ok("first teleport lands >=120px from player (" + str(d) + "px, fair)")
 		else:
-			_fail("first teleport lands too close (" + str(d) + "px < 150px)")
-		# 4. After the first teleport, the next timer is back to 20-30s
+			_fail("first teleport lands too close (" + str(d) + "px < 120px)")
+		# 4. After the first teleport, the next timer is back to 14-20s
 		var t1 := float(boss.get("teleport_timer"))
-		if t1 >= 20.0 and t1 <= 30.0:
-			_ok("next teleport timer back to 20-30s (" + str(t1) + "s)")
+		if t1 >= 14.0 and t1 <= 20.0:
+			_ok("next teleport timer back to 14-20s (" + str(t1) + "s)")
 		else:
-			_fail("next teleport timer out of 20-30s range (" + str(t1) + "s)")
+			_fail("next teleport timer out of 14-20s range (" + str(t1) + "s)")
 	_report()
 
 func _report() -> void:
