@@ -54,10 +54,14 @@ func _run() -> void:
 		_ok("sprite crouches (scale y 0.6)")
 	else:
 		_fail("sprite scale y is " + str(sprite.scale.y))
-	if absf(sprite.modulate.a - 0.5) < 0.01:
-		_ok("sprite semi-transparent (alpha 0.5)")
+	if absf(sprite.modulate.a - 0.35) < 0.01:
+		_ok("sprite semi-transparent (alpha 0.35)")
 	else:
 		_fail("sprite alpha is " + str(sprite.modulate.a))
+	if int(player.get("collision_layer")) == 0 and int(player.get("collision_mask")) == 0:
+		_ok("collision off while hiding (physics cannot push player out)")
+	else:
+		_fail("collision still on while hiding")
 	var lbl: Label = player.get("name_label")
 	if lbl != null and absf(lbl.modulate.a) < 0.01:
 		_ok("name label hidden while hiding")

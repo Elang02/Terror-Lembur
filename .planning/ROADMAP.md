@@ -389,6 +389,23 @@ Plans:
 
 **Status: Complete.** Committed (14 Nov 2026). test_taskwarn 2/2, bossaggro 9/9, popup 23/23, solo 13/13.
 
+## Phase 23: Bos Tidak Buta, Tidak Nyangkut, Ngumpet Beneran
+
+**Goal:** Perbaiki 3 keluhan Elang: bos nabrak/nyangkut di meja dan tembok, ngumpet tidak benar-benar di bawah meja, bos kayak buta (pemain lewat tidak ketangkep/dikejar).
+**Requirements**: BOSS-01, BOSS-02, BOSS-03, HIDE-01
+**Success Criteria** (what must be TRUE):
+  1. Bos bisa nangkep pemain dari arah mana pun, termasuk dari atas (dulu CATCH_DIST 30 < jarak kontak vertikal 36px, jadi bos nempel dari atas tapi tidak bisa nangkep)
+  2. Bos bisa lihat pemain dalam gelap sampai 200px (dulu 150px, pemain bisa seenaknya lewat dalam gelap)
+  3. Bos lepas dari nyangkut dalam 1.0 dtk (dulu 2.0 dtk) + repath baru
+  4. Ngumpet: collision pemain mati pas ngumpet (posisi persis di bawah meja, tidak didorong fisika), alpha 0.35
+  5. test_vision 8/8, test_hide 11/11; regression hijau
+**Plans**:
+- [x] 23-01: CATCH_DIST 30 → 40 + dark vision 150 → 200 + stuck 2.0 → 1.0 dtk + repath
+- [x] 23-02: Ngumpet: collision off + alpha 0.35
+- [x] 23-03: Test vision + hide + regression
+
+**Status: Complete.** Committed (14 Nov 2026). test_vision 8/8, test_hide 11/11, bossaggro 9/9, solo 13/13, popup 23/23. Render ngumpet: pemain sepenuhnya ketutup meja, posisi persis (320, 314).
+
 ## Progress
 
 ## Progress
@@ -422,5 +439,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 20. Ngumpet Beneran di Bawah Meja | 2/2 | Complete | 14 Nov 2026 |
 | 21. Evaluasi Menyeluruh + Balance | 3/3 | Complete | 14 Nov 2026 |
 | 22. Peringatan Bos Datang ke Tugas | 2/2 | Complete | 14 Nov 2026 |
+| 23. Bos Tidak Buta, Tidak Nyangkut, Ngumpet Beneran | 3/3 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

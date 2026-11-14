@@ -277,6 +277,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **BAL-04**: Teks ENDING PAHIT tanpa "level berikut" (cuma ada 1 level)
 - [ ] **BAL-05**: Timer tidak jalan selama intro cerita (dulu intro 4 dtk ikut kehitung, tidak adil buat bintang)
 - [ ] **WARN-01**: Pas buka popup tugas dan bos dalam 350px, muncul peringatan "BOS MENDENGAR SUARAMU! Dia menuju ke tugasmu!" + bunyi alarm, 3 detik; kalau bos jauh tidak ada peringatan
+- [ ] **BOSS-01**: Bos bisa nangkep pemain dari arah mana pun (CATCH_DIST 30 → 40; dari atas jarak kontak 36px dulu di luar jangkauan)
+- [ ] **BOSS-02**: Penglihatan bos dalam gelap 150px → 200px (pemain nggak bisa seenaknya lewat dalam gelap)
+- [ ] **BOSS-03**: Bos lepas dari nyangkut di meja/tembok lebih cepat (stuck detector 2.0 dtk → 1.0 dtk + repath baru pas lepas)
+- [ ] **HIDE-01**: Ngumpet bener-bener di bawah meja: collision pemain mati pas ngumpet (fisika nggak bisa dorong keluar), alpha 0.5 → 0.35
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -308,6 +312,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BAL-04 | Phase 21 | Done |
 | BAL-05 | Phase 21 | Done |
 | WARN-01 | Phase 22 | Done |
+| BOSS-01 | Phase 23 | Done |
+| BOSS-02 | Phase 23 | Done |
+| BOSS-03 | Phase 23 | Done |
+| HIDE-01 | Phase 23 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -321,8 +329,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v10 requirements: 5 total
 - v11 requirements: 2 total
 - v12 requirements: 5 total
-- v13 requirements: 1 total
-- Mapped to phases: 101
+- v13 requirements: 4 total
+- Mapped to phases: 105
 - Unmapped: 0 ✓
 
 ---

@@ -6,7 +6,7 @@ const SPEED_SEARCH := 140.0
 const SPEED_RETURN := 100.0
 const VISION_RANGE := 300.0
 const VISION_ANGLE := 1.2
-const CATCH_DIST := 30.0
+const CATCH_DIST := 40.0
 const TELEPORT_MIN := 14.0
 const TELEPORT_MAX := 20.0
 const FIRST_TELEPORT_MIN := 15.0
@@ -168,11 +168,14 @@ func _update_stuck(delta: float) -> void:
 		stuck_last_pos = global_position
 		return
 	stuck_timer += delta
-	if stuck_timer >= 2.0:
+	if stuck_timer >= 1.0:
 		stuck_timer = 0.0
 		global_position = path[path_index]
 		stuck_last_pos = global_position
 		velocity = Vector2.ZERO
+		# Fresh route to the real target, so the boss does not grind the
+		# same bad path again right after the jump.
+		_request_path(target)
 
 func _refresh_mark() -> void:
 	var m := ""
@@ -399,7 +402,7 @@ func _nearest_visible_player() -> Node2D:
 		var to_p: Vector2 = (child.global_position - global_position).normalized()
 		if facing.dot(to_p) < cos(VISION_ANGLE):
 			continue
-		if not child.get("flashlight_on") and not level.is_lit(child.global_position) and d >= 150.0:
+		if not child.get("flashlight_on") and not level.is_lit(child.global_position) and d >= 200.0:
 			continue
 		if not _has_line_of_sight(child):
 			continue

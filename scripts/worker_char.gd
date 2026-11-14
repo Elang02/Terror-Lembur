@@ -264,9 +264,13 @@ func _toggle_hide() -> void:
 		return
 	hiding = true
 	hide_spot = spot
+	# No collision while hiding: physics would push the player out of the
+	# desk and leave them standing next to it instead of under it.
+	collision_layer = 0
+	collision_mask = 0
 	global_position = spot + Vector2(0, -6)
 	sprite.scale = Vector2(1.0, 0.6)
-	sprite.modulate.a = 0.5
+	sprite.modulate.a = 0.35
 	if name_label != null:
 		name_label.modulate.a = 0.0
 	light.enabled = false
@@ -275,6 +279,8 @@ func _toggle_hide() -> void:
 
 func _unhide() -> void:
 	hiding = false
+	collision_layer = 1
+	collision_mask = 1
 	sprite.scale = Vector2.ONE
 	sprite.modulate.a = 1.0
 	if name_label != null:
