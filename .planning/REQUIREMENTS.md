@@ -219,6 +219,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [x] **TASK-05**: Tutorial, HUD, dan menu menjelaskan cara main yang baru (bukan lagi "tahan E")
 - [x] **TASK-06**: Demo bot bisa menyelesaikan tugas dengan minigame (buat video), dan semua test lama tetap hijau
 
+### Task Popups (Elang 14 Nov 2026: tugas harus kayak Excel/panel beneran, popup, interaktif — bukan bar kecil)
+
+- [ ] **POP-01**: Tiap tugas dibuka sebagai popup fullscreen (latar gelap, panel tengah): judul, instruksi, area interaktif, progress, footer Esc = batalkan (progres hilang), bos tetap bergerak selagi popup dibuka
+- [ ] **POP-02**: Komputer = Laporan Excel (kuis hitung cepat, 5 soal, tombol 1-3)
+- [ ] **POP-03**: Generator = Panel Listrik (Simon hafalan lampu, 3 ronde, tombol 1-4)
+- [ ] **POP-04**: Arsip = Fotokopi (timing bar SPASI, 5 lembar) + Pintu Keluar = Keypad (ketik kode 4 digit) + Tuas Sel = tarik tuas (mash SPASI)
+- [ ] **POP-05**: Pemain terkunci geraknya selagi popup dibuka; tugas 2 orang tetap butuh 2 pemain di dekatnya buat dibuka
+- [ ] **POP-06**: Demo bot bisa mainkan semua popup (buat video), dan semua test lama tetap hijau
+
 | LIGHT-01 | Phase 11 | Pending |
 | LIGHT-02 | Phase 11 | Pending |
 | LIGHT-03 | Phase 11 | Pending |
@@ -227,19 +236,35 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROD-01 | Phase 13 | Pending |
 | PROD-02 | Phase 13 | Pending |
 | PROD-03 | Phase 13 | Pending |
+### Task Popups (Elang 14 Nov 2026: tugas harus kayak Excel/panel beneran, popup, interaktif — bukan bar kecil)
+
+- [ ] **POP-01**: Tiap tugas dibuka sebagai popup fullscreen (latar gelap, panel tengah): judul, instruksi, area interaktif, progress, footer Esc = batalkan (progres hilang), bos tetap bergerak selagi popup dibuka
+- [ ] **POP-02**: Komputer = Laporan Excel (kuis hitung cepat, 5 soal, tombol 1-3)
+- [ ] **POP-03**: Generator = Panel Listrik (Simon hafalan lampu, 3 ronde, tombol 1-4)
+- [ ] **POP-04**: Arsip = Fotokopi (timing bar SPASI, 5 lembar) + Pintu Keluar = Keypad (ketik kode 4 digit) + Tuas Sel = tarik tuas (mash SPASI)
+- [ ] **POP-05**: Pemain terkunci geraknya selagi popup dibuka; tugas 2 orang tetap butuh 2 pemain di dekatnya buat dibuka
+- [ ] **POP-06**: Demo bot bisa mainkan semua popup (buat video), dan semua test lama tetap hijau
+
 | TASK-01 | Phase 14 | Done |
 | TASK-02 | Phase 14 | Done |
 | TASK-03 | Phase 14 | Done |
 | TASK-04 | Phase 14 | Done |
 | TASK-05 | Phase 14 | Done |
 | TASK-06 | Phase 14 | Done |
+| POP-01 | Phase 15 | Pending |
+| POP-02 | Phase 15 | Pending |
+| POP-03 | Phase 15 | Pending |
+| POP-04 | Phase 15 | Pending |
+| POP-05 | Phase 15 | Pending |
+| POP-06 | Phase 15 | Pending |
 
 **Coverage:**
 - v1 requirements: 46 total
 - v3 requirements: 11 total
 - v4 requirements: 8 total
 - v5 requirements: 6 total
-- Mapped to phases: 71
+- v6 requirements: 6 total
+- Mapped to phases: 77
 - Unmapped: 0 ✓
 
 ---

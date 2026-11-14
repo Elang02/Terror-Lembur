@@ -54,29 +54,29 @@ func _run() -> void:
 	for tp in lvl.get("tasks"):
 		if tp.get("task_id") == 0:
 			gen = tp
-	var gen_marker_before: float = gen.get("marker_pos")
+	player.set("interacting", true)
+	player.set("interact_target", 0)
+	lvl.call("try_open_task_popup", 0)
 	await process_frame
 	await process_frame
 	await process_frame
-	await process_frame
-	await process_frame
-	await process_frame
-	await process_frame
-	await process_frame
-	await process_frame
-	await process_frame
-	var gen_marker_after: float = gen.get("marker_pos")
-	if bool(gen.get("active")) and absf(gen_marker_after - gen_marker_before) > 0.01:
-		_ok("Generator active with 1 worker in solo, marker moves (" + str(gen_marker_before) + " -> " + str(gen_marker_after) + ")")
+	var pop: Node = lvl.get("popup")
+	if pop != null and bool(pop.get("open")) and int(lvl.get("popup_task_id")) == 0:
+		_ok("Generator popup opens with 1 worker in solo")
 	else:
-		_fail("Generator not active with 1 worker in solo (active=" + str(gen.get("active")) + ")")
-	gen.set("marker_pos", float(gen.get("zone_center")))
-	lvl.call("try_task_hit", 0)
-	var gen_prog_after := float(gen.get("progress"))
-	if absf(gen_prog_after - 0.25) < 0.01:
-		_ok("Generator hit registers in solo (progress 0.25 = 1/4 hits)")
+		_fail("Generator popup did not open in solo (open=" + str(pop.get("open")) + ")")
+	if pop != null and str(pop.get("kind")) == "simon":
+		_ok("Generator popup kind is simon (Panel Listrik)")
 	else:
-		_fail("Generator hit did not register (progress=" + str(gen_prog_after) + ")")
+		_fail("Generator popup kind is " + str(pop.get("kind")))
+	if pop != null and bool(pop.get("open")):
+		pop.call("close_popup", false)
+		await process_frame
+		await process_frame
+	if pop != null and not bool(pop.get("open")):
+		_ok("popup closes on cancel")
+	else:
+		_fail("popup still open after cancel")
 	Input.action_release("interact")
 	player.set("interacting", false)
 	player.set("interact_target", -1)

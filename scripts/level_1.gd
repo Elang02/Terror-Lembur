@@ -10,11 +10,11 @@ const TASK_SCENE := "res://scenes/task_point.tscn"
 const PICKUP_SCENE := "res://scenes/pickup_item.tscn"
 
 const TASK_DEFS := [
-	{"id": 0, "label": "GENERATOR", "pos": Vector2(736, 400), "need": 2, "time": 8.0, "noise": 400.0, "hits": 4, "speed": 1.5, "zone": 0.26},
-	{"id": 1, "label": "KOMPUTER", "pos": Vector2(400, 400), "need": 1, "time": 10.0, "noise": 150.0, "hits": 3, "speed": 1.0, "zone": 0.28},
-	{"id": 2, "label": "ARSIP", "pos": Vector2(190, 560), "need": 1, "time": 6.0, "noise": 150.0, "hits": 2, "speed": 0.8, "zone": 0.2},
-	{"id": 3, "label": "PINTU KELUAR", "pos": Vector2(800, 760), "need": 2, "time": 5.0, "noise": 400.0, "hits": 3, "speed": 1.2, "zone": 0.24},
-	{"id": 4, "label": "TUAS SEL", "pos": Vector2(960, 140), "need": 1, "time": 3.0, "noise": 150.0, "hits": 2, "speed": 1.8, "zone": 0.3},
+	{"id": 0, "label": "GENERATOR", "pos": Vector2(736, 400), "need": 2, "time": 8.0, "noise": 400.0},
+	{"id": 1, "label": "KOMPUTER", "pos": Vector2(400, 400), "need": 1, "time": 10.0, "noise": 150.0},
+	{"id": 2, "label": "ARSIP", "pos": Vector2(190, 560), "need": 1, "time": 6.0, "noise": 150.0},
+	{"id": 3, "label": "PINTU KELUAR", "pos": Vector2(800, 760), "need": 2, "time": 5.0, "noise": 400.0},
+	{"id": 4, "label": "TUAS SEL", "pos": Vector2(960, 140), "need": 1, "time": 3.0, "noise": 150.0},
 ]
 const CELL_POS := Vector2(1080, 140)
 const GUDANG_ROOM := Rect2(32, 64, 192, 224)
@@ -120,8 +120,10 @@ var self_rescue_progress := 0.0
 const SELF_RESCUE_TIME := 15.0
 var self_rescue_noise_timer := 0.0
 var warn_timer := 0.0
-var noise_emit_timer := 0.0
 var debug_timer := 0.0
+var popup: TaskPopup = null
+var popup_open := false
+var popup_task_id := -1
 
 var flicker_lights: Array[PointLight2D] = []
 var flicker_base: Array[float] = []
@@ -234,6 +236,7 @@ func _ready() -> void:
 	_init_desk_positions()
 	_build_astar()
 	_build_tasks()
+	_build_popup()
 	if Engine.is_editor_hint():
 		return
 	sfx = SFX.new()
@@ -322,7 +325,7 @@ func _toggle_mute() -> void:
 
 const TUTORIAL_TEXTS := {
 	1: "1/4  Gerak pakai WASD  (T: lewati tutorial)",
-	2: "2/4  Jalan ke Komputer, tekan E pas penanda di zona hijau  (T: lewati)",
+	2: "2/4  Jalan ke Komputer, tekan E buat buka tugasnya  (T: lewati)",
 	3: "3/4  Tekan C di dekat meja buat ngumpet  (T: lewati)",
 	4: "4/4  Selesaikan semua tugas, lalu kabur lewat Pintu Keluar  (T: lewati)",
 }
@@ -356,12 +359,6 @@ func _task_done(task_id: int) -> bool:
 			return bool(tp.get("done"))
 	return false
 
-func _task_hits(task_id: int) -> int:
-	for tp in tasks:
-		if int(tp.get("task_id")) == task_id:
-			return int(tp.get("hits"))
-	return 0
-
 func _update_tutorial() -> void:
 	if tutorial_step == 5:
 		return
@@ -390,7 +387,7 @@ func _update_tutorial() -> void:
 				tutorial_step = 2
 				_refresh_tutorial_label()
 		2:
-			if _task_hits(1) > 0 or _task_done(1):
+			if (popup_open and popup_task_id == 1) or _task_done(1):
 				tutorial_step = 3
 				_refresh_tutorial_label()
 		3:
@@ -778,10 +775,14 @@ func _build_tasks() -> void:
 	for def in TASK_DEFS:
 		var tp := scene.instantiate() as Node2D
 		tp.name = "Task_" + str(def["label"]).replace(" ", "_")
-		tp.setup(def["id"], def["label"], def["need"], def["time"], def["noise"], def["hits"], def["speed"], def["zone"])
+		tp.setup(def["id"], def["label"], def["need"], def["time"], def["noise"])
 		tp.position = def["pos"]
 		add_child(tp)
 		tasks.append(tp)
+
+func _build_popup() -> void:
+	popup = TaskPopup.new()
+	add_child(popup)
 
 func _build_pickups() -> void:
 	var scene := load(PICKUP_SCENE) as PackedScene
@@ -1097,7 +1098,6 @@ func _process(delta: float) -> void:
 	elif local_camera != null and local_camera.offset != Vector2.ZERO:
 		local_camera.offset = Vector2.ZERO
 	if multiplayer.is_server() and not game_over:
-		_update_tasks(delta)
 		_update_self_rescue(delta)
 		_update_pickups()
 		_check_endings()
@@ -1114,53 +1114,94 @@ func _process(delta: float) -> void:
 func _is_player(node: Node) -> bool:
 	return node is CharacterBody2D and node.has_method("set_locked")
 
-func _update_tasks(delta: float) -> void:
-	for tp in tasks:
-		if tp.done:
+func _popup_kind(task_id: int) -> String:
+	match task_id:
+		0:
+			return "simon"
+		1:
+			return "excel"
+		2:
+			return "fotokopi"
+		3:
+			return "keypad"
+		4:
+			return "mash"
+	return "excel"
+
+func _popup_title(task_id: int) -> String:
+	match task_id:
+		0:
+			return "Panel Listrik"
+		1:
+			return "Laporan Excel"
+		2:
+			return "Fotokopi"
+		3:
+			return "Keypad Pintu"
+		4:
+			return "Tuas Sel"
+	return "Tugas"
+
+func _task_ready(task_id: int) -> bool:
+	var tp: Node = null
+	for t in tasks:
+		if int(t.get("task_id")) == task_id:
+			tp = t
+			break
+	if tp == null or bool(tp.get("done")):
+		return false
+	if task_id == 3 and not _main_tasks_done():
+		return false
+	if task_id == 4 and not _any_locked():
+		return false
+	var workers := 0
+	for child in ysort.get_children():
+		if not _is_player(child):
 			continue
-		var id: int = tp.task_id
-		if id == 3 and not _main_tasks_done():
+		if child.get("locked"):
 			continue
-		if id == 4 and not _any_locked():
-			tp.set("active", false)
-			continue
-		var workers := 0
-		for child in ysort.get_children():
-			if not _is_player(child):
-				continue
-			if child.get("locked"):
-				continue
-			if child.get("interacting") and child.get("interact_target") == id:
-				if child.global_position.distance_to(tp.global_position) < INTERACT_RANGE + 20.0:
-					workers += 1
-		var ready := false
-		if id == 0:
-			ready = workers >= 2 or (workers == 1 and solo_mode)
-		elif id == 3:
-			ready = workers >= 2 or (workers == 1 and (_any_locked() or solo_mode))
-		else:
-			ready = workers >= 1
-		tp.set("active", ready)
-		if not ready:
-			continue
-		var mp: float = tp.get("marker_pos")
-		var md: float = tp.get("marker_dir")
-		mp += md * float(tp.get("marker_speed")) * delta
-		if mp >= 1.0:
-			mp = 1.0
-			md = -1.0
-		elif mp <= 0.0:
-			mp = 0.0
-			md = 1.0
-		tp.set("marker_pos", mp)
-		tp.set("marker_dir", md)
-		noise_emit_timer += delta
-		if noise_emit_timer > 0.5:
-			noise_emit_timer = 0.0
-			report_noise(tp.global_position, tp.noise_radius)
+		if child.get("interacting") and child.get("interact_target") == task_id:
+			if child.global_position.distance_to(tp.global_position) < INTERACT_RANGE + 20.0:
+				workers += 1
+	if task_id == 0:
+		return workers >= 2 or (workers == 1 and solo_mode)
+	if task_id == 3:
+		return workers >= 2 or (workers == 1 and (_any_locked() or solo_mode))
+	return workers >= 1
+
+func try_open_task_popup(task_id: int) -> void:
+	if popup_open:
+		return
+	if popup == null:
+		return
+	if not _task_ready(task_id):
+		return
+	var tp: Node = null
+	for t in tasks:
+		if int(t.get("task_id")) == task_id:
+			tp = t
+			break
+	if tp == null:
+		return
+	var me := _my_player()
+	var is_demo := false
+	if me != null:
+		is_demo = bool(me.get("demo_mode"))
+	popup_open = true
+	popup_task_id = task_id
+	popup.open_popup(self, task_id, tp, _popup_kind(task_id), _popup_title(task_id), is_demo)
 
 @rpc("any_peer", "call_local")
-func try_task_hit(task_id: int) -> void:
+func popup_set_progress(task_id: int, progress: float) -> void:
+	if not multiplayer.is_server():
+		return
+	for tp in tasks:
+		if int(tp.get("task_id")) == task_id:
+			tp.set("progress", clampf(progress, 0.0, 1.0))
+			return
+
+@rpc("any_peer", "call_local")
+func popup_task_done(task_id: int) -> void:
 	if not multiplayer.is_server():
 		return
 	for tp in tasks:
@@ -1168,19 +1209,23 @@ func try_task_hit(task_id: int) -> void:
 			continue
 		if bool(tp.get("done")):
 			return
-		if not bool(tp.get("active")):
-			return
-		if bool(tp.call("try_hit")):
-			play_sfx("tick", -8.0, 1.4)
-			if float(tp.get("progress")) >= 1.0:
-				tp.set("done", true)
-				_on_task_done(tp)
-		else:
-			play_sfx("thud", -4.0, 0.8)
-			report_noise(tp.global_position, float(tp.get("noise_radius")))
-			hud_warn_label.text = "MISS! Bos dengar suaramu!"
-			warn_timer = 1.5
+		tp.set("progress", 1.0)
+		tp.set("done", true)
+		_on_task_done(tp)
 		return
+
+@rpc("any_peer", "call_local")
+func popup_task_cancel(task_id: int) -> void:
+	if not multiplayer.is_server():
+		return
+	for tp in tasks:
+		if int(tp.get("task_id")) == task_id:
+			tp.set("progress", 0.0)
+			return
+
+func _on_popup_closed() -> void:
+	popup_open = false
+	popup_task_id = -1
 
 func _update_self_rescue(delta: float) -> void:
 	if not solo_mode:
@@ -1387,7 +1432,7 @@ func _update_hud() -> void:
 		if solo_mode:
 			hud_status_label.text = locked_names + "Tahan E buat kabur dari sel (15 detik, berisik!)."
 		else:
-			hud_status_label.text = locked_names + "Tekan E pas zona hijau di TUAS SEL buat bebaskan."
+			hud_status_label.text = locked_names + "Tekan E di TUAS SEL buat bebaskan."
 		hud_status_pill.visible = true
 	else:
 		hud_status_label.text = ""
@@ -1409,7 +1454,7 @@ func _update_hud() -> void:
 						need_txt = " (sendiri)" if solo_mode else " (butuh 2 orang)"
 					elif tp.task_id == 3:
 						need_txt = " (sendiri)" if solo_mode else " (butuh 2 orang)"
-					prompt_txt = "Tekan E pas zona hijau: " + tp.label_text + " " + str(int(tp.get("hits"))) + "/" + str(int(tp.get("hits_needed"))) + need_txt
+					prompt_txt = "E: kerjakan " + tp.label_text + need_txt
 					prompt_prog = tp.progress
 		else:
 			if me.get("hiding"):

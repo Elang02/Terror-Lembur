@@ -90,6 +90,11 @@ func _physics_process(delta: float) -> void:
 		return
 	if shout_timer > 0.0:
 		shout_timer -= delta
+	var lvl0 := get_parent().get_parent()
+	if lvl0 != null and bool(lvl0.get("popup_open")):
+		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+		move_and_slide()
+		return
 	var input_dir := Vector2.ZERO
 	if demo_mode:
 		input_dir = _demo_update(delta)
@@ -170,13 +175,8 @@ func _demo_update(delta: float) -> Vector2:
 			return Vector2.ZERO
 		interacting = true
 		interact_target = demo_task_id
-		for tp in lvl.get("tasks"):
-			if int(tp.get("task_id")) == demo_task_id and bool(tp.get("active")):
-				var half: float = float(tp.get("zone_size")) * 0.5
-				var mp: float = float(tp.get("marker_pos"))
-				var zc: float = float(tp.get("zone_center"))
-				if mp >= zc - half and mp <= zc + half:
-					lvl.rpc_id(1, "try_task_hit", demo_task_id)
+		if lvl.has_method("try_open_task_popup"):
+			lvl.try_open_task_popup(demo_task_id)
 		return Vector2.ZERO
 	interacting = false
 	interact_target = -1
@@ -219,8 +219,8 @@ func _update_actions(input_dir: Vector2) -> void:
 	_update_interact()
 	if Input.is_action_just_pressed("interact") and interacting and interact_target >= 0 and interact_target < 90:
 		var lvl := get_parent().get_parent()
-		if lvl != null and lvl.has_method("try_task_hit"):
-			lvl.rpc_id(1, "try_task_hit", interact_target)
+		if lvl != null and lvl.has_method("try_open_task_popup"):
+			lvl.try_open_task_popup(interact_target)
 
 func _update_interact() -> void:
 	if demo_mode:

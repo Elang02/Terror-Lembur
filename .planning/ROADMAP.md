@@ -260,6 +260,24 @@ Plans:
 - [x] 14-03: Tutorial + HUD + menu text untuk cara main baru
 - [x] 14-04: test_taskminigame.gd + full regression + video baru
 
+## Phase 15: Task Popups
+
+**Goal:** Tugas dibuka sebagai popup fullscreen yang tampilannya kayak aplikasi beneran (Excel, panel listrik, fotokopi, keypad), interaktif, bos tetap bergerak.
+**Requirements**: POP-01, POP-02, POP-03, POP-04, POP-05, POP-06
+**Success Criteria** (what must be TRUE):
+  1. Tiap tugas dibuka sebagai popup fullscreen (latar gelap, panel tengah, judul, instruksi, progress, footer Esc = batalkan, progres hilang)
+  2. Komputer = kuis Excel 5 soal (tombol 1-3); Generator = Simon panel listrik 3 ronde (tombol 1-4)
+  3. Arsip = timing Fotokopi SPASI 5 lembar; Pintu Keluar = keypad kode 4 digit; Tuas Sel = mash SPASI
+  4. Pemain terkunci geraknya selagi popup dibuka; tugas 2 orang butuh 2 pemain di dekatnya buat dibuka
+  5. Demo bot memainkan semua popup; semua test lama tetap hijau
+**Plans**: TBD
+
+Plans:
+- [ ] 15-01: Popup framework (overlay, panel, input, open/close, Esc cancel, player lock) + hapus timing bar lama
+- [ ] 15-02: Excel (Komputer) + Panel Listrik Simon (Generator)
+- [ ] 15-03: Fotokopi (Arsip) + Keypad (Pintu Keluar) + Mash tuas (Tuas Sel)
+- [ ] 15-04: Demo bot mainkan popup + test_popup.gd + full regression + video baru
+
 ## Progress
 
 **Execution Order:**
@@ -281,5 +299,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 12. Audio Production | 2/2 | Complete | 14 Nov 2026 |
 | 13. Production Build | 2/2 | Complete | 14 Nov 2026 |
 | 14. Task Minigames | 4/4 | Complete | 14 Nov 2026 |
+| 15. Task Popups | 0/4 | Not started | - |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
