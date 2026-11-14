@@ -201,9 +201,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ### Production Build (Production grade: build final terverifikasi)
 
-- [ ] **PROD-01**: Full solo playthrough jalan tanpa script error
-- [ ] **PROD-02**: Export Web + Windows dibangun ulang dari kode terbaru, zip itch.io terverifikasi
-- [ ] **PROD-03**: Video gameplay baru (60-120 detik) yang menunjukkan senter mulus
+- [x] **PROD-01**: Full solo playthrough jalan tanpa script error
+- [x] **PROD-02**: Export Web + Windows dibangun ulang dari kode terbaru, zip itch.io terverifikasi
+- [x] **PROD-03**: Video gameplay baru (60-120 detik) yang menunjukkan senter mulus
 
 | TENSE-01 | Phase 9 | Pending |
 | TENSE-02 | Phase 9 | Pending |

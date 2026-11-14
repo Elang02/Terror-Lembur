@@ -259,6 +259,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 10. Polish Bos & FSM | 3/3 | Complete | 14 Nov 2026 |
 | 11. Senter Smooth | 3/3 | Complete | 14 Nov 2026 |
 | 12. Audio Production | 2/2 | Complete | 14 Nov 2026 |
-| 13. Production Build | 0/2 | Not started | - |
+| 13. Production Build | 2/2 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
