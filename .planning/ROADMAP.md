@@ -273,10 +273,10 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 15-01: Popup framework (overlay, panel, input, open/close, Esc cancel, player lock) + hapus timing bar lama
-- [ ] 15-02: Excel (Komputer) + Panel Listrik Simon (Generator)
-- [ ] 15-03: Fotokopi (Arsip) + Keypad (Pintu Keluar) + Mash tuas (Tuas Sel)
-- [ ] 15-04: Demo bot mainkan popup + test_popup.gd + full regression + video baru
+- [x] 15-01: Popup framework (overlay, panel, input, open/close, Esc cancel, player lock) + hapus timing bar lama
+- [x] 15-02: Excel (Komputer) + Panel Listrik Simon (Generator)
+- [x] 15-03: Fotokopi (Arsip) + Keypad (Pintu Keluar) + Mash tuas (Tuas Sel)
+- [x] 15-04: Demo bot mainkan popup + test_popup.gd + full regression + video baru
 
 ## Progress
 
@@ -299,6 +299,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 12. Audio Production | 2/2 | Complete | 14 Nov 2026 |
 | 13. Production Build | 2/2 | Complete | 14 Nov 2026 |
 | 14. Task Minigames | 4/4 | Complete | 14 Nov 2026 |
-| 15. Task Popups | 0/4 | Not started | - |
+| 15. Task Popups | 4/4 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

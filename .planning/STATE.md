@@ -3,10 +3,10 @@ gsd_state_version: '1.0'
 status: executing
 progress:
   total_phases: 15
-  completed_phases: 13
+  completed_phases: 14
   total_plans: 0
   completed_plans: 0
-  percent: 87
+  percent: 93
 ---
 
 # Project State
@@ -16,7 +16,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-14)
 
 **Core value:** A solo curator can play the game start to finish, feel fear and tension, and reach an ending.
-**Current focus:** Phase 15 — Task Popups (Elang 14 Nov 2026: tugas harus kayak Excel/panel beneran, popup, interaktif)
+**Current focus:** Phase 5 — Final Submission (Phase 15 task popups complete)
 
 ## Current Position
 

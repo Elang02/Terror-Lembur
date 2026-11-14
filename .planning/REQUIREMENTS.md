@@ -221,12 +221,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ### Task Popups (Elang 14 Nov 2026: tugas harus kayak Excel/panel beneran, popup, interaktif — bukan bar kecil)
 
-- [ ] **POP-01**: Tiap tugas dibuka sebagai popup fullscreen (latar gelap, panel tengah): judul, instruksi, area interaktif, progress, footer Esc = batalkan (progres hilang), bos tetap bergerak selagi popup dibuka
-- [ ] **POP-02**: Komputer = Laporan Excel (kuis hitung cepat, 5 soal, tombol 1-3)
-- [ ] **POP-03**: Generator = Panel Listrik (Simon hafalan lampu, 3 ronde, tombol 1-4)
-- [ ] **POP-04**: Arsip = Fotokopi (timing bar SPASI, 5 lembar) + Pintu Keluar = Keypad (ketik kode 4 digit) + Tuas Sel = tarik tuas (mash SPASI)
-- [ ] **POP-05**: Pemain terkunci geraknya selagi popup dibuka; tugas 2 orang tetap butuh 2 pemain di dekatnya buat dibuka
-- [ ] **POP-06**: Demo bot bisa mainkan semua popup (buat video), dan semua test lama tetap hijau
+- [x] **POP-01**: Tiap tugas dibuka sebagai popup fullscreen (latar gelap, panel tengah): judul, instruksi, area interaktif, progress, footer Esc = batalkan (progres hilang), bos tetap bergerak selagi popup dibuka
+- [x] **POP-02**: Komputer = Laporan Excel (kuis hitung cepat, 5 soal, tombol 1-3)
+- [x] **POP-03**: Generator = Panel Listrik (Simon hafalan lampu, 3 ronde, tombol 1-4)
+- [x] **POP-04**: Arsip = Fotokopi (timing bar SPASI, 5 lembar) + Pintu Keluar = Keypad (ketik kode 4 digit) + Tuas Sel = tarik tuas (mash SPASI)
+- [x] **POP-05**: Pemain terkunci geraknya selagi popup dibuka; tugas 2 orang tetap butuh 2 pemain di dekatnya buat dibuka
+- [x] **POP-06**: Demo bot bisa mainkan semua popup (buat video), dan semua test lama tetap hijau
 
 | LIGHT-01 | Phase 11 | Pending |
 | LIGHT-02 | Phase 11 | Pending |
@@ -251,12 +251,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TASK-04 | Phase 14 | Done |
 | TASK-05 | Phase 14 | Done |
 | TASK-06 | Phase 14 | Done |
-| POP-01 | Phase 15 | Pending |
-| POP-02 | Phase 15 | Pending |
-| POP-03 | Phase 15 | Pending |
-| POP-04 | Phase 15 | Pending |
-| POP-05 | Phase 15 | Pending |
-| POP-06 | Phase 15 | Pending |
+| POP-01 | Phase 15 | Done |
+| POP-02 | Phase 15 | Done |
+| POP-03 | Phase 15 | Done |
+| POP-04 | Phase 15 | Done |
+| POP-05 | Phase 15 | Done |
+| POP-06 | Phase 15 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
