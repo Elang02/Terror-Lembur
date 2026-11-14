@@ -94,11 +94,13 @@ var mash_handle: Panel = null
 var mash_track: Control = null
 
 var cari_round := 1
-var cari_items: Array = []
+var cari_pages: Array = []
+var cari_page := 0
 var cari_target := ""
-var cari_target_pos := 1
+var cari_target_page := 0
+var cari_target_slot := 1
 var cari_boxes: Array = []
-var cari_pool: Array = ["MAP MERAH", "STAPLER", "PULPEN", "GUNTING", "KALKULATOR", "PENGGARIS", "KLIP", "AMPLOP", "BUKU", "MAP BIRU", "MAP KUNING", "FLASHDISK"]
+var cari_pool: Array = ["LAPORAN KEUANGAN Q3", "SURAT PEMECATAN", "NOTULEN RAPAT", "DAFTAR GAJI", "MEMO DIREKSI", "INVOICE KLIEN", "KONTRAK KERJA", "ABSENSI OKTOBER", "SURAT CUTI", "LAPORAN AUDIT", "RENCANA ANGGARAN", "BERKAS PAJAK", "SURAT PERINGATAN", "DAFTAR INVENTARIS", "PROPOSAL PROYEK", "SLIP GAJI"]
 
 var urut_dates: Array = []
 var urut_display: Array = []
@@ -271,7 +273,7 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 			mash_prog = 0.0
 			_build_mash()
 		"cari":
-			instr_label.text = "Berkas penting buat laporan lemburmu ada di gudang ini. Cari kotaknya, tekan angka 1-9. Salah, dia dengar."
+			instr_label.text = "Berkas penting buat laporan lemburmu ada di tumpukan arsip ini. Bolak-balik halamannya pakai tombol panah kiri-kanan, tekan angka 1-4 buat milih berkas. Salah, dia dengar."
 			cari_round = 1
 			_next_cari()
 		"urut":
@@ -689,35 +691,64 @@ func _refresh_mash_handle() -> void:
 func _next_cari() -> void:
 	var pool: Array = cari_pool.duplicate()
 	pool.shuffle()
-	cari_items.clear()
-	for i in range(9):
-		cari_items.append(pool[i])
-	cari_target = cari_items[rng.randi_range(0, 8)]
-	cari_target_pos = cari_items.find(cari_target) + 1
+	cari_pages.clear()
+	for p in range(3):
+		var page: Array = []
+		for i in range(4):
+			page.append(pool[p * 4 + i])
+		cari_pages.append(page)
+	var flat := rng.randi_range(0, 11)
+	cari_target = pool[flat]
+	cari_target_page = flat / 4
+	cari_target_slot = flat % 4 + 1
+	cari_page = 0
+	_build_cari()
+
+func _cari_flip(dir: int) -> void:
+	var np: int = clampi(cari_page + dir, 0, 2)
+	if np == cari_page:
+		return
+	cari_page = np
+	if level != null and level.has_method("play_sfx"):
+		level.play_sfx("tick", -12.0, 1.0)
 	_build_cari()
 
 func _build_cari() -> void:
 	status_label.text = "Ronde " + str(cari_round) + "/3  —  Cari: " + cari_target
 	_clear_content()
 	cari_boxes.clear()
-	var grid := GridContainer.new()
-	grid.columns = 3
-	grid.add_theme_constant_override("h_separation", 10)
-	grid.add_theme_constant_override("v_separation", 10)
-	content.add_child(grid)
-	for i in range(9):
-		var box := _panelc(COL_IRON, 6, Color(0.3, 0.24, 0.16), 2)
-		box.custom_minimum_size = Vector2(226, 64)
-		grid.add_child(box)
-		var bv := VBoxContainer.new()
-		bv.add_theme_constant_override("separation", 2)
-		box.add_child(bv)
-		var num := _make_label(str(i + 1), 16, COL_GOLD, true)
-		bv.add_child(num)
-		var item := _make_label(str(cari_items[i]), 18, COL_PAPER, true)
-		item.add_theme_font_override("font", _body_f())
-		bv.add_child(item)
-		cari_boxes.append(box)
+	var paper := _panelc(Color(0.93, 0.89, 0.78), 4, Color(0.35, 0.28, 0.18), 2)
+	paper.custom_minimum_size = Vector2(720, 0)
+	content.add_child(paper)
+	var pv := VBoxContainer.new()
+	pv.add_theme_constant_override("separation", 4)
+	paper.add_child(pv)
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 12)
+	pv.add_child(head)
+	var title := _make_label("BERKAS ARSIP KANTOR", 22, Color(0.16, 0.12, 0.08), true)
+	title.add_theme_font_override("font", _title_f())
+	head.add_child(title)
+	var stamp := _make_label("RAHASIA", 16, COL_BLOOD, true)
+	stamp.add_theme_font_override("font", _title_f())
+	head.add_child(stamp)
+	var sub := _make_label("Tumpukan arsip gudang — Halaman " + str(cari_page + 1) + "/3", 14, Color(0.35, 0.28, 0.18), false)
+	pv.add_child(sub)
+	var rule := HSeparator.new()
+	pv.add_child(rule)
+	var page: Array = cari_pages[cari_page]
+	for i in range(4):
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 10)
+		pv.add_child(row)
+		var num := _make_label(str(i + 1) + ".", 18, COL_BLOOD, true)
+		row.add_child(num)
+		var fname := _make_label(str(page[i]), 18, Color(0.16, 0.12, 0.08), false)
+		fname.add_theme_font_override("font", _body_f())
+		row.add_child(fname)
+		cari_boxes.append(row)
+	var foot := _make_label("← → ganti halaman  |  1-4 pilih berkas", 14, Color(0.35, 0.28, 0.18), false)
+	pv.add_child(foot)
 	_refresh_progress()
 
 func _gen_urut() -> void:
@@ -805,8 +836,9 @@ func press_number(n: int) -> void:
 						key_entered.clear()
 						_refresh_keypad()
 		"cari":
-			if n >= 1 and n <= 9:
-				if n == cari_target_pos:
+			if n >= 1 and n <= 4:
+				var picked: String = str(cari_pages[cari_page][n - 1])
+				if picked == cari_target:
 					_right("Ketemu! (" + str(cari_round) + "/3)")
 					cari_round += 1
 					if cari_round > 3:
@@ -959,7 +991,10 @@ func _demo_step(delta: float) -> void:
 			press_space()
 			demo_timer = 0.12
 		"cari":
-			press_number(cari_target_pos)
+			if cari_page != cari_target_page:
+				_cari_flip(1 if cari_target_page > cari_page else -1)
+			else:
+				press_number(cari_target_slot)
 			demo_timer = 0.4
 		"urut":
 			var target_date: int = urut_dates[urut_next]
@@ -1017,6 +1052,14 @@ func _unhandled_input(event: InputEvent) -> void:
 					_submit_excel()
 			return
 		match k.keycode:
+			KEY_LEFT:
+				if kind == "cari":
+					get_viewport().set_input_as_handled()
+					_cari_flip(-1)
+			KEY_RIGHT:
+				if kind == "cari":
+					get_viewport().set_input_as_handled()
+					_cari_flip(1)
 			KEY_1:
 				get_viewport().set_input_as_handled()
 				press_number(1)

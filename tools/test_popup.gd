@@ -125,8 +125,14 @@ func _run() -> void:
 		else:
 			_fail("Gudang kind is " + str(pop.get("kind")) + " expected cari")
 		for r in range(3):
-			var tpos: int = int(pop.get("cari_target_pos"))
-			pop.call("press_number", tpos)
+			var tpage: int = int(pop.get("cari_target_page"))
+			var tslot: int = int(pop.get("cari_target_slot"))
+			while int(pop.get("cari_page")) != tpage:
+				pop.call("_cari_flip", 1 if tpage > int(pop.get("cari_page")) else -1)
+				await process_frame
+			if int(pop.get("cari_page")) != tpage:
+				_fail("Cari: page flip did not reach target page")
+			pop.call("press_number", tslot)
 			await process_frame
 		var gudang: Node = _task(5)
 		if gudang != null and bool(gudang.get("done")):

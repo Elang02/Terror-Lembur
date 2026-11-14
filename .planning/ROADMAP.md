@@ -537,6 +537,22 @@ Plans:
 
 **Status: Complete.** Committed (14 Nov 2026). test_popup 27/27, test_win 6/6, test_flow 3/3, test_tutorial 11/11. Render terverifikasi: grid 3x3 Cari Berkas dan 5 slot tanggal Catatan Rapat rapih, teks di dalam kotak. **Fix susulan: HUD task count "X/3" hardcoded jadi dinamis "X/5" (main_total dari TASK_DEFS); video v21 take 1 tidak selesai dalam 300 dtk (bot baru 1 tugas, lama di sel karena bos camping) + file sempat dikira korup (moov atom, ternyata valid 314 dtk).
 
+## Phase 32: Cari Berkas Jadi Dokumen Kertas Berhalaman
+
+**Goal:** Grid 3x3 Cari Berkas terlalu mudah (semua kelihatan sekaligus). Jadiin dokumen kertas: ada judul, bisa pindah halaman kayak ngebuka tumpukan berkas (bukan buku), target tersembunyi di 1 dari 3 halaman.
+**Requirements**: TASK-04
+**Success Criteria** (what must be TRUE):
+  1. Kertas kuning tua + judul "BERKAS ARSIP KANTOR" + stempel merah "RAHASIA" + daftar 4 berkas per halaman
+  2. 3 halaman per ronde, 12 berkas total, target di 1 halaman + 1 slot acak
+  3. Panah kiri-kanan ganti halaman, angka 1-4 pilih berkas; salah = noise
+  4. Demo bot balik halaman dulu baru milih; test_popup 27/27
+  5. Render kedua halaman terverifikasi (teks di dalam kotak, halaman 1 dan 2 beda isi)
+**Plans**:
+- [x] 32-01: cari_pages 3x4 + _cari_flip + _build_cari kertas + input panah + demo bot + tes update
+- [x] 32-02: Render visual 2 halaman, regresi + commit + rebuild + video v22
+
+**Status: Complete.** Committed (15 Nov 2026). test_popup 27/27. Render terverifikasi: halaman 1 (SLIP GAJI dkk) dan halaman 2 (INVOICE KLIEN dkk) beda isi, judul + stempel RAHASIA kelihatan, semua teks di dalam kertas.
+
 ## Progress
 
 ## Progress

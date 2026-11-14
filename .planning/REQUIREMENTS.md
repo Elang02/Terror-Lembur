@@ -298,6 +298,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **TASK-01**: Dua tugas utama baru di area atas peta supaya pemain explore seluruh map, bukan cuma bawah: Gudang (128,176, kiri atas) dan Rapat (700,128, atas tengah); total tugas utama jadi 5, semuanya nyambung sama cerita lembur (berkas + catatan rapat buat nyelesain laporan)
 - [ ] **TASK-02**: Minigame baru beda mekanik: Gudang = Cari Berkas (grid 3x3 kotak, cari item target, tekan angka 1-9, 3 ronde, salah = noise); Rapat = Catatan Rapat (urutkan 5 tanggal dari paling lama, tekan angka 1-5, salah urutan = noise + ulang dari awal)
 - [ ] **TASK-03**: Kode pintu jadi 5 digit (tiap tugas utama kasih 1 digit, catatan pintu dihapus); keypad 5 digit, menu CARA BERMAIN update (5 digit + daftar 7 tugas); demo bot rutenya nambah Gudang + Rapat (Komputer, Arsip, Generator, Gudang, Rapat, Pintu Keluar)
+- [ ] **TASK-04**: Cari Berkas jadi dokumen kertas berhalaman (bukan grid kotak): kertas kuning tua + judul "BERKAS ARSIP KANTOR" + stempel merah "RAHASIA" + daftar 4 berkas per halaman; 3 halaman per ronde, 12 berkas total, target di 1 halaman acak; panah kiri-kanan ganti halaman, angka 1-4 pilih berkas; salah = noise; 3 ronde; nama berkas gaya dokumen kantor (SLIP GAJI, SURAT PEMECATAN, NOTULEN RAPAT, dst)
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -350,6 +351,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TASK-01 | Phase 31 | Done |
 | TASK-02 | Phase 31 | Done |
 | TASK-03 | Phase 31 | Done |
+| TASK-04 | Phase 32 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -371,7 +373,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v18 requirements: 1 total
 - v19 requirements: 1 total
 - v20 requirements: 2 total
-- Mapped to phases: 121
+- Mapped to phases: 122
 - Unmapped: 0 ✓
 
 ---
