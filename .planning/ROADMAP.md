@@ -375,6 +375,20 @@ Plans:
 
 **Status: Complete.** Committed (14 Nov 2026). test_bossaggro 9/9, test_tension 5/5, test_hide 10/10, popup 23/23, solo 13/13, win 6/6, flow 3/3, search 2/2, patrol 2/2, music 7/7, tutorial 11/11, bosspol 6/6, light 7/7, mute 9/9, intro 6/6. Video v13: bot ketangkep 2x, tidak selesai dalam 180 dtk (terlalu agresif). Video v14: bot ketangkep 1x, progres 2/3 di 0:51, balance membaik.
 
+## Phase 22: Peringatan Bos Datang ke Tugas
+
+**Goal:** Pemain dapat peringatan dulu sebelum bos menyamperin pas lagi kerjain tugas, jadi bisa pilih buru-buru selesaikan atau batalkan (Esc) dan ngumpet.
+**Requirements**: WARN-01
+**Success Criteria** (what must be TRUE):
+  1. Buka popup tugas + bos dalam 350px = peringatan "BOS MENDENGAR SUARAMU! Dia menuju ke tugasmu!" + alarm, 3 detik
+  2. Bos jauh dari tugas = tidak ada peringatan (bos tidak akan datang)
+  3. test_taskwarn 2/2; regression hijau
+**Plans**:
+- [x] 22-01: Peringatan di try_open_task_popup + RPC on_boss_heard_task
+- [x] 22-02: Test taskwarn + regression
+
+**Status: Complete.** Committed (14 Nov 2026). test_taskwarn 2/2, bossaggro 9/9, popup 23/23, solo 13/13.
+
 ## Progress
 
 ## Progress
@@ -407,5 +421,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 19. Bos Lebih Agresif | 3/3 | Complete | 14 Nov 2026 |
 | 20. Ngumpet Beneran di Bawah Meja | 2/2 | Complete | 14 Nov 2026 |
 | 21. Evaluasi Menyeluruh + Balance | 3/3 | Complete | 14 Nov 2026 |
+| 22. Peringatan Bos Datang ke Tugas | 2/2 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

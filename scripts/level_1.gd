@@ -1306,6 +1306,14 @@ func try_open_task_popup(task_id: int) -> void:
 			report_noise(tp.global_position, 350.0)
 		else:
 			rpc_id(1, "report_noise", tp.global_position, 350.0)
+		if boss.global_position.distance_to(tp.global_position) <= 350.0:
+			rpc("on_boss_heard_task")
+
+@rpc("any_peer", "call_local")
+func on_boss_heard_task() -> void:
+	hud_warn_label.text = "BOS MENDENGAR SUARAMU! Dia menuju ke tugasmu!"
+	warn_timer = 3.0
+	play_sfx("alarm", -6.0)
 
 @rpc("any_peer", "call_local")
 func popup_set_progress(task_id: int, progress: float) -> void:

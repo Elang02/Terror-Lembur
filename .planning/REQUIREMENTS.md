@@ -276,6 +276,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **BAL-03**: Teks menu CARA BERMAIN sebut semua 5 tugas + mekanik kode pintu (dulu cuma 3 popup, kode tidak disebut)
 - [ ] **BAL-04**: Teks ENDING PAHIT tanpa "level berikut" (cuma ada 1 level)
 - [ ] **BAL-05**: Timer tidak jalan selama intro cerita (dulu intro 4 dtk ikut kehitung, tidak adil buat bintang)
+- [ ] **WARN-01**: Pas buka popup tugas dan bos dalam 350px, muncul peringatan "BOS MENDENGAR SUARAMU! Dia menuju ke tugasmu!" + bunyi alarm, 3 detik; kalau bos jauh tidak ada peringatan
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -306,6 +307,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BAL-03 | Phase 21 | Done |
 | BAL-04 | Phase 21 | Done |
 | BAL-05 | Phase 21 | Done |
+| WARN-01 | Phase 22 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -319,7 +321,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v10 requirements: 5 total
 - v11 requirements: 2 total
 - v12 requirements: 5 total
-- Mapped to phases: 100
+- v13 requirements: 1 total
+- Mapped to phases: 101
 - Unmapped: 0 ✓
 
 ---
