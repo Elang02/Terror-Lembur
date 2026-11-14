@@ -30,6 +30,7 @@ var teleport_mult := 1.0
 var path: PackedVector2Array = []
 var path_index := 0
 var repath_timer := 0.0
+var search_repath_timer := 0.0
 var level: Node2D
 var rng := RandomNumberGenerator.new()
 
@@ -226,9 +227,13 @@ func _update_search(delta: float) -> void:
 	if global_position.distance_to(search_center) > 30.0:
 		_steer_to(search_center, SPEED_SEARCH * speed_mult)
 	else:
-		velocity = Vector2.ZERO
 		var orbit := Vector2(cos(state_timer * 1.2), sin(state_timer * 1.2)) * 60.0
-		_move_toward(search_center + orbit, SPEED_SEARCH * speed_mult * 0.5)
+		var orbit_target := search_center + orbit
+		search_repath_timer -= delta
+		if search_repath_timer <= 0.0 or global_position.distance_to(orbit_target) < 20.0:
+			search_repath_timer = 1.0
+			_request_path(orbit_target)
+		_steer_to(orbit_target, SPEED_SEARCH * speed_mult * 0.5)
 	if state_timer > 5.0:
 		state = State.RETURN
 		state_timer = 0.0
