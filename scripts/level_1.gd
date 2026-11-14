@@ -932,7 +932,7 @@ func _build_hud() -> void:
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head_row.add_child(spacer)
-	hud_task_count = UITheme.make_label("0/3", UITheme.body_font(), 14, UITheme.COL_GREY)
+	hud_task_count = UITheme.make_label("0/5", UITheme.body_font(), 14, UITheme.COL_GREY)
 	head_row.add_child(hud_task_count)
 	var divider := ColorRect.new()
 	divider.color = Color(0.62, 0.5, 0.22, 0.9)
@@ -1549,11 +1549,14 @@ func _restart_game() -> void:
 func _update_hud() -> void:
 	var bi := 0
 	var done_count := 0
+	var main_total := 0
 	for tp in tasks:
+		if tp.task_id != 3 and tp.task_id != 4:
+			main_total += 1
+			if tp.done:
+				done_count += 1
 		if tp.task_id == 4:
 			continue
-		if tp.done:
-			done_count += 1
 		if bi < hud_task_rows.size():
 			var mark := "\u2611" if tp.done else "\u2610"
 			var extra := ""
@@ -1570,7 +1573,7 @@ func _update_hud() -> void:
 				hud_task_bars[bi].add_theme_stylebox_override("fill", UITheme.bar_fill_style(UITheme.COL_GREEN))
 		bi += 1
 	if hud_task_count != null:
-		hud_task_count.text = str(done_count) + "/3"
+		hud_task_count.text = str(done_count) + "/" + str(main_total)
 	for tp2 in tasks:
 		if tp2.done and not task_done_sounded.get(tp2.task_id, false):
 			task_done_sounded[tp2.task_id] = true

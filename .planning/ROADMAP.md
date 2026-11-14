@@ -529,13 +529,13 @@ Plans:
   1. Gudang (128,176) + Rapat (700,128) jadi tugas utama, total 5; pemain harus keliling full map
   2. Gudang = Cari Berkas (grid 3x3, cari item target, angka 1-9, 3 ronde); Rapat = Catatan Rapat (urutkan 5 tanggal, angka 1-5, salah = noise + ulang)
   3. Kode pintu 5 digit, tiap tugas kasih 1 digit, catatan pintu dihapus; keypad 5 digit; menu update
-  4. Demo bot rutenya nambah Gudang + Rapat; test_popup 29/29, test_win 6/6, test_flow 3/3, test_tutorial 11/11, regresi penuh hijau
+  4. Demo bot rutenya nambah Gudang + Rapat; test_popup 27/27, test_win 6/6, test_flow 3/3, test_tutorial 11/11, regresi penuh hijau
   5. Render kedua popup baru terverifikasi (teks tidak keluar kotak)
 **Plans**:
 - [x] 31-01: TASK_DEFS + kode 5 digit + keypad 5 digit + popup cari/urut + demo bot + tes update
 - [x] 31-02: Render visual kedua popup baru, regresi + commit + rebuild + video v21
 
-**Status: Complete.** Committed (14 Nov 2026). test_popup 29/29, test_win 6/6, test_flow 3/3, test_tutorial 11/11. Render terverifikasi: grid 3x3 Cari Berkas dan 5 slot tanggal Catatan Rapat rapih, teks di dalam kotak.
+**Status: Complete.** Committed (14 Nov 2026). test_popup 27/27, test_win 6/6, test_flow 3/3, test_tutorial 11/11. Render terverifikasi: grid 3x3 Cari Berkas dan 5 slot tanggal Catatan Rapat rapih, teks di dalam kotak. **Fix susulan: HUD task count "X/3" hardcoded jadi dinamis "X/5" (main_total dari TASK_DEFS); video v21 take 1 tidak selesai dalam 300 dtk (bot baru 1 tugas, lama di sel karena bos camping) + file sempat dikira korup (moov atom, ternyata valid 314 dtk).
 
 ## Progress
 
