@@ -70,8 +70,11 @@ func _run() -> void:
 		else:
 			_fail("Excel title is " + str(pop.get("title_label").text))
 		for q in range(7):
-			var correct: int = int(pop.get("excel_correct"))
-			pop.call("press_number", correct + 1)
+			var answer: int = int(pop.get("excel_a")) * int(pop.get("excel_b"))
+			for ch in str(answer):
+				pop.call("press_digit", int(ch))
+				await process_frame
+			pop.call("_submit_excel")
 			await process_frame
 		var komp: Node = _task(1)
 		if komp != null and bool(komp.get("done")):

@@ -469,6 +469,23 @@ Plans:
 
 **Status: Complete.** Committed (14 Nov 2026). test_popup 23/23. Render 5 popup diverifikasi: CRT fosfor hijau, panel berkarat strip BAHAYA, fotokopi amber + kertas tua, keypad karatan LCD fosfor, tuas besi berkarat. Layout rapih: panel ngikutin tinggi isi via CenterContainer (percobaan pertama pakai offset 0 bikin panel meluber ke bawah layar, diganti CenterContainer). Teks tidak keluar kotak: semua panel dalam pakai PanelContainer dengan content margin; teks strip BAHAYA dipendekin dari "BAHAYA — TEGANGAN TINGGI — PANEL LISTRIK TUA" jadi "BAHAYA — TEGANGAN TINGGI" karena font Creepster kelebaran.
 
+## Phase 28: Excel Interaktif Kayak Spreadsheet Beneran
+
+**Goal:** Excel bukan lagi pilih 1 dari 3 opsi, tapi ketik jawaban langsung ke sel kayak spreadsheet beneran.
+**Requirements**: POPUP-05
+**Success Criteria** (what must be TRUE):
+  1. Grid nunjukin A2 = angka pertama, B2 = "× angka kedua", C2 = sel jawaban yang bisa diketik
+  2. Tombol 0-9 ketik digit ke C2 (maks 3 digit), Backspace hapus, ENTER/SPASI submit
+  3. Formula bar nunjukin "= a × b" + input yang diketik (mirip Excel)
+  4. Sel C2 ke-highlight border fosfor + kursor blok "▌" berkedip tiap 0.45 dtk
+  5. Jawaban benar → soal berikut; salah → noise + input kehapus, ulang soal yang sama
+  6. Demo bot ngetik digit jawaban satu-satu lalu submit; test_popup 23/23
+**Plans**:
+- [x] 28-01: Grid A2/B2/C2 + press_digit/backspace/submit + formula bar mirror + kursor berkedip + demo bot ngetik
+- [x] 28-02: test_popup + render verifikasi + commit + rebuild
+
+**Status: Complete.** Committed (14 Nov 2026). test_popup 23/23. Render Excel diverifikasi: C2 nunjukin "42▌" + border fosfor, formula bar "= 7 × 4   42".
+
 ## Progress
 
 ## Progress
@@ -506,6 +523,7 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 24. Bos Tidak Lihat Nembus Tembok + Bisa Dengar Langkah | 2/2 | Complete | 14 Nov 2026 |
 | 25. Bos Patroli Dekat Pemain + Video Berhenti Pas Game Selesai | 2/2 | Complete | 14 Nov 2026 |
 | 26. Kabur dari Sel Tidak Lagi Gratis | 2/2 | Complete | 14 Nov 2026 |
-| 27. Popup Tugas Nyatu Sama Tema Horor | 2/2 | Complete | 14 Nov 2026 |
+| 27. Popup Tugas Nyatu Sama Tema Horor | 4/4 | Complete | 14 Nov 2026 |
+| 28. Excel Interaktif Kayak Spreadsheet Beneran | 1/1 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

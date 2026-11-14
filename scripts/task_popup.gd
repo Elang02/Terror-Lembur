@@ -53,8 +53,11 @@ var rng := RandomNumberGenerator.new()
 var excel_q := 0
 var excel_a := 0
 var excel_b := 0
-var excel_opts: Array = []
-var excel_correct := 0
+var excel_input := ""
+var excel_input_label: Label = null
+var excel_formula_label: Label = null
+var excel_cursor_visible := true
+var excel_cursor_timer := 0.0
 
 var simon_round := 1
 var simon_seq: Array = []
@@ -196,6 +199,8 @@ func _clear_content() -> void:
 	foto_bar = null
 	foto_papers = null
 	key_label = null
+	excel_input_label = null
+	excel_formula_label = null
 	mash_bar = null
 	mash_handle = null
 	mash_track = null
@@ -213,8 +218,9 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 	demo_timer = 0.0
 	match kind:
 		"excel":
-			instr_label.text = "Laporan lembur harus selesai malam ini. Hitung cepat, jangan sampai salah."
+			instr_label.text = "Ketik jawabannya langsung ke sel C2, lalu tekan ENTER. 7 soal."
 			excel_q = 0
+			excel_input = ""
 			_next_excel()
 		"simon":
 			instr_label.text = "Panel listriknya tua. Hafalkan urutan lampunya, lalu ulangi. Salah, dia dengar."
@@ -314,18 +320,12 @@ func _next_excel() -> void:
 		close_popup(true)
 		return
 	excel_q += 1
+	excel_input = ""
+	excel_cursor_visible = true
+	excel_cursor_timer = 0.0
 	status_label.text = "Soal " + str(excel_q) + "/7"
 	excel_a = rng.randi_range(2, 9)
 	excel_b = rng.randi_range(2, 9)
-	var correct: int = excel_a * excel_b
-	excel_opts.clear()
-	excel_opts.append(correct)
-	while excel_opts.size() < 3:
-		var wrong: int = correct + rng.randi_range(-6, 6)
-		if wrong > 0 and not excel_opts.has(wrong):
-			excel_opts.append(wrong)
-	excel_opts.shuffle()
-	excel_correct = excel_opts.find(correct)
 	_clear_content()
 	var crt := _panelc(Color(0.02, 0.05, 0.02), 4, Color(0.15, 0.3, 0.15), 2)
 	crt.custom_minimum_size = Vector2(720, 36)
@@ -343,10 +343,10 @@ func _next_excel() -> void:
 	var frow := HBoxContainer.new()
 	frow.add_theme_constant_override("separation", 10)
 	formula.add_child(frow)
-	var fx := _make_label(">", 18, COL_PHOSPHOR_DIM, false)
+	var fx := _make_label("fx", 18, COL_PHOSPHOR_DIM, false)
 	frow.add_child(fx)
-	var ftext := _make_label(str(excel_a) + " x " + str(excel_b) + " = ?", 24, COL_PHOSPHOR, false)
-	frow.add_child(ftext)
+	excel_formula_label = _make_label("", 24, COL_PHOSPHOR, false)
+	frow.add_child(excel_formula_label)
 	var grid := GridContainer.new()
 	grid.columns = 3
 	grid.add_theme_constant_override("h_separation", 0)
@@ -354,11 +354,55 @@ func _next_excel() -> void:
 	content.add_child(grid)
 	for col in ["A", "B", "C"]:
 		grid.add_child(_grid_cell(col, 14, Color(0.05, 0.1, 0.05), COL_PHOSPHOR_DIM, 236.0))
-	for i in range(3):
-		var cell := _grid_cell("[" + str(i + 1) + "]  " + str(excel_opts[i]), 26, Color(0.03, 0.07, 0.03), COL_PHOSPHOR, 236.0)
-		cell.custom_minimum_size = Vector2(236, 56)
-		grid.add_child(cell)
+	grid.add_child(_grid_cell(str(excel_a), 26, Color(0.03, 0.07, 0.03), COL_PHOSPHOR, 236.0))
+	grid.add_child(_grid_cell("× " + str(excel_b), 26, Color(0.03, 0.07, 0.03), COL_PHOSPHOR, 236.0))
+	var answer_cell := PanelContainer.new()
+	answer_cell.add_theme_stylebox_override("panel", _stylebox(Color(0.05, 0.12, 0.05), 0, COL_PHOSPHOR, 2))
+	answer_cell.custom_minimum_size = Vector2(236, 56)
+	excel_input_label = _make_label("", 26, COL_PHOSPHOR, true)
+	excel_input_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	answer_cell.add_child(excel_input_label)
+	grid.add_child(answer_cell)
+	_refresh_excel_input()
 	_refresh_progress()
+
+func _refresh_excel_input() -> void:
+	var shown := excel_input
+	if excel_cursor_visible:
+		shown += "▌"
+	if excel_input_label != null:
+		excel_input_label.text = shown
+	if excel_formula_label != null:
+		excel_formula_label.text = "= " + str(excel_a) + " × " + str(excel_b) + "   " + excel_input
+
+func press_digit(d: int) -> void:
+	if not open or kind != "excel":
+		return
+	if excel_input.length() >= 3:
+		return
+	excel_input += str(d)
+	_refresh_excel_input()
+
+func press_backspace() -> void:
+	if not open or kind != "excel":
+		return
+	if excel_input.length() > 0:
+		excel_input = excel_input.substr(0, excel_input.length() - 1)
+		_refresh_excel_input()
+
+func _submit_excel() -> void:
+	if not open or kind != "excel":
+		return
+	if excel_input == "":
+		return
+	var correct: int = excel_a * excel_b
+	if int(excel_input) == correct:
+		_right("Benar! Rumus cocok.")
+		_next_excel()
+	else:
+		_wrong("Salah! Coba lagi.")
+		excel_input = ""
+		_refresh_excel_input()
 
 func _start_simon_round() -> void:
 	status_label.text = "Ronde " + str(simon_round) + "/4 — hafalkan " + str(simon_round + 2) + " lampu"
@@ -561,13 +605,6 @@ func press_number(n: int) -> void:
 	if not open:
 		return
 	match kind:
-		"excel":
-			if n >= 1 and n <= 3:
-				if n - 1 == excel_correct:
-					_right("Benar! Rumus cocok.")
-					_next_excel()
-				else:
-					_wrong("Salah! Coba lagi.")
 		"simon":
 			if simon_phase != "input":
 				return
@@ -635,6 +672,12 @@ func _process(delta: float) -> void:
 	if not open:
 		return
 	match kind:
+		"excel":
+			excel_cursor_timer += delta
+			if excel_cursor_timer >= 0.45:
+				excel_cursor_timer = 0.0
+				excel_cursor_visible = not excel_cursor_visible
+				_refresh_excel_input()
 		"simon":
 			if simon_flash_idx >= 0:
 				simon_flash_timer -= delta
@@ -681,8 +724,13 @@ func _demo_step(delta: float) -> void:
 		return
 	match kind:
 		"excel":
-			press_number(excel_correct + 1)
-			demo_timer = 0.5
+			var answer: String = str(excel_a * excel_b)
+			if excel_input.length() < answer.length():
+				press_digit(int(answer.substr(excel_input.length(), 1)))
+				demo_timer = 0.25
+			else:
+				_submit_excel()
+				demo_timer = 0.5
 		"simon":
 			if simon_phase == "input" and simon_input_idx < simon_seq.size():
 				press_number(int(simon_seq[simon_input_idx]))
@@ -707,10 +755,50 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var k: InputEventKey = event
+		if k.keycode == KEY_ESCAPE:
+			get_viewport().set_input_as_handled()
+			close_popup(false)
+			return
+		if kind == "excel":
+			match k.keycode:
+				KEY_0, KEY_KP_0:
+					get_viewport().set_input_as_handled()
+					press_digit(0)
+				KEY_1, KEY_KP_1:
+					get_viewport().set_input_as_handled()
+					press_digit(1)
+				KEY_2, KEY_KP_2:
+					get_viewport().set_input_as_handled()
+					press_digit(2)
+				KEY_3, KEY_KP_3:
+					get_viewport().set_input_as_handled()
+					press_digit(3)
+				KEY_4, KEY_KP_4:
+					get_viewport().set_input_as_handled()
+					press_digit(4)
+				KEY_5, KEY_KP_5:
+					get_viewport().set_input_as_handled()
+					press_digit(5)
+				KEY_6, KEY_KP_6:
+					get_viewport().set_input_as_handled()
+					press_digit(6)
+				KEY_7, KEY_KP_7:
+					get_viewport().set_input_as_handled()
+					press_digit(7)
+				KEY_8, KEY_KP_8:
+					get_viewport().set_input_as_handled()
+					press_digit(8)
+				KEY_9, KEY_KP_9:
+					get_viewport().set_input_as_handled()
+					press_digit(9)
+				KEY_BACKSPACE:
+					get_viewport().set_input_as_handled()
+					press_backspace()
+				KEY_ENTER, KEY_KP_ENTER, KEY_SPACE:
+					get_viewport().set_input_as_handled()
+					_submit_excel()
+			return
 		match k.keycode:
-			KEY_ESCAPE:
-				get_viewport().set_input_as_handled()
-				close_popup(false)
 			KEY_1:
 				get_viewport().set_input_as_handled()
 				press_number(1)

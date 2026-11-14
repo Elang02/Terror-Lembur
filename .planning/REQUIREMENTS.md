@@ -291,6 +291,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **POPUP-02**: Tiap popup nyatu sama tema horor kantor: Excel jadi terminal CRT hijau fosfor di layar hitam, Panel Listrik jadi panel tua berkarat + strip BAHAYA merah darah, Fotokopi jadi mesin tua + zona amber + kertas kuning tua, Keypad jadi keypad karatan + LCD fosfor redup, Tuas Sel jadi tuas besi berkarat; progress bar merah darah; teks instruksi pakai suara game (bukan instruksi minigame generik)
 - [ ] **POPUP-03**: Layout rapih: panel ngikutin tinggi isi (CenterContainer, bukan fix 540px), tidak ada ruang kosong gede di dalam popup; jarak antar elemen konsisten 8px
 - [ ] **POPUP-04**: Tidak ada teks yang keluar kotak: semua panel dalam pakai PanelContainer dengan content margin (12px kiri/kanan, 6px atas/bawah), teks strip BAHAYA dipendekin biar muat
+- [ ] **POPUP-05**: Excel interaktif kayak spreadsheet beneran: bukan pilih 1 dari 3 opsi, tapi ketik jawaban angka langsung ke sel C2 (tombol 0-9, Backspace hapus, ENTER/SPASI submit); formula bar nunjukin "= a × b" + input yang diketik (mirip Excel); sel C2 ke-highlight border fosfor + kursor blok berkedip; salah = noise + input kehapus, ulang soal yang sama
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -336,6 +337,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | POPUP-02 | Phase 27 | Done |
 | POPUP-03 | Phase 27 | Done |
 | POPUP-04 | Phase 27 | Done |
+| POPUP-05 | Phase 28 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -355,7 +357,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v16 requirements: 2 total
 - v17 requirements: 2 total
 - v18 requirements: 1 total
-- Mapped to phases: 115
+- v19 requirements: 1 total
+- Mapped to phases: 116
 - Unmapped: 0 ✓
 
 ---
