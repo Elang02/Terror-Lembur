@@ -321,8 +321,8 @@ enabled = false
 zoom = Vector2(2, 2)
 limit_left = 0
 limit_top = 0
-limit_right = 1280
-limit_bottom = 736
+limit_right = 1536
+limit_bottom = 896
 
 [node name="Flashlight" type="PointLight2D" parent="."]
 color = Color(1, 0.95, 0.8, 1)
