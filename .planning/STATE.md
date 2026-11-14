@@ -2,11 +2,11 @@
 gsd_state_version: '1.0'
 status: executing
 progress:
-  total_phases: 6
+  total_phases: 10
   completed_phases: 5
   total_plans: 0
   completed_plans: 0
-  percent: 92
+  percent: 50
 ---
 
 # Project State
@@ -16,16 +16,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-14)
 
 **Core value:** A solo curator can play the game start to finish, feel fear and tension, and reach an ending.
-**Current focus:** Phase 6 — Testing & Verification
+**Current focus:** Phase 7 — Audio & Suasana (improvement round, mentor evaluation 14 Nov 2026)
 
 ## Current Position
 
-Phase: 6 of 6 (Testing & Verification)
+Phase: 7 of 10 (Audio & Suasana)
 Plan: 0 of 3 in current phase
-Status: Executing (Elang approved all 6 phases 14 Nov 2026 00:56 WIB, roadmap approval gate lifted)
-Last activity: 2026-11-14 — Phase 1 (solo mode), Phase 2 (Pale Figure boss), Phase 3 (flow fixes + docs + art + progress report), Phase 4 (WebGL + Windows builds, itch.io zip, paragraph) complete; Phase 5 complete (submission docs + 3 screenshots + 100s gameplay video); Phase 6 partial: win-path test 6/6 (solo happy ending end-to-end verified), cell-camp fix verified, demo bot full route verified. BLOCKED on Elang: outsider playtest, real-LAN test, GitHub push (token)
+Status: Executing (Elang approved all 6 phases 14 Nov 2026 00:56 WIB, roadmap approval gate lifted; improvement round added 14 Nov 2026 ~10:55 WIB on Elang's order "buat phase phasenya dulu")
+Last activity: 2026-11-14 — Phase 1 (solo mode), Phase 2 (Pale Figure boss), Phase 3 (flow fixes + docs + art + progress report), Phase 4 (WebGL + Windows builds, itch.io zip, paragraph) complete; Phase 5 prep complete (submission docs + 3 screenshots + 100s gameplay video); Phase 6 partial: win-path test 6/6, cell-camp fix verified, demo bot full route verified, patrol test 2/2. Boss AI evaluation round 2 fixed: SEARCH orbit wall-bump, patrol waypoint on a desk, stuck detector, patrol timeout 8s to 30s, RETURN hold 3s after self-rescue. BLOCKED on Elang: outsider playtest, real-LAN test, GitHub push (token), itch.io page (login)
 
-Progress: [█████████░] 92%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -60,12 +60,17 @@ Recent decisions affecting current work:
 - 13 Nov 2026: Mourncrest Wraith banned (AI-generated). Monster sprite = Nasha Pale Figure.
 - 14 Nov 2026: Flow fixes implemented (boss enrage on exit unlock, teleport min 150px from players).
 - 14 Nov 2026: Art keywords locked (Mencekam / Pixel Gelap Kontras / Dingin + Aksen Hangat). Grayscale test passed. Asset consistency passed.
+- 14 Nov 2026 ~10:55 WIB: Elang ordered new GSD phases for the mentor-video evaluation (audio, tutorial, early tension, boss polish + FSM). Improvement round = Phases 7-10, executed BEFORE Phase 5 (submission) and Phase 6 (testing). Execution order now: 7 → 8 → 9 → 10 → 5 → 6.
 
 ### Pending Todos
 
-- Phase 4: WebGL build + itch.io page (needs Elang's login) + progress paragraph.
-- Phase 5: Gameplay video + 3 screenshots + submission docs.
+- Phase 7: Find free non-AI horror ambient loop + wire intensity scaling by boss state.
+- Phase 8: In-game step-by-step tutorial (Gimersia rule).
+- Phase 9: First boss contact within ~12s, fair early tension.
+- Phase 10: Boss walk animation/bobbing + SEARCH desk-check.
+- Phase 5: Submission form itself (needs 2 representatives data + Elang).
 - Phase 6: Playtest outsiders, LAN test on real PCs, push to GitHub (needs token).
+- Phase 4: itch.io page (needs Elang's login).
 
 ### Blockers/Concerns
 

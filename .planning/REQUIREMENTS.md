@@ -90,6 +90,35 @@ Deferred to future release. Tracked but not in current roadmap.
 - **CAMP-01**: Level 2 / campaign (multiple office floors)
 - **CAMP-02**: Bad-ending cross-level nerf (requires level 2)
 
+## v3 Requirements — Improvement Round (mentor evaluation, 14 Nov 2026)
+
+From Elang's request to evaluate the game against the 4 Gimersia week-1 mentor videos
+(Game Design Datu Yoga, Programming Livander, Art Yaqufa, Production Kristian).
+Each maps to roadmap Phases 7-10, which run BEFORE Phase 5 (submission) and Phase 6 (testing).
+
+### Audio & Suasana (Production: audio is the unsung hero)
+
+- [ ] **AUDIO-01**: Ambient/BGM loop plays during gameplay (free license, non-AI, declared in submission)
+- [ ] **AUDIO-02**: Music intensity scales with boss state (calm in patrol, tense in chase)
+- [ ] **AUDIO-03**: Ambient does not drown procedural SFX (heartbeat, footsteps, whispers stay audible)
+
+### Tutorial In-Game (Gimersia rule: tutorial wajib ada di dalam game)
+
+- [ ] **TUT-01**: In-game tutorial guides a first-time player step by step (not just menu text)
+- [ ] **TUT-02**: Tutorial covers: walk to first task, hold E to work, hide when boss is near, reach the exit
+- [ ] **TUT-03**: Tutorial does not block experienced players (skippable, or only on first run)
+
+### Ketegangan Awal (Game Design: risk of losing must be felt from the start)
+
+- [ ] **TENSE-01**: First boss contact happens within ~12s of game start (faster first teleport and/or patrol start closer to first task)
+- [ ] **TENSE-02**: Early tension is fair (boss does not spawn-camp the first task, player still has room to learn)
+
+### Polish Bos & FSM (Art: boss must not glide; Game Design: SEARCH should threaten hiding)
+
+- [ ] **BOSSPOL-01**: Boss has a walk animation or procedural bobbing so it does not glide (2-4 frames or bob)
+- [ ] **BOSSPOL-02**: Walk animation reads clearly at ~2x player height, keeps the Pale Figure silhouette
+- [ ] **FSM-01**: SEARCH state occasionally checks a nearby desk/hide spot (boss walks to nearest desk, pauses briefly) so hiding is not 100% safe
+
 ## Out of Scope
 
 Explicitly excluded. Documented to prevent scope creep.
@@ -153,10 +182,22 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GIT-02 | Phase 6 | Pending |
 | POLISH-01 | Phase 6 | Pending |
 | POLISH-02 | Phase 6 | Pending |
+| AUDIO-01 | Phase 7 | Pending |
+| AUDIO-02 | Phase 7 | Pending |
+| AUDIO-03 | Phase 7 | Pending |
+| TUT-01 | Phase 8 | Pending |
+| TUT-02 | Phase 8 | Pending |
+| TUT-03 | Phase 8 | Pending |
+| TENSE-01 | Phase 9 | Pending |
+| TENSE-02 | Phase 9 | Pending |
+| BOSSPOL-01 | Phase 10 | Pending |
+| BOSSPOL-02 | Phase 10 | Pending |
+| FSM-01 | Phase 10 | Pending |
 
 **Coverage:**
 - v1 requirements: 46 total
-- Mapped to phases: 46
+- v3 requirements: 11 total
+- Mapped to phases: 57
 - Unmapped: 0 ✓
 
 ---

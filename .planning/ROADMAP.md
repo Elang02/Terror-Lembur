@@ -2,14 +2,18 @@
 
 ## Overview
 
-From a LAN-only 2-PC build to a solo-playable Gimersia submission in 15 days. Phase 1 (solo mode) is the biggest blocker and comes first. Phases 2-3 fix the boss, flow, and design. Phase 4 delivers the 19 Nov checkpoint package. Phase 5 completes the 29 Nov submission. Phase 6 verifies everything on real hardware.
+From a LAN-only 2-PC build to a solo-playable Gimersia submission in 15 days. Phase 1 (solo mode) is the biggest blocker and comes first. Phases 2-3 fix the boss, flow, and design. Phase 4 delivers the 19 Nov checkpoint package. Phases 7-10 (improvement round, from the 14 Nov 2026 mentor-video evaluation) polish audio, tutorial, early tension, and boss feel BEFORE the final submission. Phase 5 completes the 29 Nov submission. Phase 6 verifies everything on real hardware.
 
 ## Phases
 
-- [ ] **Phase 1: Mode Solo** - One player can play start to finish alone
-- [ ] **Phase 2: Monster & Boss Visual** - Sprite chosen, wired, patrol and state mark confirmed
-- [ ] **Phase 3: Flow Fixes & Design Docs** - Flow critiques addressed, concept updated, art direction locked
-- [ ] **Phase 4: Checkpoint Package** - WebGL build, itch.io page, screenshot, progress paragraph (due 19 Nov 23:59 WIB)
+- [x] **Phase 1: Mode Solo** - One player can play start to finish alone
+- [x] **Phase 2: Monster & Boss Visual** - Sprite chosen, wired, patrol and state mark confirmed
+- [x] **Phase 3: Flow Fixes & Design Docs** - Flow critiques addressed, concept updated, art direction locked
+- [x] **Phase 4: Checkpoint Package** - WebGL build, itch.io page, screenshot, progress paragraph (due 19 Nov 23:59 WIB)
+- [ ] **Phase 7: Audio & Suasana** - Ambient/BGM loop + intensity scaling (mentor evaluation 14 Nov 2026)
+- [ ] **Phase 8: Tutorial In-Game** - Step-by-step onboarding inside the game (Gimersia rule)
+- [ ] **Phase 9: Ketegangan Awal** - First boss contact within ~12s, fair early tension
+- [ ] **Phase 10: Polish Bos & FSM** - Boss walk animation + SEARCH checks a nearby desk
 - [ ] **Phase 5: Final Submission** - Video, screenshots, description, declarations (due 29 Nov 23:59 WIB)
 - [ ] **Phase 6: Testing & Verification** - Playtest, LAN test, performance, full playthrough, push to GitHub
 
@@ -129,16 +133,82 @@ Plans:
 - [ ] 06-03: Profile performance, verify boss hitbox, fix em dash, evaluate red lights
 - [ ] 06-04: Push 15 commits (needs Elang's token), update PR #1
 
+### Phase 7: Audio & Suasana
+**Goal**: The game has ambient music that carries the horror tension when the boss is far, not just SFX
+**Depends on**: Phase 4 (improvement round, from mentor evaluation 14 Nov 2026)
+**Requirements**: AUDIO-01, AUDIO-02, AUDIO-03
+**Success Criteria** (what must be TRUE):
+  1. A free, non-AI ambient/BGM loop plays during gameplay and loops cleanly
+  2. Music intensity rises when the boss chases and falls back in patrol (audible in a recording)
+  3. Procedural SFX (heartbeat, footsteps, whispers, task tick) stay audible over the music
+  4. Music license is declared in the submission docs
+**Plans**: TBD
+
+Plans:
+- [ ] 07-01: Find a free non-AI horror ambient loop (no AI disclosure, commercial use allowed), verify license
+- [ ] 07-02: Wire loop into the game with intensity scaling by boss state
+- [ ] 07-03: Balance music vs SFX volumes, verify in a recording
+
+### Phase 8: Tutorial In-Game
+**Goal**: A first-time player (kurator) is guided step by step inside the game, per the Gimersia rule
+**Depends on**: Phase 7
+**Requirements**: TUT-01, TUT-02, TUT-03
+**Success Criteria** (what must be TRUE):
+  1. Tutorial steps appear in-game in order: walk to first task, hold E, hide when boss is near, reach the exit
+  2. Each step completes when the player does the action (not on a timer)
+  3. Tutorial can be skipped and does not reappear for experienced players
+  4. Tutorial does not block the task HUD or the boss warnings
+**Plans**: TBD
+
+Plans:
+- [ ] 08-01: Design tutorial steps (4 steps max, action-gated, skippable)
+- [ ] 08-02: Implement tutorial prompts + step tracking in code
+- [ ] 08-03: Verify with a fresh playthrough (demo bot + screenshot)
+
+### Phase 9: Ketegangan Awal
+**Goal**: The player feels threatened within the first ~12 seconds, without the opening being unfair
+**Depends on**: Phase 8
+**Requirements**: TENSE-01, TENSE-02
+**Success Criteria** (what must be TRUE):
+  1. First boss contact (sighting, teleport warning, or chase) happens within ~12s of game start
+  2. The first task is still completable (boss does not spawn-camp it)
+  3. Tension is verified in a playthrough recording (boss appears early, player reacts)
+**Plans**: TBD
+
+Plans:
+- [ ] 09-01: Shorten first teleport timer and/or move patrol start closer to first task
+- [ ] 09-02: Verify first contact timing + first task fairness in a playthrough
+
+### Phase 10: Polish Bos & FSM
+**Goal**: The boss stops gliding and hiding stops being 100% safe
+**Depends on**: Phase 9
+**Requirements**: BOSSPOL-01, BOSSPOL-02, FSM-01
+**Success Criteria** (what must be TRUE):
+  1. Boss has a walk animation or procedural bobbing visible in a recording (no glide)
+  2. Animation keeps the Pale Figure silhouette and reads at ~2x player height
+  3. In SEARCH state the boss sometimes walks to a nearby desk and pauses, so hiding carries risk
+  4. Existing tests still pass (flow 3/3, solo 11/11, win 6/6, search 2/2, patrol 2/2)
+**Plans**: TBD
+
+Plans:
+- [ ] 10-01: Build walk frames or bobbing for the Pale Figure sprite
+- [ ] 10-02: Add SEARCH desk-check behavior to boss.gd
+- [ ] 10-03: Re-run all boss tests + record a clip of the boss walking and desk-checking
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
+Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (submission) → 6 (testing).
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Mode Solo | 0/4 | Not started | - |
-| 2. Monster & Boss Visual | 0/3 | Not started | - |
-| 3. Flow Fixes & Design Docs | 0/5 | Not started | - |
-| 4. Checkpoint Package | 0/3 | Not started | - |
-| 5. Final Submission | 0/3 | Not started | - |
-| 6. Testing & Verification | 0/4 | Not started | - |
+| 1. Mode Solo | 4/4 | Complete | 14 Nov 2026 |
+| 2. Monster & Boss Visual | 3/3 | Complete | 14 Nov 2026 |
+| 3. Flow Fixes & Design Docs | 5/5 | Complete | 14 Nov 2026 |
+| 4. Checkpoint Package | 2/3 | Complete (itch.io page needs Elang's login) | 14 Nov 2026 |
+| 7. Audio & Suasana | 0/3 | Not started | - |
+| 8. Tutorial In-Game | 0/3 | Not started | - |
+| 9. Ketegangan Awal | 0/2 | Not started | - |
+| 10. Polish Bos & FSM | 0/3 | Not started | - |
+| 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
+| 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
