@@ -312,6 +312,26 @@ Plans:
 
 **Status: Complete.** Committed `8969947` (14 Nov 2026). test_intro 6/6, tutorial 11/11, popup 23/23, win 6/6. Video v10 170 dtk: menu -> intro -> tutorial -> gameplay -> HAPPY ENDING 3 bintang, kode 2141, 0x ketangkep, 0:42.
 
+## Phase 18: Kode Murni Hafalan + Game Lebih Menantang
+
+**Goal:** Kode pintu hanya diingat pemain (tidak ada di HUD), dan game lebih tegang (tugas lebih panjang, bos lebih cepat dan bisa menggagalkan tugas).
+**Requirements**: HARD-01, HARD-02, HARD-03, HARD-04
+**Success Criteria** (what must be TRUE):
+  1. Kode TIDAK tampil di panel TUGAS; digit tampil 5 detik pas tugas selesai, lalu hilang; keypad tidak menampilkan kode
+  2. Excel 7 soal, Simon 4 ronde, Fotokopi 7 lembar, Tuas Sel lebih berat
+  3. Bos solo speed_mult 1.0 (lebih cepat dari jalan kaki); popup ketutup kalau pemain ketangkep pas lagi kerja
+  4. Demo bot + semua test tetap hijau; video baru yang lebih tegang
+**Plans**: TBD
+
+Plans:
+- [x] 18-01: Hapus kode dari HUD (pure memory), pesan reveal 5 detik, update hint keypad
+- [x] 18-02: Tugas lebih panjang + bos solo lebih cepat + popup ketutup kalau ketangkep
+- [x] 18-03: Update test + full regression + video baru
+
+**Status: Complete.** Committed `1848467` (14 Nov 2026). test_popup 23/23, solo 13/13, win 6/6, flow 3/3. Video v11 180 dtk: menu -> intro -> gameplay -> HAPPY ENDING 3 bintang, kode 2141, 0x ketangkep, 0:49. Catatan: bot adalah pemain sempurna (tahu peta, auto-main tugas instan), jadi videonya tetap kelihatan cepat; untuk pemain manusia tantangannya jauh lebih besar (harus hafal kode, tugas lebih lama, bos lebih cepat dan bisa menggagalkan tugas).
+
+## Progress
+
 ## Progress
 
 **Execution Order:**
@@ -336,5 +356,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 15. Task Popups | 4/4 | Complete | 14 Nov 2026 |
 | 16. Task Popups v2 | 4/4 | Complete | 14 Nov 2026 |
 | 17. Intro Story + Video dari Menu | 3/3 | Complete | 14 Nov 2026 |
+| 18. Kode Hafalan + Game Lebih Menantang | 3/3 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

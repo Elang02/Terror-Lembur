@@ -260,6 +260,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **POP2-05**: Demo bot + semua test tetap hijau, video baru
 - [ ] **INTRO-01**: Layar cerita pembuka (6 baris, jam 23.00, lembur, hantu bos lama) muncul pas pertama main, tombol apa saja buat lanjut, pemain terkunci selama intro, demo auto-lanjut 4 detik
 - [ ] **INTRO-02**: Video direkam dari menu (menu 3 detik lalu auto-start solo di mode demo), lalu intro, tutorial, gameplay, sampai menang
+- [ ] **HARD-01**: Kode pintu HANYA diingat pemain (hapus dari panel TUGAS); digit tampil 5 detik pas tugas selesai, lalu hilang; keypad tidak menampilkan kode
+- [ ] **HARD-02**: Tugas lebih panjang: Excel 7 soal, Simon 4 ronde, Fotokopi 7 lembar, Tuas Sel lebih berat
+- [ ] **HARD-03**: Bos solo lebih cepat (speed_mult 0.9 jadi 1.0, lebih cepat dari jalan kaki, harus sprint buat kabur) dan bisa menggagalkan tugas (popup ketutup kalau ketangkep pas lagi kerja)
+- [ ] **HARD-04**: Demo bot + semua test tetap hijau, video baru yang lebih tegang
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -274,6 +278,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | POP2-05 | Phase 16 | Done |
 | INTRO-01 | Phase 17 | Done |
 | INTRO-02 | Phase 17 | Done |
+| HARD-01 | Phase 18 | Done |
+| HARD-02 | Phase 18 | Done |
+| HARD-03 | Phase 18 | Done |
+| HARD-04 | Phase 18 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -283,7 +291,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v6 requirements: 6 total
 - v7 requirements: 5 total
 - v8 requirements: 2 total
-- Mapped to phases: 84
+- v9 requirements: 4 total
+- Mapped to phases: 88
 - Unmapped: 0 ✓
 
 ---
