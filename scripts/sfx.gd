@@ -7,6 +7,10 @@ const POOL_SIZE := 8
 var _streams: Dictionary = {}
 var _players: Array[AudioStreamPlayer] = []
 var _rng := RandomNumberGenerator.new()
+var muted := false
+
+func set_muted(v: bool) -> void:
+	muted = v
 
 func _ready() -> void:
 	_rng.seed = 12345
@@ -17,6 +21,8 @@ func _ready() -> void:
 	_build_all()
 
 func play(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
+	if muted:
+		return
 	if not _streams.has(sound_name):
 		return
 	for p in _players:

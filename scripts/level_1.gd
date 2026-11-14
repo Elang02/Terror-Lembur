@@ -100,6 +100,9 @@ var boss: CharacterBody2D
 var music_calm: AudioStreamPlayer
 var music_tense: AudioStreamPlayer
 var music_tense_level := 0.0
+var muted := false
+var mute_fade := 1.0
+const SETTINGS_CFG := "user://settings.cfg"
 var tasks: Array = []
 var pickups: Array = []
 var desk_positions: Array[Vector2] = []
@@ -236,6 +239,7 @@ func _ready() -> void:
 	sfx = SFX.new()
 	add_child(sfx)
 	_setup_music()
+	_load_muted()
 	_build_darkness()
 	_build_pickups()
 	_build_hud()
@@ -292,8 +296,29 @@ func _update_music(delta: float) -> void:
 		if d >= 0.0 and d < 150.0:
 			target = maxf(target, 0.8)
 	music_tense_level = move_toward(music_tense_level, target, delta / 1.5)
-	music_tense.volume_db = lerpf(-60.0, -12.0, music_tense_level)
-	music_calm.volume_db = lerpf(-18.0, -26.0, music_tense_level)
+	mute_fade = move_toward(mute_fade, 0.0 if muted else 1.0, delta / 0.3)
+	var tense_db := lerpf(-60.0, -12.0, music_tense_level)
+	var calm_db := lerpf(-18.0, -26.0, music_tense_level)
+	music_tense.volume_db = lerpf(-80.0, tense_db, mute_fade)
+	music_calm.volume_db = lerpf(-80.0, calm_db, mute_fade)
+
+func _load_muted() -> void:
+	var cfg := ConfigFile.new()
+	if cfg.load(SETTINGS_CFG) == OK:
+		muted = bool(cfg.get_value("audio", "muted", false))
+	mute_fade = 0.0 if muted else 1.0
+	if sfx != null:
+		sfx.set_muted(muted)
+
+func _toggle_mute() -> void:
+	muted = not muted
+	if sfx != null:
+		sfx.set_muted(muted)
+	var cfg := ConfigFile.new()
+	cfg.set_value("audio", "muted", muted)
+	cfg.save(SETTINGS_CFG)
+	hud_warn_label.text = "SUARA MATI  (M buat nyalain)" if muted else "SUARA NYALA"
+	warn_timer = 1.5
 
 const TUTORIAL_TEXTS := {
 	1: "1/4  Gerak pakai WASD  (T: lewati tutorial)",
@@ -1023,6 +1048,8 @@ func _process(delta: float) -> void:
 			if heartbeat_timer <= 0.0:
 				heartbeat_timer = lerpf(0.45, 1.0, clampf(bd / 320.0, 0.0, 1.0))
 				play_sfx("heartbeat", -8.0)
+	if Input.is_action_just_pressed("mute"):
+		_toggle_mute()
 	_update_music(delta)
 	_update_tutorial()
 	var me2 := _my_player()
@@ -1374,9 +1401,9 @@ func _update_hud() -> void:
 			elif nearest_desk(me.global_position) != Vector2.INF:
 				prompt_txt = "C: ngumpet di bawah meja"
 			elif me.get("has_throwable"):
-				prompt_txt = "Q: lempar barang  |  F: teriak  |  R: senter  |  C: ngumpet  |  SHIFT: lari"
+				prompt_txt = "Q: lempar barang  |  F: teriak  |  R: senter  |  C: ngumpet  |  SHIFT: lari  |  M: bisukan"
 			else:
-				prompt_txt = "E: interaksi  |  F: teriak  |  R: senter  |  C: ngumpet  |  SHIFT: lari"
+				prompt_txt = "E: interaksi  |  F: teriak  |  R: senter  |  C: ngumpet  |  SHIFT: lari  |  M: bisukan"
 	hud_prompt_label.text = prompt_txt
 	hud_prompt_pill.visible = prompt_txt != ""
 	if prompt_prog >= 0.0:

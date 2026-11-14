@@ -97,8 +97,9 @@ func _build_visual() -> void:
 
 func _process(_delta: float) -> void:
 	if boss_light != null:
-		boss_light.position = facing * 12.0
-		boss_light.rotation = facing.angle()
+		var w := clampf(8.0 * _delta, 0.0, 1.0)
+		boss_light.rotation = lerp_angle(boss_light.rotation, facing.angle(), w)
+		boss_light.position = boss_light.position.lerp(facing * 12.0, w)
 
 func _circle_points(center: Vector2, r: float) -> PackedVector2Array:
 	var pts := PackedVector2Array()

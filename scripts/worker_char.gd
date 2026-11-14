@@ -10,6 +10,10 @@ const SHOUT_COOLDOWN := 5.0
 const SHOUT_RADIUS := 500.0
 
 var facing := Vector2.DOWN
+var aim_dir := Vector2.DOWN
+const LIGHT_SMOOTH := 14.0
+const LIGHT_FADE := 6.0
+const LIGHT_ENERGY := 2.5
 var bot_mode := false
 var bot_time := 0.0
 var demo_mode := false
@@ -192,7 +196,6 @@ func _update_actions(input_dir: Vector2) -> void:
 		return
 	if Input.is_action_just_pressed("flashlight"):
 		flashlight_on = not flashlight_on
-		light.enabled = flashlight_on
 	if Input.is_action_just_pressed("shout") and shout_timer <= 0.0:
 		shout_timer = SHOUT_COOLDOWN
 		var lvl := get_parent().get_parent()
@@ -276,6 +279,7 @@ func _process(_delta: float) -> void:
 			facing = Vector2.RIGHT if velocity.x > 0.0 else Vector2.LEFT
 		else:
 			facing = Vector2.DOWN if velocity.y > 0.0 else Vector2.UP
+		aim_dir = velocity.normalized()
 		sprite.play("walk_" + _dir_name(facing))
 		if is_multiplayer_authority() and not bot_mode:
 			step_timer -= _delta
@@ -286,8 +290,11 @@ func _process(_delta: float) -> void:
 					lvl2.play_sfx("step", -16.0, randf_range(0.92, 1.08))
 	else:
 		sprite.play("idle_" + _dir_name(facing))
-	light.position = facing * 12.0
-	light.rotation = facing.angle()
+	var w := clampf(LIGHT_SMOOTH * _delta, 0.0, 1.0)
+	light.rotation = lerp_angle(light.rotation, aim_dir.angle(), w)
+	light.position = light.position.lerp(aim_dir * 12.0, w)
+	light.energy = move_toward(light.energy, LIGHT_ENERGY if flashlight_on else 0.0, LIGHT_FADE * _delta)
+	light.enabled = light.energy > 0.05
 
 func _dir_name(dir: Vector2) -> String:
 	if dir == Vector2.RIGHT:

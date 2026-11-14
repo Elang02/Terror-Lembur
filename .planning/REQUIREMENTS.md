@@ -188,16 +188,42 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TUT-01 | Phase 8 | Pending |
 | TUT-02 | Phase 8 | Pending |
 | TUT-03 | Phase 8 | Pending |
+### Senter Smooth (Production grade: senter harus mulus, bukan patah-patah)
+
+- [x] **LIGHT-01**: Senter pemain mengarah analog (diagonal) dan berputar mulus mengikuti arah gerak, tanpa lompat 90 derajat
+- [x] **LIGHT-02**: Senter merah bos berputar mulus mengikuti arah gerak bos, tanpa lompat di titik waypoint
+- [x] **LIGHT-03**: Toggle senter (R) fade mulus (energy lerp) bukan mati/nyala instan
+
+### Audio Production (Production grade: pemain bisa bisukan game)
+
+- [x] **AUD-04**: Toggle mute (M) untuk semua audio (musik + SFX), tersimpan antar sesi
+- [x] **AUD-05**: Tidak ada bunyi pop/klik saat toggle mute atau ganti state musik
+
+### Production Build (Production grade: build final terverifikasi)
+
+- [ ] **PROD-01**: Full solo playthrough jalan tanpa script error
+- [ ] **PROD-02**: Export Web + Windows dibangun ulang dari kode terbaru, zip itch.io terverifikasi
+- [ ] **PROD-03**: Video gameplay baru (60-120 detik) yang menunjukkan senter mulus
+
 | TENSE-01 | Phase 9 | Pending |
 | TENSE-02 | Phase 9 | Pending |
 | BOSSPOL-01 | Phase 10 | Pending |
 | BOSSPOL-02 | Phase 10 | Pending |
 | FSM-01 | Phase 10 | Pending |
+| LIGHT-01 | Phase 11 | Pending |
+| LIGHT-02 | Phase 11 | Pending |
+| LIGHT-03 | Phase 11 | Pending |
+| AUD-04 | Phase 12 | Pending |
+| AUD-05 | Phase 12 | Pending |
+| PROD-01 | Phase 13 | Pending |
+| PROD-02 | Phase 13 | Pending |
+| PROD-03 | Phase 13 | Pending |
 
 **Coverage:**
 - v1 requirements: 46 total
 - v3 requirements: 11 total
-- Mapped to phases: 57
+- v4 requirements: 8 total
+- Mapped to phases: 65
 - Unmapped: 0 ✓
 
 ---

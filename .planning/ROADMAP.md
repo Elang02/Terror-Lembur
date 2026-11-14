@@ -195,10 +195,57 @@ Plans:
 - [ ] 10-02: Add SEARCH desk-check behavior to boss.gd
 - [ ] 10-03: Re-run all boss tests + record a clip of the boss walking and desk-checking
 
+## Phase 11: Senter Smooth
+
+**Goal:** Senter pemain dan senter merah bos berputar mulus mengikuti arah gerak, tanpa lompat.
+**Requirements**: LIGHT-01, LIGHT-02, LIGHT-03
+**Success Criteria** (what must be TRUE):
+  1. Senter pemain mengarah diagonal saat gerak diagonal dan berputar mulus (tidak lompat 90 derajat)
+  2. Senter merah bos berputar mulus di tikungan path, tidak lompat
+  3. Toggle senter (R) fade energy mulus, bukan mati/nyala instan
+  4. Existing tests still pass (flow 3/3, solo 11/11, win 6/6, search 2/2, patrol 2/2, bosspol 6/6)
+**Plans**: TBD
+
+Plans:
+- [ ] 11-01: Analog aim + lerped rotation/position for the player flashlight (worker_char.gd)
+- [ ] 11-02: Lerped rotation/position for the boss searchlight (boss.gd) + smooth R toggle fade
+- [ ] 11-03: New test test_light.gd + record a clip showing the smooth sweep
+
+## Phase 12: Audio Production
+
+**Goal:** Pemain bisa membisukan game; tidak ada bunyi pop saat toggle.
+**Requirements**: AUD-04, AUD-05
+**Success Criteria** (what must be TRUE):
+  1. Tombol M membisukan semua audio (musik + SFX) dan menyalakannya lagi
+  2. Status mute tersimpan antar sesi (user://)
+  3. Tidak ada pop/klik saat mute/unmute atau saat musik crossfade
+  4. Existing tests still pass (music 7/7)
+**Plans**: TBD
+
+Plans:
+- [ ] 12-01: Mute toggle (M) + persistence in level_1.gd / sfx.gd
+- [ ] 12-02: Verify no pops + music test regression
+
+## Phase 13: Production Build
+
+**Goal:** Build final dari kode terbaru, terverifikasi, siap submit.
+**Requirements**: PROD-01, PROD-02, PROD-03
+**Success Criteria** (what must be TRUE):
+  1. Full solo playthrough (demo bot) runs with zero script errors
+  2. Web + Windows exports rebuilt from latest code; itch.io zip verified (index.html at root)
+  3. Fresh gameplay video 60-120s shows the smooth lights
+  4. All 9 test files green
+**Plans**: TBD
+
+Plans:
+- [ ] 13-01: Re-export Web + Windows, rebuild itch.io zip + PC zip
+- [ ] 13-02: Full playthrough check + fresh video recording
+
 ## Progress
 
 **Execution Order:**
 Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (submission) → 6 (testing).
+**Production round (Elang, 14 Nov 2026 ~11:54 WIB: "improve terus pake GSD, sampe production grade"): 11 → 12 → 13, then 5 (submission) → 6 (testing).**
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -210,5 +257,8 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 8. Tutorial In-Game | 3/3 | Complete | 14 Nov 2026 |
 | 9. Ketegangan Awal | 2/2 | Complete | 14 Nov 2026 |
 | 10. Polish Bos & FSM | 3/3 | Complete | 14 Nov 2026 |
+| 11. Senter Smooth | 3/3 | Complete | 14 Nov 2026 |
+| 12. Audio Production | 2/2 | Complete | 14 Nov 2026 |
+| 13. Production Build | 0/2 | Not started | - |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
