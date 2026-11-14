@@ -461,12 +461,13 @@ Plans:
   4. Fotokopi jadi mesin tua + zona amber + kertas kuning tua
   5. Keypad jadi keypad karatan + LCD fosfor redup, tombol angka di tengah
   6. Tuas Sel jadi tuas besi berkarat, tanpa judul ganda
-  7. test_popup 23/23; render 5 popup diverifikasi visual
+  7. Layout rapih: panel ngikutin tinggi isi, tidak ada ruang kosong gede
+  8. test_popup 23/23; render 5 popup diverifikasi visual
 **Plans**:
 - [x] 27-01: Font game + warna tema + redesign 5 popup + teks instruksi suara game
 - [x] 27-02: Render verifikasi + test_popup + commit + rebuild
 
-**Status: Complete.** Committed (14 Nov 2026). test_popup 23/23. Render 5 popup diverifikasi: CRT fosfor hijau, panel berkarat strip BAHAYA, fotokopi amber + kertas tua, keypad karatan LCD fosfor, tuas besi berkarat.
+**Status: Complete.** Committed (14 Nov 2026). test_popup 23/23. Render 5 popup diverifikasi: CRT fosfor hijau, panel berkarat strip BAHAYA, fotokopi amber + kertas tua, keypad karatan LCD fosfor, tuas besi berkarat. Layout rapih: panel ngikutin tinggi isi via CenterContainer (percobaan pertama pakai offset 0 bikin panel meluber ke bawah layar, diganti CenterContainer).
 
 ## Progress
 

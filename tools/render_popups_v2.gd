@@ -28,6 +28,14 @@ func _run() -> void:
 			m.visible = false
 	if lvl.has_method("show_hud"):
 		lvl.call("show_hud")
+	if lvl.has_method("_dismiss_intro"):
+		lvl.call("_dismiss_intro")
+	var intro_dim: Node = lvl.get("intro_dim")
+	if intro_dim != null:
+		intro_dim.visible = false
+	var intro_panel: Node = lvl.get("intro_panel")
+	if intro_panel != null:
+		intro_panel.visible = false
 	var pop: Node = lvl.get("popup")
 	# Excel (Komputer) - CRT terminal
 	pop.call("open_popup", lvl, 1, _task(1), "excel", "Laporan Excel", false)

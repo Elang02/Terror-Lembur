@@ -289,6 +289,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **RESCUE-02**: Waktu self-rescue 15 dtk → 10 dtk, supaya kabur tidak kelamaan
 - [ ] **POPUP-01**: Popup tugas pakai font game (Creepster judul, Special Elite isi), bukan font default Godot
 - [ ] **POPUP-02**: Tiap popup nyatu sama tema horor kantor: Excel jadi terminal CRT hijau fosfor di layar hitam, Panel Listrik jadi panel tua berkarat + strip BAHAYA merah darah, Fotokopi jadi mesin tua + zona amber + kertas kuning tua, Keypad jadi keypad karatan + LCD fosfor redup, Tuas Sel jadi tuas besi berkarat; progress bar merah darah; teks instruksi pakai suara game (bukan instruksi minigame generik)
+- [ ] **POPUP-03**: Layout rapih: panel ngikutin tinggi isi (CenterContainer, bukan fix 540px), tidak ada ruang kosong gede di dalam popup; jarak antar elemen konsisten 8px
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -332,6 +333,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | RESCUE-02 | Phase 26 | Done |
 | POPUP-01 | Phase 27 | Done |
 | POPUP-02 | Phase 27 | Done |
+| POPUP-03 | Phase 27 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -350,7 +352,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v15 requirements: 2 total
 - v16 requirements: 2 total
 - v17 requirements: 2 total
-- Mapped to phases: 113
+- v18 requirements: 1 total
+- Mapped to phases: 114
 - Unmapped: 0 ✓
 
 ---

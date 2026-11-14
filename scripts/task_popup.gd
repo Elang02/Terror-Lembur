@@ -114,13 +114,11 @@ func _build_ui() -> void:
 	dim.color = Color(0, 0, 0, 0.78)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(dim)
+	var center := CenterContainer.new()
+	center.set_anchors_preset(Control.PRESET_FULL_RECT)
+	add_child(center)
 	panel = PanelContainer.new()
-	panel.set_anchors_preset(Control.PRESET_CENTER)
-	panel.custom_minimum_size = Vector2(780, 540)
-	panel.offset_left = -390
-	panel.offset_top = -270
-	panel.offset_right = 390
-	panel.offset_bottom = 270
+	panel.custom_minimum_size = Vector2(780, 0)
 	var style := StyleBoxFlat.new()
 	style.bg_color = COL_PANEL
 	style.border_color = COL_PANEL_BORDER
@@ -134,9 +132,9 @@ func _build_ui() -> void:
 	style.shadow_size = 12
 	style.shadow_offset = Vector2(0, 4)
 	panel.add_theme_stylebox_override("panel", style)
-	add_child(panel)
+	center.add_child(panel)
 	var vb := VBoxContainer.new()
-	vb.add_theme_constant_override("separation", 12)
+	vb.add_theme_constant_override("separation", 8)
 	panel.add_child(vb)
 	title_label = _make_label("", 38, COL_BLOOD_BRIGHT, true)
 	title_label.add_theme_font_override("font", _title_f())
@@ -150,7 +148,6 @@ func _build_ui() -> void:
 	vb.add_child(status_label)
 	content = VBoxContainer.new()
 	content.add_theme_constant_override("separation", 10)
-	content.custom_minimum_size = Vector2(720, 220)
 	vb.add_child(content)
 	feedback_label = _make_label("", 18, COL_GREEN, true)
 	feedback_label.add_theme_font_override("font", _body_f())
