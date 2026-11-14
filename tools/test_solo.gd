@@ -87,6 +87,14 @@ func _run() -> void:
 		_ok("player locked after catch")
 	else:
 		_fail("player not locked after catch")
+	# Move the boss far from the cell so the guard mechanic (Phase 26)
+	# does not freeze the rescue: the boss must be >150px away and out of
+	# the 400px rescue-noise radius.
+	var boss_far: Node2D = lvl.get("boss")
+	if boss_far != null:
+		boss_far.global_position = Vector2(200, 200)
+		boss_far.set("teleport_timer", 99999.0)
+		boss_far.set("state", 0)
 	Input.action_press("interact")
 	var rescue_before := float(lvl.get("self_rescue_progress"))
 	for i in range(30):
@@ -97,6 +105,13 @@ func _run() -> void:
 	else:
 		_fail("self-rescue progress stuck at " + str(rescue_after))
 	lvl.set("self_rescue_progress", 0.99)
+	# Boss may have patrolled/teleported back near the cell during the
+	# progress wait; move it away again so the guard cannot freeze the
+	# final 1% of the rescue.
+	if boss_far != null:
+		boss_far.global_position = Vector2(200, 200)
+		boss_far.set("teleport_timer", 99999.0)
+		boss_far.set("state", 0)
 	for i in range(10):
 		await process_frame
 	Input.action_release("interact")

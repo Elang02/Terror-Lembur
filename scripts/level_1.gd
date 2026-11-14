@@ -117,7 +117,8 @@ var solo_mode := false
 var solo_catches := 0
 const SOLO_MAX_CATCHES := 3
 var self_rescue_progress := 0.0
-const SELF_RESCUE_TIME := 15.0
+const SELF_RESCUE_TIME := 10.0
+const SELF_RESCUE_GUARD_RADIUS := 150.0
 var self_rescue_noise_timer := 0.0
 var warn_timer := 0.0
 var debug_timer := 0.0
@@ -1365,18 +1366,36 @@ func _update_self_rescue(delta: float) -> void:
 		self_rescue_progress = 0.0
 		return
 	if locked_player.get("interacting") and locked_player.get("interact_target") == 99:
-		self_rescue_progress += delta / SELF_RESCUE_TIME
-		self_rescue_noise_timer += delta
-		if self_rescue_noise_timer >= 1.0:
-			self_rescue_noise_timer = 0.0
-			report_noise(locked_player.global_position, 400.0)
-		if self_rescue_progress >= 1.0:
-			self_rescue_progress = 0.0
-			locked_player.rpc_id(int(locked_player.name), "set_locked", false)
-			if boss != null:
-				boss.send_back_to_room()
-			hud_warn_label.text = "Kamu berhasil kabur dari sel!"
-			warn_timer = 2.0
+		var boss_guarding := false
+		if boss != null:
+			boss_guarding = boss.global_position.distance_to(locked_player.global_position) <= SELF_RESCUE_GUARD_RADIUS
+		if boss_guarding:
+			# Bos menjaga sel: kabur tetap jalan, tapi jauh lebih lambat.
+			# Progres tidak pernah beku total, jadi pemain tidak bisa
+			# terjebak selamanya walau bos camping di depan sel.
+			self_rescue_progress += delta / SELF_RESCUE_TIME * 0.3
+			hud_warn_label.text = "BOS MENJAGA SEL! Kaburmu melambat, tunggu dia pergi!"
+			warn_timer = 1.0
+			if self_rescue_progress >= 1.0:
+				self_rescue_progress = 0.0
+				locked_player.rpc_id(int(locked_player.name), "set_locked", false)
+				if boss != null:
+					boss.send_back_to_room()
+				hud_warn_label.text = "Kamu berhasil kabur dari sel!"
+				warn_timer = 2.0
+		else:
+			self_rescue_progress += delta / SELF_RESCUE_TIME
+			self_rescue_noise_timer += delta
+			if self_rescue_noise_timer >= 1.0:
+				self_rescue_noise_timer = 0.0
+				report_noise(locked_player.global_position, 400.0)
+			if self_rescue_progress >= 1.0:
+				self_rescue_progress = 0.0
+				locked_player.rpc_id(int(locked_player.name), "set_locked", false)
+				if boss != null:
+					boss.send_back_to_room()
+				hud_warn_label.text = "Kamu berhasil kabur dari sel!"
+				warn_timer = 2.0
 	else:
 		self_rescue_progress = maxf(0.0, self_rescue_progress - delta * 0.1)
 
@@ -1572,7 +1591,7 @@ func _update_hud() -> void:
 			locked_names += disp + " DIKURUNG di ruang bos! "
 	if locked_names != "":
 		if solo_mode:
-			hud_status_label.text = locked_names + "Tahan E buat kabur dari sel (15 detik, berisik!)."
+			hud_status_label.text = locked_names + "Tahan E buat kabur dari sel (10 detik, berisik!)."
 		else:
 			hud_status_label.text = locked_names + "Tekan E di TUAS SEL buat bebaskan."
 		hud_status_pill.visible = true

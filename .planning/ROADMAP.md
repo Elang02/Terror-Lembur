@@ -436,6 +436,20 @@ Plans:
 
 **Status: Complete.** Committed (14 Nov 2026). test_patrolbias 3/3, patrol 2/2, bossaggro 9/9, solo 13/13, hearing 7/7. Video v17: 196 dtk, ada suara (mean -29.7 dB), 0 script error, bot GAME OVER (ketangkep 3x) dan video berhenti sendiri 5 dtk setelah layar akhir.
 
+## Phase 26: Kabur dari Sel Tidak Lagi Gratis
+
+**Goal:** Keluar dari sel (self-rescue solo) harus ada tantangan: bos yang datang ke sel benar-benar menghambat kabur, bukan cuma berdiri diam.
+**Requirements**: RESCUE-01, RESCUE-02
+**Success Criteria** (what must be TRUE):
+  1. Kalau bos dalam 150px dari sel pas pemain self-rescue, progres kabur melambat jadi 30% (tidak beku total, tidak ada soft-lock)
+  2. Waktu self-rescue 15 dtk → 10 dtk
+  3. test_rescue 4/4; regression hijau; video v18 menunjukkan bot kabur dari sel lalu lanjut kerja
+**Plans**:
+- [x] 26-01: Guard radius 150px + crawl 30% + rescue 10 dtk + test_rescue
+- [x] 26-02: Regression + rekam v18 + commit + rebuild
+
+**Status: Complete.** Committed (14 Nov 2026). test_rescue 4/4, solo 13/13, bossaggro 9/9, hearing 7/7, vision 8/8, popup 23/23, patrolbias 3/3. Video v18: 297 dtk, ada suara (mean -32.3 dB), 0 script error, bot GAME OVER (ketangkep 3x) tapi sempat kabur dari sel dan lanjut ke Generator.
+
 ## Progress
 
 ## Progress
@@ -472,5 +486,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 23. Bos Tidak Buta, Tidak Nyangkut, Ngumpet Beneran | 3/3 | Complete | 14 Nov 2026 |
 | 24. Bos Tidak Lihat Nembus Tembok + Bisa Dengar Langkah | 2/2 | Complete | 14 Nov 2026 |
 | 25. Bos Patroli Dekat Pemain + Video Berhenti Pas Game Selesai | 2/2 | Complete | 14 Nov 2026 |
+| 26. Kabur dari Sel Tidak Lagi Gratis | 2/2 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
