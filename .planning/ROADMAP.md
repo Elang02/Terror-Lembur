@@ -290,10 +290,12 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 16-01: Sistem kode pintu dari tugas (level code_digits, reveal per tugas, HUD tampilkan kode, keypad pakai kode level)
-- [ ] 16-02: Visual Excel + Panel Listrik kayak perangkat beneran
-- [ ] 16-03: Visual Keypad + Fotokopi + Tuas Sel kayak perangkat beneran
-- [ ] 16-04: Test + full regression + video baru
+- [x] 16-01: Sistem kode pintu dari tugas (level code_digits, reveal per tugas, HUD tampilkan kode, keypad pakai kode level)
+- [x] 16-02: Visual Excel + Panel Listrik kayak perangkat beneran
+- [x] 16-03: Visual Keypad + Fotokopi + Tuas Sel kayak perangkat beneran
+- [x] 16-04: Test + full regression + video baru
+
+**Status: Complete.** Committed `75b3484` (14 Nov 2026). test_popup 23/23 (6 tes kode baru), full suite 12 file hijau (popup 23/23, solo 13/13, win 6/6, flow 3/3, search 2/2, patrol 2/2, music 7/7, tutorial 11/11, tension 5/5, bosspol 6/6, light 7/7, mute 9/9). Video v9 150 dtk: bot selesaikan playthrough penuh, kode 2324, HAPPY ENDING 3 bintang 0:36. test_bosspol flaky fix: tunggu 10 frame (bukan 30) supaya SUSPICIOUS 1.5s tidak keburu habis.
 
 ## Progress
 
@@ -317,6 +319,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 13. Production Build | 2/2 | Complete | 14 Nov 2026 |
 | 14. Task Minigames | 4/4 | Complete | 14 Nov 2026 |
 | 15. Task Popups | 4/4 | Complete | 14 Nov 2026 |
-| 16. Task Popups v2 | 0/4 | Not started | - |
+| 16. Task Popups v2 | 4/4 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
