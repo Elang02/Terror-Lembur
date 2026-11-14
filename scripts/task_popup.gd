@@ -109,6 +109,16 @@ func _panel(bg: Color, radius: int, border: Color = Color(0, 0, 0, 0), border_w:
 	p.add_theme_stylebox_override("panel", _stylebox(bg, radius, border, border_w))
 	return p
 
+func _panelc(bg: Color, radius: int, border: Color = Color(0, 0, 0, 0), border_w: int = 0) -> PanelContainer:
+	var s := _stylebox(bg, radius, border, border_w)
+	s.content_margin_left = 12
+	s.content_margin_right = 12
+	s.content_margin_top = 6
+	s.content_margin_bottom = 6
+	var p := PanelContainer.new()
+	p.add_theme_stylebox_override("panel", s)
+	return p
+
 func _build_ui() -> void:
 	dim = ColorRect.new()
 	dim.color = Color(0, 0, 0, 0.78)
@@ -317,7 +327,7 @@ func _next_excel() -> void:
 	excel_opts.shuffle()
 	excel_correct = excel_opts.find(correct)
 	_clear_content()
-	var crt := _panel(Color(0.02, 0.05, 0.02), 4, Color(0.15, 0.3, 0.15), 2)
+	var crt := _panelc(Color(0.02, 0.05, 0.02), 4, Color(0.15, 0.3, 0.15), 2)
 	crt.custom_minimum_size = Vector2(720, 36)
 	content.add_child(crt)
 	var hrow := HBoxContainer.new()
@@ -327,7 +337,7 @@ func _next_excel() -> void:
 	hrow.add_child(hicon)
 	var htitle := _make_label("LAPORAN LEMBUR  —  TERMINAL", 17, COL_PHOSPHOR, false)
 	hrow.add_child(htitle)
-	var formula := _panel(Color(0.03, 0.08, 0.03), 3, Color(0.15, 0.3, 0.15), 1)
+	var formula := _panelc(Color(0.03, 0.08, 0.03), 3, Color(0.15, 0.3, 0.15), 1)
 	formula.custom_minimum_size = Vector2(720, 40)
 	content.add_child(formula)
 	var frow := HBoxContainer.new()
@@ -360,16 +370,16 @@ func _start_simon_round() -> void:
 	simon_show_timer = 0.8
 	simon_input_idx = 0
 	_clear_content()
-	var warn := _panel(COL_BLOOD, 4)
+	var warn := _panelc(COL_BLOOD, 4)
 	warn.custom_minimum_size = Vector2(720, 30)
 	content.add_child(warn)
 	var wrow := HBoxContainer.new()
 	wrow.alignment = BoxContainer.ALIGNMENT_CENTER
 	warn.add_child(wrow)
-	var wlabel := _make_label("BAHAYA  —  TEGANGAN TINGGI  —  PANEL LISTRIK TUA", 15, COL_PAPER, true)
+	var wlabel := _make_label("BAHAYA  —  TEGANGAN TINGGI", 15, COL_PAPER, true)
 	wlabel.add_theme_font_override("font", _title_f())
 	wrow.add_child(wlabel)
-	var metal := _panel(COL_RUST, 8, Color(0.2, 0.15, 0.1), 2)
+	var metal := _panelc(COL_RUST, 8, Color(0.2, 0.15, 0.1), 2)
 	metal.custom_minimum_size = Vector2(720, 180)
 	content.add_child(metal)
 	var mrow := HBoxContainer.new()
@@ -421,7 +431,7 @@ func _simon_light(idx: int, on: bool) -> void:
 func _build_foto() -> void:
 	status_label.text = "Lembar: " + str(foto_sheets) + "/7"
 	_clear_content()
-	var machine := _panel(COL_IRON, 8, Color(0.3, 0.24, 0.16), 2)
+	var machine := _panelc(COL_IRON, 8, Color(0.3, 0.24, 0.16), 2)
 	machine.custom_minimum_size = Vector2(720, 150)
 	content.add_child(machine)
 	var mvb := VBoxContainer.new()
@@ -463,13 +473,13 @@ func _draw_foto_bar() -> void:
 func _build_keypad() -> void:
 	status_label.text = "Masukkan 4 digit kodenya."
 	_clear_content()
-	var body := _panel(COL_IRON, 10, Color(0.3, 0.24, 0.16), 2)
+	var body := _panelc(COL_IRON, 10, Color(0.3, 0.24, 0.16), 2)
 	body.custom_minimum_size = Vector2(720, 170)
 	content.add_child(body)
 	var bvb := VBoxContainer.new()
 	bvb.add_theme_constant_override("separation", 10)
 	body.add_child(bvb)
-	var lcd := _panel(Color(0.02, 0.07, 0.02), 4, Color(0.15, 0.3, 0.15), 2)
+	var lcd := _panelc(Color(0.02, 0.07, 0.02), 4, Color(0.15, 0.3, 0.15), 2)
 	lcd.custom_minimum_size = Vector2(680, 56)
 	bvb.add_child(lcd)
 	key_label = _make_label("_ _ _ _", 36, COL_PHOSPHOR, true)

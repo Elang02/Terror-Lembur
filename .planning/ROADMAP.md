@@ -467,7 +467,7 @@ Plans:
 - [x] 27-01: Font game + warna tema + redesign 5 popup + teks instruksi suara game
 - [x] 27-02: Render verifikasi + test_popup + commit + rebuild
 
-**Status: Complete.** Committed (14 Nov 2026). test_popup 23/23. Render 5 popup diverifikasi: CRT fosfor hijau, panel berkarat strip BAHAYA, fotokopi amber + kertas tua, keypad karatan LCD fosfor, tuas besi berkarat. Layout rapih: panel ngikutin tinggi isi via CenterContainer (percobaan pertama pakai offset 0 bikin panel meluber ke bawah layar, diganti CenterContainer).
+**Status: Complete.** Committed (14 Nov 2026). test_popup 23/23. Render 5 popup diverifikasi: CRT fosfor hijau, panel berkarat strip BAHAYA, fotokopi amber + kertas tua, keypad karatan LCD fosfor, tuas besi berkarat. Layout rapih: panel ngikutin tinggi isi via CenterContainer (percobaan pertama pakai offset 0 bikin panel meluber ke bawah layar, diganti CenterContainer). Teks tidak keluar kotak: semua panel dalam pakai PanelContainer dengan content margin; teks strip BAHAYA dipendekin dari "BAHAYA — TEGANGAN TINGGI — PANEL LISTRIK TUA" jadi "BAHAYA — TEGANGAN TINGGI" karena font Creepster kelebaran.
 
 ## Progress
 
