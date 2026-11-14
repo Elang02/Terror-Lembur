@@ -471,20 +471,21 @@ Plans:
 
 ## Phase 28: Excel Interaktif Kayak Spreadsheet Beneran
 
-**Goal:** Excel bukan lagi pilih 1 dari 3 opsi, tapi ketik jawaban langsung ke sel kayak spreadsheet beneran.
+**Goal:** Excel bukan lagi pilih 1 dari 3 opsi, tapi ketik jawaban langsung ke sel kayak spreadsheet beneran, dengan rumus Excel asli.
 **Requirements**: POPUP-05
 **Success Criteria** (what must be TRUE):
-  1. Grid nunjukin A2 = angka pertama, B2 = "× angka kedua", C2 = sel jawaban yang bisa diketik
-  2. Tombol 0-9 ketik digit ke C2 (maks 3 digit), Backspace hapus, ENTER/SPASI submit
-  3. Formula bar nunjukin "= a × b" + input yang diketik (mirip Excel)
-  4. Sel C2 ke-highlight border fosfor + kursor blok "▌" berkedip tiap 0.45 dtk
+  1. Tabel data 3 kolom (A,B,C) x 4 baris (2-5) + nomor baris, satu tabel yang sama buat 7 soal
+  2. Formula bar nunjukin rumus Excel asli: =SUM(A2:A5), =SUM(A2:C2), =AVERAGE(A2:A3), =MAX(C2:C5), =MIN(B2:B5), =A4*B4, =A5+B5+C5
+  3. Player ketik hasil hitungannya ke sel HASIL (tombol 0-9, Backspace hapus, ENTER/SPASI submit)
+  4. Sel HASIL ke-highlight border fosfor + kursor blok "▌" berkedip tiap 0.45 dtk
   5. Jawaban benar → soal berikut; salah → noise + input kehapus, ulang soal yang sama
-  6. Demo bot ngetik digit jawaban satu-satu lalu submit; test_popup 23/23
+  6. AVERAGE selalu bilangan bulat (A2 dan A3 dipaksa paritas sama); demo bot ngetik digit jawaban satu-satu; test_popup 23/23
 **Plans**:
-- [x] 28-01: Grid A2/B2/C2 + press_digit/backspace/submit + formula bar mirror + kursor berkedip + demo bot ngetik
-- [x] 28-02: test_popup + render verifikasi + commit + rebuild
+- [x] 28-01: Grid A2/B2/C2 + ketik ke sel (Phase 28 v1)
+- [x] 28-02: Tabel 4 baris + 7 rumus Excel asli (SUM/AVERAGE/MAX/MIN/kali/tambah) + sel HASIL (Phase 28 v2)
+- [x] 28-03: test_popup + render verifikasi + commit + rebuild
 
-**Status: Complete.** Committed (14 Nov 2026). test_popup 23/23. Render Excel diverifikasi: C2 nunjukin "42▌" + border fosfor, formula bar "= 7 × 4   42".
+**Status: Complete.** Committed (14 Nov 2026). test_popup 23/23. Render Excel diverifikasi: formula bar "=SUM(A2:A5)", tabel A/B/C baris 2-5, sel HASIL nunjukin "42▌".
 
 ## Progress
 

@@ -70,7 +70,7 @@ func _run() -> void:
 		else:
 			_fail("Excel title is " + str(pop.get("title_label").text))
 		for q in range(7):
-			var answer: int = int(pop.get("excel_a")) * int(pop.get("excel_b"))
+			var answer: int = int(pop.get("excel_answer"))
 			for ch in str(answer):
 				pop.call("press_digit", int(ch))
 				await process_frame

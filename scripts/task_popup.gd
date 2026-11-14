@@ -51,8 +51,9 @@ var progress_label: Label
 var rng := RandomNumberGenerator.new()
 
 var excel_q := 0
-var excel_a := 0
-var excel_b := 0
+var excel_data: Array = []
+var excel_formula_text := ""
+var excel_answer := 0
 var excel_input := ""
 var excel_input_label: Label = null
 var excel_formula_label: Label = null
@@ -218,7 +219,7 @@ func open_popup(p_level: Node, p_task_id: int, p_task_node: Node, p_kind: String
 	demo_timer = 0.0
 	match kind:
 		"excel":
-			instr_label.text = "Ketik jawabannya langsung ke sel C2, lalu tekan ENTER. 7 soal."
+			instr_label.text = "Baca rumusnya di formula bar, hitung dari tabel, ketik hasilnya di sel HASIL, lalu tekan ENTER. 7 soal."
 			excel_q = 0
 			excel_input = ""
 			_next_excel()
@@ -315,17 +316,61 @@ func _grid_cell(text: String, size: int, bg: Color, fg: Color, min_w: float = 0.
 		cell.custom_minimum_size = Vector2(min_w, 0)
 	return cell
 
+func _excel_cell(col: int, row: int) -> int:
+	return int(excel_data[row][col])
+
+func _excel_gen_grid() -> void:
+	excel_data.clear()
+	for r in range(4):
+		var row_arr: Array = []
+		for c in range(3):
+			row_arr.append(rng.randi_range(2, 9))
+		excel_data.append(row_arr)
+	var a2: int = int(excel_data[0][0])
+	var a3: int = a2 + rng.randi_range(0, 3) * 2
+	if a3 > 9:
+		a3 = a2 - rng.randi_range(0, 3) * 2
+		if a3 < 2:
+			a3 = a2
+	excel_data[1][0] = a3
+
+func _excel_formula_for(idx: int) -> Dictionary:
+	match idx:
+		0:
+			return {"text": "=SUM(A2:A5)", "answer": _excel_cell(0, 0) + _excel_cell(0, 1) + _excel_cell(0, 2) + _excel_cell(0, 3)}
+		1:
+			return {"text": "=SUM(A2:C2)", "answer": _excel_cell(0, 0) + _excel_cell(1, 0) + _excel_cell(2, 0)}
+		2:
+			return {"text": "=AVERAGE(A2:A3)", "answer": (_excel_cell(0, 0) + _excel_cell(0, 1)) / 2}
+		3:
+			var m: int = _excel_cell(2, 0)
+			for r in range(1, 4):
+				m = maxi(m, _excel_cell(2, r))
+			return {"text": "=MAX(C2:C5)", "answer": m}
+		4:
+			var mn: int = _excel_cell(1, 0)
+			for r in range(1, 4):
+				mn = mini(mn, _excel_cell(1, r))
+			return {"text": "=MIN(B2:B5)", "answer": mn}
+		5:
+			return {"text": "=A4*B4", "answer": _excel_cell(0, 2) * _excel_cell(1, 2)}
+		_:
+			return {"text": "=A5+B5+C5", "answer": _excel_cell(0, 3) + _excel_cell(1, 3) + _excel_cell(2, 3)}
+
 func _next_excel() -> void:
 	if excel_q >= 7:
 		close_popup(true)
 		return
+	if excel_q == 0:
+		_excel_gen_grid()
 	excel_q += 1
 	excel_input = ""
 	excel_cursor_visible = true
 	excel_cursor_timer = 0.0
 	status_label.text = "Soal " + str(excel_q) + "/7"
-	excel_a = rng.randi_range(2, 9)
-	excel_b = rng.randi_range(2, 9)
+	var f: Dictionary = _excel_formula_for(excel_q - 1)
+	excel_formula_text = str(f["text"])
+	excel_answer = int(f["answer"])
 	_clear_content()
 	var crt := _panelc(Color(0.02, 0.05, 0.02), 4, Color(0.15, 0.3, 0.15), 2)
 	crt.custom_minimum_size = Vector2(720, 36)
@@ -345,24 +390,33 @@ func _next_excel() -> void:
 	formula.add_child(frow)
 	var fx := _make_label("fx", 18, COL_PHOSPHOR_DIM, false)
 	frow.add_child(fx)
-	excel_formula_label = _make_label("", 24, COL_PHOSPHOR, false)
+	excel_formula_label = _make_label(excel_formula_text, 24, COL_PHOSPHOR, false)
 	frow.add_child(excel_formula_label)
 	var grid := GridContainer.new()
-	grid.columns = 3
+	grid.columns = 4
 	grid.add_theme_constant_override("h_separation", 0)
 	grid.add_theme_constant_override("v_separation", 0)
 	content.add_child(grid)
+	grid.add_child(_grid_cell("", 14, Color(0.05, 0.1, 0.05), COL_PHOSPHOR_DIM, 40.0))
 	for col in ["A", "B", "C"]:
-		grid.add_child(_grid_cell(col, 14, Color(0.05, 0.1, 0.05), COL_PHOSPHOR_DIM, 236.0))
-	grid.add_child(_grid_cell(str(excel_a), 26, Color(0.03, 0.07, 0.03), COL_PHOSPHOR, 236.0))
-	grid.add_child(_grid_cell("× " + str(excel_b), 26, Color(0.03, 0.07, 0.03), COL_PHOSPHOR, 236.0))
+		grid.add_child(_grid_cell(col, 14, Color(0.05, 0.1, 0.05), COL_PHOSPHOR_DIM, 226.0))
+	for r in range(4):
+		grid.add_child(_grid_cell(str(r + 2), 14, Color(0.05, 0.1, 0.05), COL_PHOSPHOR_DIM, 40.0))
+		for c in range(3):
+			grid.add_child(_grid_cell(str(_excel_cell(c, r)), 24, Color(0.03, 0.07, 0.03), COL_PHOSPHOR, 226.0))
+	var arow := HBoxContainer.new()
+	arow.add_theme_constant_override("separation", 12)
+	arow.alignment = BoxContainer.ALIGNMENT_CENTER
+	content.add_child(arow)
+	var alabel := _make_label("HASIL", 20, COL_PHOSPHOR, false)
+	arow.add_child(alabel)
 	var answer_cell := PanelContainer.new()
 	answer_cell.add_theme_stylebox_override("panel", _stylebox(Color(0.05, 0.12, 0.05), 0, COL_PHOSPHOR, 2))
-	answer_cell.custom_minimum_size = Vector2(236, 56)
+	answer_cell.custom_minimum_size = Vector2(200, 52)
 	excel_input_label = _make_label("", 26, COL_PHOSPHOR, true)
 	excel_input_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	answer_cell.add_child(excel_input_label)
-	grid.add_child(answer_cell)
+	arow.add_child(answer_cell)
 	_refresh_excel_input()
 	_refresh_progress()
 
@@ -372,8 +426,6 @@ func _refresh_excel_input() -> void:
 		shown += "▌"
 	if excel_input_label != null:
 		excel_input_label.text = shown
-	if excel_formula_label != null:
-		excel_formula_label.text = "= " + str(excel_a) + " × " + str(excel_b) + "   " + excel_input
 
 func press_digit(d: int) -> void:
 	if not open or kind != "excel":
@@ -395,7 +447,7 @@ func _submit_excel() -> void:
 		return
 	if excel_input == "":
 		return
-	var correct: int = excel_a * excel_b
+	var correct: int = excel_answer
 	if int(excel_input) == correct:
 		_right("Benar! Rumus cocok.")
 		_next_excel()
@@ -724,7 +776,7 @@ func _demo_step(delta: float) -> void:
 		return
 	match kind:
 		"excel":
-			var answer: String = str(excel_a * excel_b)
+			var answer: String = str(excel_answer)
 			if excel_input.length() < answer.length():
 				press_digit(int(answer.substr(excel_input.length(), 1)))
 				demo_timer = 0.25
