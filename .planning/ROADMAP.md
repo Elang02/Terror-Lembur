@@ -297,6 +297,21 @@ Plans:
 
 **Status: Complete.** Committed `75b3484` (14 Nov 2026). test_popup 23/23 (6 tes kode baru), full suite 12 file hijau (popup 23/23, solo 13/13, win 6/6, flow 3/3, search 2/2, patrol 2/2, music 7/7, tutorial 11/11, tension 5/5, bosspol 6/6, light 7/7, mute 9/9). Video v9 150 dtk: bot selesaikan playthrough penuh, kode 2324, HAPPY ENDING 3 bintang 0:36. test_bosspol flaky fix: tunggu 10 frame (bukan 30) supaya SUSPICIOUS 1.5s tidak keburu habis.
 
+## Phase 17: Layar Cerita Pembuka + Video dari Menu
+
+**Goal:** Video direkam dari menu (bukan continue), menampilkan cerita awal dan tutorial.
+**Requirements**: INTRO-01, INTRO-02
+**Success Criteria** (what must be TRUE):
+  1. Layar cerita pembuka (6 baris) muncul pas pertama main, tombol apa saja buat lanjut, pemain terkunci selama intro, demo auto-lanjut 4 detik
+  2. Video dari menu: menu 3 detik lalu auto-start solo di mode demo, lalu intro, tutorial, gameplay, sampai menang
+  3. Semua test tetap hijau
+**Plans**:
+- [x] 17-01: Layar cerita pembuka (level_1.gd intro overlay + blokir gerak + auto-dismiss demo)
+- [x] 17-02: Menu auto-start di mode demo (network.gd demo_menu_timer 3 detik)
+- [x] 17-03: Test intro 6/6 + regression + video v10 dari menu
+
+**Status: Complete.** Committed `8969947` (14 Nov 2026). test_intro 6/6, tutorial 11/11, popup 23/23, win 6/6. Video v10 170 dtk: menu -> intro -> tutorial -> gameplay -> HAPPY ENDING 3 bintang, kode 2141, 0x ketangkep, 0:42.
+
 ## Progress
 
 **Execution Order:**
@@ -320,5 +335,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 14. Task Minigames | 4/4 | Complete | 14 Nov 2026 |
 | 15. Task Popups | 4/4 | Complete | 14 Nov 2026 |
 | 16. Task Popups v2 | 4/4 | Complete | 14 Nov 2026 |
+| 17. Intro Story + Video dari Menu | 3/3 | Complete | 14 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

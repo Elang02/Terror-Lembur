@@ -258,6 +258,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **POP2-03**: Panel Listrik tampil kayak panel beneran (lampu BULAT dengan glow, panel metal + sekrup, bukan kotak warna)
 - [ ] **POP2-04**: Keypad tampil kayak keypad pintu beneran (layar LCD, tombol digit); Fotokopi kayak mesin fotokopi (kertas keluar); Tuas Sel kayak tuas beneran (gagang geser)
 - [ ] **POP2-05**: Demo bot + semua test tetap hijau, video baru
+- [ ] **INTRO-01**: Layar cerita pembuka (6 baris, jam 23.00, lembur, hantu bos lama) muncul pas pertama main, tombol apa saja buat lanjut, pemain terkunci selama intro, demo auto-lanjut 4 detik
+- [ ] **INTRO-02**: Video direkam dari menu (menu 3 detik lalu auto-start solo di mode demo), lalu intro, tutorial, gameplay, sampai menang
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -265,11 +267,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | POP-04 | Phase 15 | Done |
 | POP-05 | Phase 15 | Done |
 | POP-06 | Phase 15 | Done |
-| POP2-01 | Phase 16 | Pending |
-| POP2-02 | Phase 16 | Pending |
-| POP2-03 | Phase 16 | Pending |
-| POP2-04 | Phase 16 | Pending |
-| POP2-05 | Phase 16 | Pending |
+| POP2-01 | Phase 16 | Done |
+| POP2-02 | Phase 16 | Done |
+| POP2-03 | Phase 16 | Done |
+| POP2-04 | Phase 16 | Done |
+| POP2-05 | Phase 16 | Done |
+| INTRO-01 | Phase 17 | Done |
+| INTRO-02 | Phase 17 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -278,7 +282,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v5 requirements: 6 total
 - v6 requirements: 6 total
 - v7 requirements: 5 total
-- Mapped to phases: 82
+- v8 requirements: 2 total
+- Mapped to phases: 84
 - Unmapped: 0 ✓
 
 ---
