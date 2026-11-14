@@ -190,6 +190,11 @@ var hud_pulse_t := 0.0
 var flash_rect: ColorRect
 var flash_a := 0.0
 var hud_stamina_bar: ProgressBar
+var hud_tutorial_panel: PanelContainer
+var hud_tutorial_label: Label
+var tutorial_step := 0
+var tutorial_spawn_pos := Vector2.ZERO
+const TUTORIAL_CFG := "user://tutorial.cfg"
 var sfx: SFX
 var heartbeat_timer := 0.0
 var tick_timer := 0.0
@@ -289,6 +294,81 @@ func _update_music(delta: float) -> void:
 	music_tense_level = move_toward(music_tense_level, target, delta / 1.5)
 	music_tense.volume_db = lerpf(-60.0, -12.0, music_tense_level)
 	music_calm.volume_db = lerpf(-18.0, -26.0, music_tense_level)
+
+const TUTORIAL_TEXTS := {
+	1: "1/4  Gerak pakai WASD  (T: lewati tutorial)",
+	2: "2/4  Jalan ke Komputer, tahan E buat ngerjain  (T: lewati)",
+	3: "3/4  Tekan C di dekat meja buat ngumpet  (T: lewati)",
+	4: "4/4  Selesaikan semua tugas, lalu kabur lewat Pintu Keluar  (T: lewati)",
+}
+
+func _tutorial_is_done() -> bool:
+	var cfg := ConfigFile.new()
+	if cfg.load(TUTORIAL_CFG) != OK:
+		return false
+	return bool(cfg.get_value("tutorial", "done", false))
+
+func _refresh_tutorial_label() -> void:
+	if hud_tutorial_panel == null:
+		return
+	if tutorial_step >= 1 and tutorial_step <= 4:
+		hud_tutorial_label.text = TUTORIAL_TEXTS[tutorial_step]
+		hud_tutorial_panel.visible = true
+	else:
+		hud_tutorial_panel.visible = false
+
+func _finish_tutorial() -> void:
+	tutorial_step = 5
+	var cfg := ConfigFile.new()
+	cfg.set_value("tutorial", "done", true)
+	cfg.save(TUTORIAL_CFG)
+	if hud_tutorial_panel != null:
+		hud_tutorial_panel.visible = false
+
+func _task_done(task_id: int) -> bool:
+	for tp in tasks:
+		if int(tp.get("task_id")) == task_id:
+			return bool(tp.get("done"))
+	return false
+
+func _update_tutorial() -> void:
+	if tutorial_step == 5:
+		return
+	if tutorial_step == 0:
+		if _tutorial_is_done():
+			tutorial_step = 5
+			return
+		var me0 := _my_player()
+		if me0 == null or game_over:
+			return
+		if hud_layer == null or not hud_layer.visible:
+			return
+		tutorial_step = 1
+		tutorial_spawn_pos = me0.global_position
+		_refresh_tutorial_label()
+		return
+	var me := _my_player()
+	if me == null:
+		return
+	if Input.is_action_just_pressed("skip_tutorial"):
+		_finish_tutorial()
+		return
+	match tutorial_step:
+		1:
+			if me.global_position.distance_to(tutorial_spawn_pos) > 120.0:
+				tutorial_step = 2
+				_refresh_tutorial_label()
+		2:
+			if (bool(me.get("interacting")) and int(me.get("interact_target")) == 1) or _task_done(1):
+				tutorial_step = 3
+				_refresh_tutorial_label()
+		3:
+			if bool(me.get("hiding")):
+				tutorial_step = 4
+				_refresh_tutorial_label()
+		4:
+			if _main_tasks_done():
+				_finish_tutorial()
 
 func _build_tilemap_layers() -> void:
 	var tile_set := load(TILESET_PATH) as TileSet
@@ -797,6 +877,19 @@ func _build_hud() -> void:
 	hud_warn_label.add_theme_constant_override("outline_size", 8)
 	hud_warn_label.visible = false
 	hud.add_child(hud_warn_label)
+	hud_tutorial_panel = PanelContainer.new()
+	UITheme.apply_panel(hud_tutorial_panel, Color(0.05, 0.08, 0.05, 0.92), UITheme.COL_GREEN, 1, 10)
+	hud_tutorial_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	hud_tutorial_panel.offset_top = 68
+	hud_tutorial_panel.offset_bottom = 112
+	hud_tutorial_panel.offset_left = -320
+	hud_tutorial_panel.offset_right = 320
+	hud_tutorial_panel.visible = false
+	hud.add_child(hud_tutorial_panel)
+	hud_tutorial_label = UITheme.make_label("", UITheme.body_font(), 16, UITheme.COL_PAPER)
+	hud_tutorial_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hud_tutorial_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	hud_tutorial_panel.add_child(hud_tutorial_label)
 	hud_status_pill = PanelContainer.new()
 	UITheme.apply_panel(hud_status_pill, Color(0.2, 0.12, 0.02, 0.9), UITheme.COL_GOLD, 1, 14)
 	hud_status_pill.position = Vector2(16, 226)
@@ -931,6 +1024,7 @@ func _process(delta: float) -> void:
 				heartbeat_timer = lerpf(0.45, 1.0, clampf(bd / 320.0, 0.0, 1.0))
 				play_sfx("heartbeat", -8.0)
 	_update_music(delta)
+	_update_tutorial()
 	var me2 := _my_player()
 	if me2 != null and me2.get("interacting") and not game_over:
 		tick_timer -= delta
