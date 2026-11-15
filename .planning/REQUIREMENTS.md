@@ -309,6 +309,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **BAL-08**: Kejar bos 270 -> 240 (aturan DbD: killer cuma ~15% lebih cepat dari survivor lari; 240 = 20% lebih cepat dari jalan 200, 20% lebih lambat dari sprint 300; kejaran diputusin LOS, bukan kecepatan mentah; enrage akhir game 240 x 1.6 = 384, tetap lebih cepat dari sprint)
 - [ ] **LOS-02**: Kejaran putus karena LOS hilang -> peringatan "Dia kehilangan jejakmu!" (teks + tick pelan), biar pemain belajar aturan mainnya: putus pandangan = selamat
 - [ ] **MUG-02**: Prompt lempar barang diajarin jadi alat mancing: "Q: lempar barang (mancing bos)" — mug yang dilempar udah bikin noise 300px dan bos datang ke titik jatuhnya, tinggal diajarin ke pemain
+- [ ] **PACE-01**: Teleport pertama 15-20 detik -> 25-35 detik (bedah kode: teleport pertama bisa jatuhin bos 120px dari pemain pas dia lagi ngerjain Excel 7 soal; patroli yang kelihatan tetap kasih tegang, teleport kejutan datang belakangan)
+- [ ] **CELL-01**: Habis kabur dari sel, bos buta 3 -> 5 detik + patroli MENJAUH dari pemain 10 detik (dulu patroli terdekat-ke-pemain bikin bos balik ke sel; ini yang bikin spiral mati di v23/v24/v25)
+- [ ] **OPEN-01**: Patroli pertama bos dari ujung jauh (index 2 = (1328,272)), bukan (272,448) yang 137px dari Komputer (bedah kode gap #1: tugas pertama praktis mustahil dibuka tanpa diganggu)
+- [ ] **CHASE-01**: Kejaran punya wind-up 1 detik — bos diam dulu pas "!" + alarm bunyi, pemain dapat ancang-ancang buat putus pandangan (bedah kode gap #2: kejaran dari jarak <200px hampir mustahil menang di koridor terbuka; _update_stuck juga dijaga biar nggak loncat pas wind-up)
+- [ ] **SHOUT-01**: Di solo, hint teriak jujur soal harganya: "F: teriak (bos datang ke kamu!)" (bedah kode gap #5: teriak manggil bos ke posisi pemain sendiri — di solo itu jebakan buat pemain baru)
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -372,6 +377,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BAL-08 | Phase 36 | Done |
 | LOS-02 | Phase 36 | Done |
 | MUG-02 | Phase 36 | Done |
+| PACE-01 | Phase 37 | Done |
+| CELL-01 | Phase 37 | Done |
+| OPEN-01 | Phase 38 | Done |
+| CHASE-01 | Phase 38 | Done |
+| SHOUT-01 | Phase 38 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -397,7 +407,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v22 requirements: 1 total
 - v23 requirements: 1 total
 - v24 requirements: 3 total
-- Mapped to phases: 132
+- Mapped to phases: 137
 - Unmapped: 0 ✓
 
 ---

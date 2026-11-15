@@ -607,7 +607,34 @@ Plans:
 **Plans**:
 - [x] 36-01: BAL-08 + LOS-02 + MUG-02 + test_phase36 + tes + commit + rebuild + video v26
 
-**Status: Complete.** Committed (15 Nov 2026). test_phase36 3/3. Video v26: [hasil menyusul].
+**Status: Complete.** Committed (15 Nov 2026). test_phase36 3/3. Video v26: direkam 15 Nov 2026 (16,7 MB, 241 detik) tapi TIDAK dicek frame-nya — Elang: fokus ke game, bukan video.
+
+## Phase 37: Teleport Pertama Lebih Lambat + Bos Menjauh Habis Rescue
+
+**Goal:** Bedah kode + video v23/v24/v25: teleport pertama 15-20 detik bisa jatuhin bos di atas pemain pas Excel; habis kabur dari sel bos cuma 72px dari sel dan langsung patroli mendekat (spiral mati).
+**Requirements**: PACE-01, CELL-01
+**Success Criteria** (what must be TRUE):
+  1. FIRST_TELEPORT 25-35 detik
+  2. send_back_to_room: blind 5 detik + post_rescue_timer 10 detik; _pick_waypoint pilih waypoint terjauh selama cooldown, terdekat sesudahnya
+  3. test_phase37 5/5; regresi hijau
+**Plans**:
+- [x] 37-01: PACE-01 + CELL-01 + test_phase37 + tes + commit + rebuild
+
+**Status: Complete.** Committed (15 Nov 2026). test_phase37 5/5.
+
+## Phase 38: Pembukaan Adil + Wind-Up Kejaran + Teriak Jujur
+
+**Goal:** Laporan bedah kode 5 gap: pembukaan jebakan (bos patroli 137px dari Komputer), kejaran <200px mustahil menang, stamina 1x kabur per 12 detik, kabur dari sel 72px dari bos, teriak jebakan di solo. Yang diimplementasi: OPEN-01, CHASE-01, SHOUT-01. Stamina regen TIDAK diubah (8/detik tetap — Elang Phase 29 minta sprint langka).
+**Requirements**: OPEN-01, CHASE-01, SHOUT-01
+**Success Criteria** (what must be TRUE):
+  1. Target patroli pertama = (1328,272) ujung jauh
+  2. Kejaran mulai dengan wind-up 1 detik: bos diam 0px, lalu lari; _update_stuck tidak loncat pas wind-up
+  3. Hint solo: "F: teriak (bos datang ke kamu!)"
+  4. test_phase38 5/5; regresi hijau
+**Plans**:
+- [x] 38-01: OPEN-01 + CHASE-01 + SHOUT-01 + test_phase38 + tes + commit + rebuild
+
+**Status: Complete.** Committed (15 Nov 2026). test_phase38 5/5.
 
 ## Progress
 
@@ -653,5 +680,7 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 34. Bot Kabur yang Bener (Lari Dulu, Ngumpet Belakangan) | 1/1 | Complete | 15 Nov 2026 |
 | 35. Bot Kabur Lebih Pintar (Lari ke Balik Tembok) | 1/1 | Complete | 15 Nov 2026 |
 | 36. Kejaran Lebih Adil (Aturan DbD) + Kasih Tahu Pemain Saat Kejaran Putus | 1/1 | Complete | 15 Nov 2026 |
+| 37. Teleport Pertama Lebih Lambat + Bos Menjauh Habis Rescue | 1/1 | Complete | 15 Nov 2026 |
+| 38. Pembukaan Adil + Wind-Up Kejaran + Teriak Jujur | 1/1 | Complete | 15 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

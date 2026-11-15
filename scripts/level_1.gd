@@ -1631,6 +1631,7 @@ func _update_hud() -> void:
 		hud_status_pill.visible = false
 	var prompt_txt := ""
 	var prompt_prog := -1.0
+	var shout_txt := "F: teriak (bos datang ke kamu!)" if solo_mode else "F: teriak"
 	var me := _my_player()
 	if exit_opening and not game_over:
 		prompt_txt = "PINTU SEDANG TERBUKA... " + str(int((1.0 - exit_open_timer / EXIT_OPEN_TIME) * 100.0)) + "% (bos dengar!)"
@@ -1661,9 +1662,9 @@ func _update_hud() -> void:
 			elif nearest_desk(me.global_position) != Vector2.INF:
 				prompt_txt = "C: ngumpet di bawah meja"
 			elif me.get("has_throwable"):
-				prompt_txt = "Q: lempar barang (mancing bos)  |  F: teriak  |  R: senter  |  C: ngumpet  |  SHIFT: lari  |  M: bisukan"
+				prompt_txt = "Q: lempar barang (mancing bos)  |  " + shout_txt + "  |  R: senter  |  C: ngumpet  |  SHIFT: lari  |  M: bisukan"
 			else:
-				prompt_txt = "E: interaksi  |  F: teriak  |  R: senter  |  C: ngumpet  |  SHIFT: lari  |  M: bisukan"
+				prompt_txt = "E: interaksi  |  " + shout_txt + "  |  R: senter  |  C: ngumpet  |  SHIFT: lari  |  M: bisukan"
 	hud_prompt_label.text = prompt_txt
 	hud_prompt_pill.visible = prompt_txt != ""
 	if prompt_prog >= 0.0:
