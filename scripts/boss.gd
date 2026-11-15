@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const SPEED_PATROL := 130.0
-const SPEED_CHASE := 270.0
+const SPEED_CHASE := 240.0
 const SPEED_SEARCH := 160.0
 const SPEED_RETURN := 100.0
 const VISION_RANGE := 340.0
@@ -315,6 +315,7 @@ func _update_chase(delta: float) -> void:
 	repath_timer -= delta
 	var p := _nearest_visible_player()
 	if p == null:
+		level.rpc("on_boss_lost")
 		_enter_search(target)
 		return
 	target = p.global_position
@@ -323,6 +324,7 @@ func _update_chase(delta: float) -> void:
 		_request_path(target)
 	_steer_to(target, SPEED_CHASE * speed_mult)
 	if chase_timer > CHASE_TIRED:
+		level.rpc("on_boss_lost")
 		_enter_search(target)
 		chase_timer = 0.0
 

@@ -595,6 +595,20 @@ Plans:
 
 **Status: Complete.** Committed (15 Nov 2026). Video v25: [hasil menyusul].
 
+## Phase 36: Kejaran Lebih Adil (Aturan DbD) + Kasih Tahu Pemain Saat Kejaran Putus
+
+**Goal:** Riset game horror (DbD/Phasmo/Amnesia/Granny/Outlast) + video v23/v24/v25: bot mati terus di kejaran terbuka karena bos 270 vs jalan 200 (selisih 35%, DbD cuma 15%). Kejaran harus diputusin LOS, bukan kecepatan mentah. Pemain juga nggak pernah dikasih tahu kalau putus pandangan itu yang nyelamatin dia.
+**Requirements**: BAL-08, LOS-02, MUG-02
+**Success Criteria** (what must be TRUE):
+  1. SPEED_CHASE 270 -> 240; test_bossaggro update; enrage akhir game tetap 384 > sprint 300
+  2. Kejaran putus (LOS hilang / bos capek 8 detik) -> "Dia kehilangan jejakmu!" 2 detik
+  3. Prompt mug: "Q: lempar barang (mancing bos)"
+  4. test_phase36 3/3; regresi hijau; video v26 bot lebih tahan lama dari v25
+**Plans**:
+- [x] 36-01: BAL-08 + LOS-02 + MUG-02 + test_phase36 + tes + commit + rebuild + video v26
+
+**Status: Complete.** Committed (15 Nov 2026). test_phase36 3/3. Video v26: [hasil menyusul].
+
 ## Progress
 
 ## Progress
@@ -638,5 +652,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 33. Bandingin Sama Game Lain (DbD/Phasmo/Amnesia) | 2/2 | Complete | 15 Nov 2026 |
 | 34. Bot Kabur yang Bener (Lari Dulu, Ngumpet Belakangan) | 1/1 | Complete | 15 Nov 2026 |
 | 35. Bot Kabur Lebih Pintar (Lari ke Balik Tembok) | 1/1 | Complete | 15 Nov 2026 |
+| 36. Kejaran Lebih Adil (Aturan DbD) + Kasih Tahu Pemain Saat Kejaran Putus | 1/1 | Complete | 15 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

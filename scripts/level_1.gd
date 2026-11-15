@@ -1661,7 +1661,7 @@ func _update_hud() -> void:
 			elif nearest_desk(me.global_position) != Vector2.INF:
 				prompt_txt = "C: ngumpet di bawah meja"
 			elif me.get("has_throwable"):
-				prompt_txt = "Q: lempar barang  |  F: teriak  |  R: senter  |  C: ngumpet  |  SHIFT: lari  |  M: bisukan"
+				prompt_txt = "Q: lempar barang (mancing bos)  |  F: teriak  |  R: senter  |  C: ngumpet  |  SHIFT: lari  |  M: bisukan"
 			else:
 				prompt_txt = "E: interaksi  |  F: teriak  |  R: senter  |  C: ngumpet  |  SHIFT: lari  |  M: bisukan"
 	hud_prompt_label.text = prompt_txt
@@ -1843,6 +1843,12 @@ func on_boss_chase() -> void:
 	hud_warn_label.text = "BOS MENGEJAR!"
 	warn_timer = 2.0
 	play_sfx("alarm", -6.0)
+
+@rpc("any_peer", "call_local")
+func on_boss_lost() -> void:
+	hud_warn_label.text = "Dia kehilangan jejakmu!"
+	warn_timer = 2.0
+	play_sfx("tick", -12.0, 1.0)
 
 @rpc("any_peer", "call_local")
 func on_boss_telegraph() -> void:

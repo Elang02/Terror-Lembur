@@ -35,8 +35,8 @@ func _run() -> void:
 		_ok("patrol speed 130")
 	else:
 		_fail("patrol speed is " + str(boss.get("SPEED_PATROL")))
-	if absf(float(boss.get("SPEED_CHASE")) - 270.0) < 0.01:
-		_ok("chase speed 270")
+	if absf(float(boss.get("SPEED_CHASE")) - 240.0) < 0.01:
+		_ok("chase speed 240")
 	else:
 		_fail("chase speed is " + str(boss.get("SPEED_CHASE")))
 	if absf(float(boss.get("VISION_RANGE")) - 340.0) < 0.01:

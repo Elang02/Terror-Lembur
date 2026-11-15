@@ -306,6 +306,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **BOT-01**: Demo bot main kayak manusia: (a) di dalam popup, kalau bos <200px (peringatan merah) bot tutup popup (Esc, progres reset, sama kayak pemain) lalu kabur; (b) saat jalan, kalau bos CHASE dalam 250px atau jarak <100px bot kabur; di pintu keluar, bot tunggu pintu terbuka lalu tekan E buat menang
 - [ ] **BOT-02**: Bot kabur yang bener (perbaikan BOT-01, v23: bot ngumpet di meja terdekat pas dikejar, padahal bos lihat dia ke sana + SNIFF-01, jadi ketangkep; cuma 1/5 tugas): saat dikejar bot LARI dulu ke waypoint patroli terjauh dari bos (sprint, 300 vs chase 270) sampai kejarannya putus (bos bukan CHASE + jarak >250px); baru ngumpet, dan cuma di meja yang jaraknya >200px dari bos; ngumpet sampai bos >350px baru lanjut rute
 - [ ] **BOT-03**: Bot kabur lebih pintar (perbaikan BOT-02, v24: bot tetap ketangkep 3x di 1:02 in-game, 1/5 tugas; kejarannya nggak putus karena bot lari lurus di koridor dan bos tetap lihat dia): (a) titik kabur = waypoint patroli terjauh dari bos yang TIDAK kelihatan bos (cek raycast LOS), jadi lari ke balik tembok dan kejaran putus; (b) bot tidak buka popup tugas kalau bos dalam 350px — mundur dulu, tunggu bos pergi, baru kerjakan
+- [ ] **BAL-08**: Kejar bos 270 -> 240 (aturan DbD: killer cuma ~15% lebih cepat dari survivor lari; 240 = 20% lebih cepat dari jalan 200, 20% lebih lambat dari sprint 300; kejaran diputusin LOS, bukan kecepatan mentah; enrage akhir game 240 x 1.6 = 384, tetap lebih cepat dari sprint)
+- [ ] **LOS-02**: Kejaran putus karena LOS hilang -> peringatan "Dia kehilangan jejakmu!" (teks + tick pelan), biar pemain belajar aturan mainnya: putus pandangan = selamat
+- [ ] **MUG-02**: Prompt lempar barang diajarin jadi alat mancing: "Q: lempar barang (mancing bos)" — mug yang dilempar udah bikin noise 300px dan bos datang ke titik jatuhnya, tinggal diajarin ke pemain
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -366,6 +369,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BOT-01 | Phase 33 | Done |
 | BOT-02 | Phase 34 | Done |
 | BOT-03 | Phase 35 | Done |
+| BAL-08 | Phase 36 | Done |
+| LOS-02 | Phase 36 | Done |
+| MUG-02 | Phase 36 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -390,7 +396,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v21 requirements: 5 total
 - v22 requirements: 1 total
 - v23 requirements: 1 total
-- Mapped to phases: 129
+- v24 requirements: 3 total
+- Mapped to phases: 132
 - Unmapped: 0 ✓
 
 ---
