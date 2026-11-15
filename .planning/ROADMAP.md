@@ -569,6 +569,19 @@ Plans:
 
 **Status: Complete.** Committed (15 Nov 2026). test_win 8/8, test_phase33 4/4, test_popup 27/27, regresi 10 tes tanpa fail. Video v23: [hasil menyusul].
 
+## Phase 34: Bot Kabur yang Bener (Lari Dulu, Ngumpet Belakangan)
+
+**Goal:** Video v23 nunjukin BOT-01 malah bikin bot mati lebih cepat (1/5 tugas, GAME OVER di 1:03 in-game; v22: 5/5 tugas, GAME OVER 2:00). Root cause dari frame: bot kabur ke meja TERDEKAT pas dikejar, padahal bos lihat dia ke sana; SNIFF-01 bikin bos curiga ke meja itu, SEARCH desk-check, ketangkep. Habis kabur dari sel pun bot langsung ngumpet di meja ruang bos, 70px dari bos. Ngumpet cuma aman kalau bos tidak lihat lo ke sana.
+**Requirements**: BOT-02
+**Success Criteria** (what must be TRUE):
+  1. Saat dikejar bot lari (sprint) ke waypoint patroli terjauh dari bos, bukan ke meja; retarget tiap 2 detik
+  2. Ngumpet cuma kalau kejarannya putus (bos bukan CHASE + jarak >250px) dan meja >200px dari bos
+  3. Video v24 nunjukin bot lebih tahan lama dari v23 (tugas selesai + waktu hidup lebih panjang)
+**Plans**:
+- [x] 34-01: _demo_flee v2 + _demo_far_point + sprint saat kabur + tes + commit + rebuild + video v24
+
+**Status: Complete.** Committed (15 Nov 2026). Video v24: [hasil menyusul].
+
 ## Progress
 
 ## Progress
@@ -610,5 +623,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 28. Excel Interaktif Kayak Spreadsheet Beneran | 1/1 | Complete | 14 Nov 2026 |
 | 29. Bos Lebih Cepat + Sensitif, Sprint Terbatas | 2/2 | Complete | 14 Nov 2026 |
 | 33. Bandingin Sama Game Lain (DbD/Phasmo/Amnesia) | 2/2 | Complete | 15 Nov 2026 |
+| 34. Bot Kabur yang Bener (Lari Dulu, Ngumpet Belakangan) | 1/1 | Complete | 15 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

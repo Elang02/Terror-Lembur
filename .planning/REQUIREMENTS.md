@@ -303,7 +303,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **HEART-01**: Terror radius ala Dead by Daylight: detak jantung makin KENCANG + makin CEPAT saat bos mendekat (volume -14 dB di 320px sampai -2 dB saat sangat dekat; interval sudah scaling 0.45-1.0 detik)
 - [ ] **HAUNT-01**: Ghost event ala Phasmophobia: tiap 25-45 detik acak saat bos jauh (>350px) dan tidak di intro, muncul satu event: bisikan ("Kamu dengar bisikan di lorong...") atau benda jatuh ("Sesuatu jatuh di kejauhan..." + shake kecil); tidak pernah muncul saat bos dekat
 - [ ] **SNIFF-01**: Ngumpet ala Amnesia tidak 100% aman dari patroli: bos PATROL yang lewat dalam 100px dari pemain ngumpet jadi CURIGA ke arah meja itu (lalu SEARCH + desk-check seperti biasa); ngumpet jauh dari rute patroli tetap aman
-- [ ] **BOT-01**: Demo bot main kayak manusia: (a) di dalam popup, kalau bos <200px (peringatan merah) bot tutup popup (Esc, progres reset, sama kayak pemain) lalu kabur; (b) saat jalan, kalau bos CHASE dalam 250px atau jarak <100px bot kabur ke meja terdekat, ngumpet sampai bos >350px, baru lanjut rute tugas; di pintu keluar, bot tunggu pintu terbuka lalu tekan E buat menang
+- [ ] **BOT-01**: Demo bot main kayak manusia: (a) di dalam popup, kalau bos <200px (peringatan merah) bot tutup popup (Esc, progres reset, sama kayak pemain) lalu kabur; (b) saat jalan, kalau bos CHASE dalam 250px atau jarak <100px bot kabur; di pintu keluar, bot tunggu pintu terbuka lalu tekan E buat menang
+- [ ] **BOT-02**: Bot kabur yang bener (perbaikan BOT-01, v23: bot ngumpet di meja terdekat pas dikejar, padahal bos lihat dia ke sana + SNIFF-01, jadi ketangkep; cuma 1/5 tugas): saat dikejar bot LARI dulu ke waypoint patroli terjauh dari bos (sprint, 300 vs chase 270) sampai kejarannya putus (bos bukan CHASE + jarak >250px); baru ngumpet, dan cuma di meja yang jaraknya >200px dari bos; ngumpet sampai bos >350px baru lanjut rute
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -362,6 +363,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HAUNT-01 | Phase 33 | Done |
 | SNIFF-01 | Phase 33 | Done |
 | BOT-01 | Phase 33 | Done |
+| BOT-02 | Phase 34 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -384,7 +386,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v19 requirements: 1 total
 - v20 requirements: 2 total
 - v21 requirements: 5 total
-- Mapped to phases: 127
+- v22 requirements: 1 total
+- Mapped to phases: 128
 - Unmapped: 0 ✓
 
 ---

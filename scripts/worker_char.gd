@@ -27,6 +27,8 @@ var demo_wait_timer := 0.0
 var demo_stuck_timer := 0.0
 var demo_last_pos := Vector2.ZERO
 var demo_fleeing := false
+var demo_flee_target := Vector2.INF
+var demo_flee_retarget := 0.0
 var locked := false
 var hiding := false
 var interacting := false
@@ -119,7 +121,7 @@ func _physics_process(delta: float) -> void:
 		input_dir = Input.get_vector("left", "right", "up", "down")
 	if locked or hiding or interacting:
 		input_dir = Vector2.ZERO
-	sprinting = not bot_mode and Input.is_action_pressed("sprint") and input_dir.length() > 0.1 and stamina > 0.0
+	sprinting = ((not bot_mode and Input.is_action_pressed("sprint")) or (demo_mode and demo_fleeing)) and input_dir.length() > 0.1 and stamina > 0.0
 	var speed := SPEED * SPRINT_MULT if sprinting else SPEED
 	if sprinting:
 		stamina = maxf(0.0, stamina - STAMINA_DRAIN * delta)
@@ -217,21 +219,52 @@ func _demo_flee(delta: float, lvl: Node) -> Vector2:
 	var bd := -1.0
 	if lvl.has_method("_boss_distance"):
 		bd = float(lvl.call("_boss_distance"))
+	var bstate := -1
+	var bossn: Node = lvl.get("boss")
+	if bossn != null:
+		bstate = int(bossn.get("state"))
 	if hiding:
 		if bd < 0.0 or bd > 350.0:
 			_unhide()
 			demo_fleeing = false
+			demo_flee_target = Vector2.INF
 			demo_path = []
 			demo_repath_timer = 0.0
 		return Vector2.ZERO
+	if bstate == 2 or (bd >= 0.0 and bd < 250.0):
+		demo_flee_retarget -= delta
+		if demo_flee_target == Vector2.INF or demo_flee_retarget <= 0.0 or global_position.distance_to(demo_flee_target) < 60.0:
+			demo_flee_target = _demo_far_point(lvl)
+			demo_flee_retarget = 2.0
+			demo_path = []
+			demo_repath_timer = 0.0
+		return _demo_move_to(delta, lvl, demo_flee_target)
 	var desk: Vector2 = lvl.nearest_desk(global_position) if lvl.has_method("nearest_desk") else Vector2.INF
-	if desk == Vector2.INF:
-		demo_fleeing = false
-		return Vector2.ZERO
-	if global_position.distance_to(desk) < 50.0:
-		_toggle_hide()
-		return Vector2.ZERO
-	return _demo_move_to(delta, lvl, desk)
+	if desk != Vector2.INF and (bossn == null or desk.distance_to(bossn.global_position) > 200.0):
+		if global_position.distance_to(desk) < 50.0:
+			_toggle_hide()
+			return Vector2.ZERO
+		return _demo_move_to(delta, lvl, desk)
+	if demo_flee_target == Vector2.INF:
+		demo_flee_target = _demo_far_point(lvl)
+		demo_path = []
+		demo_repath_timer = 0.0
+	return _demo_move_to(delta, lvl, demo_flee_target)
+
+func _demo_far_point(lvl: Node) -> Vector2:
+	var bpos := Vector2(768, 448)
+	var bossn: Node = lvl.get("boss")
+	if bossn != null:
+		bpos = bossn.global_position
+	var best := Vector2(272, 624)
+	var best_d := -1.0
+	var loop: Array = lvl.get("PATROL_LOOP")
+	for wp in loop:
+		var d := (wp as Vector2).distance_to(bpos)
+		if d > best_d:
+			best_d = d
+			best = wp
+	return best
 
 func _demo_move_to(delta: float, lvl: Node, target: Vector2) -> Vector2:
 	demo_repath_timer -= delta
