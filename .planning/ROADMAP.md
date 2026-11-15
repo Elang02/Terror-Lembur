@@ -732,6 +732,21 @@ Plans:
 
 **Status: Complete.** Committed (15 Nov 2026). test_phase45 7/7.
 
+## Phase 46: Ruang Aman Toilet + Encounter Pertama yang Aman
+
+**Goal:** Riset desain: ketakutan butuh lembah (ruang aman, Resident Evil) dan encounter pertama harus mengajarkan ngumpet dengan aman (Outlast), bukan teleport pertama yang langsung berburu.
+**Requirements**: SAFE-01, FIRST-01, FIRST-02, FIRST-03
+**Success Criteria** (what must be TRUE):
+  1. Bos tidak pernah teleport ke Toilet; sel Toilet padat di AStar bos; di dalam detak jantung mati + musik tenang + lampu hijau + "AMAN"
+  2. Playthrough pertama: detik ke-12 bos muncul di koridor bawah, setengah kecepatan + buta 25 detik
+  3. Ngumpet saat bos lewat <250px mengakhiri encounter + tutorial langkah 3 selesai
+  4. Encounter dibatalkan kalau 40 detik lewat
+  5. test_phase46 13/13; regresi kunci hijau
+**Plans**:
+- [x] 46-01: SAFE-01 + FIRST-01..03 + test_phase46 + tes + commit + rebuild
+
+**Status: Complete.** Committed (15 Nov 2026). test_phase46 13/13.
+
 ## Progress
 
 ## Progress
@@ -785,5 +800,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 43. Kode Tidak Pernah Hilang | 1/1 | Complete | 15 Nov 2026 |
 | 44. Umpan Balik yang Jujur | 1/1 | Complete | 15 Nov 2026 |
 | 45. Jeda Solo + Mug Muncul Lagi | 1/1 | Complete | 15 Nov 2026 |
+| 46. Ruang Aman Toilet + Encounter Pertama yang Aman | 1/1 | Complete | 15 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

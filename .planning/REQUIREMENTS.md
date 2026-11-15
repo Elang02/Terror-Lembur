@@ -324,6 +324,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **FEED-05**: Intro cuma ditutup tombol E/klik, bukan WASD (pemain yang langsung jalan tidak lagi melewatkan cerita tanpa sadar)
 - [ ] **PAUSE-01**: P jeda di solo — bos, timer, musik, dan popup ikut berhenti; panel "JEDA — P lanjut | R ulang dari awal"; co-op tidak bisa jeda (butuh kesepakatan host)
 - [ ] **MUG-01**: Mug lempar muncul lagi 60 detik setelah diambil, di titik acak dari 6 titik awal (Q tidak jadi tombol mati di akhir game)
+- [ ] **SAFE-01**: Toilet jadi ruang aman — bos tidak pernah teleport ke sana, selnya padat di AStar bos (bos berhenti di pintu), di dalam detak jantung mati + musik dipaksa tenang, ada lampu hijau + tulisan "AMAN" di pintu (tempat hafalin 5 digit dengan tenang)
+- [ ] **FIRST-01**: Encounter pertama yang aman (Outlast) — cuma di playthrough pertama (tutorial belum selesai): detik ke-12 bos muncul di koridor bawah dekat spawn, jalan setengah kecepatan + buta 25 detik (tidak bisa nangkep)
+- [ ] **FIRST-02**: Encounter berakhir saat pemain ngumpet selagi bos lewat dalam 250px — bos balik kecepatan penuh (buta 2 detik grace), tutorial langkah 3 selesai di momen itu
+- [ ] **FIRST-03**: Encounter dibatalkan diam-diam kalau 40 detik sudah lewat tanpa pemicu (pemain sibuk di popup / sudah jauh)
 - [ ] **LVL2-01**: Cerita lantai 2: pintu keluar lantai 1 menuju tangga; pintu utama gedung dikunci hantu; jalan keluar lewat lantai 2 (ruang direksi lama). Tema Pulang tetap.
 - [ ] **LVL2-02**: 5 tugas lantai 2 (Server Utama/Simon 5 ronde, Komputer Direksi/Excel 8 soal, Arsip Lama/Fotokopi 8 lembar, Cari Berkas Lama/4 halaman 4 ronde, Urut Catatan Lama/6 tanggal) + Pintu Keluar keypad 5 digit + Tuas Sel
 - [ ] **LVL2-03**: Peta lantai 2: grid 48x28, 15 ruangan susunan beda, ruang bos di ujung (direksi lama), sel di ruang bos, pintu keluar di lobby tangga
@@ -410,6 +414,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FEED-05 | Phase 44 | Done |
 | PAUSE-01 | Phase 45 | Done |
 | MUG-01 | Phase 45 | Done |
+| SAFE-01 | Phase 46 | Done |
+| FIRST-01 | Phase 46 | Done |
+| FIRST-02 | Phase 46 | Done |
+| FIRST-03 | Phase 46 | Done |
 | LVL2-01 | Phase 41 | Planned (design done in Phase 40) |
 | LVL2-02 | Phase 41 | Planned (design done in Phase 40) |
 | LVL2-03 | Phase 41 | Planned (design done in Phase 40) |
@@ -443,7 +451,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v22 requirements: 1 total
 - v23 requirements: 1 total
 - v24 requirements: 3 total
-- Mapped to phases: 155
+- Mapped to phases: 159
 - Unmapped: 0 ✓
 
 ---

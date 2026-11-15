@@ -33,6 +33,7 @@ var search_center := Vector2.ZERO
 var waypoint_timer := 0.0
 var patrol_index := 2
 var speed_mult := 1.0
+var slow_mult := 1.0
 var teleport_mult := 1.0
 var path: PackedVector2Array = []
 var path_index := 0
@@ -432,7 +433,7 @@ func _move_toward(dest: Vector2, speed: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, 900.0 * get_physics_process_delta_time())
 		return
 	dir = dir.normalized()
-	var want := dir * speed
+	var want := dir * speed * slow_mult
 	velocity = velocity.lerp(want, clampf(6.0 * get_physics_process_delta_time(), 0.0, 1.0))
 	facing = dir
 

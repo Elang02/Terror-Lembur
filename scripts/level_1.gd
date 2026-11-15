@@ -125,6 +125,11 @@ var self_rescue_noise_timer := 0.0
 var warn_timer := 0.0
 var code_timer := 0.0
 var paused := false
+var first_encounter_active := false
+var first_encounter_done := false
+const FIRST_ENCOUNTER_AT := 12.0
+const FIRST_ENCOUNTER_MAX := 40.0
+const FIRST_ENCOUNTER_SPOT := Vector2(272, 624)
 const MUG_RESPAWN_TIME := 60.0
 var pickup_spots: Array[Vector2] = []
 var debug_timer := 0.0
@@ -323,6 +328,9 @@ func _update_music(delta: float) -> void:
 		var d := _boss_distance()
 		if d >= 0.0 and d < 150.0:
 			target = maxf(target, 0.8)
+	var me := _my_player()
+	if me != null and TOILET_ROOM.has_point(me.global_position):
+		target = 0.0
 	music_tense_level = move_toward(music_tense_level, target, delta / 1.5)
 	mute_fade = move_toward(mute_fade, 0.0 if muted else 1.0, delta / 0.3)
 	var tense_db := lerpf(-60.0, -12.0, music_tense_level)
@@ -422,6 +430,55 @@ func _update_tutorial() -> void:
 		4:
 			if _any_main_task_done():
 				_finish_tutorial()
+
+func _update_first_encounter() -> void:
+	if first_encounter_done or game_over:
+		return
+	if _tutorial_is_done():
+		first_encounter_done = true
+		return
+	if boss == null:
+		return
+	var me := _my_player()
+	if me == null:
+		return
+	if not first_encounter_active:
+		if elapsed < FIRST_ENCOUNTER_AT:
+			return
+		if elapsed > FIRST_ENCOUNTER_MAX:
+			first_encounter_done = true
+			return
+		if popup_open or intro_open or bool(me.get("locked")):
+			return
+		first_encounter_active = true
+		boss.global_position = FIRST_ENCOUNTER_SPOT
+		boss.set("path", PackedVector2Array())
+		boss.set("slow_mult", 0.5)
+		boss.set("blind_timer", 25.0)
+		boss.set("state", 0)
+		boss.set("state_timer", 0.0)
+		hud_warn_label.text = "Bos itu... jangan bergerak. Ngumpet di bawah meja!"
+		warn_timer = 3.0
+		return
+	var bd := _boss_distance()
+	if bool(me.get("hiding")) and bd >= 0.0 and bd < 250.0:
+		_end_first_encounter("Dia lewat... kamu aman. Untuk sekarang.")
+		return
+	if float(boss.get("blind_timer")) <= 0.0:
+		_end_first_encounter("")
+
+func _end_first_encounter(msg: String) -> void:
+	first_encounter_active = false
+	first_encounter_done = true
+	if boss != null:
+		boss.set("slow_mult", 1.0)
+		boss.set("blind_timer", 2.0)
+	if msg != "":
+		hud_warn_label.text = msg
+		warn_timer = 3.0
+	if tutorial_step == 3:
+		tutorial_step = 4
+		_refresh_tutorial_label()
 
 func _any_main_task_done() -> bool:
 	for tp in tasks:
@@ -559,6 +616,7 @@ func _build_astar() -> void:
 		if rect.size.x <= 0.0 or rect.size.y <= 0.0:
 			continue
 		_mark_rect_solid(rect)
+	_mark_rect_solid(TOILET_ROOM)
 
 func _prop_collision_aabb(prop: Node2D) -> Rect2:
 	var col := prop.get_node_or_null("Collision")
@@ -763,6 +821,21 @@ func _build_horror_lights() -> void:
 	red.energy = 0.5
 	red.texture_scale = 2.0
 	add_child(red)
+	var safe_light := PointLight2D.new()
+	safe_light.name = "Lampu_Aman_Toilet"
+	safe_light.position = Vector2(200, 384)
+	safe_light.color = Color(0.35, 0.85, 0.6, 1)
+	safe_light.energy = 0.8
+	safe_light.texture_scale = 2.0
+	add_child(safe_light)
+	var safe_sign := Label.new()
+	safe_sign.name = "Tanda_Aman"
+	safe_sign.text = "AMAN"
+	safe_sign.position = Vector2(96, 320)
+	safe_sign.add_theme_font_override("font", UITheme.body_font())
+	safe_sign.add_theme_font_size_override("font_size", 22)
+	safe_sign.add_theme_color_override("font_color", Color(0.35, 0.85, 0.6, 1))
+	add_child(safe_sign)
 func _build_cell() -> void:
 	var room := Polygon2D.new()
 	room.name = "Bayangan_Ruang_Bos"
@@ -1222,7 +1295,9 @@ func _process(delta: float) -> void:
 		flash_rect.color = Color(0.9, 0.05, 0.05, flash_a)
 	if boss != null and not game_over:
 		var bd := _boss_distance()
-		if bd >= 0.0 and bd < 320.0:
+		var me_safe := _my_player()
+		var in_safe := me_safe != null and TOILET_ROOM.has_point(me_safe.global_position)
+		if bd >= 0.0 and bd < 320.0 and not in_safe:
 			heartbeat_timer -= delta
 			if heartbeat_timer <= 0.0:
 				heartbeat_timer = lerpf(0.45, 1.0, clampf(bd / 320.0, 0.0, 1.0))
@@ -1232,6 +1307,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("mute"):
 		_toggle_mute()
 	_update_music(delta)
+	_update_first_encounter()
 	_update_tutorial()
 	var me2 := _my_player()
 	if me2 != null and me2.get("interacting") and not game_over:
@@ -1905,6 +1981,8 @@ func teleport_destination() -> Vector2:
 			if dest.distance_to(p) < 120.0:
 				ok = false
 				break
+		if ok and TOILET_ROOM.has_point(dest):
+			ok = false
 		if ok:
 			for child in ysort.get_children():
 				if _is_player(child) and bool(child.get("hiding")):
