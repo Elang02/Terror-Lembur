@@ -9,10 +9,11 @@ const VISION_ANGLE := 1.35
 const CATCH_DIST := 40.0
 const TELEPORT_MIN := 14.0
 const TELEPORT_MAX := 20.0
-const FIRST_TELEPORT_MIN := 15.0
-const FIRST_TELEPORT_MAX := 20.0
+const FIRST_TELEPORT_MIN := 25.0
+const FIRST_TELEPORT_MAX := 35.0
 const BLIND_TIME := 1.5
 const CHASE_TIRED := 8.0
+const CHASE_WINDUP := 1.0
 const HEARING_WALK := 160.0
 const HEARING_SPRINT := 360.0
 
@@ -23,12 +24,14 @@ var facing := Vector2.DOWN
 var target: Vector2 = Vector2.ZERO
 var state_timer := 0.0
 var chase_timer := 0.0
+var chase_windup_timer := 0.0
+var post_rescue_timer := 0.0
 var teleport_timer := 0.0
 var blind_timer := 0.0
 var telegraph_timer := 0.0
 var search_center := Vector2.ZERO
 var waypoint_timer := 0.0
-var patrol_index := 7
+var patrol_index := 2
 var speed_mult := 1.0
 var teleport_mult := 1.0
 var path: PackedVector2Array = []
@@ -115,6 +118,8 @@ func _physics_process(delta: float) -> void:
 		return
 	if blind_timer > 0.0:
 		blind_timer -= delta
+	if post_rescue_timer > 0.0:
+		post_rescue_timer -= delta
 	if telegraph_timer > 0.0:
 		telegraph_timer -= delta
 		visible = int(Time.get_ticks_msec() / 120) % 2 == 0
@@ -158,6 +163,9 @@ func _update_bob(delta: float) -> void:
 		boss_sprite.rotation = 0.0
 
 func _update_stuck(delta: float) -> void:
+	# Selama wind-up kejaran bos memang diam — jangan anggap itu nyangkut.
+	if chase_windup_timer > 0.0:
+		return
 	# A* waypoints are cell centres, but the boss capsule can clip a prop
 	# corner between two waypoints and wedge. If it barely moves while it
 	# has a path, jump it to the next path point instead of grinding the wall.
@@ -219,13 +227,20 @@ func _pick_waypoint() -> void:
 	# while the player does tasks undisturbed.
 	var anchor := _nearest_player_pos()
 	if anchor != Vector2.INF:
+		# Habis pemain kabur dari sel, bos patroli MENJAUH dulu 10 detik
+		# (bukan mendekat): pemain yang baru kabur butuh ruang bernapas.
+		var want_far := post_rescue_timer > 0.0
 		var best: Vector2 = Vector2.INF
-		var best_d := 1e9
+		var best_d := -1.0 if want_far else 1e9
 		for wp in loop:
 			if global_position.distance_to(wp) < 50.0:
 				continue
 			var d := anchor.distance_to(wp)
-			if d < best_d:
+			if want_far:
+				if d > best_d:
+					best_d = d
+					best = wp
+			elif d < best_d:
 				best_d = d
 				best = wp
 		if best != Vector2.INF:
@@ -319,6 +334,10 @@ func _update_chase(delta: float) -> void:
 		_enter_search(target)
 		return
 	target = p.global_position
+	if chase_windup_timer > 0.0:
+		chase_windup_timer -= delta
+		velocity = Vector2.ZERO
+		return
 	if repath_timer <= 0.0:
 		repath_timer = 0.4
 		_request_path(target)
@@ -422,6 +441,7 @@ func _update_detection() -> void:
 		if state != State.CHASE:
 			state = State.CHASE
 			chase_timer = 0.0
+			chase_windup_timer = CHASE_WINDUP
 			state_timer = 0.0
 			repath_timer = 0.0
 			level.rpc("on_boss_chase")
@@ -546,7 +566,8 @@ func _do_teleport() -> void:
 
 func send_back_to_room() -> void:
 	global_position = level.boss_room_center()
-	blind_timer = 3.0
+	blind_timer = 5.0
+	post_rescue_timer = 10.0
 	teleport_timer = rng.randf_range(TELEPORT_MIN, TELEPORT_MAX) * teleport_mult
 	state = State.RETURN
 	state_timer = 0.0
