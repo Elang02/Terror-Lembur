@@ -25,6 +25,7 @@ var target: Vector2 = Vector2.ZERO
 var state_timer := 0.0
 var chase_timer := 0.0
 var chase_windup_timer := 0.0
+var chase_lost_timer := 0.0
 var post_rescue_timer := 0.0
 var teleport_timer := 0.0
 var blind_timer := 0.0
@@ -334,10 +335,15 @@ func _update_chase(delta: float) -> void:
 	repath_timer -= delta
 	var p := _nearest_visible_player()
 	if p == null:
-		level.rpc("on_boss_lost")
-		_enter_search(target)
-		return
-	target = p.global_position
+		chase_lost_timer += delta
+		if chase_lost_timer > 0.5:
+			level.rpc("on_boss_lost")
+			_enter_search(target)
+			chase_lost_timer = 0.0
+			return
+	else:
+		chase_lost_timer = 0.0
+		target = p.global_position
 	if chase_windup_timer > 0.0:
 		chase_windup_timer -= delta
 		velocity = Vector2.ZERO
@@ -445,6 +451,7 @@ func _update_detection() -> void:
 		if state != State.CHASE:
 			state = State.CHASE
 			chase_timer = 0.0
+			chase_lost_timer = 0.0
 			chase_windup_timer = CHASE_WINDUP
 			state_timer = 0.0
 			repath_timer = 0.0

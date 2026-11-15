@@ -55,10 +55,10 @@ func _run() -> void:
 		_ok("tense level rises in CHASE (" + str(lvl_tense) + ")")
 	else:
 		_fail("tense level stuck low in CHASE (" + str(lvl_tense) + ")")
-	if tense.volume_db > -20.0:
-		_ok("tense volume audible in CHASE (" + str(tense.volume_db) + " dB)")
+	if tense.volume_db < -60.0:
+		_ok("tense loop ducked to silence in CHASE (" + str(tense.volume_db) + " dB)")
 	else:
-		_fail("tense volume too quiet in CHASE (" + str(tense.volume_db) + " dB)")
+		_fail("tense loop still audible in CHASE (" + str(tense.volume_db) + " dB)")
 	# Back to PATROL: tense level should fall toward 0.0
 	boss.set("state", 0)
 	boss.global_position = lvl.boss_room_center()

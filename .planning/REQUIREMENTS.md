@@ -328,6 +328,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **FIRST-01**: Encounter pertama yang aman (Outlast) — cuma di playthrough pertama (tutorial belum selesai): detik ke-12 bos muncul di koridor bawah dekat spawn, jalan setengah kecepatan + buta 25 detik (tidak bisa nangkep)
 - [ ] **FIRST-02**: Encounter berakhir saat pemain ngumpet selagi bos lewat dalam 250px — bos balik kecepatan penuh (buta 2 detik grace), tutorial langkah 3 selesai di momen itu
 - [ ] **FIRST-03**: Encounter dibatalkan diam-diam kalau 40 detik sudah lewat tanpa pemicu (pemain sibuk di popup / sudah jauh)
+- [ ] **STORY-01**: Tiap tugas selesai menampilkan satu baris backstory bos bareng digit kodenya (5 baris jadi satu cerita: bos lama mati karena lembur, pemain mengulang nasibnya) — Pulang jadi menolak jadi dia
+- [ ] **PULANG-01**: Papan di pintu keluar menunjukkan progres pulang ("X/5 tugas selesai, selangkah lagi pulang", hijau "Semua tugas selesai, buka pintunya!" kalau sudah 5/5)
+- [ ] **SILENCE-01**: Musik hening saat kejaran dan saat telegraph teleport (tinggal detak jantung + langkah kaki), balik 2 detik setelah kejaran putus; 3 detik sebelum teleport musik juga dibungkam
+- [ ] **CHASE-02**: Kejaran tidak langsung putus saat pandangan terhalang sesaat — grace 0,5 detik sebelum bos menyerah ke SEARCH (kejaran di koridor bawah sempat batal sendiri karena jalur A* memutar arah hadap bos)
 - [ ] **LVL2-01**: Cerita lantai 2: pintu keluar lantai 1 menuju tangga; pintu utama gedung dikunci hantu; jalan keluar lewat lantai 2 (ruang direksi lama). Tema Pulang tetap.
 - [ ] **LVL2-02**: 5 tugas lantai 2 (Server Utama/Simon 5 ronde, Komputer Direksi/Excel 8 soal, Arsip Lama/Fotokopi 8 lembar, Cari Berkas Lama/4 halaman 4 ronde, Urut Catatan Lama/6 tanggal) + Pintu Keluar keypad 5 digit + Tuas Sel
 - [ ] **LVL2-03**: Peta lantai 2: grid 48x28, 15 ruangan susunan beda, ruang bos di ujung (direksi lama), sel di ruang bos, pintu keluar di lobby tangga
@@ -418,6 +422,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FIRST-01 | Phase 46 | Done |
 | FIRST-02 | Phase 46 | Done |
 | FIRST-03 | Phase 46 | Done |
+| STORY-01 | Phase 47 | Done |
+| PULANG-01 | Phase 47 | Done |
+| SILENCE-01 | Phase 47 | Done |
+| CHASE-02 | Phase 47 | Done |
 | LVL2-01 | Phase 41 | Planned (design done in Phase 40) |
 | LVL2-02 | Phase 41 | Planned (design done in Phase 40) |
 | LVL2-03 | Phase 41 | Planned (design done in Phase 40) |
@@ -451,7 +459,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v22 requirements: 1 total
 - v23 requirements: 1 total
 - v24 requirements: 3 total
-- Mapped to phases: 159
+- Mapped to phases: 163
 - Unmapped: 0 ✓
 
 ---

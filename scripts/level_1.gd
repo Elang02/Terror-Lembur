@@ -125,6 +125,15 @@ var self_rescue_noise_timer := 0.0
 var warn_timer := 0.0
 var code_timer := 0.0
 var paused := false
+var silence_fade := 1.0
+var exit_sign_label: Label
+const STORY_LINES := [
+	"Laporan ini dulu dikerjakan Pak Bos sampai jam 2 pagi.",
+	"Surat pemecatan ini tidak pernah sempat dikirim.",
+	"Listrik gedung ini padam di malam Pak Bos meninggal.",
+	"Berkas-berkas ini tidak pernah sempat dirapikan Pak Bos.",
+	"Catatan rapat terakhir Pak Bos: jangan lembur sendirian.",
+]
 var first_encounter_active := false
 var first_encounter_done := false
 const FIRST_ENCOUNTER_AT := 12.0
@@ -331,12 +340,21 @@ func _update_music(delta: float) -> void:
 	var me := _my_player()
 	if me != null and TOILET_ROOM.has_point(me.global_position):
 		target = 0.0
+	var silence_target := 1.0
+	if boss != null and not game_over:
+		var st2: int = boss.get("state")
+		if st2 == 2 or float(boss.get("telegraph_timer")) > 0.0 or float(boss.get("teleport_timer")) < 3.0:
+			silence_target = 0.0
+	if silence_target < silence_fade:
+		silence_fade = move_toward(silence_fade, 0.0, delta / 0.3)
+	else:
+		silence_fade = move_toward(silence_fade, 1.0, delta / 2.0)
 	music_tense_level = move_toward(music_tense_level, target, delta / 1.5)
 	mute_fade = move_toward(mute_fade, 0.0 if muted else 1.0, delta / 0.3)
 	var tense_db := lerpf(-60.0, -12.0, music_tense_level)
 	var calm_db := lerpf(-18.0, -26.0, music_tense_level)
-	music_tense.volume_db = lerpf(-80.0, tense_db, mute_fade)
-	music_calm.volume_db = lerpf(-80.0, calm_db, mute_fade)
+	music_tense.volume_db = lerpf(-80.0, tense_db, mute_fade * silence_fade)
+	music_calm.volume_db = lerpf(-80.0, calm_db, mute_fade * silence_fade)
 
 func _load_muted() -> void:
 	var cfg := ConfigFile.new()
@@ -836,6 +854,18 @@ func _build_horror_lights() -> void:
 	safe_sign.add_theme_font_size_override("font_size", 22)
 	safe_sign.add_theme_color_override("font_color", Color(0.35, 0.85, 0.6, 1))
 	add_child(safe_sign)
+	exit_sign_label = Label.new()
+	exit_sign_label.name = "Tanda_Pintu_Keluar"
+	exit_sign_label.text = "0/5 tugas selesai, selangkah lagi pulang"
+	exit_sign_label.position = Vector2(640, 692)
+	exit_sign_label.size = Vector2(320, 48)
+	exit_sign_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	exit_sign_label.add_theme_font_override("font", UITheme.body_font())
+	exit_sign_label.add_theme_font_size_override("font_size", 18)
+	exit_sign_label.add_theme_color_override("font_color", Color(0.85, 0.62, 0.2, 1))
+	exit_sign_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
+	exit_sign_label.add_theme_constant_override("outline_size", 6)
+	add_child(exit_sign_label)
 func _build_cell() -> void:
 	var room := Polygon2D.new()
 	room.name = "Bayangan_Ruang_Bos"
@@ -1120,7 +1150,7 @@ func _build_hud() -> void:
 	hud_code_label = UITheme.make_label("", UITheme.title_font(), 26, Color(0.45, 0.85, 0.45))
 	hud_code_label.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	hud_code_label.offset_top = 64
-	hud_code_label.offset_bottom = 104
+	hud_code_label.offset_bottom = 144
 	hud_code_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hud_code_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
 	hud_code_label.add_theme_constant_override("outline_size", 8)
@@ -1380,7 +1410,7 @@ func _reveal_code_digit(idx: int) -> void:
 	if code_found[idx]:
 		return
 	code_found[idx] = true
-	hud_code_label.text = "Kode pintu ditemukan! Digit ke-" + str(idx + 1) + " = " + str(code_digits[idx]) + "  (INGAT BAIK-BAIK!)"
+	hud_code_label.text = "Kode pintu ditemukan! Digit ke-" + str(idx + 1) + " = " + str(code_digits[idx]) + "  (INGAT BAIK-BAIK!)\n" + STORY_LINES[idx]
 	code_timer = 10.0
 	play_sfx("complete", -6.0)
 
@@ -1775,6 +1805,12 @@ func _update_hud() -> void:
 		bi += 1
 	if hud_task_count != null:
 		hud_task_count.text = str(done_count) + "/" + str(main_total)
+	if exit_sign_label != null:
+		if done_count >= main_total and main_total > 0:
+			exit_sign_label.text = "Semua tugas selesai, buka pintunya!"
+			exit_sign_label.add_theme_color_override("font_color", Color(0.35, 0.85, 0.6, 1))
+		else:
+			exit_sign_label.text = str(done_count) + "/" + str(main_total) + " tugas selesai, selangkah lagi pulang"
 	for tp2 in tasks:
 		if tp2.done and not task_done_sounded.get(tp2.task_id, false):
 			task_done_sounded[tp2.task_id] = true

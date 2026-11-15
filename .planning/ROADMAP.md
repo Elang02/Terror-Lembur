@@ -747,6 +747,21 @@ Plans:
 
 **Status: Complete.** Committed (15 Nov 2026). test_phase46 13/13.
 
+## Phase 47: Backstory Bos + Progres Pulang + Hening Saat Kejaran
+
+**Goal:** Riset desain: bos harus jadi karakter (backstory per tugas), Pulang harus terasa di aturan (progres di pintu keluar), dan kejaran harus hening (Silent Hill / Alien: Isolation). Plus bug nyata yang ketemu saat ngetes: kejaran di koridor bawah batal sendiri dalam 2 tick.
+**Requirements**: STORY-01, PULANG-01, SILENCE-01, CHASE-02
+**Success Criteria** (what must be TRUE):
+  1. Tiap digit kode datang dengan satu baris backstory bos (5 baris = cerita utuh)
+  2. Papan di pintu keluar menunjukkan X/5 dan berubah saat semua tugas selesai
+  3. Musik hening saat CHASE dan telegraph, balik 2 detik setelah putus
+  4. Kejaran bertahan 0,5 detik saat pandangan terhalang sesaat (grace), tidak langsung putus
+  5. test_phase47 8/8; test_music diperbarui ke desain baru 7/7; regresi kunci hijau
+**Plans**:
+- [x] 47-01: STORY-01 + PULANG-01 + SILENCE-01 + CHASE-02 + test_phase47 + tes + commit + rebuild
+
+**Status: Complete.** Committed (15 Nov 2026). test_phase47 8/8.
+
 ## Progress
 
 ## Progress
@@ -801,5 +816,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 44. Umpan Balik yang Jujur | 1/1 | Complete | 15 Nov 2026 |
 | 45. Jeda Solo + Mug Muncul Lagi | 1/1 | Complete | 15 Nov 2026 |
 | 46. Ruang Aman Toilet + Encounter Pertama yang Aman | 1/1 | Complete | 15 Nov 2026 |
+| 47. Backstory Bos + Progres Pulang + Hening Saat Kejaran | 1/1 | Complete | 15 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
