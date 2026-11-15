@@ -25,18 +25,20 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	boss = lvl.get("boss")
-	# 1. First teleport timer is 8-12s, not 20-30s
+	# 1. First teleport timer is 25-35s, not 15-20s (Phase 37: pemain sempat
+	# selesaikan tugas pertama sebelum bos bisa muncul di atas dia)
 	var t0 := float(boss.get("teleport_timer"))
-	if t0 >= 15.0 and t0 <= 20.0:
-		_ok("first teleport timer is 15-20s (" + str(t0) + "s)")
+	if t0 >= 25.0 and t0 <= 35.0:
+		_ok("first teleport timer is 25-35s (" + str(t0) + "s)")
 	else:
-		_fail("first teleport timer out of 15-20s range (" + str(t0) + "s)")
-	# 2. First patrol waypoint is (272,448), closest to the Computer task
+		_fail("first teleport timer out of 25-35s range (" + str(t0) + "s)")
+	# 2. First patrol waypoint is (1328,272), far end — opening grace window
+	# (Phase 38: dulu (272,448), 137px dari Komputer, tugas pertama mustahil)
 	var target: Vector2 = boss.get("target")
-	if target == Vector2(272, 448):
-		_ok("first patrol waypoint is (272,448), closest to Computer task")
+	if target == Vector2(1328, 272):
+		_ok("first patrol waypoint is (1328,272), far end (opening grace)")
 	else:
-		_fail("first patrol waypoint is " + str(target) + ", expected (272,448)")
+		_fail("first patrol waypoint is " + str(target) + ", expected (1328,272)")
 	# 3. First teleport is fair: boss lands >=150px from the player
 	var pscene := load("res://scenes/worker_char.tscn") as PackedScene
 	var player := pscene.instantiate() as Node2D
