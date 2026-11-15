@@ -567,7 +567,7 @@ Plans:
 - [x] 33-01: GATE-01 + HEART-01 + HAUNT-01 + SNIFF-01 + BOT-01 + menu CARA BERMAIN + test_win update + test_phase33 baru
 - [x] 33-02: Regresi + commit + rebuild + video v23
 
-**Status: Complete.** Committed (15 Nov 2026). test_win 8/8, test_phase33 4/4, test_popup 27/27, regresi 10 tes tanpa fail. Video v23: [hasil menyusul].
+**Status: Complete.** Committed (15 Nov 2026). test_win 8/8, test_phase33 4/4, test_popup 27/27, regresi 10 tes tanpa fail. Video v23: 188.4 detik, audio -25.8 dB, GAME OVER 0 bintang, bot 1/5 tugas (cuma Komputer), mati 3x di ~1:03 in-game — flee v1 lari ke meja terdekat lalu ngumpet, bos SNIFF-01 nemu dia di meja itu.
 
 ## Phase 34: Bot Kabur yang Bener (Lari Dulu, Ngumpet Belakangan)
 
@@ -580,7 +580,7 @@ Plans:
 **Plans**:
 - [x] 34-01: _demo_flee v2 + _demo_far_point + sprint saat kabur + tes + commit + rebuild + video v24
 
-**Status: Complete.** Committed (15 Nov 2026). Video v24: [hasil menyusul].
+**Status: Complete.** Committed (15 Nov 2026). Video v24: 154.1 detik, audio -26.6 dB, GAME OVER 0 bintang, bot 1/5 tugas, mati 3x di 1:02 in-game — bot lari lurus di koridor terbuka, bos tetap lihat dia, kejaran nggak putus.
 
 ## Phase 35: Bot Kabur Lebih Pintar (Lari ke Balik Tembok, Jangan Buka Tugas Kalau Bos Dekat)
 
@@ -593,7 +593,7 @@ Plans:
 **Plans**:
 - [x] 35-01: _demo_far_point pakai LOS + guard buka popup + tes + commit + rebuild + video v25
 
-**Status: Complete.** Committed (15 Nov 2026). Video v25: [hasil menyusul].
+**Status: Complete.** Committed (15 Nov 2026). Video v25: 235.7 detik, audio -26.0 dB, GAME OVER 0 bintang, bot 1/5 tugas, mati 3x di 1:48 in-game — bot berhasil ngumpet sekali (frame 0:33) dan lari ke balik tembok, tapi spiral sel: kabur dari sel, bos 72px di depan sel, ketangkep lagi.
 
 ## Phase 36: Kejaran Lebih Adil (Aturan DbD) + Kasih Tahu Pemain Saat Kejaran Putus
 
