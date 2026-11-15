@@ -116,6 +116,9 @@ func _circle_points(center: Vector2, r: float) -> PackedVector2Array:
 func _physics_process(delta: float) -> void:
 	if not multiplayer.is_server():
 		return
+	if level != null and bool(level.get("paused")):
+		velocity = Vector2.ZERO
+		return
 	if blind_timer > 0.0:
 		blind_timer -= delta
 	if post_rescue_timer > 0.0:

@@ -124,6 +124,9 @@ const SELF_RESCUE_GUARD_RADIUS := 150.0
 var self_rescue_noise_timer := 0.0
 var warn_timer := 0.0
 var code_timer := 0.0
+var paused := false
+const MUG_RESPAWN_TIME := 60.0
+var pickup_spots: Array[Vector2] = []
 var debug_timer := 0.0
 var popup: TaskPopup = null
 var popup_open := false
@@ -198,6 +201,7 @@ var hud_prompt_pill: PanelContainer
 var hud_prompt_bar: ProgressBar
 var hud_warn_label: Label
 var hud_code_label: Label
+var hud_pause_panel: PanelContainer
 var hud_status_label: Label
 var hud_status_pill: PanelContainer
 var hud_edge_rects: Array[ColorRect] = []
@@ -818,6 +822,7 @@ func _build_pickups() -> void:
 		Vector2(320, 300), Vector2(420, 300), Vector2(1150, 300),
 		Vector2(1250, 300), Vector2(560, 540), Vector2(1150, 500),
 	]
+	pickup_spots.assign(spots)
 	for s in spots:
 		var pk := scene.instantiate() as Node2D
 		pk.name = _prop_name("Mug_Lempar")
@@ -828,6 +833,10 @@ func _build_pickups() -> void:
 func _update_pickups() -> void:
 	for pk in pickups:
 		if pk.taken:
+			if pk.has_meta("respawn_at") and elapsed >= float(pk.get_meta("respawn_at")):
+				pk.position = pickup_spots[randi_range(0, pickup_spots.size() - 1)]
+				pk.taken = false
+				pk.remove_meta("respawn_at")
 			continue
 		for child in ysort.get_children():
 			if not _is_player(child):
@@ -838,6 +847,7 @@ func _update_pickups() -> void:
 				continue
 			if child.global_position.distance_to(pk.global_position) < 30.0:
 				pk.taken = true
+				pk.set_meta("respawn_at", elapsed + MUG_RESPAWN_TIME)
 				child.rpc_id(int(child.name), "give_throwable")
 				break
 
@@ -1043,6 +1053,23 @@ func _build_hud() -> void:
 	hud_code_label.add_theme_constant_override("outline_size", 8)
 	hud_code_label.visible = false
 	hud.add_child(hud_code_label)
+	hud_pause_panel = PanelContainer.new()
+	UITheme.apply_panel(hud_pause_panel, Color(0.05, 0.05, 0.06, 0.95), Color(0.85, 0.62, 0.2), 2, 10)
+	hud_pause_panel.set_anchors_preset(Control.PRESET_CENTER)
+	hud_pause_panel.visible = false
+	hud.add_child(hud_pause_panel)
+	var pvb := VBoxContainer.new()
+	pvb.add_theme_constant_override("separation", 8)
+	hud_pause_panel.add_child(pvb)
+	var pause_title := UITheme.make_label("JEDA", UITheme.title_font(), 36, UITheme.COL_BLOOD_BRIGHT)
+	pause_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	pvb.add_child(pause_title)
+	var pause_hint := UITheme.make_label("P lanjut  |  R ulang dari awal", UITheme.body_font(), 16, UITheme.COL_PAPER)
+	pause_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	pvb.add_child(pause_hint)
+	var pause_note := UITheme.make_label("bos ikut berhenti (solo)", UITheme.body_font(), 14, UITheme.COL_GREY)
+	pause_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	pvb.add_child(pause_note)
 	hud_tutorial_panel = PanelContainer.new()
 	UITheme.apply_panel(hud_tutorial_panel, Color(0.05, 0.08, 0.05, 0.92), UITheme.COL_GREEN, 1, 10)
 	hud_tutorial_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
@@ -1172,6 +1199,8 @@ func _build_hud() -> void:
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
+		return
+	if paused:
 		return
 	if intro_open:
 		intro_timer -= delta
@@ -1605,6 +1634,16 @@ func _show_end(title: String, detail: String, s: int) -> void:
 		tw.tween_interval(0.12 * float(i))
 		tw.tween_property(end_stars[i], "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
+func _toggle_pause() -> void:
+	if not solo_mode or game_over or intro_open:
+		return
+	paused = not paused
+	hud_pause_panel.visible = paused
+	if music_calm != null:
+		music_calm.stream_paused = paused
+	if music_tense != null:
+		music_tense.stream_paused = paused
+
 func _unhandled_input(event: InputEvent) -> void:
 	if intro_open:
 		if event is InputEventKey and event.pressed and not event.echo and event.is_action_pressed("interact"):
@@ -1613,6 +1652,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif event is InputEventMouseButton and event.pressed:
 			_dismiss_intro()
 			get_viewport().set_input_as_handled()
+		return
+	if paused:
+		if event.is_action_pressed("pause"):
+			_toggle_pause()
+			get_viewport().set_input_as_handled()
+		elif event.is_action_pressed("flashlight"):
+			rpc("_restart_game")
+		return
+	if not game_over and event.is_action_pressed("pause") and solo_mode:
+		_toggle_pause()
+		get_viewport().set_input_as_handled()
 		return
 	if game_over and event.is_action_pressed("flashlight"):
 		rpc("_restart_game")

@@ -897,6 +897,8 @@ func press_space() -> void:
 func _process(delta: float) -> void:
 	if not open:
 		return
+	if level != null and bool(level.get("paused")):
+		return
 	boss_warn_timer += delta
 	if level != null:
 		var bd := float(level.call("_boss_distance"))

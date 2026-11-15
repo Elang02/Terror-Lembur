@@ -719,6 +719,19 @@ Plans:
 
 **Status: Complete.** Committed (15 Nov 2026). test_phase44 7/7.
 
+## Phase 45: Jeda Solo + Mug Muncul Lagi
+
+**Goal:** Audit kode: tidak ada jeda sama sekali (run 5-10 menit tidak bisa ditinggal), dan 6 mug tidak pernah muncul lagi — di akhir game (enrage, pintu terbuka) pemain kehabisan umpan, Q jadi tombol mati.
+**Requirements**: PAUSE-01, MUG-01
+**Success Criteria** (what must be TRUE):
+  1. P jeda di solo: bos + timer + musik + popup berhenti, panel JEDA muncul; P lagi lanjut; R ulang dari awal
+  2. Mug yang diambil muncul lagi setelah 60 detik di titik acak
+  3. test_phase45 7/7; regresi kunci hijau
+**Plans**:
+- [x] 45-01: PAUSE-01 + MUG-01 + test_phase45 + tes + commit + rebuild
+
+**Status: Complete.** Committed (15 Nov 2026). test_phase45 7/7.
+
 ## Progress
 
 ## Progress
@@ -771,5 +784,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 42. Meter TEKANAN di HUD | 1/1 | Complete | 15 Nov 2026 |
 | 43. Kode Tidak Pernah Hilang | 1/1 | Complete | 15 Nov 2026 |
 | 44. Umpan Balik yang Jujur | 1/1 | Complete | 15 Nov 2026 |
+| 45. Jeda Solo + Mug Muncul Lagi | 1/1 | Complete | 15 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

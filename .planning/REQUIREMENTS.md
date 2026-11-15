@@ -322,6 +322,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **FEED-03**: Prompt jujur soal sprint yang berisik ("SHIFT: lari (berisik!)") + CARA BERMAIN menyebut lari itu berisik
 - [ ] **FEED-04**: Pesan teleport jujur soal jarak ("Bos muncul di dekatmu!" kalau <200px, "Bos muncul di kejauhan..." kalau jauh)
 - [ ] **FEED-05**: Intro cuma ditutup tombol E/klik, bukan WASD (pemain yang langsung jalan tidak lagi melewatkan cerita tanpa sadar)
+- [ ] **PAUSE-01**: P jeda di solo — bos, timer, musik, dan popup ikut berhenti; panel "JEDA — P lanjut | R ulang dari awal"; co-op tidak bisa jeda (butuh kesepakatan host)
+- [ ] **MUG-01**: Mug lempar muncul lagi 60 detik setelah diambil, di titik acak dari 6 titik awal (Q tidak jadi tombol mati di akhir game)
 - [ ] **LVL2-01**: Cerita lantai 2: pintu keluar lantai 1 menuju tangga; pintu utama gedung dikunci hantu; jalan keluar lewat lantai 2 (ruang direksi lama). Tema Pulang tetap.
 - [ ] **LVL2-02**: 5 tugas lantai 2 (Server Utama/Simon 5 ronde, Komputer Direksi/Excel 8 soal, Arsip Lama/Fotokopi 8 lembar, Cari Berkas Lama/4 halaman 4 ronde, Urut Catatan Lama/6 tanggal) + Pintu Keluar keypad 5 digit + Tuas Sel
 - [ ] **LVL2-03**: Peta lantai 2: grid 48x28, 15 ruangan susunan beda, ruang bos di ujung (direksi lama), sel di ruang bos, pintu keluar di lobby tangga
@@ -406,6 +408,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FEED-03 | Phase 44 | Done |
 | FEED-04 | Phase 44 | Done |
 | FEED-05 | Phase 44 | Done |
+| PAUSE-01 | Phase 45 | Done |
+| MUG-01 | Phase 45 | Done |
 | LVL2-01 | Phase 41 | Planned (design done in Phase 40) |
 | LVL2-02 | Phase 41 | Planned (design done in Phase 40) |
 | LVL2-03 | Phase 41 | Planned (design done in Phase 40) |
@@ -439,7 +443,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v22 requirements: 1 total
 - v23 requirements: 1 total
 - v24 requirements: 3 total
-- Mapped to phases: 153
+- Mapped to phases: 155
 - Unmapped: 0 ✓
 
 ---
