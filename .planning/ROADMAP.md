@@ -551,7 +551,23 @@ Plans:
 - [x] 32-01: cari_pages 3x4 + _cari_flip + _build_cari kertas + input panah + demo bot + tes update
 - [x] 32-02: Render visual 2 halaman, regresi + commit + rebuild + video v22
 
-**Status: Complete.** Committed (15 Nov 2026). test_popup 27/27. Render terverifikasi: halaman 1 (SLIP GAJI dkk) dan halaman 2 (INVOICE KLIEN dkk) beda isi, judul + stempel RAHASIA kelihatan, semua teks di dalam kertas.
+**Status: Complete.** Committed (15 Nov 2026). test_popup 27/27. Render terverifikasi: halaman 1 (SLIP GAJI dkk) dan halaman 2 (INVOICE KLIEN dkk) beda isi, judul + stempel RAHASIA kelihatan, semua teks di dalam kertas. **Video v22: 422 dtk, audio mean -31.2 dB, bot selesaikan 5/5 tugas (GUDANG tercentang di frame 5:20) tapi GAME OVER 0 bintang (ketangkep 3x di jalan ke pintu keluar) — keterbatasan bot demo, bukan gamenya.**
+
+## Phase 33: Bandingin Sama Game Lain (DbD / Phasmophobia / Amnesia)
+
+**Goal:** Elang (15 Nov 2026): "lanjutkan terus improve, bandingkan sama game lain juga". Bandingin Terror Lembur sama Dead by Daylight, Phasmophobia, Amnesia, ambil mekanik yang bikin game-game itu tegang, implementasi yang paling ngena.
+**Requirements**: GATE-01, HEART-01, HAUNT-01, SNIFF-01, BOT-01
+**Success Criteria** (what must be TRUE):
+  1. DbD exit gate: kode benar -> pintu terbuka 6 detik (progress + alarm + noise 400px) -> tekan E di pintu buat kabur; bukan langsung menang
+  2. DbD terror radius: volume detak jantung scaling -14 dB (320px) sampai -2 dB (dekat)
+  3. Phasmo ghost event: tiap 25-45 detik acak saat bos >350px, bisikan atau benda jatuh; tidak muncul saat bos dekat
+  4. Amnesia: bos PATROL dalam 100px dari pemain ngumpet jadi CURIGA ke meja itu
+  5. Demo bot kabur dari popup saat peringatan merah + ngumpet saat dikejar + menang lewat pintu terbuka; test_win 8/8, test_phase33 4/4, test_popup 27/27
+**Plans**:
+- [x] 33-01: GATE-01 + HEART-01 + HAUNT-01 + SNIFF-01 + BOT-01 + menu CARA BERMAIN + test_win update + test_phase33 baru
+- [x] 33-02: Regresi + commit + rebuild + video v23
+
+**Status: Complete.** Committed (15 Nov 2026). test_win 8/8, test_phase33 4/4, test_popup 27/27, regresi 10 tes tanpa fail. Video v23: [hasil menyusul].
 
 ## Progress
 
@@ -593,5 +609,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 27. Popup Tugas Nyatu Sama Tema Horor | 4/4 | Complete | 14 Nov 2026 |
 | 28. Excel Interaktif Kayak Spreadsheet Beneran | 1/1 | Complete | 14 Nov 2026 |
 | 29. Bos Lebih Cepat + Sensitif, Sprint Terbatas | 2/2 | Complete | 14 Nov 2026 |
+| 33. Bandingin Sama Game Lain (DbD/Phasmo/Amnesia) | 2/2 | Complete | 15 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

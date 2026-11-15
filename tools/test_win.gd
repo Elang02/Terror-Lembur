@@ -60,8 +60,24 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	await process_frame
+	if lvl.get("exit_opening") == true and lvl.get("game_over") == false:
+		_ok("correct code starts the 6s door opening, game not over yet")
+	else:
+		_fail("exit_opening=" + str(lvl.get("exit_opening")) + " game_over=" + str(lvl.get("game_over")))
+	lvl.set("exit_open_timer", 0.01)
+	await process_frame
+	await process_frame
+	await process_frame
+	if lvl.get("exit_open") == true:
+		_ok("door fully open after timer")
+	else:
+		_fail("exit_open false after timer")
+	lvl.call("try_open_task_popup", 3)
+	await process_frame
+	await process_frame
+	await process_frame
 	if lvl.get("game_over") == true:
-		_ok("game over flag set after exit done")
+		_ok("game over flag set after walking out the open door")
 	else:
 		_fail("game_over false after exit done")
 	if str(lvl.get("game_result")) == "HAPPY ENDING":

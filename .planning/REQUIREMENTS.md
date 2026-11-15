@@ -299,6 +299,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **TASK-02**: Minigame baru beda mekanik: Gudang = Cari Berkas (grid 3x3 kotak, cari item target, tekan angka 1-9, 3 ronde, salah = noise); Rapat = Catatan Rapat (urutkan 5 tanggal dari paling lama, tekan angka 1-5, salah urutan = noise + ulang dari awal)
 - [ ] **TASK-03**: Kode pintu jadi 5 digit (tiap tugas utama kasih 1 digit, catatan pintu dihapus); keypad 5 digit, menu CARA BERMAIN update (5 digit + daftar 7 tugas); demo bot rutenya nambah Gudang + Rapat (Komputer, Arsip, Generator, Gudang, Rapat, Pintu Keluar)
 - [ ] **TASK-04**: Cari Berkas jadi dokumen kertas berhalaman (bukan grid kotak): kertas kuning tua + judul "BERKAS ARSIP KANTOR" + stempel merah "RAHASIA" + daftar 4 berkas per halaman; 3 halaman per ronde, 12 berkas total, target di 1 halaman acak; panah kiri-kanan ganti halaman, angka 1-4 pilih berkas; salah = noise; 3 ronde; nama berkas gaya dokumen kantor (SLIP GAJI, SURAT PEMECATAN, NOTULEN RAPAT, dst)
+- [ ] **GATE-01**: Pintu keluar ala exit gate Dead by Daylight: kode benar TIDAK langsung menang; pintu terbuka 6 detik (progress tampil di bar tugas + prompt "PINTU SEDANG TERBUKA... X%", alarm + noise 400px ke bos), setelah terbuka pemain harus tekan E di pintu buat kabur (prompt "E: KABUR LEWAT PINTU KELUAR!"); ketangkep saat pintu terbuka tidak reset pintunya, tinggal kabur lagi dari sel lalu jalan ke pintu
+- [ ] **HEART-01**: Terror radius ala Dead by Daylight: detak jantung makin KENCANG + makin CEPAT saat bos mendekat (volume -14 dB di 320px sampai -2 dB saat sangat dekat; interval sudah scaling 0.45-1.0 detik)
+- [ ] **HAUNT-01**: Ghost event ala Phasmophobia: tiap 25-45 detik acak saat bos jauh (>350px) dan tidak di intro, muncul satu event: bisikan ("Kamu dengar bisikan di lorong...") atau benda jatuh ("Sesuatu jatuh di kejauhan..." + shake kecil); tidak pernah muncul saat bos dekat
+- [ ] **SNIFF-01**: Ngumpet ala Amnesia tidak 100% aman dari patroli: bos PATROL yang lewat dalam 100px dari pemain ngumpet jadi CURIGA ke arah meja itu (lalu SEARCH + desk-check seperti biasa); ngumpet jauh dari rute patroli tetap aman
+- [ ] **BOT-01**: Demo bot main kayak manusia: (a) di dalam popup, kalau bos <200px (peringatan merah) bot tutup popup (Esc, progres reset, sama kayak pemain) lalu kabur; (b) saat jalan, kalau bos CHASE dalam 250px atau jarak <100px bot kabur ke meja terdekat, ngumpet sampai bos >350px, baru lanjut rute tugas; di pintu keluar, bot tunggu pintu terbuka lalu tekan E buat menang
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -352,6 +357,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TASK-02 | Phase 31 | Done |
 | TASK-03 | Phase 31 | Done |
 | TASK-04 | Phase 32 | Done |
+| GATE-01 | Phase 33 | Done |
+| HEART-01 | Phase 33 | Done |
+| HAUNT-01 | Phase 33 | Done |
+| SNIFF-01 | Phase 33 | Done |
+| BOT-01 | Phase 33 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -373,7 +383,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v18 requirements: 1 total
 - v19 requirements: 1 total
 - v20 requirements: 2 total
-- Mapped to phases: 122
+- v21 requirements: 5 total
+- Mapped to phases: 127
 - Unmapped: 0 ✓
 
 ---

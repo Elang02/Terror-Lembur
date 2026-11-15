@@ -290,6 +290,20 @@ func _update_patrol(_delta: float) -> void:
 		else:
 			_pick_waypoint()
 	_steer_to(target, SPEED_PATROL * speed_mult)
+	for child in level.ysort.get_children():
+		if not (child is CharacterBody2D):
+			continue
+		if not child.has_method("set_locked"):
+			continue
+		if child.get("locked"):
+			continue
+		if not bool(child.get("hiding")):
+			continue
+		if global_position.distance_to(child.global_position) < 100.0:
+			state = State.SUSPICIOUS
+			target = child.global_position
+			state_timer = 0.0
+			return
 
 func _update_suspicious(delta: float) -> void:
 	velocity = Vector2.ZERO

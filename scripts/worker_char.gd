@@ -26,6 +26,7 @@ var demo_task_id := -1
 var demo_wait_timer := 0.0
 var demo_stuck_timer := 0.0
 var demo_last_pos := Vector2.ZERO
+var demo_fleeing := false
 var locked := false
 var hiding := false
 var interacting := false
@@ -141,6 +142,20 @@ func _demo_update(delta: float) -> Vector2:
 	var lvl := get_parent().get_parent()
 	if lvl == null or demo_wp_index >= demo_waypoints.size():
 		return Vector2.ZERO
+	if demo_fleeing:
+		return _demo_flee(delta, lvl)
+	var bd := -1.0
+	if lvl.has_method("_boss_distance"):
+		bd = float(lvl.call("_boss_distance"))
+	var bstate := -1
+	var bossn: Node = lvl.get("boss")
+	if bossn != null:
+		bstate = int(bossn.get("state"))
+	if (bstate == 2 and bd >= 0.0 and bd < 250.0) or (bd >= 0.0 and bd < 100.0):
+		demo_fleeing = true
+		demo_path = []
+		demo_repath_timer = 0.0
+		return _demo_flee(delta, lvl)
 	var target: Vector2 = demo_waypoints[demo_wp_index]
 	var dist := global_position.distance_to(target)
 	if dist < 70.0:
@@ -153,6 +168,8 @@ func _demo_update(delta: float) -> Vector2:
 					task_done = true
 		if task_done:
 			if demo_wp_index == 5:
+				if bool(lvl.get("exit_open")):
+					lvl.try_open_task_popup(3)
 				return Vector2.ZERO
 			demo_wp_index += 1
 			if demo_wp_index == 1:
@@ -190,6 +207,33 @@ func _demo_update(delta: float) -> Vector2:
 				print("DEMO unstuck: nudged toward target")
 	interacting = false
 	interact_target = -1
+	return _demo_move_to(delta, lvl, target)
+
+func _demo_flee(delta: float, lvl: Node) -> Vector2:
+	demo_stuck_timer = 0.0
+	demo_last_pos = global_position
+	interacting = false
+	interact_target = -1
+	var bd := -1.0
+	if lvl.has_method("_boss_distance"):
+		bd = float(lvl.call("_boss_distance"))
+	if hiding:
+		if bd < 0.0 or bd > 350.0:
+			_unhide()
+			demo_fleeing = false
+			demo_path = []
+			demo_repath_timer = 0.0
+		return Vector2.ZERO
+	var desk: Vector2 = lvl.nearest_desk(global_position) if lvl.has_method("nearest_desk") else Vector2.INF
+	if desk == Vector2.INF:
+		demo_fleeing = false
+		return Vector2.ZERO
+	if global_position.distance_to(desk) < 50.0:
+		_toggle_hide()
+		return Vector2.ZERO
+	return _demo_move_to(delta, lvl, desk)
+
+func _demo_move_to(delta: float, lvl: Node, target: Vector2) -> Vector2:
 	demo_repath_timer -= delta
 	if demo_path.is_empty() or demo_repath_timer <= 0.0:
 		demo_repath_timer = 1.0

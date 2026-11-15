@@ -210,6 +210,11 @@ var tutorial_spawn_pos := Vector2.ZERO
 const TUTORIAL_CFG := "user://tutorial.cfg"
 var sfx: SFX
 var heartbeat_timer := 0.0
+var exit_opening := false
+var exit_open_timer := 0.0
+var exit_open := false
+const EXIT_OPEN_TIME := 6.0
+var haunt_timer := 25.0
 var tick_timer := 0.0
 var task_done_sounded: Dictionary = {}
 var end_dim: ColorRect
@@ -1146,7 +1151,9 @@ func _process(delta: float) -> void:
 			heartbeat_timer -= delta
 			if heartbeat_timer <= 0.0:
 				heartbeat_timer = lerpf(0.45, 1.0, clampf(bd / 320.0, 0.0, 1.0))
-				play_sfx("heartbeat", -8.0)
+				play_sfx("heartbeat", _heartbeat_volume(bd))
+		_update_haunt(delta, bd)
+	_update_exit_opening(delta)
 	if Input.is_action_just_pressed("mute"):
 		_toggle_mute()
 	_update_music(delta)
@@ -1289,6 +1296,9 @@ func _task_ready(task_id: int) -> bool:
 	return workers >= 1
 
 func try_open_task_popup(task_id: int) -> void:
+	if task_id == 3 and exit_open:
+		_finish_level()
+		return
 	if popup_open:
 		return
 	if popup == null:
@@ -1435,7 +1445,15 @@ func _on_task_done(tp) -> void:
 	light.texture_scale = 3.0
 	add_child(light)
 	if tp.task_id == 3:
-		_finish_level()
+		exit_opening = true
+		exit_open_timer = EXIT_OPEN_TIME
+		hud_warn_label.text = "KODE BENAR! Pintu sedang terbuka... bertahanlah!"
+		warn_timer = 3.0
+		play_sfx("alarm", -4.0)
+		if multiplayer.is_server():
+			report_noise(tp.global_position, 400.0)
+		else:
+			rpc_id(1, "report_noise", tp.global_position, 400.0)
 
 func _enrage_boss() -> void:
 	boss_speed_mult += 0.3
@@ -1614,7 +1632,10 @@ func _update_hud() -> void:
 	var prompt_txt := ""
 	var prompt_prog := -1.0
 	var me := _my_player()
-	if me != null and not game_over:
+	if exit_opening and not game_over:
+		prompt_txt = "PINTU SEDANG TERBUKA... " + str(int((1.0 - exit_open_timer / EXIT_OPEN_TIME) * 100.0)) + "% (bos dengar!)"
+		prompt_prog = 1.0 - exit_open_timer / EXIT_OPEN_TIME
+	elif me != null and not game_over:
 		if me.get("interacting") and me.get("interact_target") >= 0:
 			var tid: int = me.get("interact_target")
 			if tid == 99:
@@ -1623,13 +1644,17 @@ func _update_hud() -> void:
 			else:
 				var tp = tasks[tid] if tid < tasks.size() else null
 				if tp != null:
-					var need_txt := ""
-					if tp.task_id == 0:
-						need_txt = " (sendiri)" if solo_mode else " (butuh 2 orang)"
-					elif tp.task_id == 3:
-						need_txt = " (sendiri)" if solo_mode else " (butuh 2 orang)"
-					prompt_txt = "E: kerjakan " + tp.label_text + need_txt
-					prompt_prog = tp.progress
+					if tp.task_id == 3 and exit_open:
+						prompt_txt = "E: KABUR LEWAT PINTU KELUAR!"
+						prompt_prog = 1.0
+					else:
+						var need_txt := ""
+						if tp.task_id == 0:
+							need_txt = " (sendiri)" if solo_mode else " (butuh 2 orang)"
+						elif tp.task_id == 3:
+							need_txt = " (sendiri)" if solo_mode else " (butuh 2 orang)"
+						prompt_txt = "E: kerjakan " + tp.label_text + need_txt
+						prompt_prog = tp.progress
 		else:
 			if me.get("hiding"):
 				prompt_txt = "NGUMPET, gerak atau tekan C buat keluar"
@@ -1646,6 +1671,48 @@ func _update_hud() -> void:
 		hud_prompt_bar.value = prompt_prog
 	else:
 		hud_prompt_bar.visible = false
+func _heartbeat_volume(bd: float) -> float:
+	return lerpf(-14.0, -2.0, 1.0 - clampf(bd / 320.0, 0.0, 1.0))
+
+func _update_haunt(delta: float, boss_dist: float) -> void:
+	if intro_open:
+		return
+	haunt_timer -= delta
+	if haunt_timer > 0.0:
+		return
+	haunt_timer = randf_range(25.0, 45.0)
+	if boss_dist < 0.0 or boss_dist <= 350.0:
+		return
+	if randi_range(0, 1) == 0:
+		hud_warn_label.text = "Kamu dengar bisikan di lorong..."
+		warn_timer = 2.0
+		play_sfx("whisper", -4.0)
+	else:
+		hud_warn_label.text = "Sesuatu jatuh di kejauhan..."
+		warn_timer = 2.0
+		play_sfx("thud", -6.0)
+		add_shake(2.0)
+
+func _update_exit_opening(delta: float) -> void:
+	if not exit_opening or game_over:
+		return
+	exit_open_timer -= delta
+	var tp3: Node = null
+	for t in tasks:
+		if int(t.get("task_id")) == 3:
+			tp3 = t
+			break
+	if tp3 != null:
+		tp3.set("progress", clampf(1.0 - exit_open_timer / EXIT_OPEN_TIME, 0.0, 1.0))
+	if exit_open_timer <= 0.0:
+		exit_opening = false
+		exit_open = true
+		if tp3 != null:
+			tp3.set("progress", 1.0)
+		hud_warn_label.text = "PINTU TERBUKA! KABUR SEKARANG!"
+		warn_timer = 3.0
+		play_sfx("complete", -2.0)
+
 func _boss_distance() -> float:
 	var me := _my_player()
 	if me == null or boss == null:
@@ -1666,7 +1733,7 @@ func nearest_interactable(pos: Vector2) -> int:
 	var best := -1
 	var best_d := INTERACT_RANGE
 	for tp in tasks:
-		if tp.done:
+		if tp.done and not (tp.task_id == 3 and exit_open):
 			continue
 		if tp.task_id == 3 and not _main_tasks_done():
 			continue
