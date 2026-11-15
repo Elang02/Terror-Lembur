@@ -1765,6 +1765,12 @@ func is_lit(pos: Vector2) -> bool:
 func boss_room_center() -> Vector2:
 	return BOSS_ROOM.get_center()
 
+func _room_of(pos: Vector2) -> Rect2:
+	for r in ALL_ROOMS:
+		if r.has_point(pos):
+			return r
+	return Rect2()
+
 func teleport_destination() -> Vector2:
 	var players: Array[Vector2] = []
 	for child in ysort.get_children():
@@ -1784,6 +1790,13 @@ func teleport_destination() -> Vector2:
 			if dest.distance_to(p) < 120.0:
 				ok = false
 				break
+		if ok:
+			for child in ysort.get_children():
+				if _is_player(child) and bool(child.get("hiding")):
+					var pr := _room_of(child.global_position)
+					if pr.size.x > 0.0 and pr.has_point(dest):
+						ok = false
+						break
 		if ok:
 			return dest
 	return boss_room_center()
