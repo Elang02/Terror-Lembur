@@ -305,6 +305,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **SNIFF-01**: Ngumpet ala Amnesia tidak 100% aman dari patroli: bos PATROL yang lewat dalam 100px dari pemain ngumpet jadi CURIGA ke arah meja itu (lalu SEARCH + desk-check seperti biasa); ngumpet jauh dari rute patroli tetap aman
 - [ ] **BOT-01**: Demo bot main kayak manusia: (a) di dalam popup, kalau bos <200px (peringatan merah) bot tutup popup (Esc, progres reset, sama kayak pemain) lalu kabur; (b) saat jalan, kalau bos CHASE dalam 250px atau jarak <100px bot kabur; di pintu keluar, bot tunggu pintu terbuka lalu tekan E buat menang
 - [ ] **BOT-02**: Bot kabur yang bener (perbaikan BOT-01, v23: bot ngumpet di meja terdekat pas dikejar, padahal bos lihat dia ke sana + SNIFF-01, jadi ketangkep; cuma 1/5 tugas): saat dikejar bot LARI dulu ke waypoint patroli terjauh dari bos (sprint, 300 vs chase 270) sampai kejarannya putus (bos bukan CHASE + jarak >250px); baru ngumpet, dan cuma di meja yang jaraknya >200px dari bos; ngumpet sampai bos >350px baru lanjut rute
+- [ ] **BOT-03**: Bot kabur lebih pintar (perbaikan BOT-02, v24: bot tetap ketangkep 3x di 1:02 in-game, 1/5 tugas; kejarannya nggak putus karena bot lari lurus di koridor dan bos tetap lihat dia): (a) titik kabur = waypoint patroli terjauh dari bos yang TIDAK kelihatan bos (cek raycast LOS), jadi lari ke balik tembok dan kejaran putus; (b) bot tidak buka popup tugas kalau bos dalam 350px — mundur dulu, tunggu bos pergi, baru kerjakan
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -364,6 +365,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SNIFF-01 | Phase 33 | Done |
 | BOT-01 | Phase 33 | Done |
 | BOT-02 | Phase 34 | Done |
+| BOT-03 | Phase 35 | Done |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -387,7 +389,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v20 requirements: 2 total
 - v21 requirements: 5 total
 - v22 requirements: 1 total
-- Mapped to phases: 128
+- v23 requirements: 1 total
+- Mapped to phases: 129
 - Unmapped: 0 ✓
 
 ---

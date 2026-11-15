@@ -582,6 +582,19 @@ Plans:
 
 **Status: Complete.** Committed (15 Nov 2026). Video v24: [hasil menyusul].
 
+## Phase 35: Bot Kabur Lebih Pintar (Lari ke Balik Tembok, Jangan Buka Tugas Kalau Bos Dekat)
+
+**Goal:** v24 tetap GAME OVER 0 bintang, 1/5 tugas, ketangkep 3x di 1:02 in-game. Frame v24: bot lari lurus di koridor terbuka, bos tetap lihat dia dari belakang, kejaran tidak putus. Bot butuh putus LOS, bukan cuma jarak.
+**Requirements**: BOT-03
+**Success Criteria** (what must be TRUE):
+  1. Titik kabur = waypoint terjauh dari bos yang tidak ada LOS dari bos (raycast), jadi bot lari ke balik tembok
+  2. Bot tidak buka popup tugas kalau bos dalam 350px; mundur dan tunggu bos pergi dulu
+  3. Video v25 lebih baik dari v24 (tugas selesai + waktu hidup lebih panjang)
+**Plans**:
+- [x] 35-01: _demo_far_point pakai LOS + guard buka popup + tes + commit + rebuild + video v25
+
+**Status: Complete.** Committed (15 Nov 2026). Video v25: [hasil menyusul].
+
 ## Progress
 
 ## Progress
@@ -624,5 +637,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 29. Bos Lebih Cepat + Sensitif, Sprint Terbatas | 2/2 | Complete | 14 Nov 2026 |
 | 33. Bandingin Sama Game Lain (DbD/Phasmo/Amnesia) | 2/2 | Complete | 15 Nov 2026 |
 | 34. Bot Kabur yang Bener (Lari Dulu, Ngumpet Belakangan) | 1/1 | Complete | 15 Nov 2026 |
+| 35. Bot Kabur Lebih Pintar (Lari ke Balik Tembok) | 1/1 | Complete | 15 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

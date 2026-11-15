@@ -189,6 +189,12 @@ func _demo_update(delta: float) -> Vector2:
 			return Vector2.ZERO
 		interacting = true
 		interact_target = demo_task_id
+		if bd >= 0.0 and bd < 350.0:
+			demo_fleeing = true
+			demo_flee_target = Vector2.INF
+			demo_path = []
+			demo_repath_timer = 0.0
+			return _demo_flee(delta, lvl)
 		if lvl.has_method("try_open_task_popup"):
 			lvl.try_open_task_popup(demo_task_id)
 		return Vector2.ZERO
@@ -256,14 +262,26 @@ func _demo_far_point(lvl: Node) -> Vector2:
 	var bossn: Node = lvl.get("boss")
 	if bossn != null:
 		bpos = bossn.global_position
+	var loop: Array = lvl.get("PATROL_LOOP")
 	var best := Vector2(272, 624)
 	var best_d := -1.0
-	var loop: Array = lvl.get("PATROL_LOOP")
 	for wp in loop:
 		var d := (wp as Vector2).distance_to(bpos)
 		if d > best_d:
 			best_d = d
 			best = wp
+	if bossn != null and bossn.has_method("_has_line_of_sight"):
+		var hidden_best := Vector2.INF
+		var hidden_d := -1.0
+		for wp in loop:
+			if bool(bossn.call("_has_line_of_sight", wp)):
+				continue
+			var d2 := (wp as Vector2).distance_to(bpos)
+			if d2 > hidden_d:
+				hidden_d = d2
+				hidden_best = wp
+		if hidden_best != Vector2.INF:
+			return hidden_best
 	return best
 
 func _demo_move_to(delta: float, lvl: Node, target: Vector2) -> Vector2:
