@@ -123,6 +123,7 @@ const SELF_RESCUE_TIME := 10.0
 const SELF_RESCUE_GUARD_RADIUS := 150.0
 var self_rescue_noise_timer := 0.0
 var warn_timer := 0.0
+var code_timer := 0.0
 var debug_timer := 0.0
 var popup: TaskPopup = null
 var popup_open := false
@@ -196,6 +197,7 @@ var hud_prompt_label: Label
 var hud_prompt_pill: PanelContainer
 var hud_prompt_bar: ProgressBar
 var hud_warn_label: Label
+var hud_code_label: Label
 var hud_status_label: Label
 var hud_status_pill: PanelContainer
 var hud_edge_rects: Array[ColorRect] = []
@@ -406,7 +408,7 @@ func _update_tutorial() -> void:
 				tutorial_step = 2
 				_refresh_tutorial_label()
 		2:
-			if (popup_open and popup_task_id == 1) or _task_done(1):
+			if popup_open or _task_done(1):
 				tutorial_step = 3
 				_refresh_tutorial_label()
 		3:
@@ -414,8 +416,15 @@ func _update_tutorial() -> void:
 				tutorial_step = 4
 				_refresh_tutorial_label()
 		4:
-			if _main_tasks_done():
+			if _any_main_task_done():
 				_finish_tutorial()
+
+func _any_main_task_done() -> bool:
+	for tp in tasks:
+		var tid := int(tp.get("task_id"))
+		if tid != 3 and tid != 4 and bool(tp.get("done")):
+			return true
+	return false
 
 func _build_tilemap_layers() -> void:
 	var tile_set := load(TILESET_PATH) as TileSet
@@ -1025,6 +1034,15 @@ func _build_hud() -> void:
 	hud_warn_label.add_theme_constant_override("outline_size", 8)
 	hud_warn_label.visible = false
 	hud.add_child(hud_warn_label)
+	hud_code_label = UITheme.make_label("", UITheme.title_font(), 26, Color(0.45, 0.85, 0.45))
+	hud_code_label.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	hud_code_label.offset_top = 64
+	hud_code_label.offset_bottom = 104
+	hud_code_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hud_code_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
+	hud_code_label.add_theme_constant_override("outline_size", 8)
+	hud_code_label.visible = false
+	hud.add_child(hud_code_label)
 	hud_tutorial_panel = PanelContainer.new()
 	UITheme.apply_panel(hud_tutorial_panel, Color(0.05, 0.08, 0.05, 0.92), UITheme.COL_GREEN, 1, 10)
 	hud_tutorial_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
@@ -1165,6 +1183,10 @@ func _process(delta: float) -> void:
 		warn_timer -= delta
 		if warn_timer <= 0.0:
 			hud_warn_label.text = ""
+	if code_timer > 0.0:
+		code_timer -= delta
+		if code_timer <= 0.0:
+			hud_code_label.text = ""
 	hud_pulse_t += delta
 	if flash_a > 0.0:
 		flash_a = maxf(0.0, flash_a - delta * 1.4)
@@ -1189,6 +1211,7 @@ func _process(delta: float) -> void:
 			tick_timer = 0.4
 			play_sfx("tick", -10.0)
 	hud_warn_label.visible = hud_warn_label.text != ""
+	hud_code_label.visible = hud_code_label.text != ""
 	if hud_warn_label.visible:
 		hud_warn_label.modulate.a = 0.75 + 0.25 * sin(hud_pulse_t * 8.0)
 	var boss_d := _boss_distance()
@@ -1252,8 +1275,8 @@ func _reveal_code_digit(idx: int) -> void:
 	if code_found[idx]:
 		return
 	code_found[idx] = true
-	hud_warn_label.text = "Kode pintu ditemukan! Digit ke-" + str(idx + 1) + " = " + str(code_digits[idx]) + "  (INGAT BAIK-BAIK!)"
-	warn_timer = 5.0
+	hud_code_label.text = "Kode pintu ditemukan! Digit ke-" + str(idx + 1) + " = " + str(code_digits[idx]) + "  (INGAT BAIK-BAIK!)"
+	code_timer = 10.0
 	play_sfx("complete", -6.0)
 
 func _popup_kind(task_id: int) -> String:
@@ -1328,6 +1351,16 @@ func try_open_task_popup(task_id: int) -> void:
 	if popup == null:
 		return
 	if not _task_ready(task_id):
+		var reason := ""
+		if task_id == 3 and not _main_tasks_done():
+			reason = "Selesaikan semua tugas dulu!"
+		elif task_id == 4:
+			reason = "Tidak ada yang dikurung!"
+		elif (task_id == 0 or task_id == 3) and not solo_mode:
+			reason = "Butuh 2 orang!"
+		if reason != "":
+			hud_warn_label.text = reason
+			warn_timer = 2.0
 		return
 	var tp: Node = null
 	for t in tasks:
@@ -1574,7 +1607,7 @@ func _show_end(title: String, detail: String, s: int) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if intro_open:
-		if event is InputEventKey and event.pressed and not event.echo:
+		if event is InputEventKey and event.pressed and not event.echo and event.is_action_pressed("interact"):
 			_dismiss_intro()
 			get_viewport().set_input_as_handled()
 		elif event is InputEventMouseButton and event.pressed:
@@ -1694,9 +1727,9 @@ func _update_hud() -> void:
 			elif nearest_desk(me.global_position) != Vector2.INF:
 				prompt_txt = "C: ngumpet di bawah meja"
 			elif me.get("has_throwable"):
-				prompt_txt = "Q: lempar barang (mancing bos)  |  " + shout_txt + "  |  R: senter  |  C: ngumpet  |  SHIFT: lari  |  M: bisukan"
+				prompt_txt = "Q: lempar barang (mancing bos)  |  " + shout_txt + "  |  R: senter  |  C: ngumpet  |  SHIFT: lari (berisik!)  |  M: bisukan"
 			else:
-				prompt_txt = "E: interaksi  |  " + shout_txt + "  |  R: senter  |  C: ngumpet  |  SHIFT: lari  |  M: bisukan"
+				prompt_txt = "E: interaksi  |  " + shout_txt + "  |  R: senter  |  C: ngumpet  |  SHIFT: lari (berisik!)  |  M: bisukan"
 	hud_prompt_label.text = prompt_txt
 	hud_prompt_pill.visible = prompt_txt != ""
 	if prompt_prog >= 0.0:
@@ -1905,7 +1938,14 @@ func on_boss_telegraph() -> void:
 @rpc("any_peer", "call_local")
 func on_boss_teleported(dest: Vector2) -> void:
 	add_shake(6.0)
-	hud_warn_label.text = "Bos muncul di dekatmu!"
+	var me := _my_player()
+	var d := -1.0
+	if me != null:
+		d = me.global_position.distance_to(dest)
+	if d >= 0.0 and d < 200.0:
+		hud_warn_label.text = "Bos muncul di dekatmu!"
+	else:
+		hud_warn_label.text = "Bos muncul di kejauhan..."
 	warn_timer = 2.0
 	play_sfx("thud", -4.0)
 

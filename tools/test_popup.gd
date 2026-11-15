@@ -250,12 +250,24 @@ func _run() -> void:
 		_ok("all 5 code digits revealed after the 5 main tasks")
 	else:
 		_fail("code_found not all true after main tasks: " + str(found))
-	# HUD does NOT show the code (pure memory: the player must remember it)
+	# CODE-01 (Phase 43): the code label shows ONLY the latest revealed
+	# digit for 10 s, then hides. Memory-only is preserved: no full code,
+	# no re-check.
 	var code_label: Label = lvl.get("hud_code_label")
-	if code_label == null:
-		_ok("HUD has no code label (code is memory-only)")
+	if code_label != null and code_label.text.contains("Digit ke-"):
+		_ok("code label shows a single latest digit")
 	else:
-		_fail("HUD still shows a code label: " + str(code_label.text))
+		_fail("code label wrong (label: '" + ("" if code_label == null else code_label.text) + "')")
+	lvl.set("code_timer", 0.05)
+	await process_frame
+	await process_frame
+	await process_frame
+	await process_frame
+	await process_frame
+	if code_label != null and not code_label.visible:
+		_ok("code label hides after timer (no re-check)")
+	else:
+		_fail("code label still visible after timer")
 	# Keypad uses the level code (reopen exit popup and compare)
 	pop.call("open_popup", lvl, 3, _task(3), "keypad", "Keypad Pintu", false)
 	await process_frame

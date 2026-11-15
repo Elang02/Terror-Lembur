@@ -689,6 +689,36 @@ Plans:
 
 **Status: Complete.** Committed (15 Nov 2026). test_phase42 4/4.
 
+## Phase 43: Kode Tidak Pernah Hilang
+
+**Goal:** Audit kode menemukan bug kritis: digit ke-5 kode pintu TIDAK PERNAH terlihat pemain — `_on_task_done` reveal digit 5 lalu `_enrage_boss()` menimpa `hud_warn_label` di frame yang sama. Semua pesan penting berbagi satu label, jadi digit 1-4 pun bisa hilang kalau reveal berbarengan dengan warning/kejaran. Run bisa jadi unwinnable secara praktis.
+**Requirements**: CODE-01
+**Success Criteria** (what must be TRUE):
+  1. Label kode terpisah dari label warning; reveal digit 5 tetap kelihatan sesudah enrage
+  2. Warning lain tidak menimpa label kode
+  3. Label kode hilang sendiri setelah 10 detik (memory-only tetap: tidak ada cek ulang)
+  4. test_phase43 3/3; test_popup diperbarui ke desain baru (28/28)
+**Plans**:
+- [x] 43-01: CODE-01 + test_phase43 + update test_popup + tes + commit + rebuild
+
+**Status: Complete.** Committed (15 Nov 2026). test_phase43 3/3, test_popup 28/28.
+
+## Phase 44: Umpan Balik yang Jujur
+
+**Goal:** Audit kode + riset game: game berbohong/diam di momen penting — E di tugas belum siap diam total, tutorial macet sampai akhir game, sprint berisik tanpa indikator, pesan teleport bohong soal jarak, intro hilang kalau pemain tekan WASD.
+**Requirements**: FEED-01, FEED-02, FEED-03, FEED-04, FEED-05
+**Success Criteria** (what must be TRUE):
+  1. E di tugas belum siap menampilkan alasan 2 detik
+  2. Tutorial langkah 2 terima popup apa pun; langkah 4 selesai saat tugas pertama selesai
+  3. Prompt "SHIFT: lari (berisik!)" + CARA BERMAIN menyebut lari itu berisik
+  4. Pesan teleport berdasarkan jarak sebenarnya
+  5. Intro cuma ditutup E/klik
+  6. test_phase44 7/7; regresi kunci hijau
+**Plans**:
+- [x] 44-01: FEED-01..05 + test_phase44 + tes + commit + rebuild
+
+**Status: Complete.** Committed (15 Nov 2026). test_phase44 7/7.
+
 ## Progress
 
 ## Progress
@@ -739,5 +769,7 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 40. Desain Lantai 2 di GSD (Siap Bangun, Sesuai Konsep) | 1/1 | Complete | 15 Nov 2026 |
 | 41. Lantai 2 (Implementasi) | 0/1 | Planned (sesudah submit Gimersia 29 Nov 2026) | - |
 | 42. Meter TEKANAN di HUD | 1/1 | Complete | 15 Nov 2026 |
+| 43. Kode Tidak Pernah Hilang | 1/1 | Complete | 15 Nov 2026 |
+| 44. Umpan Balik yang Jujur | 1/1 | Complete | 15 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
