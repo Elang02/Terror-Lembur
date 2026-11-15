@@ -676,6 +676,19 @@ Plans:
 
 **Status: Planned.** Implementasi SESUDAH submit Gimersia 29 Nov 2026.
 
+## Phase 42: Meter TEKANAN di HUD
+
+**Goal:** Riset Phasmophobia (saran #5): pressure dial yang kelihatan. Eskalasi bos selama ini cuma kerasa lewat kecepatan — pemain tidak tahu seberapa marah bos sampai ketangkep. Meter TEKANAN di panel status bikin eskalasi kelihatan.
+**Requirements**: PRESS-01
+**Success Criteria** (what must be TRUE):
+  1. Bar TEKANAN di panel status kanan atas, selalu kelihatan
+  2. Nilai = (boss_speed_mult - 1.0) / 0.8 → 0-100%; warna hijau <40, kuning <75, merah >=75
+  3. test_phase42 4/4; regresi kunci hijau
+**Plans**:
+- [x] 42-01: PRESS-01 + test_phase42 + tes + commit + rebuild
+
+**Status: Complete.** Committed (15 Nov 2026). test_phase42 4/4.
+
 ## Progress
 
 ## Progress
@@ -725,5 +738,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 39. Teleport Hormat Pemain Ngumpet | 1/1 | Complete | 15 Nov 2026 |
 | 40. Desain Lantai 2 di GSD (Siap Bangun, Sesuai Konsep) | 1/1 | Complete | 15 Nov 2026 |
 | 41. Lantai 2 (Implementasi) | 0/1 | Planned (sesudah submit Gimersia 29 Nov 2026) | - |
+| 42. Meter TEKANAN di HUD | 1/1 | Complete | 15 Nov 2026 |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

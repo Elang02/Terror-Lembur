@@ -315,6 +315,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **CHASE-01**: Kejaran punya wind-up 1 detik — bos diam dulu pas "!" + alarm bunyi, pemain dapat ancang-ancang buat putus pandangan (bedah kode gap #2: kejaran dari jarak <200px hampir mustahil menang di koridor terbuka; _update_stuck juga dijaga biar nggak loncat pas wind-up)
 - [ ] **SHOUT-01**: Di solo, hint teriak jujur soal harganya: "F: teriak (bos datang ke kamu!)" (bedah kode gap #5: teriak manggil bos ke posisi pemain sendiri — di solo itu jebakan buat pemain baru)
 - [ ] **TELE-02**: Teleport tidak masuk ruangan pemain yang lagi ngumpet (konsep §6: "nggak bisa teleport ke ruangan yang sama persis dengan pemain yang lagi ngumpet di bawah meja") — destination di ruangan yang sama dengan pemain ngumpet ditolak, coba lagi (max 8x, fallback ruang bos)
+- [ ] **PRESS-01**: Meter TEKANAN di HUD (panel status kanan atas): eskalasi bos kelihatan — speed_mult 1.0-1.8 dipetakan ke 0-100%, warna hijau-kuning-merah; pemain tahu bos makin agresif tiap tugas selesai (riset Phasmophobia: pressure dial yang kelihatan)
 - [ ] **LVL2-01**: Cerita lantai 2: pintu keluar lantai 1 menuju tangga; pintu utama gedung dikunci hantu; jalan keluar lewat lantai 2 (ruang direksi lama). Tema Pulang tetap.
 - [ ] **LVL2-02**: 5 tugas lantai 2 (Server Utama/Simon 5 ronde, Komputer Direksi/Excel 8 soal, Arsip Lama/Fotokopi 8 lembar, Cari Berkas Lama/4 halaman 4 ronde, Urut Catatan Lama/6 tanggal) + Pintu Keluar keypad 5 digit + Tuas Sel
 - [ ] **LVL2-03**: Peta lantai 2: grid 48x28, 15 ruangan susunan beda, ruang bos di ujung (direksi lama), sel di ruang bos, pintu keluar di lobby tangga
@@ -392,6 +393,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CHASE-01 | Phase 38 | Done |
 | SHOUT-01 | Phase 38 | Done |
 | TELE-02 | Phase 39 | Done |
+| PRESS-01 | Phase 42 | Done |
 | LVL2-01 | Phase 41 | Planned (design done in Phase 40) |
 | LVL2-02 | Phase 41 | Planned (design done in Phase 40) |
 | LVL2-03 | Phase 41 | Planned (design done in Phase 40) |
@@ -425,7 +427,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v22 requirements: 1 total
 - v23 requirements: 1 total
 - v24 requirements: 3 total
-- Mapped to phases: 146
+- Mapped to phases: 147
 - Unmapped: 0 ✓
 
 ---

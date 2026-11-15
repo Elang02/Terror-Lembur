@@ -203,6 +203,11 @@ var hud_pulse_t := 0.0
 var flash_rect: ColorRect
 var flash_a := 0.0
 var hud_stamina_bar: ProgressBar
+var hud_pressure_bar: ProgressBar
+var hud_pressure_label: Label
+var _press_style_low: StyleBoxFlat
+var _press_style_mid: StyleBoxFlat
+var _press_style_high: StyleBoxFlat
 var hud_tutorial_panel: PanelContainer
 var hud_tutorial_label: Label
 var tutorial_step := 0
@@ -992,6 +997,25 @@ func _build_hud() -> void:
 	hud_boss_label = UITheme.make_label("", UITheme.body_font(), 15, UITheme.COL_BLOOD_BRIGHT)
 	hud_boss_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	hud_boss_row.add_child(hud_boss_label)
+	var press_row := HBoxContainer.new()
+	press_row.add_theme_constant_override("separation", 8)
+	svb.add_child(press_row)
+	hud_pressure_label = UITheme.make_label("TEKANAN", UITheme.body_font(), 13, UITheme.COL_GREY)
+	hud_pressure_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	press_row.add_child(hud_pressure_label)
+	hud_pressure_bar = ProgressBar.new()
+	hud_pressure_bar.min_value = 0.0
+	hud_pressure_bar.max_value = 100.0
+	hud_pressure_bar.value = 0.0
+	hud_pressure_bar.custom_minimum_size = Vector2(172, 9)
+	hud_pressure_bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hud_pressure_bar.show_percentage = false
+	hud_pressure_bar.add_theme_stylebox_override("background", UITheme.bar_bg_style())
+	_press_style_low = UITheme.bar_fill_style(Color(0.35, 0.85, 0.6))
+	_press_style_mid = UITheme.bar_fill_style(Color(0.85, 0.62, 0.2))
+	_press_style_high = UITheme.bar_fill_style(Color(0.9, 0.25, 0.25))
+	hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_low)
+	press_row.add_child(hud_pressure_bar)
 	hud_warn_label = UITheme.make_label("", UITheme.title_font(), 30, UITheme.COL_BLOOD_BRIGHT)
 	hud_warn_label.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	hud_warn_label.offset_top = 16
@@ -1613,6 +1637,14 @@ func _update_hud() -> void:
 			boss_txt = "Ada yang mengawasi..."
 	hud_boss_label.text = boss_txt
 	hud_boss_row.visible = boss_txt != ""
+	var press := clampf((boss_speed_mult - 1.0) / 0.8, 0.0, 1.0)
+	hud_pressure_bar.value = press * 100.0
+	if press < 0.4:
+		hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_low)
+	elif press < 0.75:
+		hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_mid)
+	else:
+		hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_high)
 	var locked_names := ""
 	for child in ysort.get_children():
 		if not _is_player(child):
