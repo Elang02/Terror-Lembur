@@ -636,6 +636,46 @@ Plans:
 
 **Status: Complete.** Committed (15 Nov 2026). test_phase38 5/5.
 
+## Phase 39: Teleport Hormat Pemain Ngumpet
+
+**Goal:** Konsep §6: bos "nggak bisa teleport ke ruangan yang sama persis dengan pemain yang lagi ngumpet di bawah meja" — aturan ini belum ada di game.
+**Requirements**: TELE-02
+**Success Criteria** (what must be TRUE):
+  1. `teleport_destination()` menolak destinasi di ruangan yang sama dengan pemain ngumpet (cek `_room_of()`, max 8 percobaan, fallback ruang bos)
+  2. Aturan 120px tetap jalan
+  3. test_phase39 2/2; regresi kunci hijau
+**Plans**:
+- [x] 39-01: TELE-02 + test_phase39 + tes + commit + rebuild
+
+**Status: Complete.** Committed (15 Nov 2026). test_phase39 2/2.
+
+## Phase 40: Desain Lantai 2 di GSD (Siap Bangun, Sesuai Konsep)
+
+**Goal:** Elang (15 Nov 2026, sesi 1 jam ke-2): "improve terus, di GSDnya juga, jadi kalo nanti ada level selanjutnya benar benar sesuai konsep gamenya". Desain lantai 2 ditulis lengkap dari KONSEP.md §2/§4/§6/§8 — cerita, peta, 5 tugas, eskalasi bos, nerf antar level, bintang, dan syarat arsitektur (data level jadi data, bukan copy level_1.gd).
+**Requirements**: LVL2-01..08 (design)
+**Success Criteria** (what must be TRUE):
+  1. `.planning/LEVEL-2-DESIGN.md` lengkap dan berakar ke konsep (tiap keputusan menunjuk pasal konsep)
+  2. Requirements LVL2-01..08 + traceability; coverage 137 → 146
+  3. ROADMAP Phase 41 (Planned); CAMP-01 diperbarui
+**Plans**:
+- [x] 40-01: LEVEL-2-DESIGN.md + requirements + roadmap + commit
+
+**Status: Complete.** Committed (15 Nov 2026).
+
+## Phase 41: Lantai 2 (Implementasi)
+
+**Goal:** Bangun lantai 2 sesuai `.planning/LEVEL-2-DESIGN.md`: `level_config.gd` + `LEVEL_CONFIGS`, `level_2.tscn`, nerf, layar akhir + lanjut lantai, menu pilih lantai, tes `test_level2`, video playthrough.
+**Requirements**: LVL2-01..08
+**Success Criteria** (what must be TRUE):
+  1. Lantai 1 dipindah ke config dulu, tes hijau, baru tambah lantai 2
+  2. Lantai 2 bisa ditamatkan solo (bot demo) + LAN
+  3. Nerf Bad Ending jalan; bintang + lanjut lantai jalan
+  4. test_level2 hijau; regresi hijau
+**Plans**:
+- [ ] 41-01: level_config.gd + LEVEL_CONFIGS + level_2.tscn + nerf + menu + tes
+
+**Status: Planned.** Implementasi SESUDAH submit Gimersia 29 Nov 2026.
+
 ## Progress
 
 ## Progress
@@ -682,5 +722,8 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 36. Kejaran Lebih Adil (Aturan DbD) + Kasih Tahu Pemain Saat Kejaran Putus | 1/1 | Complete | 15 Nov 2026 |
 | 37. Teleport Pertama Lebih Lambat + Bos Menjauh Habis Rescue | 1/1 | Complete | 15 Nov 2026 |
 | 38. Pembukaan Adil + Wind-Up Kejaran + Teriak Jujur | 1/1 | Complete | 15 Nov 2026 |
+| 39. Teleport Hormat Pemain Ngumpet | 1/1 | Complete | 15 Nov 2026 |
+| 40. Desain Lantai 2 di GSD (Siap Bangun, Sesuai Konsep) | 1/1 | Complete | 15 Nov 2026 |
+| 41. Lantai 2 (Implementasi) | 0/1 | Planned (sesudah submit Gimersia 29 Nov 2026) | - |
 | 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
 | 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |

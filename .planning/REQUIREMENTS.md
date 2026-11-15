@@ -128,7 +128,7 @@ Explicitly excluded. Documented to prevent scope creep.
 | Dayung Pulang as Gimersia entry | Elang chose Terror Lembur (A) on 13 Nov 2026. Dayung deprioritized. |
 | AI-generated visual assets | Banned by Gimersia Section VIII. Mourncrest Wraith excluded. |
 | Paid asset packs | Elang wants free only (13 Nov 2026). |
-| Level 2 / campaign | Single level only for Gimersia. Too big for 15 days. |
+| Level 2 / campaign | Single level only for Gimersia. Too big for 15 days. Design done in Phase 40 (`.planning/LEVEL-2-DESIGN.md`, requirements LVL2-01..08, Phase 41 planned); implementation after submission 29 Nov 2026. |
 | Bad-ending cross-level nerf | Needs level 2, not applicable to single level. |
 | 3D realism art style | Not recommended for game jams (Art session). |
 
@@ -314,6 +314,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **OPEN-01**: Patroli pertama bos dari ujung jauh (index 2 = (1328,272)), bukan (272,448) yang 137px dari Komputer (bedah kode gap #1: tugas pertama praktis mustahil dibuka tanpa diganggu)
 - [ ] **CHASE-01**: Kejaran punya wind-up 1 detik — bos diam dulu pas "!" + alarm bunyi, pemain dapat ancang-ancang buat putus pandangan (bedah kode gap #2: kejaran dari jarak <200px hampir mustahil menang di koridor terbuka; _update_stuck juga dijaga biar nggak loncat pas wind-up)
 - [ ] **SHOUT-01**: Di solo, hint teriak jujur soal harganya: "F: teriak (bos datang ke kamu!)" (bedah kode gap #5: teriak manggil bos ke posisi pemain sendiri — di solo itu jebakan buat pemain baru)
+- [ ] **TELE-02**: Teleport tidak masuk ruangan pemain yang lagi ngumpet (konsep §6: "nggak bisa teleport ke ruangan yang sama persis dengan pemain yang lagi ngumpet di bawah meja") — destination di ruangan yang sama dengan pemain ngumpet ditolak, coba lagi (max 8x, fallback ruang bos)
+- [ ] **LVL2-01**: Cerita lantai 2: pintu keluar lantai 1 menuju tangga; pintu utama gedung dikunci hantu; jalan keluar lewat lantai 2 (ruang direksi lama). Tema Pulang tetap.
+- [ ] **LVL2-02**: 5 tugas lantai 2 (Server Utama/Simon 5 ronde, Komputer Direksi/Excel 8 soal, Arsip Lama/Fotokopi 8 lembar, Cari Berkas Lama/4 halaman 4 ronde, Urut Catatan Lama/6 tanggal) + Pintu Keluar keypad 5 digit + Tuas Sel
+- [ ] **LVL2-03**: Peta lantai 2: grid 48x28, 15 ruangan susunan beda, ruang bos di ujung (direksi lama), sel di ruang bos, pintu keluar di lobby tangga
+- [ ] **LVL2-04**: Eskalasi bos lantai 2: chase 255, patrol 140, teleport 12-18 dtk (pertama 20-30 dtk), vision 350, hearing 180/380
+- [ ] **LVL2-05**: Nerf antar level (konsep §8): Bad Ending lantai 1 → gerak -20%, senter redup, tugas +25% langkah; Happy Ending → tanpa nerf; max 2x
+- [ ] **LVL2-06**: Bintang per level (3 = tidak ketangkep, 2 = 1x, 1 = 2x/pahit) + layar akhir tawarkan lanjut ke lantai berikut
+- [ ] **LVL2-07**: Data level jadi data (LEVEL_CONFIGS): TASK_DEFS, PATROL_LOOP, ruangan, CELL_POS, BOSS_ROOM, hide spot, stat bos per level — level 2 = config + peta baru, bukan copy level_1.gd
+- [ ] **LVL2-08**: Menu pilih lantai (lantai 2 terbuka setelah lantai 1 tamat); solo + LAN tetap jalan di lantai 2
 
 | POP-01 | Phase 15 | Done |
 | POP-02 | Phase 15 | Done |
@@ -382,6 +391,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | OPEN-01 | Phase 38 | Done |
 | CHASE-01 | Phase 38 | Done |
 | SHOUT-01 | Phase 38 | Done |
+| TELE-02 | Phase 39 | Done |
+| LVL2-01 | Phase 41 | Planned (design done in Phase 40) |
+| LVL2-02 | Phase 41 | Planned (design done in Phase 40) |
+| LVL2-03 | Phase 41 | Planned (design done in Phase 40) |
+| LVL2-04 | Phase 41 | Planned (design done in Phase 40) |
+| LVL2-05 | Phase 41 | Planned (design done in Phase 40) |
+| LVL2-06 | Phase 41 | Planned (design done in Phase 40) |
+| LVL2-07 | Phase 41 | Planned (design done in Phase 40) |
+| LVL2-08 | Phase 41 | Planned (design done in Phase 40) |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -407,7 +425,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v22 requirements: 1 total
 - v23 requirements: 1 total
 - v24 requirements: 3 total
-- Mapped to phases: 137
+- Mapped to phases: 146
 - Unmapped: 0 ✓
 
 ---
