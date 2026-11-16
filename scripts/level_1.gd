@@ -138,7 +138,7 @@ var first_encounter_active := false
 var first_encounter_done := false
 const FIRST_ENCOUNTER_AT := 12.0
 const FIRST_ENCOUNTER_MAX := 40.0
-const FIRST_ENCOUNTER_SPOT := Vector2(272, 624)
+const FIRST_ENCOUNTER_SPOT := Vector2(400, 656)
 const MUG_RESPAWN_TIME := 60.0
 var pickup_spots: Array[Vector2] = []
 var debug_timer := 0.0
@@ -628,14 +628,30 @@ func _build_astar() -> void:
 	astar.update()
 	for cell in wall_layer_ref.get_used_cells():
 		astar.set_point_solid(cell, true)
+	var prop_rects: Array[Rect2] = []
 	for child in ysort.get_children():
 		if not (child is Prop):
 			continue
 		var rect := _prop_collision_aabb(child as Node2D)
 		if rect.size.x <= 0.0 or rect.size.y <= 0.0:
 			continue
+		prop_rects.append(rect)
 		_mark_rect_solid(rect)
 	_mark_rect_solid(TOILET_ROOM)
+	# Steer the boss away from desk corners: a walkable cell next to a
+	# desk costs more, so A* prefers an open lane and the boss's wide
+	# body does not wedge against a corner. Soft preference, not a
+	# block, so no corridor becomes unreachable.
+	for rect in prop_rects:
+		var x0 := int(floor(rect.position.x / 32.0)) - 1
+		var y0 := int(floor(rect.position.y / 32.0)) - 1
+		var x1 := int(floor((rect.position.x + rect.size.x - 1.0) / 32.0)) + 1
+		var y1 := int(floor((rect.position.y + rect.size.y - 1.0) / 32.0)) + 1
+		for y in range(maxi(y0, 0), mini(y1, ROOM_H - 1) + 1):
+			for x in range(maxi(x0, 0), mini(x1, ROOM_W - 1) + 1):
+				var c := Vector2i(x, y)
+				if not astar.is_point_solid(c):
+					astar.set_point_weight_scale(c, 5.0)
 
 func _prop_collision_aabb(prop: Node2D) -> Rect2:
 	var col := prop.get_node_or_null("Collision")
