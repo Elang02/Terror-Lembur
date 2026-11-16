@@ -964,7 +964,7 @@ func _process(delta: float) -> void:
 func _demo_step(delta: float) -> void:
 	if demo and level != null and level.has_method("_boss_distance"):
 		var bd := float(level.call("_boss_distance"))
-		if bd >= 0.0 and bd < 200.0:
+		if bd >= 0.0 and bd < 120.0:
 			var me: Node = level.call("_my_player")
 			if me != null:
 				me.set("demo_fleeing", true)

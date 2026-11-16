@@ -545,6 +545,12 @@ func _has_line_of_sight(p: Node2D) -> bool:
 		return true
 	return hit.get("collider") == p
 
+func _has_line_of_sight_to(pos: Vector2) -> bool:
+	var space := get_world_2d().direct_space_state
+	var query := PhysicsRayQueryParameters2D.create(global_position, pos, 1, [self])
+	var hit: Dictionary = space.intersect_ray(query)
+	return hit.is_empty()
+
 func _check_catch() -> void:
 	if blind_timer > 0.0:
 		return

@@ -157,7 +157,7 @@ func _demo_update(delta: float) -> Vector2:
 	var bossn: Node = lvl.get("boss")
 	if bossn != null:
 		bstate = int(bossn.get("state"))
-	if (bstate == 2 and bd >= 0.0 and bd < 250.0) or (bd >= 0.0 and bd < 100.0):
+	if (bstate == 2 and bd >= 0.0 and bd < 200.0) or (bd >= 0.0 and bd < 80.0):
 		demo_fleeing = true
 		demo_path = []
 		demo_repath_timer = 0.0
@@ -193,7 +193,7 @@ func _demo_update(delta: float) -> Vector2:
 			return Vector2.ZERO
 		interacting = true
 		interact_target = demo_task_id
-		if bd >= 0.0 and bd < 350.0:
+		if (bstate == 2 and bd >= 0.0 and bd < 200.0) or (bd >= 0.0 and bd < 100.0):
 			demo_fleeing = true
 			demo_flee_target = Vector2.INF
 			demo_path = []
@@ -234,14 +234,14 @@ func _demo_flee(delta: float, lvl: Node) -> Vector2:
 	if bossn != null:
 		bstate = int(bossn.get("state"))
 	if hiding:
-		if bd < 0.0 or bd > 350.0:
+		if bd < 0.0 or bd > 250.0 or (bstate != 2 and bd > 150.0):
 			_unhide()
 			demo_fleeing = false
 			demo_flee_target = Vector2.INF
 			demo_path = []
 			demo_repath_timer = 0.0
 		return Vector2.ZERO
-	if bstate == 2 or (bd >= 0.0 and bd < 250.0):
+	if bstate == 2 or (bd >= 0.0 and bd < 200.0):
 		demo_flee_retarget -= delta
 		if demo_flee_target == Vector2.INF or demo_flee_retarget <= 0.0 or global_position.distance_to(demo_flee_target) < 60.0:
 			demo_flee_target = _demo_far_point(lvl)
@@ -249,17 +249,11 @@ func _demo_flee(delta: float, lvl: Node) -> Vector2:
 			demo_path = []
 			demo_repath_timer = 0.0
 		return _demo_move_to(delta, lvl, demo_flee_target)
-	var desk: Vector2 = lvl.nearest_desk(global_position) if lvl.has_method("nearest_desk") else Vector2.INF
-	if desk != Vector2.INF and (bossn == null or desk.distance_to(bossn.global_position) > 200.0):
-		if global_position.distance_to(desk) < 50.0:
-			_toggle_hide()
-			return Vector2.ZERO
-		return _demo_move_to(delta, lvl, desk)
-	if demo_flee_target == Vector2.INF:
-		demo_flee_target = _demo_far_point(lvl)
-		demo_path = []
-		demo_repath_timer = 0.0
-	return _demo_move_to(delta, lvl, demo_flee_target)
+	demo_fleeing = false
+	demo_flee_target = Vector2.INF
+	demo_path = []
+	demo_repath_timer = 0.0
+	return Vector2.ZERO
 
 func _demo_far_point(lvl: Node) -> Vector2:
 	var bpos := Vector2(768, 448)
@@ -274,11 +268,11 @@ func _demo_far_point(lvl: Node) -> Vector2:
 		if d > best_d:
 			best_d = d
 			best = wp
-	if bossn != null and bossn.has_method("_has_line_of_sight"):
+	if bossn != null and bossn.has_method("_has_line_of_sight_to"):
 		var hidden_best := Vector2.INF
 		var hidden_d := -1.0
 		for wp in loop:
-			if bool(bossn.call("_has_line_of_sight", wp)):
+			if bool(bossn.call("_has_line_of_sight_to", wp)):
 				continue
 			var d2 := (wp as Vector2).distance_to(bpos)
 			if d2 > hidden_d:
