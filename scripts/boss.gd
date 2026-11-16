@@ -301,6 +301,10 @@ func _in_other_room(p: Vector2) -> bool:
 
 func _update_patrol(_delta: float) -> void:
 	waypoint_timer += _delta
+	if path.is_empty():
+		_request_path(target)
+		if path.is_empty():
+			_pick_waypoint()
 	# Long cross-map legs take ~10-22s at patrol speed, so the timeout must
 	# be generous or the boss skips the far waypoints forever.
 	if global_position.distance_to(target) < 24.0 or waypoint_timer > 30.0:

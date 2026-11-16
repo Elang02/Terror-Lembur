@@ -193,7 +193,7 @@ func _demo_update(delta: float) -> Vector2:
 			return Vector2.ZERO
 		interacting = true
 		interact_target = demo_task_id
-		if (bstate == 2 and bd >= 0.0 and bd < 200.0) or (bd >= 0.0 and bd < 100.0):
+		if (bstate == 2 and bd >= 0.0 and bd < 200.0) or (bd >= 0.0 and bd < 60.0):
 			demo_fleeing = true
 			demo_flee_target = Vector2.INF
 			demo_path = []

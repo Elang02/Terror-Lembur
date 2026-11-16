@@ -475,6 +475,7 @@ func _update_first_encounter() -> void:
 		boss.set("blind_timer", 25.0)
 		boss.set("state", 0)
 		boss.set("state_timer", 0.0)
+		boss.call("_pick_waypoint")
 		hud_warn_label.text = "Bos itu... jangan bergerak. Ngumpet di bawah meja!"
 		warn_timer = 3.0
 		return
