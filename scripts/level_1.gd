@@ -246,6 +246,7 @@ var end_dim: ColorRect
 var end_center: CenterContainer
 var elapsed := 0.0
 var times_caught := 0
+var spawn_grace_timer := 30.0
 var shake_strength := 0.0
 var local_camera: Camera2D = null
 var end_panel: PanelContainer
@@ -1328,6 +1329,12 @@ func _process(delta: float) -> void:
 			_dismiss_intro()
 	if not game_over and not intro_open:
 		elapsed += delta
+		if spawn_grace_timer > 0.0:
+			spawn_grace_timer -= delta
+			if boss != null:
+				var cur_blind := float(boss.get("blind_timer"))
+				if cur_blind < 1.0:
+					boss.set("blind_timer", 1.0)
 	if warn_timer > 0.0:
 		warn_timer -= delta
 		if warn_timer <= 0.0:
@@ -1614,7 +1621,8 @@ func _update_self_rescue(delta: float) -> void:
 			self_rescue_noise_timer += delta
 			if self_rescue_noise_timer >= 1.0:
 				self_rescue_noise_timer = 0.0
-				report_noise(locked_player.global_position, 400.0)
+				if boss == null or float(boss.get("post_rescue_timer")) <= 0.0:
+					report_noise(locked_player.global_position, 400.0)
 			if self_rescue_progress >= 1.0:
 				self_rescue_progress = 0.0
 				locked_player.rpc_id(int(locked_player.name), "set_locked", false)

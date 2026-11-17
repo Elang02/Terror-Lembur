@@ -175,8 +175,23 @@ func _update_stuck(delta: float) -> void:
 	# corner between two waypoints and wedge. If it barely moves while it
 	# has a path, jump it to the next path point instead of grinding the wall.
 	if path.is_empty() or path_index >= path.size():
-		stuck_timer = 0.0
-		stuck_last_pos = global_position
+		# No route at all: the boss may be standing where A* cannot start
+		# (solid cell). After 1s still, snap to the nearest walkable cell
+		# centre so pathfinding can resume.
+		if global_position.distance_to(stuck_last_pos) > 5.0:
+			stuck_timer = 0.0
+			stuck_last_pos = global_position
+			return
+		stuck_timer += delta
+		if stuck_timer >= 1.0:
+			stuck_timer = 0.0
+			var cell := Vector2i(int(global_position.x / 32.0), int(global_position.y / 32.0))
+			var w: Vector2i = level.call("_nearest_walkable", cell)
+			global_position = Vector2(w.x * 32 + 16, w.y * 32 + 16)
+			stuck_last_pos = global_position
+			velocity = Vector2.ZERO
+			path = []
+			path_index = 0
 		return
 	if global_position.distance_to(stuck_last_pos) > 5.0:
 		stuck_timer = 0.0
@@ -231,6 +246,8 @@ func _pick_waypoint() -> void:
 	# encounters actually happen, instead of the boss wandering far away
 	# while the player does tasks undisturbed.
 	var anchor := _nearest_player_pos()
+	if anchor == Vector2.INF and post_rescue_timer > 0.0:
+		anchor = level.CELL_POS
 	if anchor != Vector2.INF:
 		# Habis pemain kabur dari sel, bos patroli MENJAUH dulu 10 detik
 		# (bukan mendekat): pemain yang baru kabur butuh ruang bernapas.
@@ -568,8 +585,10 @@ func _check_catch() -> void:
 			continue
 		if global_position.distance_to(child.global_position) < CATCH_DIST:
 			level.on_player_caught(child)
-			state = State.RETURN
+			post_rescue_timer = 20.0
+			state = State.PATROL
 			state_timer = 0.0
+			_pick_waypoint()
 			return
 
 func _start_telegraph() -> void:

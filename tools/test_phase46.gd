@@ -108,7 +108,7 @@ func _run() -> void:
 		_ok("first encounter triggers at 12s")
 	else:
 		_fail("first encounter did not trigger")
-	if boss.global_position.distance_to(Vector2(272, 624)) < 100.0:
+	if boss.global_position.distance_to(Vector2(400, 656)) < 100.0:
 		_ok("boss walks in at the bottom corridor")
 	else:
 		_fail("boss not at encounter spot: " + str(boss.global_position))
