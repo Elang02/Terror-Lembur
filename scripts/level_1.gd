@@ -246,7 +246,7 @@ var end_dim: ColorRect
 var end_center: CenterContainer
 var elapsed := 0.0
 var times_caught := 0
-var spawn_grace_timer := 30.0
+var spawn_grace_timer := 0.0
 var shake_strength := 0.0
 var local_camera: Camera2D = null
 var end_panel: PanelContainer
@@ -255,6 +255,11 @@ var end_detail: Label
 var end_stars: Array[Label] = []
 
 func _ready() -> void:
+	# Spawn grace only in a real game (this scene is the main scene).
+	# Headless tests instantiate the level as a child and need the boss
+	# to detect the player immediately, so they keep grace at 0.
+	if get_tree().current_scene == self:
+		spawn_grace_timer = 30.0
 	if has_node("FloorLayer") and has_node("WallLayer"):
 		wall_layer_ref = $"WallLayer"
 	else:
@@ -875,7 +880,7 @@ func _build_horror_lights() -> void:
 	exit_sign_label = Label.new()
 	exit_sign_label.name = "Tanda_Pintu_Keluar"
 	exit_sign_label.text = "0/5 tugas selesai, selangkah lagi pulang"
-	exit_sign_label.position = Vector2(640, 692)
+	exit_sign_label.position = Vector2(640, 640)
 	exit_sign_label.size = Vector2(320, 48)
 	exit_sign_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	exit_sign_label.add_theme_font_override("font", UITheme.body_font())

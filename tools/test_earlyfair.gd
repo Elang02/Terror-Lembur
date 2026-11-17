@@ -22,6 +22,9 @@ func _init() -> void:
 	root.add_child(lvl)
 	lvl.call("_dismiss_intro")
 	lvl.set("solo_mode", true)
+	# This test verifies the spawn grace, so enable it explicitly.
+	# Real games get it from _ready (main scene); test levels default to 0.
+	lvl.set("spawn_grace_timer", 30.0)
 	var worker_scene: PackedScene = load("res://scenes/worker_char.tscn")
 	player = worker_scene.instantiate()
 	player.name = "1"
