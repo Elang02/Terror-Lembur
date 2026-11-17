@@ -351,6 +351,10 @@ func _update_patrol(_delta: float) -> void:
 		velocity = Vector2.ZERO
 		return
 	_steer_to(target, SPEED_PATROL * speed_mult)
+	# Kepala bos menoleh kiri-kanan selagi jalan, jadi kerucut pandangannya
+	# menyapu sekitar, bukan cuma lurus ke arah jalan.
+	var sway := sin(Time.get_ticks_msec() / 1000.0 * 1.5) * 0.6
+	facing = facing.rotated(sway)
 	for child in level.ysort.get_children():
 		if not (child is CharacterBody2D):
 			continue

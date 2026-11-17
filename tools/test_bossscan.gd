@@ -88,6 +88,24 @@ func _run() -> void:
 		_ok("boss resumes patrol after scan")
 	else:
 		_fail("boss did not resume patrol after scan")
+	# 4. While walking, the boss's head sways: facing deviates from its
+	# movement direction instead of staring straight ahead.
+	var max_dev := 0.0
+	for i in range(180):
+		await process_frame
+		if float(boss.get("scan_timer")) > 0.0:
+			continue
+		var vel: Vector2 = boss.get("velocity")
+		if vel.length() < 50.0:
+			continue
+		var f: Vector2 = boss.get("facing")
+		var dev: float = absf(wrapf(f.angle() - vel.normalized().angle(), -PI, PI))
+		if dev > max_dev:
+			max_dev = dev
+	if max_dev > 0.2:
+		_ok("head sways while walking (max deviation %.2f rad)" % max_dev)
+	else:
+		_fail("head does not sway while walking (max deviation %.2f rad)" % max_dev)
 	print("=== BOSS_SCAN TEST RESULTS ===")
 	for r in results:
 		print(r)
