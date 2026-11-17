@@ -71,17 +71,17 @@ func _run() -> void:
 		_ok("boss hears sprinting player 200px away (PATROL -> SUSPICIOUS)")
 	else:
 		_fail("boss ignores sprinting player 200px away (state=" + str(boss.get("state")) + ")")
-	# --- HEARING: player walking within 160px ---
+	# --- HEARING: player walking within 200px ---
 	boss.set("state", 0)
 	boss.set("state_timer", 0.0)
-	player.global_position = Vector2(300, 656)
+	player.global_position = Vector2(250, 656)
 	player.velocity = Vector2(-200, 0)
 	player.set("sprinting", false)
 	boss.call("_update_detection")
 	if int(boss.get("state")) == 1:
-		_ok("boss hears walking player 100px away (PATROL -> SUSPICIOUS)")
+		_ok("boss hears walking player 150px away (PATROL -> SUSPICIOUS)")
 	else:
-		_fail("boss ignores walking player 100px away (state=" + str(boss.get("state")) + ")")
+		_fail("boss ignores walking player 150px away (state=" + str(boss.get("state")) + ")")
 	# --- HEARING: player walking at 140px (within new 160px range, beyond old 120px) ---
 	boss.set("state", 0)
 	boss.set("state_timer", 0.0)
@@ -93,21 +93,21 @@ func _run() -> void:
 		_ok("boss hears walking player 140px away (PATROL -> SUSPICIOUS)")
 	else:
 		_fail("boss ignores walking player 140px away (state=" + str(boss.get("state")) + ")")
-	# --- HEARING: player walking at 200px (beyond walk range 160) ---
+	# --- HEARING: player walking at 250px (beyond walk range 200) ---
 	boss.set("state", 0)
 	boss.set("state_timer", 0.0)
-	player.global_position = Vector2(200, 656)
+	player.global_position = Vector2(150, 656)
 	player.velocity = Vector2(-200, 0)
 	player.set("sprinting", false)
 	boss.call("_update_detection")
 	if int(boss.get("state")) == 0:
-		_ok("boss does NOT hear walking player 200px away (beyond 160px)")
+		_ok("boss does NOT hear walking player 250px away (beyond 200px)")
 	else:
-		_fail("boss hears walking player 200px away (state=" + str(boss.get("state")) + ")")
-	# --- HEARING: player standing still within 160px (silent) ---
+		_fail("boss hears walking player 250px away (state=" + str(boss.get("state")) + ")")
+	# --- HEARING: player standing still within 200px (silent) ---
 	boss.set("state", 0)
 	boss.set("state_timer", 0.0)
-	player.global_position = Vector2(300, 656)
+	player.global_position = Vector2(250, 656)
 	player.velocity = Vector2.ZERO
 	player.set("sprinting", false)
 	boss.call("_update_detection")

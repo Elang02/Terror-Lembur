@@ -5,7 +5,7 @@ const SPEED_CHASE := 240.0
 const SPEED_SEARCH := 160.0
 const SPEED_RETURN := 100.0
 const VISION_RANGE := 340.0
-const VISION_ANGLE := 1.35
+const VISION_ANGLE := 1.9
 const CATCH_DIST := 40.0
 const TELEPORT_MIN := 14.0
 const TELEPORT_MAX := 20.0
@@ -14,7 +14,7 @@ const FIRST_TELEPORT_MAX := 35.0
 const BLIND_TIME := 1.5
 const CHASE_TIRED := 8.0
 const CHASE_WINDUP := 1.0
-const HEARING_WALK := 160.0
+const HEARING_WALK := 200.0
 const HEARING_SPRINT := 360.0
 
 enum State { PATROL, SUSPICIOUS, CHASE, SEARCH, RETURN }
@@ -522,7 +522,8 @@ func _nearest_visible_player() -> Node2D:
 		var d := global_position.distance_to(child.global_position)
 		if d > VISION_RANGE:
 			continue
-		if d < 60.0:
+		var prox := 60.0 if bool(child.get("hiding")) else 120.0
+		if d < prox:
 			if d < best_d:
 				best = child
 				best_d = d
