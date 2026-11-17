@@ -53,7 +53,7 @@ func _run() -> void:
 	boss.global_position = spot
 	boss.set("path", PackedVector2Array())
 	boss.set("slow_mult", 0.5)
-	boss.set("blind_timer", 25.0)
+	boss.set("blind_timer", 999.0)
 	boss.set("state", 0)
 	boss.set("state_timer", 0.0)
 	boss.call("_pick_waypoint")
