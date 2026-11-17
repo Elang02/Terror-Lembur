@@ -57,6 +57,11 @@ func _run() -> void:
 	boss.global_position = Vector2(400, 656)
 	boss.set("state", 0)
 	boss.set("teleport_timer", 99999.0)
+	# Pin blind so the boss cannot spot/catch the stationary player mid-test:
+	# phase 3 measures pure patrol bias, not the catch mechanic (a stationary
+	# player in the open SHOULD get caught, which moves them to the cell and
+	# breaks the distance measurement). Same pin as test_bossdesk.
+	boss.set("blind_timer", 999.0)
 	var close_frames := 0
 	var total_frames := 0
 	for i in range(600):
