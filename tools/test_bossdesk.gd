@@ -65,15 +65,22 @@ func _run() -> void:
 	var max_desk_close := 0
 	var start_pos: Vector2 = boss.global_position
 	var furthest := 0.0
+	var scanned_this_window := false
 	while samples < 600:
 		await process_frame
 		samples += 1
+		if float(boss.get("scan_timer")) > 0.0:
+			scanned_this_window = true
 		if samples % 30 == 0:
 			var p: Vector2 = boss.global_position
 			var step := p.distance_to(last_pos)
 			var nd := _nearest_desk_dist(p)
-			if step < min_step:
-				min_step = step
+			if not scanned_this_window:
+				if step < min_step:
+					min_step = step
+				if step < 5.0:
+					stall_windows += 1
+			scanned_this_window = false
 			if nd < min_desk:
 				min_desk = nd
 			if nd < 45.0:
@@ -81,8 +88,6 @@ func _run() -> void:
 			var d0 := p.distance_to(start_pos)
 			if d0 > furthest:
 				furthest = d0
-			if step < 5.0:
-				stall_windows += 1
 			last_pos = p
 		if float(lvl.get("elapsed")) > 45.0:
 			break
