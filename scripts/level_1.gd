@@ -880,8 +880,8 @@ func _build_horror_lights() -> void:
 	exit_sign_label = Label.new()
 	exit_sign_label.name = "Tanda_Pintu_Keluar"
 	exit_sign_label.text = "0/5 tugas selesai, selangkah lagi pulang"
-	exit_sign_label.position = Vector2(640, 640)
-	exit_sign_label.size = Vector2(320, 48)
+	exit_sign_label.position = Vector2(570, 640)
+	exit_sign_label.size = Vector2(460, 48)
 	exit_sign_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	exit_sign_label.add_theme_font_override("font", UITheme.body_font())
 	exit_sign_label.add_theme_font_size_override("font_size", 18)
