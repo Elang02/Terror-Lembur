@@ -168,7 +168,7 @@ func _update_bob(delta: float) -> void:
 		boss_sprite.rotation = 0.0
 
 func _update_stuck(delta: float) -> void:
-	# Selama wind-up kejaran bos memang diam — jangan anggap itu nyangkut.
+	# Selama wind-up kejaran bos memang diam - jangan anggap itu nyangkut.
 	if chase_windup_timer > 0.0:
 		return
 	# A* waypoints are cell centres, but the boss capsule can clip a prop

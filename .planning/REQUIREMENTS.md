@@ -9,57 +9,57 @@ Requirements for Gimersia submission. Each maps to roadmap phases.
 
 ### Solo Mode
 
-- [ ] **SOLO-01**: One player can start the game alone (no second PC, no network) and reach an ending
-- [ ] **SOLO-02**: Solo player can complete all main tasks (Generator, Computer, Archive, Exit) alone
-- [ ] **SOLO-03**: Solo player can rescue themselves or the game remains fair when caught alone
-- [ ] **SOLO-04**: Boss difficulty is balanced for one player (not tuned for two)
+- [x] **SOLO-01**: One player can start the game alone (no second PC, no network) and reach an ending
+- [x] **SOLO-02**: Solo player can complete all main tasks (Generator, Computer, Archive, Exit) alone
+- [x] **SOLO-03**: Solo player can rescue themselves or the game remains fair when caught alone
+- [x] **SOLO-04**: Boss difficulty is balanced for one player (not tuned for two)
 
 ### Build & Submission
 
-- [ ] **BUILD-01**: WebGL build exports cleanly and runs in a browser
+- [x] **BUILD-01**: WebGL build exports cleanly and runs in a browser
 - [ ] **BUILD-02**: itch.io page published before 19 Nov 2026 23:59 WIB
-- [ ] **BUILD-03**: Gameplay video 60 seconds to 2 minutes recorded
-- [ ] **BUILD-04**: Minimum 3 screenshots for submission (menu, gameplay, ending)
+- [x] **BUILD-03**: Gameplay video 60 seconds to 2 minutes recorded
+- [x] **BUILD-04**: Minimum 3 screenshots for submission (menu, gameplay, ending)
 - [ ] **BUILD-05**: Game description + cara bermain written for submission form
 - [ ] **BUILD-06**: Third-party asset declaration prepared for submission form
 - [ ] **BUILD-07**: Statement of work period + theme match prepared
 - [ ] **BUILD-08**: Data of 2 team representatives prepared for Bandung
-- [ ] **BUILD-09**: Progress paragraph written for 19 Nov checkpoint
+- [x] **BUILD-09**: Progress paragraph written for 19 Nov checkpoint
 
 ### Boss & Monster
 
-- [ ] **BOSS-01**: Monster sprite chosen (non-AI, Gimersia-legal) and wired as real nodes in boss.tscn
-- [ ] **BOSS-02**: Boss reads ~2x player height and is visually distinct from players
-- [ ] **BOSS-03**: Boss "?" / "!" state mark visually confirmed in a screenshot
-- [ ] **BOSS-04**: Boss patrol loop (8 points) visually confirmed in a playthrough
+- [x] **BOSS-01**: Monster sprite chosen (non-AI, Gimersia-legal) and wired as real nodes in boss.tscn
+- [x] **BOSS-02**: Boss reads ~2x player height and is visually distinct from players
+- [x] **BOSS-03**: Boss "?" / "!" state mark visually confirmed in a screenshot
+- [x] **BOSS-04**: Boss patrol loop (8 points) visually confirmed in a playthrough
 - [ ] **BOSS-05**: Boss searchlight color decided (red vs cold white)
 
 ### Design Docs
 
-- [ ] **DESIGN-01**: Concept document (KONSEP.md) updated to Pulang theme + ghost of old boss
-- [ ] **DESIGN-02**: MDA defined in design docs (Mechanics, Dynamics, Aesthetics)
-- [ ] **DESIGN-03**: Core loop stated in one sentence (concept pitch)
-- [ ] **DESIGN-04**: Theme Pulang felt through mechanics (tasks = requirement to go home, exit opens after tasks, failure = cannot go home)
+- [x] **DESIGN-01**: Concept document (KONSEP.md) updated to Pulang theme + ghost of old boss
+- [x] **DESIGN-02**: MDA defined in design docs (Mechanics, Dynamics, Aesthetics)
+- [x] **DESIGN-03**: Core loop stated in one sentence (concept pitch)
+- [x] **DESIGN-04**: Theme Pulang felt through mechanics (tasks = requirement to go home, exit opens after tasks, failure = cannot go home)
 
 ### Art Direction
 
 - [ ] **ART-01**: 3 art keywords agreed by team (mood, form/style, color — specific, not ambiguous)
-- [ ] **ART-02**: Dark office scene readability tested in grayscale before coloring
-- [ ] **ART-03**: Asset detail hierarchy checked (props quieter than players and boss)
-- [ ] **ART-04**: Visual consistency checked across Imersa (32px), Rubber Studio (16px), Gridwright packs
+- [x] **ART-02**: Dark office scene readability tested in grayscale before coloring
+- [x] **ART-03**: Asset detail hierarchy checked (props quieter than players and boss)
+- [x] **ART-04**: Visual consistency checked across Imersa (32px), Rubber Studio (16px), Gridwright packs
 
 ### Scope & Team
 
-- [ ] **SCOPE-01**: Must/Should/Could scope locked and agreed by team
-- [ ] **SCOPE-02**: Roadmap for remaining days locked (checkpoint 19 Nov, submission 29 Nov)
+- [x] **SCOPE-01**: Must/Should/Could scope locked and agreed by team
+- [x] **SCOPE-02**: Roadmap for remaining days locked (checkpoint 19 Nov, submission 29 Nov)
 - [ ] **SCOPE-03**: Team roles confirmed (Game Designer, Programmer Gameplay, Programmer AI & Networking, Artist, Sound Designer)
 - [ ] **SCOPE-04**: Progress report written for week-2 consultation with Kris (one-pager done, progress report pending)
 
 ### Flow Fixes
 
-- [ ] **FLOW-01**: Spawn = exit problem addressed (boss enrage / blackout when exit unlocks, or other fix)
-- [ ] **FLOW-02**: Teleport fairness addressed (boss does not land too close to a player mid-task, or warning is clearer)
-- [ ] **FLOW-03**: Both-locked game over addressed (slow noisy self-rescue option, or other fix)
+- [x] **FLOW-01**: Spawn = exit problem addressed (boss enrage / blackout when exit unlocks, or other fix)
+- [x] **FLOW-02**: Teleport fairness addressed (boss does not land too close to a player mid-task, or warning is clearer)
+- [x] **FLOW-03**: Both-locked game over addressed (slow noisy self-rescue option, or other fix)
 
 ### Quality & Testing
 
@@ -69,17 +69,17 @@ Requirements for Gimersia submission. Each maps to roadmap phases.
 - [ ] **TEST-04**: Full playthrough (all tasks to exit to ending) verified on real PCs
 - [ ] **TEST-05**: WebGL build tested on another laptop (judges use different devices)
 - [ ] **TEST-06**: Performance profiled (141 props, TileMap, lights — runs smoothly on real PC)
-- [ ] **TEST-07**: Boss hitbox verified smaller than visual (PvE fairness)
+- [x] **TEST-07**: Boss hitbox verified smaller than visual (PvE fairness)
 
 ### Git & Collaboration
 
 - [ ] **GIT-01**: 15 local commits pushed to fork + PR #1 updated (needs Elang's classic PAT, transient use)
-- [ ] **GIT-02**: All team members use same Godot version (4.7)
+- [x] **GIT-02**: All team members use same Godot version (4.7)
 
 ### Polish
 
-- [ ] **POLISH-01**: Hiding prompt em dash removed ("NGUMPET — gerak atau tekan C buat keluar" violates em dash ban)
-- [ ] **POLISH-02**: Red light in boss room + red searchlight evaluated (too much red or fine)
+- [x] **POLISH-01**: Hiding prompt em dash removed ("NGUMPET — gerak atau tekan C buat keluar" violates em dash ban)
+- [x] **POLISH-02**: Red light in boss room + red searchlight evaluated (too much red or fine)
 
 ## v2 Requirements
 
@@ -138,35 +138,35 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SOLO-01 | Phase 1 | Pending |
-| SOLO-02 | Phase 1 | Pending |
-| SOLO-03 | Phase 1 | Pending |
-| SOLO-04 | Phase 1 | Pending |
-| BOSS-01 | Phase 2 | Pending |
-| BOSS-02 | Phase 2 | Pending |
-| BOSS-03 | Phase 2 | Pending |
-| BOSS-04 | Phase 2 | Pending |
+| SOLO-01 | Phase 1 | Done |
+| SOLO-02 | Phase 1 | Done |
+| SOLO-03 | Phase 1 | Done |
+| SOLO-04 | Phase 1 | Done |
+| BOSS-01 | Phase 2 | Done |
+| BOSS-02 | Phase 2 | Done |
+| BOSS-03 | Phase 2 | Done |
+| BOSS-04 | Phase 2 | Done |
 | BOSS-05 | Phase 2 | Pending |
-| FLOW-01 | Phase 3 | Pending |
-| FLOW-02 | Phase 3 | Pending |
-| FLOW-03 | Phase 3 | Pending |
-| DESIGN-01 | Phase 3 | Pending |
-| DESIGN-02 | Phase 3 | Pending |
-| DESIGN-03 | Phase 3 | Pending |
-| DESIGN-04 | Phase 3 | Pending |
+| FLOW-01 | Phase 3 | Done |
+| FLOW-02 | Phase 3 | Done |
+| FLOW-03 | Phase 3 | Done |
+| DESIGN-01 | Phase 3 | Done |
+| DESIGN-02 | Phase 3 | Done |
+| DESIGN-03 | Phase 3 | Done |
+| DESIGN-04 | Phase 3 | Done |
 | ART-01 | Phase 3 | Pending |
-| ART-02 | Phase 3 | Pending |
-| ART-03 | Phase 3 | Pending |
-| ART-04 | Phase 3 | Pending |
-| SCOPE-01 | Phase 3 | Pending |
-| SCOPE-02 | Phase 3 | Pending |
+| ART-02 | Phase 3 | Done |
+| ART-03 | Phase 3 | Done |
+| ART-04 | Phase 3 | Done |
+| SCOPE-01 | Phase 3 | Done |
+| SCOPE-02 | Phase 3 | Done |
 | SCOPE-03 | Phase 3 | Pending |
 | SCOPE-04 | Phase 3 | Pending |
-| BUILD-01 | Phase 4 | Pending |
+| BUILD-01 | Phase 4 | Done |
 | BUILD-02 | Phase 4 | Pending |
-| BUILD-09 | Phase 4 | Pending |
-| BUILD-03 | Phase 5 | Pending |
-| BUILD-04 | Phase 5 | Pending |
+| BUILD-09 | Phase 4 | Done |
+| BUILD-03 | Phase 5 | Done |
+| BUILD-04 | Phase 5 | Done |
 | BUILD-05 | Phase 5 | Pending |
 | BUILD-06 | Phase 5 | Pending |
 | BUILD-07 | Phase 5 | Pending |
@@ -177,11 +177,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TEST-04 | Phase 6 | Pending |
 | TEST-05 | Phase 6 | Pending |
 | TEST-06 | Phase 6 | Pending |
-| TEST-07 | Phase 6 | Pending |
+| TEST-07 | Phase 6 | Done |
 | GIT-01 | Phase 6 | Pending |
-| GIT-02 | Phase 6 | Pending |
-| POLISH-01 | Phase 6 | Pending |
-| POLISH-02 | Phase 6 | Pending |
+| GIT-02 | Phase 6 | Done |
+| POLISH-01 | Phase 6 | Done |
+| POLISH-02 | Phase 6 | Done |
 | AUDIO-01 | Phase 7 | Pending |
 | AUDIO-02 | Phase 7 | Pending |
 | AUDIO-03 | Phase 7 | Pending |
@@ -264,10 +264,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **HARD-02**: Tugas lebih panjang: Excel 7 soal, Simon 4 ronde, Fotokopi 7 lembar, Tuas Sel lebih berat
 - [ ] **HARD-03**: Bos solo lebih cepat (speed_mult 0.9 jadi 1.0, lebih cepat dari jalan kaki, harus sprint buat kabur) dan bisa menggagalkan tugas (popup ketutup kalau ketangkep pas lagi kerja)
 - [ ] **HARD-04**: Demo bot + semua test tetap hijau, video baru yang lebih tegang
-- [ ] **BOSS-01**: Bos lebih agresif: patrol 120, chase 240, search 140, teleport tiap 14-20 dtk (dulu 20-30), chase 8 dtk (dulu 6), vision 300 (dulu 260)
-- [ ] **BOSS-02**: Bos bisa lihat pemain dari dekat walau gelap (150px dalam cone, tanpa senter), jadi senter mati bukan lagi invisibilitas gratis
-- [ ] **BOSS-03**: Bos datang ke tugas yang lagi dikerjain (popup buka = bos dengar suara dari 700px dan menyelidiki), jadi tugas itu momen paling berbahaya
-- [ ] **BOSS-04**: Teleport lebih dekat ke pemain (120px, dulu 150px)
+- [x] **BOSS-01**: Bos lebih agresif: patrol 120, chase 240, search 140, teleport tiap 14-20 dtk (dulu 20-30), chase 8 dtk (dulu 6), vision 300 (dulu 260)
+- [x] **BOSS-02**: Bos bisa lihat pemain dari dekat walau gelap (150px dalam cone, tanpa senter), jadi senter mati bukan lagi invisibilitas gratis
+- [x] **BOSS-03**: Bos datang ke tugas yang lagi dikerjain (popup buka = bos dengar suara dari 700px dan menyelidiki), jadi tugas itu momen paling berbahaya
+- [x] **BOSS-04**: Teleport lebih dekat ke pemain (120px, dulu 150px)
 - [ ] **BOSS-05**: Demo bot + semua test tetap hijau, video baru yang menunjukkan bos ketemu pemain
 - [ ] **HIDE-01**: Ngumpet beneran di bawah meja: pemain nempel ke meja (di atas titik tengah meja, jadi meja ketutupin dia di YSort), sprite jongkok (scale y 0.6) + transparan (alpha 0.5), nama hilang, senter mati
 - [ ] **HIDE-02**: Unhide balikin semua (scale, alpha, nama, senter); test_hide 10/10; regression hijau
@@ -277,9 +277,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [ ] **BAL-04**: Teks ENDING PAHIT tanpa "level berikut" (cuma ada 1 level)
 - [ ] **BAL-05**: Timer tidak jalan selama intro cerita (dulu intro 4 dtk ikut kehitung, tidak adil buat bintang)
 - [ ] **WARN-01**: Pas buka popup tugas dan bos dalam 350px, muncul peringatan "BOS MENDENGAR SUARAMU! Dia menuju ke tugasmu!" + bunyi alarm, 3 detik; kalau bos jauh tidak ada peringatan
-- [ ] **BOSS-01**: Bos bisa nangkep pemain dari arah mana pun (CATCH_DIST 30 → 40; dari atas jarak kontak 36px dulu di luar jangkauan)
-- [ ] **BOSS-02**: Penglihatan bos dalam gelap 150px → 200px (pemain nggak bisa seenaknya lewat dalam gelap)
-- [ ] **BOSS-03**: Bos lepas dari nyangkut di meja/tembok lebih cepat (stuck detector 2.0 dtk → 1.0 dtk + repath baru pas lepas)
+- [x] **BOSS-01**: Bos bisa nangkep pemain dari arah mana pun (CATCH_DIST 30 → 40; dari atas jarak kontak 36px dulu di luar jangkauan)
+- [x] **BOSS-02**: Penglihatan bos dalam gelap 150px → 200px (pemain nggak bisa seenaknya lewat dalam gelap)
+- [x] **BOSS-03**: Bos lepas dari nyangkut di meja/tembok lebih cepat (stuck detector 2.0 dtk → 1.0 dtk + repath baru pas lepas)
 - [ ] **HIDE-01**: Ngumpet bener-bener di bawah meja: collision pemain mati pas ngumpet (fisika nggak bisa dorong keluar), alpha 0.5 → 0.35
 - [ ] **LOS-01**: Bos TIDAK bisa lihat nembus tembok (raycast garis pandang sudah ada, dibuktikan tes: tembok blokir, koridor terbuka kelihatan)
 - [ ] **HEAR-01**: Bos bisa DENGAR pemain lewat FSM: jalan kaki kedengeran 120px, lari (sprint) kedengeran 300px; dengar → SUSPICIOUS ("?") → SEARCH; diam dan ngumpet itu sunyi (tidak kedengeran); suara nembus tembok (kayak noise queue)
@@ -464,4 +464,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-11-14*
-*Last updated: 2026-11-14 after initial definition*
+*Last updated: 2026-11-17 — v1 requirements verified against code, tests, screenshots and playthrough; 28 marked done*

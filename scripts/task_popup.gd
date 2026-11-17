@@ -415,7 +415,7 @@ func _next_excel() -> void:
 	crt.add_child(hrow)
 	var hicon := _make_label("▣", 20, COL_PHOSPHOR_DIM, false)
 	hrow.add_child(hicon)
-	var htitle := _make_label("LAPORAN LEMBUR  —  TERMINAL", 17, COL_PHOSPHOR, false)
+	var htitle := _make_label("LAPORAN LEMBUR  -  TERMINAL", 17, COL_PHOSPHOR, false)
 	hrow.add_child(htitle)
 	var formula := _panelc(Color(0.03, 0.08, 0.03), 3, Color(0.15, 0.3, 0.15), 1)
 	formula.custom_minimum_size = Vector2(720, 40)
@@ -492,7 +492,7 @@ func _submit_excel() -> void:
 		_refresh_excel_input()
 
 func _start_simon_round() -> void:
-	status_label.text = "Ronde " + str(simon_round) + "/4 — hafalkan " + str(simon_round + 2) + " lampu"
+	status_label.text = "Ronde " + str(simon_round) + "/4 - hafalkan " + str(simon_round + 2) + " lampu"
 	simon_seq.clear()
 	for i in range(simon_round + 2):
 		simon_seq.append(rng.randi_range(1, 4))
@@ -507,7 +507,7 @@ func _start_simon_round() -> void:
 	var wrow := HBoxContainer.new()
 	wrow.alignment = BoxContainer.ALIGNMENT_CENTER
 	warn.add_child(wrow)
-	var wlabel := _make_label("BAHAYA  —  TEGANGAN TINGGI", 15, COL_PAPER, true)
+	var wlabel := _make_label("BAHAYA  -  TEGANGAN TINGGI", 15, COL_PAPER, true)
 	wlabel.add_theme_font_override("font", _title_f())
 	wrow.add_child(wlabel)
 	var metal := _panelc(COL_RUST, 8, Color(0.2, 0.15, 0.1), 2)
@@ -568,7 +568,7 @@ func _build_foto() -> void:
 	var mvb := VBoxContainer.new()
 	mvb.add_theme_constant_override("separation", 8)
 	machine.add_child(mvb)
-	var mhead := _make_label("MESIN FOTOKOPI  —  ARSIP LAMA", 16, COL_PAPER, true)
+	var mhead := _make_label("MESIN FOTOKOPI  -  ARSIP LAMA", 16, COL_PAPER, true)
 	mvb.add_child(mhead)
 	foto_bar = Control.new()
 	foto_bar.custom_minimum_size = Vector2(680, 44)
@@ -714,7 +714,7 @@ func _cari_flip(dir: int) -> void:
 	_build_cari()
 
 func _build_cari() -> void:
-	status_label.text = "Ronde " + str(cari_round) + "/3  —  Cari: " + cari_target
+	status_label.text = "Ronde " + str(cari_round) + "/3  -  Cari: " + cari_target
 	_clear_content()
 	cari_boxes.clear()
 	var paper := _panelc(Color(0.93, 0.89, 0.78), 4, Color(0.35, 0.28, 0.18), 2)
@@ -732,7 +732,7 @@ func _build_cari() -> void:
 	var stamp := _make_label("RAHASIA", 16, COL_BLOOD, true)
 	stamp.add_theme_font_override("font", _title_f())
 	head.add_child(stamp)
-	var sub := _make_label("Tumpukan arsip gudang — Halaman " + str(cari_page + 1) + "/3", 14, Color(0.35, 0.28, 0.18), false)
+	var sub := _make_label("Tumpukan arsip gudang - Halaman " + str(cari_page + 1) + "/3", 14, Color(0.35, 0.28, 0.18), false)
 	pv.add_child(sub)
 	var rule := HSeparator.new()
 	pv.add_child(rule)
