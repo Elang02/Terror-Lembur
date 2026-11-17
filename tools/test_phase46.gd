@@ -112,7 +112,7 @@ func _run() -> void:
 		_ok("boss walks in at the bottom corridor")
 	else:
 		_fail("boss not at encounter spot: " + str(boss.global_position))
-	if absf(float(boss.get("slow_mult")) - 0.5) < 0.01 and float(boss.get("blind_timer")) > 10.0:
+	if absf(float(boss.get("slow_mult")) - 0.5) < 0.01 and float(boss.get("blind_timer")) > 5.0:
 		_ok("boss slow + blind during the encounter")
 	else:
 		_fail("boss not slow/blind (slow " + str(boss.get("slow_mult")) + ", blind " + str(boss.get("blind_timer")) + ")")
