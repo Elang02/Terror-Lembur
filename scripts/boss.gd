@@ -5,7 +5,6 @@ const SPEED_CHASE := 240.0
 const SPEED_SEARCH := 160.0
 const SPEED_RETURN := 100.0
 const VISION_RANGE := 340.0
-const VISION_ANGLE := 1.9
 const CATCH_DIST := 40.0
 const TELEPORT_MIN := 14.0
 const TELEPORT_MAX := 20.0
@@ -16,8 +15,6 @@ const CHASE_TIRED := 8.0
 const CHASE_WINDUP := 1.0
 const HEARING_WALK := 200.0
 const HEARING_SPRINT := 360.0
-const SCAN_TIME := 2.0
-const SCAN_SWEEP := 1.9
 
 enum State { PATROL, SUSPICIOUS, CHASE, SEARCH, RETURN }
 
@@ -47,9 +44,6 @@ var stuck_last_pos := Vector2.ZERO
 var search_desk_checked := false
 var search_desk_target := Vector2.ZERO
 var search_desk_pause := 0.0
-var scan_timer := 0.0
-var scan_base := 0.0
-var scan_t := 0.0
 var bob_phase := 0.0
 var level: Node2D
 var rng := RandomNumberGenerator.new()
@@ -175,9 +169,6 @@ func _update_bob(delta: float) -> void:
 func _update_stuck(delta: float) -> void:
 	# Selama wind-up kejaran bos memang diam - jangan anggap itu nyangkut.
 	if chase_windup_timer > 0.0:
-		return
-	# Selama scan bos sengaja diam di tempat - jangan anggap itu nyangkut.
-	if scan_timer > 0.0:
 		return
 	# A* waypoints are cell centres, but the boss capsule can clip a prop
 	# corner between two waypoints and wedge. If it barely moves while it
@@ -326,18 +317,6 @@ func _in_other_room(p: Vector2) -> bool:
 
 func _update_patrol(_delta: float) -> void:
 	waypoint_timer += _delta
-	if scan_timer > 0.0:
-		scan_timer -= _delta
-		scan_t += _delta
-		velocity = Vector2.ZERO
-		facing = Vector2.from_angle(scan_base + sin(scan_t / SCAN_TIME * TAU) * SCAN_SWEEP)
-		if scan_timer <= 0.0:
-			if rng.randf() < 0.25:
-				target = level.boss_room_center()
-				_request_path(target)
-			else:
-				_pick_waypoint()
-		return
 	if path.is_empty():
 		_request_path(target)
 		if path.is_empty():
@@ -345,16 +324,12 @@ func _update_patrol(_delta: float) -> void:
 	# Long cross-map legs take ~10-22s at patrol speed, so the timeout must
 	# be generous or the boss skips the far waypoints forever.
 	if global_position.distance_to(target) < 24.0 or waypoint_timer > 30.0:
-		scan_timer = SCAN_TIME
-		scan_t = 0.0
-		scan_base = facing.angle()
-		velocity = Vector2.ZERO
-		return
+		if rng.randf() < 0.25:
+			target = level.boss_room_center()
+			_request_path(target)
+		else:
+			_pick_waypoint()
 	_steer_to(target, SPEED_PATROL * speed_mult)
-	# Kepala bos menoleh kiri-kanan selagi jalan, jadi kerucut pandangannya
-	# menyapu sekitar, bukan cuma lurus ke arah jalan.
-	var sway := sin(Time.get_ticks_msec() / 1000.0 * 1.5) * 0.6
-	facing = facing.rotated(sway)
 	for child in level.ysort.get_children():
 		if not (child is CharacterBody2D):
 			continue
@@ -570,9 +545,6 @@ func _nearest_visible_player() -> Node2D:
 				best_d = d
 			continue
 		if child.get("hiding"):
-			continue
-		var to_p: Vector2 = (child.global_position - global_position).normalized()
-		if facing.dot(to_p) < cos(VISION_ANGLE):
 			continue
 		if not child.get("flashlight_on") and not level.is_lit(child.global_position) and d >= 240.0:
 			continue

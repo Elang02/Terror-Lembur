@@ -67,8 +67,24 @@ func _run() -> void:
 			chased = true
 			break
 	ok("boss chases a player walking past 100px behind it", chased, "state=" + str(int(boss.get("state"))))
-	# Case 2: player in front of the boss, inside the vision cone,
-	# 250px away, flashlight on. The boss must chase.
+	# Case 2: player 250px BEHIND the boss, flashlight on, in the open.
+	# There is no facing cone anymore: the boss hears and sees in all
+	# directions, so it must chase even though the player is behind it.
+	boss.set("state", 1)
+	boss.set("state_timer", 0.0)
+	boss.set("slow_mult", 0.0)
+	boss.set("blind_timer", 0.0)
+	me.global_position = Vector2(150, 656)
+	me.set("velocity", Vector2(0, 0))
+	chased = false
+	for i in 60:
+		await process_frame
+		if int(boss.get("state")) == 2:
+			chased = true
+			break
+	ok("boss chases a player 250px behind it (no facing cone)", chased, "state=" + str(int(boss.get("state"))))
+	# Case 3: player in front of the boss, 250px away, flashlight on.
+	# The boss must chase.
 	boss.set("state", 1)
 	boss.set("state_timer", 0.0)
 	boss.set("slow_mult", 0.0)
@@ -81,8 +97,8 @@ func _run() -> void:
 		if int(boss.get("state")) == 2:
 			chased = true
 			break
-	ok("boss chases a player 250px in front of it in the cone", chased, "state=" + str(int(boss.get("state"))))
-	# Case 3: player sprinting 300px away in the open. Hearing
+	ok("boss chases a player 250px in front of it", chased, "state=" + str(int(boss.get("state"))))
+	# Case 4: player sprinting 300px away in the open. Hearing
 	# (sprint 360px) must make the boss at least suspicious.
 	boss.set("state", 0)
 	boss.set("state_timer", 0.0)
