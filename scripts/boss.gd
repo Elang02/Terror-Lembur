@@ -58,6 +58,23 @@ const CONE_TEX := preload("res://assets/flashlight_cone.png")
 const PALE_TEX := preload("res://assets/monster/pale_figure.png")
 var _last_mark := ""
 
+signal state_changed(old_state: State, new_state: State)
+
+const STATE_NAMES := ["PATROL", "SUSPICIOUS", "CHASE", "SEARCH", "RETURN"]
+
+# Legal transitions (GDAS godot-state-machine-advanced: transition guard).
+# Forced resets (teleport, catch, send_back_to_room, first encounter) bypass
+# the guard because they are external interrupts, not decisions.
+const LEGAL_TRANSITIONS := {
+	State.PATROL: [State.SUSPICIOUS, State.CHASE, State.RETURN],
+	State.SUSPICIOUS: [State.SEARCH, State.CHASE, State.PATROL],
+	State.CHASE: [State.SEARCH, State.PATROL],
+	State.SEARCH: [State.RETURN, State.CHASE, State.PATROL],
+	State.RETURN: [State.PATROL, State.SUSPICIOUS, State.CHASE],
+}
+
+var state_history: Array[String] = []
+
 func _enter_tree() -> void:
 	set_multiplayer_authority(1)
 
@@ -224,6 +241,48 @@ func _refresh_mark() -> void:
 func _set_mark(t: String) -> void:
 	state_mark.text = t
 
+func _change_state(new_state: State, forced := false) -> bool:
+	if new_state == state:
+		return false
+	if not forced:
+		var allowed: Array = LEGAL_TRANSITIONS.get(state, [])
+		if not allowed.has(new_state):
+			push_warning("boss: illegal transition " + STATE_NAMES[state] + " -> " + STATE_NAMES[new_state])
+			return false
+	var old := state
+	_exit_state(old)
+	state = new_state
+	state_timer = 0.0
+	_enter_state(new_state)
+	_log_transition(old, new_state)
+	state_changed.emit(old, new_state)
+	return true
+
+func _exit_state(_old_state: State) -> void:
+	pass
+
+func _enter_state(new_state: State) -> void:
+	match new_state:
+		State.CHASE:
+			chase_timer = 0.0
+			chase_lost_timer = 0.0
+			chase_windup_timer = CHASE_WINDUP
+			repath_timer = 0.0
+			level.rpc("on_boss_chase")
+		State.SEARCH:
+			search_desk_checked = false
+			search_desk_target = Vector2.ZERO
+			search_desk_pause = 0.0
+
+func _log_transition(old_state: State, new_state: State) -> void:
+	var t := 0.0
+	if level != null:
+		t = float(level.get("elapsed"))
+	var entry := "[%.1f] %s -> %s" % [t, STATE_NAMES[old_state], STATE_NAMES[new_state]]
+	state_history.push_back(entry)
+	if state_history.size() > 20:
+		state_history.pop_front()
+
 func _nearest_player_pos() -> Vector2:
 	var best := Vector2.INF
 	var best_d := 1e9
@@ -343,9 +402,8 @@ func _update_patrol(_delta: float) -> void:
 		if not bool(child.get("hiding")):
 			continue
 		if global_position.distance_to(child.global_position) < 100.0:
-			state = State.SUSPICIOUS
 			target = child.global_position
-			state_timer = 0.0
+			_change_state(State.SUSPICIOUS)
 			return
 
 func _update_suspicious(delta: float) -> void:
@@ -358,12 +416,16 @@ func _update_chase(delta: float) -> void:
 	repath_timer -= delta
 	var p := _nearest_visible_player()
 	if p == null:
-		chase_lost_timer += delta
-		if chase_lost_timer > 0.5:
-			level.rpc("on_boss_lost")
-			_enter_search(target)
-			chase_lost_timer = 0.0
-			return
+		# Commit to the chase through the wind-up: the boss must not
+		# drop a chase it just started because the player ducked behind
+		# a desk for one frame.
+		if chase_windup_timer <= 0.0:
+			chase_lost_timer += delta
+			if chase_lost_timer > 0.5:
+				level.rpc("on_boss_lost")
+				_enter_search(target)
+				chase_lost_timer = 0.0
+				return
 	else:
 		chase_lost_timer = 0.0
 		target = p.global_position
@@ -381,12 +443,8 @@ func _update_chase(delta: float) -> void:
 		chase_timer = 0.0
 
 func _enter_search(center: Vector2) -> void:
-	state = State.SEARCH
 	search_center = center
-	state_timer = 0.0
-	search_desk_checked = false
-	search_desk_target = Vector2.ZERO
-	search_desk_pause = 0.0
+	_change_state(State.SEARCH)
 	_request_path(search_center)
 
 func _nearest_desk_in_range(center: Vector2, max_dist: float) -> Vector2:
@@ -404,13 +462,11 @@ func _update_search(delta: float) -> void:
 	# jalan-ke-meja langsung return dan timeout di bawah tidak pernah
 	# jalan, jadi bos bisa diam selamanya di pinggir meja dengan "?".
 	if state_timer > 5.0 and search_desk_target == Vector2.ZERO:
-		state = State.RETURN
-		state_timer = 0.0
+		_change_state(State.RETURN)
 		_request_path(level.boss_room_center())
 		return
 	if state_timer > 10.0:
-		state = State.RETURN
-		state_timer = 0.0
+		_change_state(State.RETURN)
 		_request_path(level.boss_room_center())
 		return
 	if search_desk_pause > 0.0:
@@ -453,16 +509,14 @@ func _update_return(_delta: float) -> void:
 	if state_timer > 8.0:
 		global_position = level.boss_room_center()
 		velocity = Vector2.ZERO
-		state = State.PATROL
-		state_timer = 0.0
+		_change_state(State.PATROL)
 		_pick_waypoint()
 		return
 	_steer_to(level.boss_room_center(), SPEED_RETURN * speed_mult)
 	# Stay in the room while the post-teleport blind lasts (3s), so the boss
 	# does not patrol straight past the cell right after a self-rescue.
 	if state_timer > 3.0 and global_position.distance_to(level.boss_room_center()) < 40.0:
-		state = State.PATROL
-		state_timer = 0.0
+		_change_state(State.PATROL)
 		_pick_waypoint()
 
 func _move_toward(dest: Vector2, speed: float) -> void:
@@ -480,22 +534,14 @@ func _update_detection() -> void:
 		return
 	var p := _nearest_visible_player()
 	if p != null:
-		if state != State.CHASE:
-			state = State.CHASE
-			chase_timer = 0.0
-			chase_lost_timer = 0.0
-			chase_windup_timer = CHASE_WINDUP
-			state_timer = 0.0
-			repath_timer = 0.0
-			level.rpc("on_boss_chase")
+		_change_state(State.CHASE)
 		target = p.global_position
 		return
 	var noise: Vector2 = level.consume_noise()
 	if noise != Vector2.ZERO:
 		if state == State.PATROL or state == State.RETURN:
-			state = State.SUSPICIOUS
 			target = noise
-			state_timer = 0.0
+			_change_state(State.SUSPICIOUS)
 		return
 	# Hearing: a moving player makes noise. Walking is quiet, sprinting is
 	# loud. Sound goes through walls (like the noise queue), but the range
@@ -504,9 +550,8 @@ func _update_detection() -> void:
 	var heard := _nearest_audible_player()
 	if heard != null:
 		if state == State.PATROL or state == State.RETURN:
-			state = State.SUSPICIOUS
 			target = heard.global_position
-			state_timer = 0.0
+			_change_state(State.SUSPICIOUS)
 		elif state == State.SEARCH:
 			search_center = heard.global_position
 			target = heard.global_position
@@ -558,8 +603,10 @@ func _nearest_visible_player() -> Node2D:
 			continue
 		if child.get("hiding"):
 			continue
-		if not child.get("flashlight_on") and not level.is_lit(child.global_position) and d >= 240.0:
-			continue
+		# No flashlight/darkness gate: if the boss has line of sight and
+		# the player is in range, it sees them. The old rule made the
+		# boss blind in the dark past 240px, which read as "it never
+		# chases" whenever the player walked with the light off.
 		if not _has_line_of_sight(child):
 			continue
 		if d < best_d:
@@ -594,8 +641,7 @@ func _check_catch() -> void:
 		if global_position.distance_to(child.global_position) < CATCH_DIST:
 			level.on_player_caught(child)
 			post_rescue_timer = 20.0
-			state = State.PATROL
-			state_timer = 0.0
+			_change_state(State.PATROL)
 			_pick_waypoint()
 			return
 
@@ -608,8 +654,7 @@ func _do_teleport() -> void:
 	global_position = dest
 	blind_timer = BLIND_TIME
 	teleport_timer = rng.randf_range(TELEPORT_MIN, TELEPORT_MAX) * teleport_mult
-	state = State.PATROL
-	state_timer = 0.0
+	_change_state(State.PATROL, true)
 	_pick_waypoint()
 	level.rpc("on_boss_teleported", dest)
 
@@ -618,7 +663,6 @@ func send_back_to_room() -> void:
 	blind_timer = 5.0
 	post_rescue_timer = 10.0
 	teleport_timer = rng.randf_range(TELEPORT_MIN, TELEPORT_MAX) * teleport_mult
-	state = State.RETURN
-	state_timer = 0.0
+	_change_state(State.RETURN, true)
 	path = []
 	path_index = 0

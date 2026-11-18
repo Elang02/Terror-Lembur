@@ -66,14 +66,18 @@ func _run() -> void:
 		_ok("boss sees player in the dark at 100px (no flashlight)")
 	else:
 		_fail("boss did NOT see player in the dark at 100px")
-	# 3. Boss does NOT see a player in the dark at long range (>=150px, no flashlight)
+	# 3. Boss DOES see a player in the dark at long range (250px, no flashlight).
+	# Requirement change 18 Nov (Elang): the old dark-zone rule made the boss
+	# blind past 240px with the light off, which read as "it never chases".
+	# Vision is now range + line of sight only; the flashlight no longer
+	# gates detection.
 	player.global_position = Vector2(650, 656)
 	boss.set("facing", Vector2(1, 0))
 	seen = boss.call("_nearest_visible_player")
-	if seen == null:
-		_ok("boss does not see player in the dark at 250px")
+	if seen == player:
+		_ok("boss sees player in the dark at 250px (no flashlight)")
 	else:
-		_fail("boss saw player in the dark at 250px (should be invisible)")
+		_fail("boss did NOT see player in the dark at 250px")
 	# 4. Boss still sees a player with flashlight on at long range
 	player.set("flashlight_on", true)
 	boss.set("facing", Vector2(1, 0))

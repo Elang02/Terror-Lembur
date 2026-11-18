@@ -59,13 +59,15 @@ func _run() -> void:
 		_ok("boss sees player 100px ahead in the dark (dark vision)")
 	else:
 		_fail("boss BLIND to player 100px ahead in the dark")
-	# 4. Player 250px ahead, flashlight OFF, dark area: should NOT see (by design, d>=240)
+	# 4. Player 250px ahead, flashlight OFF, dark area: the boss sees them.
+	# Requirement change 18 Nov (Elang): the old 240px dark-vision cutoff is
+	# gone; vision is range (340px) + line of sight, flashlight or not.
 	player.global_position = Vector2(650, 656)
 	seen = boss.call("_nearest_visible_player")
-	if seen == null:
-		_ok("boss cannot see player 250px ahead in the dark (by design)")
+	if seen == player:
+		_ok("boss sees player 250px ahead in the dark")
 	else:
-		_fail("boss sees player 250px ahead in the dark (should be blind by design)")
+		_fail("boss BLIND to player 250px ahead in the dark")
 	# 4b. Player 220px ahead, flashlight OFF, dark area: dark vision now reaches 240px
 	player.global_position = Vector2(620, 656)
 	seen = boss.call("_nearest_visible_player")
