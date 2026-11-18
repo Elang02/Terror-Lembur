@@ -142,6 +142,7 @@ func _panelc(bg: Color, radius: int, border: Color = Color(0, 0, 0, 0), border_w
 func _build_ui() -> void:
 	dim = ColorRect.new()
 	dim.color = Color(0, 0, 0, 0.78)
+	dim.mouse_filter = Control.MOUSE_FILTER_STOP
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(dim)
 	var center := CenterContainer.new()
