@@ -305,6 +305,8 @@ properties/8/spawn = false
 properties/8/replication_mode = 2
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=377897477]
+collision_layer = 1
+collision_mask = 1
 script = ExtResource("1_kumnw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2133829115]

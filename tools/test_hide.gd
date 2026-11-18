@@ -29,6 +29,10 @@ func _run() -> void:
 	for i in range(5):
 		await process_frame
 	sprite = player.get_node("AnimatedSprite2D") as AnimatedSprite2D
+	if int(player.get("collision_layer")) == 1 and int(player.get("collision_mask")) == 1:
+		_ok("collision layer/mask explicit 1/1 at spawn")
+	else:
+		_fail("collision layer/mask at spawn: " + str(player.get("collision_layer")) + "/" + str(player.get("collision_mask")) + " (want 1/1)")
 	player.global_position = Vector2(320, 320)
 	for i in range(5):
 		await process_frame
@@ -88,6 +92,36 @@ func _run() -> void:
 		_ok("name label restored on unhide")
 	else:
 		_fail("name label not restored")
+	# Caught while hiding: lock must restore collision + sprite, not just the flag
+	player.call("_toggle_hide")
+	for i in range(5):
+		await process_frame
+	player.call("set_locked", true)
+	for i in range(5):
+		await process_frame
+	if not bool(player.get("hiding")):
+		_ok("lock clears hiding flag")
+	else:
+		_fail("still hiding after lock")
+	if int(player.get("collision_layer")) == 1 and int(player.get("collision_mask")) == 1:
+		_ok("collision restored after caught-while-hiding")
+	else:
+		_fail("collision leaked after caught-while-hiding: " + str(player.get("collision_layer")) + "/" + str(player.get("collision_mask")) + " (want 1/1)")
+	if sprite.scale == Vector2.ONE:
+		_ok("sprite scale restored after caught-while-hiding")
+	else:
+		_fail("sprite still squashed after caught-while-hiding (scale=" + str(sprite.scale) + ")")
+	if absf(sprite.modulate.a - 1.0) < 0.01:
+		_ok("sprite alpha restored after caught-while-hiding")
+	else:
+		_fail("sprite alpha wrong after caught-while-hiding: " + str(sprite.modulate.a))
+	player.call("set_locked", false)
+	for i in range(5):
+		await process_frame
+	if int(player.get("collision_layer")) == 1 and int(player.get("collision_mask")) == 1:
+		_ok("collision still 1/1 after rescue unlock")
+	else:
+		_fail("collision wrong after rescue unlock: " + str(player.get("collision_layer")) + "/" + str(player.get("collision_mask")))
 	print("=== HIDE TEST RESULTS ===")
 	for r in results:
 		print(r)

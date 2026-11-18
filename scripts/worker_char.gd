@@ -37,6 +37,8 @@ var flashlight_on := true
 var has_throwable := false
 var shout_timer := 0.0
 var hide_spot := Vector2.ZERO
+var base_collision_layer := 1
+var base_collision_mask := 1
 var stamina := 100.0
 var sprinting := false
 var step_timer := 0.0
@@ -52,6 +54,8 @@ func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 
 func _ready() -> void:
+	base_collision_layer = collision_layer
+	base_collision_mask = collision_mask
 	bot_mode = "--bot" in OS.get_cmdline_user_args()
 	demo_mode = "--demo" in OS.get_cmdline_user_args()
 	if demo_mode:
@@ -374,15 +378,18 @@ func _toggle_hide() -> void:
 	if lvl.has_method("play_sfx"):
 		lvl.play_sfx("hide", -6.0)
 
-func _unhide() -> void:
+func _restore_hide() -> void:
 	hiding = false
-	collision_layer = 1
-	collision_mask = 1
+	collision_layer = base_collision_layer
+	collision_mask = base_collision_mask
 	sprite.scale = Vector2.ONE
 	sprite.modulate.a = 1.0
 	if name_label != null:
 		name_label.modulate.a = 1.0
 	light.enabled = flashlight_on
+
+func _unhide() -> void:
+	_restore_hide()
 	var lvl := get_parent().get_parent()
 	if lvl != null and lvl.has_method("play_sfx"):
 		lvl.play_sfx("hide", -8.0, 1.3)
@@ -432,10 +439,8 @@ func set_locked(value: bool) -> void:
 	if value:
 		velocity = Vector2.ZERO
 		interacting = false
-		hiding = false
-		sprite.modulate.a = 1.0
-		if name_label != null:
-			name_label.modulate.a = 1.0
+		if hiding:
+			_restore_hide()
 
 @rpc("any_peer", "call_local")
 func give_throwable() -> void:
