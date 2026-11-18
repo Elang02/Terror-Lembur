@@ -120,6 +120,9 @@ func _physics_process(delta: float) -> void:
 	if level != null and bool(level.get("paused")):
 		velocity = Vector2.ZERO
 		return
+	if level != null and bool(level.get("intro_open")):
+		velocity = Vector2.ZERO
+		return
 	if blind_timer > 0.0:
 		blind_timer -= delta
 	if post_rescue_timer > 0.0:

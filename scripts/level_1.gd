@@ -440,7 +440,7 @@ func _update_tutorial() -> void:
 		return
 	match tutorial_step:
 		1:
-			if me.global_position.distance_to(tutorial_spawn_pos) > 120.0:
+			if me.global_position.distance_to(tutorial_spawn_pos) > 60.0:
 				tutorial_step = 2
 				_refresh_tutorial_label()
 		2:
@@ -1022,7 +1022,7 @@ func _build_intro() -> void:
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		vb.add_child(l)
-	var hint := UITheme.make_label("Tekan tombol apa saja untuk mulai", UITheme.body_font(), 16, UITheme.COL_GOLD)
+	var hint := UITheme.make_label("Tekan E atau klik untuk mulai", UITheme.body_font(), 16, UITheme.COL_GOLD)
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vb.add_child(hint)
 
