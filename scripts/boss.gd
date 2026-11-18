@@ -47,6 +47,10 @@ var search_desk_pause := 0.0
 var bob_phase := 0.0
 var level: Node2D
 var rng := RandomNumberGenerator.new()
+var _players_cache: Array = []
+var _players_cache_tick := -1
+var _visible_cache: Node2D = null
+var _visible_cache_tick := -1
 
 var boss_sprite: Sprite2D
 var eye_l: Polygon2D
@@ -283,14 +287,21 @@ func _log_transition(old_state: State, new_state: State) -> void:
 	if state_history.size() > 20:
 		state_history.pop_front()
 
+func _players() -> Array:
+	var tick := Engine.get_physics_frames()
+	if _players_cache_tick == tick:
+		return _players_cache
+	_players_cache_tick = tick
+	_players_cache.clear()
+	for child in level.ysort.get_children():
+		if child is CharacterBody2D and child.has_method("set_locked"):
+			_players_cache.append(child)
+	return _players_cache
+
 func _nearest_player_pos() -> Vector2:
 	var best := Vector2.INF
 	var best_d := 1e9
-	for child in level.ysort.get_children():
-		if not (child is CharacterBody2D):
-			continue
-		if not child.has_method("set_locked"):
-			continue
+	for child in _players():
 		if child.get("locked"):
 			continue
 		var d := global_position.distance_to(child.global_position)
@@ -392,11 +403,7 @@ func _update_patrol(_delta: float) -> void:
 		else:
 			_pick_waypoint()
 	_steer_to(target, SPEED_PATROL * speed_mult)
-	for child in level.ysort.get_children():
-		if not (child is CharacterBody2D):
-			continue
-		if not child.has_method("set_locked"):
-			continue
+	for child in _players():
 		if child.get("locked"):
 			continue
 		if not bool(child.get("hiding")):
@@ -562,11 +569,7 @@ func _update_detection() -> void:
 func _nearest_audible_player() -> Node2D:
 	var best: Node2D = null
 	var best_d := 1e9
-	for child in level.ysort.get_children():
-		if not (child is CharacterBody2D):
-			continue
-		if not child.has_method("set_locked"):
-			continue
+	for child in _players():
 		if child.get("locked"):
 			continue
 		if child.get("hiding"):
@@ -583,13 +586,20 @@ func _nearest_audible_player() -> Node2D:
 	return best
 
 func _nearest_visible_player() -> Node2D:
+	var tick := Engine.get_physics_frames()
+	if _visible_cache_tick == tick:
+		if is_instance_valid(_visible_cache):
+			return _visible_cache
+		if _visible_cache == null:
+			return null
+	_visible_cache_tick = tick
+	_visible_cache = _nearest_visible_player_uncached()
+	return _visible_cache
+
+func _nearest_visible_player_uncached() -> Node2D:
 	var best: Node2D = null
 	var best_d := VISION_RANGE
-	for child in level.ysort.get_children():
-		if not (child is CharacterBody2D):
-			continue
-		if not child.has_method("set_locked"):
-			continue
+	for child in _players():
 		if child.get("locked"):
 			continue
 		var d := global_position.distance_to(child.global_position)
@@ -631,11 +641,7 @@ func _has_line_of_sight_to(pos: Vector2) -> bool:
 func _check_catch() -> void:
 	if blind_timer > 0.0:
 		return
-	for child in level.ysort.get_children():
-		if not (child is CharacterBody2D):
-			continue
-		if not child.has_method("set_locked"):
-			continue
+	for child in _players():
 		if child.get("locked"):
 			continue
 		if global_position.distance_to(child.global_position) < CATCH_DIST:
