@@ -3,9 +3,11 @@ extends Node
 
 const MIX_RATE := 22050
 const POOL_SIZE := 8
+const SAME_SFX_LIMIT := 5
 
 var _streams: Dictionary = {}
 var _players: Array[AudioStreamPlayer] = []
+var _started: PackedInt64Array = PackedInt64Array()
 var _rng := RandomNumberGenerator.new()
 var muted := false
 
@@ -14,10 +16,13 @@ func set_muted(v: bool) -> void:
 
 func _ready() -> void:
 	_rng.seed = 12345
+	_started.resize(POOL_SIZE)
 	for i in range(POOL_SIZE):
 		var p := AudioStreamPlayer.new()
+		p.bus = "SFX"
 		add_child(p)
 		_players.append(p)
+		_started[i] = 0
 	_build_all()
 
 func play(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
@@ -25,18 +30,33 @@ func play(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> voi
 		return
 	if not _streams.has(sound_name):
 		return
+	var same := 0
 	for p in _players:
-		if not p.playing:
-			p.stream = _streams[sound_name]
-			p.volume_db = volume_db
-			p.pitch_scale = pitch
-			p.play()
-			return
-	var p0: AudioStreamPlayer = _players[0]
-	p0.stream = _streams[sound_name]
-	p0.volume_db = volume_db
-	p0.pitch_scale = pitch
-	p0.play()
+		if p.playing and p.stream == _streams[sound_name]:
+			same += 1
+	if same >= SAME_SFX_LIMIT:
+		return
+	var idx := -1
+	for i in range(_players.size()):
+		if not _players[i].playing:
+			idx = i
+			break
+	if idx < 0:
+		idx = _oldest_playing_index()
+		_players[idx].stop()
+	var p2: AudioStreamPlayer = _players[idx]
+	p2.stream = _streams[sound_name]
+	p2.volume_db = volume_db
+	p2.pitch_scale = pitch
+	_started[idx] = Time.get_ticks_msec()
+	p2.play()
+
+func _oldest_playing_index() -> int:
+	var best := 0
+	for i in range(_players.size()):
+		if _players[i].playing and _started[i] < _started[best]:
+			best = i
+	return best
 
 func _build_all() -> void:
 	_streams["heartbeat"] = _heartbeat()
