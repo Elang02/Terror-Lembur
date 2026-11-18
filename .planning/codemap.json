@@ -1486,6 +1486,21 @@
    "to": "func:tools/diag_chase.gd#_run"
   },
   {
+   "from": "file:tools/diag_desk.gd",
+   "kind": "extends",
+   "to": "extends:SceneTree"
+  },
+  {
+   "from": "file:tools/diag_desk.gd",
+   "kind": "defines",
+   "to": "func:tools/diag_desk.gd#_init"
+  },
+  {
+   "from": "file:tools/diag_desk.gd",
+   "kind": "defines",
+   "to": "func:tools/diag_desk.gd#_run"
+  },
+  {
    "from": "file:tools/diag_desks.gd",
    "kind": "extends",
    "to": "extends:SceneTree"
@@ -2774,6 +2789,26 @@
    "from": "file:tools/test_search.gd",
    "kind": "defines",
    "to": "func:tools/test_search.gd#_report"
+  },
+  {
+   "from": "file:tools/test_searchdesk.gd",
+   "kind": "extends",
+   "to": "extends:SceneTree"
+  },
+  {
+   "from": "file:tools/test_searchdesk.gd",
+   "kind": "defines",
+   "to": "func:tools/test_searchdesk.gd#ok"
+  },
+  {
+   "from": "file:tools/test_searchdesk.gd",
+   "kind": "defines",
+   "to": "func:tools/test_searchdesk.gd#_init"
+  },
+  {
+   "from": "file:tools/test_searchdesk.gd",
+   "kind": "defines",
+   "to": "func:tools/test_searchdesk.gd#_run"
   },
   {
    "from": "file:tools/test_solo.gd",
@@ -17741,6 +17776,11 @@
    "to": "func:tools/test_bossvision.gd#ok"
   },
   {
+   "from": "func:tools/test_bossdesk.gd#_run",
+   "kind": "calls",
+   "to": "func:tools/test_searchdesk.gd#ok"
+  },
+  {
    "from": "func:tools/test_bossvision.gd#_run",
    "kind": "calls",
    "to": "func:tools/test_bossdesk.gd#ok"
@@ -17749,6 +17789,26 @@
    "from": "func:tools/test_bossvision.gd#_run",
    "kind": "calls",
    "to": "func:tools/test_bossvision.gd#ok"
+  },
+  {
+   "from": "func:tools/test_bossvision.gd#_run",
+   "kind": "calls",
+   "to": "func:tools/test_searchdesk.gd#ok"
+  },
+  {
+   "from": "func:tools/test_searchdesk.gd#_run",
+   "kind": "calls",
+   "to": "func:tools/test_bossdesk.gd#ok"
+  },
+  {
+   "from": "func:tools/test_searchdesk.gd#_run",
+   "kind": "calls",
+   "to": "func:tools/test_bossvision.gd#ok"
+  },
+  {
+   "from": "func:tools/test_searchdesk.gd#_run",
+   "kind": "calls",
+   "to": "func:tools/test_searchdesk.gd#ok"
   },
   {
    "from": "func:tools/test_bossmove.gd#_run",
@@ -20983,7 +21043,7 @@
       "on_player_caught"
      ],
      "emits": [],
-     "line": 572,
+     "line": 581,
      "rpcs": []
     },
     "_circle_points": {
@@ -21006,7 +21066,7 @@
       "teleport_destination"
      ],
      "emits": [],
-     "line": 594,
+     "line": 603,
      "rpcs": [
       "on_boss_teleported"
      ]
@@ -21046,7 +21106,7 @@
       "is_empty"
      ],
      "emits": [],
-     "line": 558,
+     "line": 567,
      "rpcs": []
     },
     "_has_line_of_sight_to": {
@@ -21057,7 +21117,7 @@
       "is_empty"
      ],
      "emits": [],
-     "line": 566,
+     "line": 575,
      "rpcs": []
     },
     "_in_other_room": {
@@ -21078,7 +21138,7 @@
       "normalized"
      ],
      "emits": [],
-     "line": 456,
+     "line": 465,
      "rpcs": []
     },
     "_nearest_audible_player": {
@@ -21090,7 +21150,7 @@
       "length"
      ],
      "emits": [],
-     "line": 505,
+     "line": 514,
      "rpcs": []
     },
     "_nearest_desk_in_range": {
@@ -21122,7 +21182,7 @@
       "is_lit"
      ],
      "emits": [],
-     "line": 528,
+     "line": 537,
      "rpcs": []
     },
     "_physics_process": {
@@ -21215,7 +21275,7 @@
       "rpc"
      ],
      "emits": [],
-     "line": 590,
+     "line": 599,
      "rpcs": [
       "on_boss_telegraph"
      ]
@@ -21267,7 +21327,7 @@
       "walls"
      ],
      "emits": [],
-     "line": 466,
+     "line": 475,
      "rpcs": [
       "on_boss_chase"
      ]
@@ -21298,7 +21358,7 @@
       "lasts"
      ],
      "emits": [],
-     "line": 440,
+     "line": 449,
      "rpcs": []
     },
     "_update_search": {
@@ -21309,6 +21369,7 @@
       "boss_room_center",
       "cos",
       "distance_to",
+      "is_empty",
       "sin"
      ],
      "emits": [],
@@ -21341,7 +21402,7 @@
       "randf_range"
      ],
      "emits": [],
-     "line": 604,
+     "line": 613,
      "rpcs": []
     }
    },
@@ -25995,6 +26056,49 @@
     ]
    ]
   },
+  "tools/diag_desk.gd": {
+   "class_name": null,
+   "consts": [],
+   "extends": "SceneTree",
+   "funcs": {
+    "_init": {
+     "calls": [
+      "add_child",
+      "call_deferred",
+      "instantiate",
+      "load"
+     ],
+     "emits": [],
+     "line": 5,
+     "rpcs": []
+    },
+    "_run": {
+     "calls": [
+      "call",
+      "distance_to",
+      "get",
+      "quit",
+      "size",
+      "snappedf",
+      "str"
+     ],
+     "emits": [],
+     "line": 11,
+     "rpcs": []
+    }
+   },
+   "loads": [
+    "res://scenes/level_1.tscn"
+   ],
+   "path": "tools/diag_desk.gd",
+   "signals": [],
+   "vars": [
+    [
+     "lvl",
+     3
+    ]
+   ]
+  },
   "tools/diag_desks.gd": {
    "class_name": null,
    "consts": [],
@@ -30004,6 +30108,79 @@
     ]
    ]
   },
+  "tools/test_searchdesk.gd": {
+   "class_name": null,
+   "consts": [],
+   "extends": "SceneTree",
+   "funcs": {
+    "_init": {
+     "calls": [
+      "add_child",
+      "call_deferred",
+      "instantiate",
+      "load"
+     ],
+     "emits": [],
+     "line": 22,
+     "rpcs": []
+    },
+    "_run": {
+     "calls": [
+      "PackedVector2Array",
+      "add_child",
+      "call",
+      "desk",
+      "distance_to",
+      "get",
+      "instantiate",
+      "load",
+      "ok",
+      "quit",
+      "s",
+      "set",
+      "snappedf",
+      "str"
+     ],
+     "emits": [],
+     "line": 28,
+     "rpcs": []
+    },
+    "ok": {
+     "calls": [],
+     "emits": [],
+     "line": 14,
+     "rpcs": []
+    }
+   },
+   "loads": [
+    "res://scenes/level_1.tscn",
+    "res://scenes/worker_char.tscn"
+   ],
+   "path": "tools/test_searchdesk.gd",
+   "signals": [],
+   "vars": [
+    [
+     "lvl",
+     8
+    ],
+    [
+     "boss",
+     9
+    ],
+    [
+     "me",
+     10
+    ],
+    [
+     "passes",
+     11
+    ],
+    [
+     "fails",
+     12
+    ]
+   ]
+  },
   "tools/test_solo.gd": {
    "class_name": null,
    "consts": [],
@@ -30809,77 +30986,77 @@
    "id": "func:scripts/boss.gd#_update_return",
    "kind": "func",
    "label": "_update_return",
-   "line": 440
+   "line": 449
   },
   {
    "file": "scripts/boss.gd",
    "id": "func:scripts/boss.gd#_move_toward",
    "kind": "func",
    "label": "_move_toward",
-   "line": 456
+   "line": 465
   },
   {
    "file": "scripts/boss.gd",
    "id": "func:scripts/boss.gd#_update_detection",
    "kind": "func",
    "label": "_update_detection",
-   "line": 466
+   "line": 475
   },
   {
    "file": "scripts/boss.gd",
    "id": "func:scripts/boss.gd#_nearest_audible_player",
    "kind": "func",
    "label": "_nearest_audible_player",
-   "line": 505
+   "line": 514
   },
   {
    "file": "scripts/boss.gd",
    "id": "func:scripts/boss.gd#_nearest_visible_player",
    "kind": "func",
    "label": "_nearest_visible_player",
-   "line": 528
+   "line": 537
   },
   {
    "file": "scripts/boss.gd",
    "id": "func:scripts/boss.gd#_has_line_of_sight",
    "kind": "func",
    "label": "_has_line_of_sight",
-   "line": 558
+   "line": 567
   },
   {
    "file": "scripts/boss.gd",
    "id": "func:scripts/boss.gd#_has_line_of_sight_to",
    "kind": "func",
    "label": "_has_line_of_sight_to",
-   "line": 566
+   "line": 575
   },
   {
    "file": "scripts/boss.gd",
    "id": "func:scripts/boss.gd#_check_catch",
    "kind": "func",
    "label": "_check_catch",
-   "line": 572
+   "line": 581
   },
   {
    "file": "scripts/boss.gd",
    "id": "func:scripts/boss.gd#_start_telegraph",
    "kind": "func",
    "label": "_start_telegraph",
-   "line": 590
+   "line": 599
   },
   {
    "file": "scripts/boss.gd",
    "id": "func:scripts/boss.gd#_do_teleport",
    "kind": "func",
    "label": "_do_teleport",
-   "line": 594
+   "line": 603
   },
   {
    "file": "scripts/boss.gd",
    "id": "func:scripts/boss.gd#send_back_to_room",
    "kind": "func",
    "label": "send_back_to_room",
-   "line": 604
+   "line": 613
   },
   {
    "id": "file:scripts/level_1.gd",
@@ -32661,6 +32838,25 @@
    "line": 27
   },
   {
+   "id": "file:tools/diag_desk.gd",
+   "kind": "file",
+   "label": "tools/diag_desk.gd"
+  },
+  {
+   "file": "tools/diag_desk.gd",
+   "id": "func:tools/diag_desk.gd#_init",
+   "kind": "func",
+   "label": "_init",
+   "line": 5
+  },
+  {
+   "file": "tools/diag_desk.gd",
+   "id": "func:tools/diag_desk.gd#_run",
+   "kind": "func",
+   "label": "_run",
+   "line": 11
+  },
+  {
    "id": "file:tools/diag_desks.gd",
    "kind": "file",
    "label": "tools/diag_desks.gd"
@@ -34359,6 +34555,32 @@
    "kind": "func",
    "label": "_report",
    "line": 73
+  },
+  {
+   "id": "file:tools/test_searchdesk.gd",
+   "kind": "file",
+   "label": "tools/test_searchdesk.gd"
+  },
+  {
+   "file": "tools/test_searchdesk.gd",
+   "id": "func:tools/test_searchdesk.gd#ok",
+   "kind": "func",
+   "label": "ok",
+   "line": 14
+  },
+  {
+   "file": "tools/test_searchdesk.gd",
+   "id": "func:tools/test_searchdesk.gd#_init",
+   "kind": "func",
+   "label": "_init",
+   "line": 22
+  },
+  {
+   "file": "tools/test_searchdesk.gd",
+   "id": "func:tools/test_searchdesk.gd#_run",
+   "kind": "func",
+   "label": "_run",
+   "line": 28
   },
   {
    "id": "file:tools/test_solo.gd",

@@ -3,7 +3,7 @@
 Dibangun otomatis oleh `tools/build_codemap.py` (GDScript tidak didukung tree-sitter engram/graphify, jadi extractor ini regex + struktural).
 Sumber query: `.planning/codemap.json`. Regenerasi: `python3 tools/build_codemap.py`.
 
-- File .gd: 76, fungsi: 512, signal: 0, scene .tscn: 28
+- File .gd: 78, fungsi: 517, signal: 0, scene .tscn: 28
 
 ## File script utama
 
@@ -68,6 +68,7 @@ Sumber query: `.planning/codemap.json`. Regenerasi: `python3 tools/build_codemap
 - `tools/diag_boss_after_catch.gd` — 2 funcs
 - `tools/diag_bosstrack.gd` — 2 funcs
 - `tools/diag_chase.gd` — 2 funcs
+- `tools/diag_desk.gd` — 2 funcs
 - `tools/diag_desks.gd` — 2 funcs
 - `tools/diag_early_catch.gd` — 2 funcs
 - `tools/diag_fe.gd` — 3 funcs
@@ -121,6 +122,7 @@ Sumber query: `.planning/codemap.json`. Regenerasi: `python3 tools/build_codemap
 - `tools/test_popup.gd` — 7 funcs
 - `tools/test_rescue.gd` — 4 funcs
 - `tools/test_search.gd` — 5 funcs
+- `tools/test_searchdesk.gd` — 3 funcs
 - `tools/test_solo.gd` — 5 funcs
 - `tools/test_stamina.gd` — 5 funcs
 - `tools/test_taskwarn.gd` — 4 funcs

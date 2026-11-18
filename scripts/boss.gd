@@ -397,6 +397,19 @@ func _nearest_desk_in_range(center: Vector2, max_dist: float) -> Vector2:
 	return best
 
 func _update_search(delta: float) -> void:
+	# Timeout berlaku juga saat lagi jalan ke meja: sebelumnya cabang
+	# jalan-ke-meja langsung return dan timeout di bawah tidak pernah
+	# jalan, jadi bos bisa diam selamanya di pinggir meja dengan "?".
+	if state_timer > 5.0 and search_desk_target == Vector2.ZERO:
+		state = State.RETURN
+		state_timer = 0.0
+		_request_path(level.boss_room_center())
+		return
+	if state_timer > 10.0:
+		state = State.RETURN
+		state_timer = 0.0
+		_request_path(level.boss_room_center())
+		return
 	if search_desk_pause > 0.0:
 		search_desk_pause -= delta
 		velocity = Vector2.ZERO
@@ -405,6 +418,10 @@ func _update_search(delta: float) -> void:
 	# search center while en route.
 	if search_desk_target != Vector2.ZERO:
 		if global_position.distance_to(search_desk_target) > 45.0:
+			# Path bisa kosong sesudah stuck recovery membersihkannya;
+			# minta rute lagi, jangan diam di tempat.
+			if path.is_empty():
+				_request_path(search_desk_target)
 			_steer_to(search_desk_target, SPEED_SEARCH * speed_mult)
 			return
 		search_desk_target = Vector2.ZERO
@@ -428,14 +445,6 @@ func _update_search(delta: float) -> void:
 			search_repath_timer = 1.0
 			_request_path(orbit_target)
 		_steer_to(orbit_target, SPEED_SEARCH * speed_mult * 0.5)
-	if state_timer > 5.0 and search_desk_target == Vector2.ZERO:
-		state = State.RETURN
-		state_timer = 0.0
-		_request_path(level.boss_room_center())
-	elif state_timer > 10.0:
-		state = State.RETURN
-		state_timer = 0.0
-		_request_path(level.boss_room_center())
 
 func _update_return(_delta: float) -> void:
 	if state_timer > 8.0:
