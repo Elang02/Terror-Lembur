@@ -69,8 +69,13 @@ func _run() -> void:
 	var warn_label: Label = lvl.get("hud_warn_label")
 	warn_label.text = ""
 	lvl.set("warn_timer", 0.0)
-	for i in range(5):
+	var t0 := float(lvl.get("elapsed"))
+	for i in range(120):
 		await process_frame
+		if warn_label.text == "Dia kehilangan jejakmu!":
+			break
+		if float(lvl.get("elapsed")) - t0 > 2.0:
+			break
 	if warn_label.text == "Dia kehilangan jejakmu!":
 		_ok("LOS break shows \"Dia kehilangan jejakmu!\"")
 	else:
