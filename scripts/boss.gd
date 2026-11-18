@@ -382,12 +382,6 @@ func _steer_to(dest: Vector2, speed: float) -> void:
 		return
 	_move_toward(dest, speed)
 
-func _in_other_room(p: Vector2) -> bool:
-	for room in level.ALL_ROOMS:
-		if room.has_point(p) and not room.has_point(global_position):
-			return true
-	return false
-
 func _update_patrol(_delta: float) -> void:
 	waypoint_timer += _delta
 	if path.is_empty():
@@ -626,7 +620,7 @@ func _nearest_visible_player_uncached() -> Node2D:
 
 func _has_line_of_sight(p: Node2D) -> bool:
 	var space := get_world_2d().direct_space_state
-	var query := PhysicsRayQueryParameters2D.create(global_position, p.global_position, 1, [self])
+	var query := PhysicsRayQueryParameters2D.create(global_position, p.global_position, 1, [get_rid()])
 	var hit: Dictionary = space.intersect_ray(query)
 	if hit.is_empty():
 		return true
@@ -634,7 +628,7 @@ func _has_line_of_sight(p: Node2D) -> bool:
 
 func _has_line_of_sight_to(pos: Vector2) -> bool:
 	var space := get_world_2d().direct_space_state
-	var query := PhysicsRayQueryParameters2D.create(global_position, pos, 1, [self])
+	var query := PhysicsRayQueryParameters2D.create(global_position, pos, 1, [get_rid()])
 	var hit: Dictionary = space.intersect_ray(query)
 	return hit.is_empty()
 
@@ -657,6 +651,9 @@ func _start_telegraph() -> void:
 
 func _do_teleport() -> void:
 	var dest: Vector2 = level.teleport_destination()
+	var cell := Vector2i(int(dest.x / 32.0), int(dest.y / 32.0))
+	var w: Vector2i = level.call("_nearest_walkable", cell)
+	dest = Vector2(w.x * 32 + 16, w.y * 32 + 16)
 	global_position = dest
 	blind_timer = BLIND_TIME
 	teleport_timer = rng.randf_range(TELEPORT_MIN, TELEPORT_MAX) * teleport_mult
