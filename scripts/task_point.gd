@@ -1,5 +1,6 @@
 @tool
 extends Node2D
+class_name TaskPoint
 
 var task_id := -1
 var label_text := ""
