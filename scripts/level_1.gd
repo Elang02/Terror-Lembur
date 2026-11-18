@@ -231,6 +231,8 @@ var hud_pressure_label: Label
 var _press_style_low: StyleBoxFlat
 var _press_style_mid: StyleBoxFlat
 var _press_style_high: StyleBoxFlat
+var _press_band := -1
+var _task_done_fill: StyleBoxFlat
 var hud_tutorial_panel: PanelContainer
 var hud_tutorial_label: Label
 var tutorial_step := 0
@@ -250,7 +252,9 @@ var end_center: CenterContainer
 var elapsed := 0.0
 var times_caught := 0
 var spawn_grace_timer := 0.0
-var shake_strength := 0.0
+var _shake_trauma := 0.0
+var _shake_noise := FastNoiseLite.new()
+var _shake_noise_y := 0
 var local_camera: Camera2D = null
 var end_panel: PanelContainer
 var end_title: Label
@@ -292,6 +296,8 @@ func _ready() -> void:
 		return
 	sfx = SFX.new()
 	add_child(sfx)
+	_shake_noise.seed = randi()
+	_shake_noise.frequency = 0.5
 	_setup_music()
 	_load_muted()
 	_build_darkness()
@@ -1038,6 +1044,7 @@ func _build_intro() -> void:
 	dim.color = Color(0, 0, 0, 0.85)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	dim.visible = false
+	dim.gui_input.connect(_on_intro_dim_gui_input)
 	hud_layer.add_child(dim)
 	intro_panel = PanelContainer.new()
 	intro_panel.name = "IntroPanel"
@@ -1049,21 +1056,30 @@ func _build_intro() -> void:
 	intro_panel.offset_right = 380
 	intro_panel.offset_bottom = 200
 	intro_panel.visible = false
+	intro_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	dim.add_child(intro_panel)
 	var vb := VBoxContainer.new()
 	vb.add_theme_constant_override("separation", 14)
+	vb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	intro_panel.add_child(vb)
 	var title := UITheme.make_label("TERROR LEMBUR", UITheme.title_font(), 40, UITheme.COL_BLOOD_BRIGHT)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	vb.add_child(title)
 	for line in INTRO_LINES:
 		var l := UITheme.make_label(line, UITheme.body_font(), 18, UITheme.COL_PAPER)
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		vb.add_child(l)
 	var hint := UITheme.make_label("Tekan E atau klik untuk mulai", UITheme.body_font(), 16, UITheme.COL_GOLD)
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	vb.add_child(hint)
+
+func _on_intro_dim_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		_dismiss_intro()
 
 func _show_intro() -> void:
 	if intro_panel == null:
@@ -1198,6 +1214,7 @@ func _build_hud() -> void:
 	_press_style_low = UITheme.bar_fill_style(Color(0.35, 0.85, 0.6))
 	_press_style_mid = UITheme.bar_fill_style(Color(0.85, 0.62, 0.2))
 	_press_style_high = UITheme.bar_fill_style(Color(0.9, 0.25, 0.25))
+	_task_done_fill = UITheme.bar_fill_style(UITheme.COL_GREEN)
 	hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_low)
 	press_row.add_child(hud_pressure_bar)
 	hud_warn_label = UITheme.make_label("", UITheme.title_font(), 30, UITheme.COL_BLOOD_BRIGHT)
@@ -1445,10 +1462,12 @@ func _process(delta: float) -> void:
 		var me := _my_player()
 		if me != null:
 			local_camera = me.get_node_or_null("Camera2D") as Camera2D
-	if shake_strength > 0.0:
-		shake_strength = maxf(0.0, shake_strength - delta * 22.0)
+	if _shake_trauma > 0.0:
+		_shake_trauma = maxf(0.0, _shake_trauma - delta * 2.2)
 		if local_camera != null:
-			local_camera.offset = Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)) * shake_strength
+			_shake_noise_y += 1
+			var sh := _shake_trauma * _shake_trauma
+			local_camera.offset = Vector2(10.0 * sh * _shake_noise.get_noise_2d(0.0, _shake_noise_y), 10.0 * sh * _shake_noise.get_noise_2d(100.0, _shake_noise_y))
 	elif local_camera != null and local_camera.offset != Vector2.ZERO:
 		local_camera.offset = Vector2.ZERO
 	if multiplayer.is_server() and not game_over:
@@ -1861,7 +1880,7 @@ func _show_end(title: String, detail: String, s: int) -> void:
 	if _is_demo():
 		print("DEMO_END: " + title + " " + str(s) + " stars")
 	for i in range(end_stars.size()):
-		var tw := create_tween()
+		var tw := create_tween().bind_node(self)
 		tw.tween_interval(0.12 * float(i))
 		tw.tween_property(end_stars[i], "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
@@ -1939,8 +1958,8 @@ func _update_hud() -> void:
 				hud_task_rows[bi].add_theme_color_override("font_color", UITheme.COL_PAPER)
 		if bi < hud_task_bars.size():
 			hud_task_bars[bi].value = tp.progress
-			if tp.done:
-				hud_task_bars[bi].add_theme_stylebox_override("fill", UITheme.bar_fill_style(UITheme.COL_GREEN))
+			if tp.done and hud_task_bars[bi].get_theme_stylebox("fill") != _task_done_fill:
+				hud_task_bars[bi].add_theme_stylebox_override("fill", _task_done_fill)
 		bi += 1
 	if hud_task_count != null:
 		hud_task_count.text = str(done_count) + "/" + str(main_total)
@@ -1973,12 +1992,15 @@ func _update_hud() -> void:
 	hud_boss_row.visible = boss_txt != ""
 	var press := clampf((boss_speed_mult - 1.0) / 0.8, 0.0, 1.0)
 	hud_pressure_bar.value = press * 100.0
-	if press < 0.4:
-		hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_low)
-	elif press < 0.75:
-		hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_mid)
-	else:
-		hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_high)
+	var band := 0 if press < 0.4 else (1 if press < 0.75 else 2)
+	if band != _press_band:
+		_press_band = band
+		if band == 0:
+			hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_low)
+		elif band == 1:
+			hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_mid)
+		else:
+			hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_high)
 	var locked_names := ""
 	for child in ysort.get_children():
 		if not _is_player(child):
@@ -2089,7 +2111,7 @@ func _boss_distance() -> float:
 	return me.global_position.distance_to(boss.global_position)
 
 func add_shake(amount: float) -> void:
-	shake_strength = maxf(shake_strength, amount)
+	_shake_trauma = maxf(_shake_trauma, clampf(amount / 10.0, 0.0, 1.0))
 
 func _my_player() -> Node2D:
 	var my_id := multiplayer.get_unique_id()

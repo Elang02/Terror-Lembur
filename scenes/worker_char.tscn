@@ -325,6 +325,7 @@ limit_left = 0
 limit_top = 0
 limit_right = 1536
 limit_bottom = 896
+limit_smoothed = true
 
 [node name="Flashlight" type="PointLight2D" parent="."]
 color = Color(1, 0.95, 0.8, 1)
