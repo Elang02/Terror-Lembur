@@ -49,8 +49,6 @@ var level: Node2D
 var rng := RandomNumberGenerator.new()
 var _players_cache: Array = []
 var _players_cache_tick := -1
-var _visible_cache: Node2D = null
-var _visible_cache_tick := -1
 
 var boss_sprite: Sprite2D
 var eye_l: Polygon2D
@@ -580,17 +578,6 @@ func _nearest_audible_player() -> Node2D:
 	return best
 
 func _nearest_visible_player() -> Node2D:
-	var tick := Engine.get_physics_frames()
-	if _visible_cache_tick == tick:
-		if is_instance_valid(_visible_cache):
-			return _visible_cache
-		if _visible_cache == null:
-			return null
-	_visible_cache_tick = tick
-	_visible_cache = _nearest_visible_player_uncached()
-	return _visible_cache
-
-func _nearest_visible_player_uncached() -> Node2D:
 	var best: Node2D = null
 	var best_d := VISION_RANGE
 	for child in _players():
