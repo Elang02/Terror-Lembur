@@ -38,7 +38,7 @@ func _run() -> void:
 	boss = lvl.get("boss")
 	if boss == null:
 		print("TEST FAIL: boss node missing")
-		quit()
+		quit(1)
 		return
 	var pscene := load("res://scenes/worker_char.tscn") as PackedScene
 	me = pscene.instantiate()
@@ -92,4 +92,4 @@ func _run() -> void:
 	ok("boss never clips through a desk (min desk distance >= 35px)", min_desk >= 35.0, "min_desk=" + str(snappedf(min_desk, 1.0)) + " close_windows(<45px)=" + str(max_desk_close))
 	print("BOSS_DESK min_step=" + str(snappedf(min_step, 1.0)) + " min_desk=" + str(snappedf(min_desk, 1.0)) + " furthest=" + str(snappedf(furthest, 1.0)) + " stall_windows=" + str(stall_windows))
 	print("=== BOSS_DESK TEST: " + str(passes) + " passed, " + str(fails) + " failed ===")
-	quit()
+	quit(0 if fails == 0 else 1)

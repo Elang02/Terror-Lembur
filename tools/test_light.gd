@@ -113,4 +113,4 @@ func _finish() -> void:
 		else:
 			failed += 1
 	print("=== LIGHT TEST: " + str(passed) + " passed, " + str(failed) + " failed ===")
-	quit(0)
+	quit(0 if failed == 0 else 1)

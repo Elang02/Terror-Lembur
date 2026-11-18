@@ -11,7 +11,7 @@ const WINDOW_SECS := 30.0
 
 var frames := 0
 var start_msec := 0
-var frame_times: Array = []
+var frame_times: Array[int] = []
 var last_msec := 0
 
 func _init() -> void:
@@ -39,8 +39,11 @@ func _init() -> void:
 	var p99_ms: float = frame_times[p99_idx] if frame_times.size() > 0 else 0.0
 	print("=== FPS TEST ===")
 	print("window_s=%.1f frames=%d avg_fps=%.1f p99_frame_ms=%.1f" % [elapsed, frames, fps, p99_ms])
-	print("RESULT: %s" % ("PASS" if fps >= 20.0 else "LOW"))
-	quit()
+	var ok := fps >= 20.0
+	if not ok:
+		print("TEST FAIL: avg fps %.1f below 20.0" % fps)
+	print("RESULT: %s" % ("PASS" if ok else "LOW"))
+	quit(0 if ok else 1)
 
 func _on_frame() -> void:
 	frames += 1

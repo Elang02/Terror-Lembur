@@ -35,7 +35,7 @@ func _run() -> void:
 	boss = lvl.get("boss")
 	if boss == null:
 		print("TEST FAIL: boss node missing")
-		quit()
+		quit(1)
 		return
 	var pscene := load("res://scenes/worker_char.tscn") as PackedScene
 	me = pscene.instantiate()
@@ -96,4 +96,4 @@ func _run() -> void:
 	ok("boss leaves SEARCH within 13s (not stuck at desk with '?')", end_state != 3, "state=" + str(end_state) + " target=" + str(end_target))
 	ok("boss got close to the desk (min dist <= 70px)", min_desk <= 70.0, "min_desk=" + str(snappedf(min_desk, 1.0)))
 	print("=== SEARCHDESK TEST: " + str(passes) + " passed, " + str(fails) + " failed ===")
-	quit()
+	quit(0 if fails == 0 else 1)

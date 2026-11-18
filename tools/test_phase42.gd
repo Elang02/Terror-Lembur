@@ -1,6 +1,6 @@
 extends SceneTree
 
-var results: Array = []
+var results: Array[String] = []
 var lvl: Node2D
 
 func _init() -> void:
@@ -22,7 +22,7 @@ func _report() -> void:
 		if r.begins_with("TEST FAIL"):
 			fails += 1
 	print("PHASE42 FAILS=" + str(fails))
-	quit()
+	quit(0 if fails == 0 else 1)
 
 func _check(mult: float, expect: float) -> void:
 	lvl.set("boss_speed_mult", mult)

@@ -22,7 +22,7 @@ func _ok(msg: String) -> void:
 
 func _report() -> void:
 	print("RESULT: " + str(results.size() - fails) + "/" + str(results.size()) + " OK")
-	quit()
+	quit(0 if fails == 0 else 1)
 
 func _pin_boss(pos: Vector2) -> void:
 	var boss: Node = lvl.get("boss")

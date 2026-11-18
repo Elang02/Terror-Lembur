@@ -1,6 +1,6 @@
 extends SceneTree
 
-var results: Array = []
+var results: Array[String] = []
 var lvl: Node2D
 var player: Node2D
 
@@ -23,7 +23,7 @@ func _report() -> void:
 		if r.begins_with("TEST FAIL"):
 			fails += 1
 	print("PHASE39 FAILS=" + str(fails))
-	quit()
+	quit(0 if fails == 0 else 1)
 
 func _run() -> void:
 	for i in range(5):

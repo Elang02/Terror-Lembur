@@ -74,4 +74,4 @@ func _report() -> void:
 		if r.begins_with("FAIL"):
 			fails += 1
 	print("FAILS=" + str(fails) + " / " + str(results.size()))
-	quit()
+	quit(0 if fails == 0 else 1)

@@ -2,7 +2,7 @@
 # Build Terror-Lembur.zip from the repo. MUST include every root file the
 # game loads at runtime (esp. office_tileset.tres) + .godot from --import.
 set -e
-REPO=~/workspace/terror-lembur-repo
+REPO="$(cd "$(dirname "$0")" && pwd)"
 OUT=~/workspace/user/files/Terror-Lembur.zip
 STAGE=/tmp/terror-zip-stage
 rm -rf "$STAGE"

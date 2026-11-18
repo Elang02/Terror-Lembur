@@ -3,6 +3,7 @@ extends SceneTree
 var lvl: Node2D
 var player: Node2D
 var boss: Node2D
+var failed := 0
 
 func _init() -> void:
 	var scene := load("res://scenes/level_1.tscn") as PackedScene
@@ -11,6 +12,7 @@ func _init() -> void:
 	call_deferred("_run")
 
 func _fail(msg: String) -> void:
+	failed += 1
 	print("TEST FAIL: " + msg)
 
 func _ok(msg: String) -> void:
@@ -114,4 +116,4 @@ func _run() -> void:
 		_ok("player unlocked after rescue completes")
 	else:
 		_fail("player still locked after rescue completes")
-	quit(0)
+	quit(0 if failed == 0 else 1)
