@@ -70,18 +70,20 @@ func _run() -> void:
 	boss.set("telegraph_timer", 0.0)
 	boss.set("blind_timer", 0.0)
 	boss.set("velocity", Vector2.ZERO)
-	for i in range(5):
+	# Wind-up cuma 0.5 dtk: tunggu 2 frame saja biar timer masih jalan
+	# saat dicek (5 frame sudah cukup buat wind-up habis).
+	for i in range(2):
 		await process_frame
-	if int(boss.get("state")) == 2 and float(boss.get("chase_windup_timer")) > 0.0 and absf(float(boss.get("CHASE_WINDUP")) - 1.0) < 0.01:
-		_ok("chase starts with 1s wind-up (state CHASE, timer armed)")
+	if int(boss.get("state")) == 2 and float(boss.get("chase_windup_timer")) > 0.0 and absf(float(boss.get("CHASE_WINDUP")) - 0.5) < 0.01:
+		_ok("chase starts with 0.5s wind-up (state CHASE, timer armed)")
 	else:
 		_fail("no chase wind-up: state=" + str(boss.get("state")) + " timer=" + str(boss.get("chase_windup_timer")))
 	var start_x := float(boss.global_position.x)
 	boss.set("speed_mult", 1.0)
-	# Wind-up di-arm ulang ke 1.0 detik penuh: entry-nya sudah terbukti di
+	# Wind-up di-arm ulang ke 0.5 detik penuh: entry-nya sudah terbukti di
 	# atas, pengukuran diam-vs-lari harus dari timer yang utuh.
-	boss.set("chase_windup_timer", 1.0)
-	for i in range(5):
+	boss.set("chase_windup_timer", 0.5)
+	for i in range(2):
 		await process_frame
 	var moved_during_windup := absf(float(boss.global_position.x) - start_x)
 	if moved_during_windup < 5.0:

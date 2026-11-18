@@ -35,8 +35,8 @@ func _run() -> void:
 		_ok("patrol speed 130")
 	else:
 		_fail("patrol speed is " + str(boss.get("SPEED_PATROL")))
-	if absf(float(boss.get("SPEED_CHASE")) - 240.0) < 0.01:
-		_ok("chase speed 240")
+	if absf(float(boss.get("SPEED_CHASE")) - 340.0) < 0.01:
+		_ok("chase speed 340")
 	else:
 		_fail("chase speed is " + str(boss.get("SPEED_CHASE")))
 	if absf(float(boss.get("VISION_RANGE")) - 340.0) < 0.01:
@@ -47,8 +47,8 @@ func _run() -> void:
 		_ok("teleport every 14-20s")
 	else:
 		_fail("teleport range is " + str(boss.get("TELEPORT_MIN")) + "-" + str(boss.get("TELEPORT_MAX")))
-	if absf(float(boss.get("CHASE_TIRED")) - 8.0) < 0.01:
-		_ok("chase lasts 8s")
+	if absf(float(boss.get("CHASE_TIRED")) - 12.0) < 0.01:
+		_ok("chase lasts 12s")
 	else:
 		_fail("chase tired is " + str(boss.get("CHASE_TIRED")))
 	# 2. Boss sees a player in the dark at close range (<150px in cone, no flashlight)

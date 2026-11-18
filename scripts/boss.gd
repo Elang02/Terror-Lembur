@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const SPEED_PATROL := 130.0
-const SPEED_CHASE := 240.0
+const SPEED_CHASE := 340.0
 const SPEED_SEARCH := 160.0
 const SPEED_RETURN := 100.0
 const VISION_RANGE := 340.0
@@ -11,8 +11,9 @@ const TELEPORT_MAX := 20.0
 const FIRST_TELEPORT_MIN := 25.0
 const FIRST_TELEPORT_MAX := 35.0
 const BLIND_TIME := 1.5
-const CHASE_TIRED := 8.0
-const CHASE_WINDUP := 1.0
+const CHASE_TIRED := 12.0
+const CHASE_WINDUP := 0.5
+const CHASE_LOST_MAX := 2.0
 const HEARING_WALK := 200.0
 const HEARING_SPRINT := 360.0
 
@@ -364,9 +365,11 @@ func _request_path(dest: Vector2) -> void:
 
 func _steer_to(dest: Vector2, speed: float) -> void:
 	if path.is_empty():
-		# No route: wait for the next repath instead of pushing straight
-		# into a wall toward an unreachable point.
-		velocity = velocity.move_toward(Vector2.ZERO, 900.0 * get_physics_process_delta_time())
+		# No A* route (e.g. target across a prop-blocked corridor):
+		# steer straight at the target instead of standing still.
+		# move_and_slide slides along walls/props, and the stuck
+		# recovery + chase timers bound a truly unreachable target.
+		_move_toward(dest, speed)
 		return
 	if path_index < path.size():
 		var wp: Vector2 = path[path_index]
@@ -420,7 +423,7 @@ func _update_chase(delta: float) -> void:
 		# a desk for one frame.
 		if chase_windup_timer <= 0.0:
 			chase_lost_timer += delta
-			if chase_lost_timer > 0.5:
+			if chase_lost_timer > CHASE_LOST_MAX:
 				level.rpc("on_boss_lost")
 				_enter_search(target)
 				chase_lost_timer = 0.0

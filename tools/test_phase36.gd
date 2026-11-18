@@ -45,10 +45,11 @@ func _run() -> void:
 	ysort.add_child(player, true)
 	for i in range(5):
 		await process_frame
-	# BAL-08: chase 240 (DbD: killer cuma ~15% lebih cepat dari survivor lari;
-	# 240 = 20% lebih cepat dari jalan 200, 20% lebih lambat dari sprint 300).
-	if absf(float(boss.get("SPEED_CHASE")) - 240.0) < 0.01:
-		_ok("chase speed 240 (was 270)")
+	# BAL-08 (revised 18 Nov 2026, Elang: boss must catch the player):
+	# chase 340, faster than player sprint 300, so a sprinting player
+	# can be caught; escape is by breaking line of sight, not by outrunning.
+	if absf(float(boss.get("SPEED_CHASE")) - 340.0) < 0.01:
+		_ok("chase speed 340 (was 240)")
 	else:
 		_fail("chase speed is " + str(boss.get("SPEED_CHASE")))
 	# LOS-02: kejaran putus karena LOS hilang -> "Dia kehilangan jejakmu!".
