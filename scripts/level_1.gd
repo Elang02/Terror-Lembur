@@ -223,6 +223,26 @@ var hud_status_label: Label
 var hud_status_pill: PanelContainer
 var hud_edge_rects: Array[ColorRect] = []
 var hud_pulse_t := 0.0
+var _hud_task_row_txt: Array[String] = []
+var _hud_task_row_done: Array[bool] = []
+var _hud_task_bar_val: Array[float] = []
+var _hud_task_bar_done: Array[bool] = []
+var _hud_task_count_txt := "\u0000"
+var _hud_exit_txt := "\u0000"
+var _hud_exit_done := false
+var _hud_timer_txt := "\u0000"
+var _hud_boss_txt := "\u0000"
+var _hud_press_val := -1.0
+var _hud_press_band := -1
+var _hud_status_txt := "\u0000"
+var _hud_prompt_txt := "\u0000"
+var _hud_prompt_prog := -2.0
+var _hud_stamina_val := -1.0
+var _task_done_style: StyleBoxFlat = null
+var _players_cache: Array = []
+var _players_cache_frame := -1
+var _my_player_cache: Node2D = null
+var _my_player_cache_frame := -1
 var flash_rect: ColorRect
 var flash_a := 0.0
 var hud_stamina_bar: ProgressBar
@@ -231,8 +251,6 @@ var hud_pressure_label: Label
 var _press_style_low: StyleBoxFlat
 var _press_style_mid: StyleBoxFlat
 var _press_style_high: StyleBoxFlat
-var _press_band := -1
-var _task_done_fill: StyleBoxFlat
 var hud_tutorial_panel: PanelContainer
 var hud_tutorial_label: Label
 var tutorial_step := 0
@@ -1009,9 +1027,7 @@ func _update_pickups() -> void:
 				pk.taken = false
 				pk.remove_meta("respawn_at")
 			continue
-		for child in ysort.get_children():
-			if not _is_player(child):
-				continue
+		for child in _players():
 			if child.get("locked") or child.get("hiding"):
 				continue
 			if child.get("has_throwable"):
@@ -1214,7 +1230,6 @@ func _build_hud() -> void:
 	_press_style_low = UITheme.bar_fill_style(Color(0.35, 0.85, 0.6))
 	_press_style_mid = UITheme.bar_fill_style(Color(0.85, 0.62, 0.2))
 	_press_style_high = UITheme.bar_fill_style(Color(0.9, 0.25, 0.25))
-	_task_done_fill = UITheme.bar_fill_style(UITheme.COL_GREEN)
 	hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_low)
 	press_row.add_child(hud_pressure_bar)
 	hud_warn_label = UITheme.make_label("", UITheme.title_font(), 30, UITheme.COL_BLOOD_BRIGHT)
@@ -1558,9 +1573,7 @@ func _task_ready(task_id: int) -> bool:
 	if task_id == 4 and not _any_locked():
 		return false
 	var workers := 0
-	for child in ysort.get_children():
-		if not _is_player(child):
-			continue
+	for child in _players():
 		if child.get("locked"):
 			continue
 		if child.get("interacting") and child.get("interact_target") == task_id:
@@ -1706,9 +1719,7 @@ func _update_self_rescue(delta: float) -> void:
 	if not solo_mode:
 		return
 	var locked_player: Node2D = null
-	for child in ysort.get_children():
-		if not _is_player(child):
-			continue
+	for child in _players():
 		if child.get("locked"):
 			locked_player = child
 			break
@@ -1801,9 +1812,7 @@ func _enrage_boss() -> void:
 	play_sfx("alarm", -4.0)
 
 func _unlock_all() -> void:
-	for child in ysort.get_children():
-		if not _is_player(child):
-			continue
+	for child in _players():
 		if child.get("locked"):
 			child.rpc_id(int(child.name), "set_locked", false)
 
@@ -1814,28 +1823,20 @@ func _main_tasks_done() -> bool:
 	return true
 
 func _any_locked() -> bool:
-	for child in ysort.get_children():
-		if not _is_player(child):
-			continue
+	for child in _players():
 		if child.get("locked"):
 			return true
 	return false
 
 func _locked_count() -> int:
 	var n := 0
-	for child in ysort.get_children():
-		if not _is_player(child):
-			continue
+	for child in _players():
 		if child.get("locked"):
 			n += 1
 	return n
 
 func _player_count() -> int:
-	var n := 0
-	for child in ysort.get_children():
-		if _is_player(child):
-			n += 1
-	return n
+	return _players().size()
 
 func _check_endings() -> void:
 	var total := _player_count()
@@ -1936,9 +1937,22 @@ func _restart_game() -> void:
 	get_tree().reload_current_scene()
 
 func _update_hud() -> void:
+	if _hud_task_row_txt.size() != hud_task_rows.size():
+		_hud_task_row_txt.clear()
+		_hud_task_row_done.clear()
+		_hud_task_bar_val.clear()
+		_hud_task_bar_done.clear()
+		for i in range(hud_task_rows.size()):
+			_hud_task_row_txt.append("\u0000")
+			_hud_task_row_done.append(false)
+			_hud_task_bar_val.append(-1.0)
+			_hud_task_bar_done.append(false)
+		if _task_done_style == null:
+			_task_done_style = UITheme.bar_fill_style(UITheme.COL_GREEN)
 	var bi := 0
 	var done_count := 0
 	var main_total := 0
+	var main_done := _main_tasks_done()
 	for tp in tasks:
 		if tp.task_id != 3 and tp.task_id != 4:
 			main_total += 1
@@ -1949,36 +1963,57 @@ func _update_hud() -> void:
 		if bi < hud_task_rows.size():
 			var mark := "\u2611" if tp.done else "\u2610"
 			var extra := ""
-			if tp.task_id == 3 and not _main_tasks_done():
+			if tp.task_id == 3 and not main_done:
 				extra = " (terkunci)"
-			hud_task_rows[bi].text = mark + " " + tp.label_text + extra
-			if tp.done:
-				hud_task_rows[bi].add_theme_color_override("font_color", UITheme.COL_GREEN)
-			else:
-				hud_task_rows[bi].add_theme_color_override("font_color", UITheme.COL_PAPER)
+			var row_txt: String = mark + " " + tp.label_text + extra
+			if row_txt != _hud_task_row_txt[bi]:
+				_hud_task_row_txt[bi] = row_txt
+				hud_task_rows[bi].text = row_txt
+			if bool(tp.done) != _hud_task_row_done[bi]:
+				_hud_task_row_done[bi] = bool(tp.done)
+				if tp.done:
+					hud_task_rows[bi].add_theme_color_override("font_color", UITheme.COL_GREEN)
+				else:
+					hud_task_rows[bi].add_theme_color_override("font_color", UITheme.COL_PAPER)
 		if bi < hud_task_bars.size():
-			hud_task_bars[bi].value = tp.progress
-			if tp.done and hud_task_bars[bi].get_theme_stylebox("fill") != _task_done_fill:
-				hud_task_bars[bi].add_theme_stylebox_override("fill", _task_done_fill)
+			var prog := clampf(float(tp.progress), 0.0, 1.0)
+			if absf(prog - _hud_task_bar_val[bi]) > 0.0005:
+				_hud_task_bar_val[bi] = prog
+				hud_task_bars[bi].value = prog
+			if bool(tp.done) != _hud_task_bar_done[bi]:
+				_hud_task_bar_done[bi] = bool(tp.done)
+				if tp.done:
+					hud_task_bars[bi].add_theme_stylebox_override("fill", _task_done_style)
 		bi += 1
-	if hud_task_count != null:
-		hud_task_count.text = str(done_count) + "/" + str(main_total)
+	var count_txt := str(done_count) + "/" + str(main_total)
+	if hud_task_count != null and count_txt != _hud_task_count_txt:
+		_hud_task_count_txt = count_txt
+		hud_task_count.text = count_txt
 	if exit_sign_label != null:
-		if done_count >= main_total and main_total > 0:
-			exit_sign_label.text = "Semua tugas selesai, buka pintunya!"
+		var exit_done := done_count >= main_total and main_total > 0
+		var exit_txt := "Semua tugas selesai, buka pintunya!" if exit_done else str(done_count) + "/" + str(main_total) + " tugas selesai, selangkah lagi pulang"
+		if exit_txt != _hud_exit_txt:
+			_hud_exit_txt = exit_txt
+			exit_sign_label.text = exit_txt
+		if exit_done and not _hud_exit_done:
+			_hud_exit_done = true
 			exit_sign_label.add_theme_color_override("font_color", Color(0.35, 0.85, 0.6, 1))
-		else:
-			exit_sign_label.text = str(done_count) + "/" + str(main_total) + " tugas selesai, selangkah lagi pulang"
 	for tp2 in tasks:
 		if tp2.done and not task_done_sounded.get(tp2.task_id, false):
 			task_done_sounded[tp2.task_id] = true
 			play_sfx("complete", -4.0)
 	var me_st := _my_player()
 	if me_st != null:
-		hud_stamina_bar.value = float(me_st.get("stamina"))
+		var st := float(me_st.get("stamina"))
+		if absf(st - _hud_stamina_val) > 0.01:
+			_hud_stamina_val = st
+			hud_stamina_bar.value = st
 	var mins := int(elapsed) / 60
 	var secs := int(elapsed) % 60
-	hud_timer_label.text = "%d:%02d" % [mins, secs]
+	var timer_txt := "%d:%02d" % [mins, secs]
+	if timer_txt != _hud_timer_txt:
+		_hud_timer_txt = timer_txt
+		hud_timer_label.text = timer_txt
 	var boss_d := _boss_distance()
 	var boss_txt := ""
 	if boss_d >= 0.0 and boss_d < 400.0:
@@ -1988,13 +2023,17 @@ func _update_hud() -> void:
 			boss_txt = "Bos dekat..."
 		else:
 			boss_txt = "Ada yang mengawasi..."
-	hud_boss_label.text = boss_txt
-	hud_boss_row.visible = boss_txt != ""
+	if boss_txt != _hud_boss_txt:
+		_hud_boss_txt = boss_txt
+		hud_boss_label.text = boss_txt
+		hud_boss_row.visible = boss_txt != ""
 	var press := clampf((boss_speed_mult - 1.0) / 0.8, 0.0, 1.0)
-	hud_pressure_bar.value = press * 100.0
+	if absf(press * 100.0 - _hud_press_val) > 0.01:
+		_hud_press_val = press * 100.0
+		hud_pressure_bar.value = _hud_press_val
 	var band := 0 if press < 0.4 else (1 if press < 0.75 else 2)
-	if band != _press_band:
-		_press_band = band
+	if band != _hud_press_band:
+		_hud_press_band = band
 		if band == 0:
 			hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_low)
 		elif band == 1:
@@ -2002,21 +2041,20 @@ func _update_hud() -> void:
 		else:
 			hud_pressure_bar.add_theme_stylebox_override("fill", _press_style_high)
 	var locked_names := ""
-	for child in ysort.get_children():
-		if not _is_player(child):
-			continue
+	for child in _players():
 		if child.get("locked"):
 			var disp := "Pemain 1" if str(child.name) == "1" else "Pemain 2"
 			locked_names += disp + " DIKURUNG di ruang bos! "
+	var status_txt := ""
 	if locked_names != "":
 		if solo_mode:
-			hud_status_label.text = locked_names + "Tahan E buat kabur dari sel (10 detik, berisik!)."
+			status_txt = locked_names + "Tahan E buat kabur dari sel (10 detik, berisik!)."
 		else:
-			hud_status_label.text = locked_names + "Tekan E di TUAS SEL buat bebaskan."
-		hud_status_pill.visible = true
-	else:
-		hud_status_label.text = ""
-		hud_status_pill.visible = false
+			status_txt = locked_names + "Tekan E di TUAS SEL buat bebaskan."
+	if status_txt != _hud_status_txt:
+		_hud_status_txt = status_txt
+		hud_status_label.text = status_txt
+		hud_status_pill.visible = status_txt != ""
 	var prompt_txt := ""
 	var prompt_prog := -1.0
 	var shout_txt := "F: teriak (bos datang ke kamu!)" if solo_mode else "F: teriak"
@@ -2053,13 +2091,15 @@ func _update_hud() -> void:
 				prompt_txt = "Q: lempar barang (mancing bos)  |  " + shout_txt + "  |  R: senter  |  C: ngumpet  |  SHIFT: lari (berisik!)  |  M: bisukan"
 			else:
 				prompt_txt = "E: interaksi  |  " + shout_txt + "  |  R: senter  |  C: ngumpet  |  SHIFT: lari (berisik!)  |  M: bisukan"
-	hud_prompt_label.text = prompt_txt
-	hud_prompt_pill.visible = prompt_txt != ""
-	if prompt_prog >= 0.0:
-		hud_prompt_bar.visible = true
-		hud_prompt_bar.value = prompt_prog
-	else:
-		hud_prompt_bar.visible = false
+	if prompt_txt != _hud_prompt_txt:
+		_hud_prompt_txt = prompt_txt
+		hud_prompt_label.text = prompt_txt
+		hud_prompt_pill.visible = prompt_txt != ""
+	if absf(prompt_prog - _hud_prompt_prog) > 0.0005:
+		_hud_prompt_prog = prompt_prog
+		hud_prompt_bar.visible = prompt_prog >= 0.0
+		if prompt_prog >= 0.0:
+			hud_prompt_bar.value = prompt_prog
 func _heartbeat_volume(bd: float) -> float:
 	return lerpf(-14.0, -2.0, 1.0 - clampf(bd / 320.0, 0.0, 1.0))
 
@@ -2113,10 +2153,27 @@ func _boss_distance() -> float:
 func add_shake(amount: float) -> void:
 	_shake_trauma = maxf(_shake_trauma, clampf(amount / 10.0, 0.0, 1.0))
 
-func _my_player() -> Node2D:
-	var my_id := multiplayer.get_unique_id()
+func _players() -> Array:
+	var frame := Engine.get_process_frames()
+	if _players_cache_frame == frame:
+		return _players_cache
+	_players_cache_frame = frame
+	_players_cache.clear()
 	for child in ysort.get_children():
-		if _is_player(child) and int(child.name) == my_id:
+		if _is_player(child):
+			_players_cache.append(child)
+	return _players_cache
+
+func _my_player() -> Node2D:
+	var frame := Engine.get_process_frames()
+	if _my_player_cache_frame == frame and is_instance_valid(_my_player_cache):
+		return _my_player_cache
+	_my_player_cache_frame = frame
+	_my_player_cache = null
+	var my_id := multiplayer.get_unique_id()
+	for child in _players():
+		if int(child.name) == my_id:
+			_my_player_cache = child
 			return child
 	return null
 
