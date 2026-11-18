@@ -156,9 +156,13 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 	visible = true
-	teleport_timer -= delta
-	if teleport_timer <= 0.0:
-		_start_telegraph()
+	# Teleport must not fire while chasing: it yanked the boss away from
+	# the player mid-pursuit, so chases ended after ~1s with no visible
+	# hunt. The timer only ticks outside CHASE.
+	if state != State.CHASE:
+		teleport_timer -= delta
+		if teleport_timer <= 0.0:
+			_start_telegraph()
 	state_timer += delta
 	match state:
 		State.PATROL:
@@ -271,6 +275,9 @@ func _enter_state(new_state: State) -> void:
 			chase_lost_timer = 0.0
 			chase_windup_timer = CHASE_WINDUP
 			repath_timer = 0.0
+			# Fresh teleport clock, so it cannot fire the instant the
+			# chase ends and yank the boss away right after a catch.
+			teleport_timer = rng.randf_range(TELEPORT_MIN, TELEPORT_MAX) * teleport_mult
 			level.rpc("on_boss_chase")
 		State.SEARCH:
 			search_desk_checked = false
@@ -396,6 +403,14 @@ func _update_patrol(_delta: float) -> void:
 			target = level.boss_room_center()
 			_request_path(target)
 		else:
+			_pick_waypoint()
+	# Retarget toward the player: if the current patrol leg is heading far
+	# away from the nearest player, pick a waypoint nearer to them instead
+	# of walking a stale leg across the map while the player works alone.
+	# (waypoint_timer resets in _pick_waypoint, so this re-checks every 5s.)
+	elif waypoint_timer > 5.0:
+		var anchor := _nearest_player_pos()
+		if anchor != Vector2.INF and target.distance_to(anchor) > 400.0:
 			_pick_waypoint()
 	_steer_to(target, SPEED_PATROL * speed_mult)
 	for child in _players():
@@ -652,10 +667,27 @@ func _do_teleport() -> void:
 	level.rpc("on_boss_teleported", dest)
 
 func send_back_to_room() -> void:
-	global_position = level.boss_room_center()
+	# After the player escapes, the boss must be FAR from the cell, not in
+	# its room next to it: the room center is 70px from the cell, so the
+	# boss camped the escape and re-caught the player the moment its blind
+	# expired (v45: boss stood outside the cell for 30s, escape crawling
+	# at 0.3x). Teleport to the patrol waypoint farthest from the cell and
+	# patrol from there, so the escaping player gets real breathing room.
+	var farthest: Vector2 = level.boss_room_center()
+	var far_d := -1.0
+	for wp in level.PATROL_LOOP:
+		var w: Vector2 = wp
+		var d: float = level.CELL_POS.distance_to(w)
+		if d > far_d:
+			far_d = d
+			farthest = w
+	global_position = farthest
+	target = farthest
+	waypoint_timer = 0.0
 	blind_timer = 5.0
 	post_rescue_timer = 10.0
 	teleport_timer = rng.randf_range(TELEPORT_MIN, TELEPORT_MAX) * teleport_mult
-	_change_state(State.RETURN, true)
+	_change_state(State.PATROL, true)
 	path = []
 	path_index = 0
+	_request_path(target)

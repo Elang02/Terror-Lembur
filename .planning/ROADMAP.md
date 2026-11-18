@@ -2,7 +2,7 @@
 
 ## Overview
 
-From a LAN-only 2-PC build to a solo-playable Gimersia submission in 15 days. Phase 1 (solo mode) is the biggest blocker and comes first. Phases 2-3 fix the boss, flow, and design. Phase 4 delivers the 19 Nov checkpoint package. Phases 7-10 (improvement round, from the 14 Nov 2026 mentor-video evaluation) polish audio, tutorial, early tension, and boss feel BEFORE the final submission. Phase 5 completes the 29 Nov submission. Phase 6 verifies everything on real hardware.
+From a LAN-only 2-PC build to a solo-playable Gimersia submission in 15 days. Phase 1 (solo mode) is the biggest blocker and comes first. Phases 2-3 fix the boss, flow, and design. Phase 4 delivers the 19 Nov checkpoint package. Phases 7-10 (improvement round, from the 14 Nov 2026 mentor-video evaluation) polish audio, tutorial, early tension, and boss feel BEFORE the final submission. Phase 5 completes the 29 Nov submission. Phase 6 verifies everything on real hardware. Phases 11-47 (production round) are complete; Phase 48 is backlog; Phase 41 (Lantai 2) is planned after the 29 Nov submission. Current boss numbers live in `.planning/FSM-BOSS.md`.
 
 ## Phases
 
@@ -10,12 +10,15 @@ From a LAN-only 2-PC build to a solo-playable Gimersia submission in 15 days. Ph
 - [x] **Phase 2: Monster & Boss Visual** - Sprite chosen, wired, patrol and state mark confirmed
 - [x] **Phase 3: Flow Fixes & Design Docs** - Flow critiques addressed, concept updated, art direction locked
 - [x] **Phase 4: Checkpoint Package** - WebGL build, itch.io page, screenshot, progress paragraph (due 19 Nov 23:59 WIB)
-- [ ] **Phase 7: Audio & Suasana** - Ambient/BGM loop + intensity scaling (mentor evaluation 14 Nov 2026)
-- [ ] **Phase 8: Tutorial In-Game** - Step-by-step onboarding inside the game (Gimersia rule)
-- [ ] **Phase 9: Ketegangan Awal** - First boss contact within ~12s, fair early tension
-- [ ] **Phase 10: Polish Bos & FSM** - Boss walk animation + SEARCH checks a nearby desk
+- [x] **Phase 7: Audio & Suasana** - Ambient/BGM loop + intensity scaling (mentor evaluation 14 Nov 2026)
+- [x] **Phase 8: Tutorial In-Game** - Step-by-step onboarding inside the game (Gimersia rule)
+- [x] **Phase 9: Ketegangan Awal** - First boss contact within ~12s, fair early tension
+- [x] **Phase 10: Polish Bos & FSM** - Boss walk animation + SEARCH checks a nearby desk
 - [ ] **Phase 5: Final Submission** - Video, screenshots, description, declarations (due 29 Nov 23:59 WIB)
 - [ ] **Phase 6: Testing & Verification** - Playtest, LAN test, performance, full playthrough, push to GitHub
+- [x] **Phase 11-47: Production round** - Senter smooth, mute, build, minigames, popups, intro, kode hafalan, bos agresif, ngumpet, balance, peringatan, LOS/hearing, patroli, rescue, popup horor, Excel interaktif, balance 29, popup warning, 2 tugas baru, Cari Berkas kertas, bandingin game lain, bot kabur, kejaran adil, teleport lambat, pembukaan adil, teleport hormat ngumpet, desain Lantai 2, TEKANAN, kode tidak hilang, umpan balik jujur, jeda + mug, Toilet aman, backstory + hening (semua Complete, lihat tabel Progress)
+- [ ] **Phase 48: Exit-E co-op + noise expiry** - Backlog (hold-E konfirmasi keluar di co-op, noise kedaluwarsa ~10 dtk)
+- [ ] **Phase 41: Lantai 2** - Planned, sesudah submit 29 Nov 2026
 
 ## Phase Details
 
@@ -88,9 +91,9 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 04-01: Export WebGL build, verify in browser
+- [x] 04-01: Export WebGL build, verify in browser
 - [ ] 04-02: Create itch.io page (needs Elang's itch.io login) + screenshot/GIF + description
-- [ ] 04-03: Write progress paragraph, submit checkpoint
+- [x] 04-03: Write progress paragraph, submit checkpoint
 
 ### Phase 5: Final Submission
 **Goal**: Complete submission package ready before 29 Nov 2026 23:59 WIB
@@ -106,7 +109,7 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 05-01: Record gameplay video (60s-2min) + capture 3 screenshots
+- [x] 05-01: Record gameplay video (60s-2min) + capture 3 screenshots
 - [ ] 05-02: Write description, cara bermain, asset declaration, statement, representatives data
 - [ ] 05-03: Submit via submission form
 
@@ -333,7 +336,7 @@ Plans:
 ## Phase 19: Bos Lebih Agresif
 
 **Goal:** Pemain ketemu bos jauh lebih sering; bos aktif berburu, bukan sekadar patrol pasif.
-**Requirements**: BOSS-01, BOSS-02, BOSS-03, BOSS-04, BOSS-05
+**Requirements**: BOSS19-01, BOSS19-02, BOSS19-03, BOSS19-04, BOSS19-05
 **Success Criteria** (what must be TRUE):
   1. Bos lebih cepat (patrol 120, chase 240, search 140), teleport tiap 14-20 dtk, chase 8 dtk, vision 300
   2. Bos bisa lihat pemain dari dekat walau gelap (150px dalam cone)
@@ -392,7 +395,7 @@ Plans:
 ## Phase 23: Bos Tidak Buta, Tidak Nyangkut, Ngumpet Beneran
 
 **Goal:** Perbaiki 3 keluhan Elang: bos nabrak/nyangkut di meja dan tembok, ngumpet tidak benar-benar di bawah meja, bos kayak buta (pemain lewat tidak ketangkep/dikejar).
-**Requirements**: BOSS-01, BOSS-02, BOSS-03, HIDE-01
+**Requirements**: BOSS23-01, BOSS23-02, BOSS23-03, HIDE23-01
 **Success Criteria** (what must be TRUE):
   1. Bos bisa nangkep pemain dari arah mana pun, termasuk dari atas (dulu CATCH_DIST 30 < jarak kontak vertikal 36px, jadi bos nempel dari atas tapi tidak bisa nangkep)
   2. Bos bisa lihat pemain dalam gelap sampai 200px (dulu 150px, pemain bisa seenaknya lewat dalam gelap)
@@ -524,7 +527,7 @@ Plans:
 ## Phase 31: Dua Tugas Baru di Area Atas + Kode 5 Digit
 
 **Goal:** 3 tugas utama terlalu sedikit dan terlalu mudah, semuanya di tengah-bawah, area atas peta tidak pernah dijelajahi. Tambah 2 tugas utama di atas (Gudang + Rapat) dengan minigame beda mekanik, dan kode pintu jadi 5 digit. Pantry/bikin kopi DITOLAK Elang (tidak nyambung sama cerita kabur); penggantinya Rapat, dipilih Elang (opsi A).
-**Requirements**: TASK-01, TASK-02, TASK-03
+**Requirements**: TASK31-01, TASK31-02, TASK31-03
 **Success Criteria** (what must be TRUE):
   1. Gudang (128,176) + Rapat (700,128) jadi tugas utama, total 5; pemain harus keliling full map
   2. Gudang = Cari Berkas (grid 3x3, cari item target, angka 1-9, 3 ronde); Rapat = Catatan Rapat (urutkan 5 tanggal, angka 1-5, salah = noise + ulang)
@@ -540,7 +543,7 @@ Plans:
 ## Phase 32: Cari Berkas Jadi Dokumen Kertas Berhalaman
 
 **Goal:** Grid 3x3 Cari Berkas terlalu mudah (semua kelihatan sekaligus). Jadiin dokumen kertas: ada judul, bisa pindah halaman kayak ngebuka tumpukan berkas (bukan buku), target tersembunyi di 1 dari 3 halaman.
-**Requirements**: TASK-04
+**Requirements**: TASK32-04
 **Success Criteria** (what must be TRUE):
   1. Kertas kuning tua + judul "BERKAS ARSIP KANTOR" + stempel merah "RAHASIA" + daftar 4 berkas per halaman
   2. 3 halaman per ronde, 12 berkas total, target di 1 halaman + 1 slot acak
@@ -762,16 +765,29 @@ Plans:
 
 **Status: Complete.** Committed (15 Nov 2026). test_phase47 8/8.
 
-## Progress
+## Phase 48: Exit-E Co-op + Noise Expiry
+
+**Goal:** Dua sisa dari audit: keluar lewat pintu di co-op harus jelas (tahan E + konfirmasi), dan noise tidak boleh nempel selamanya.
+**Requirements**: (baru — belum ada ID requirement; tambahkan ke REQUIREMENTS.md saat fase dimulai)
+**Success Criteria** (what must be TRUE):
+  1. Di co-op, tekan E di pintu terbuka memunculkan konfirmasi hold-E (bukan langsung menang tanpa sengaja)
+  2. Noise kedaluwarsa ~10 detik (bos tidak lagi menyelidiki titik noise yang sudah basi)
+  3. test_phase48 hijau; regresi hijau
+**Plans**:
+- [ ] 48-01: Exit-E co-op hold-confirm + noise expiry + test_phase48
+- [ ] 48-02: Regresi + commit + rebuild
+
+**Status: Backlog.** Belum dimulai. Setelah Phase 48: riset berikutnya (flashlight battery, directional threat, digit/caught juice, hidden mercy) — urutkan pakai scope-freeze test: "apakah ini bikin 3 menit pertama lebih baik buat kurator pertama kali main?"
 
 ## Progress
 
-## Progress
+**Execution Order (per 18 Nov 2026):**
+Phases 1-4, 7-47 done. Tersisa: 5 (submission, butuh Elang) → 6 (testing, butuh Elang/hardware) → 41 (Lantai 2, sesudah submit 29 Nov) → 48 (backlog).
+**Production round (Elang, 14 Nov 2026 ~11:54 WIB: "improve terus pake GSD, sampe production grade"): 11 → 12 → 13, lalu berlanjut sampai Phase 47 (15 Nov 2026).**
+**Task minigames (Elang, 14 Nov 2026: tugas jangan cuma mencet tombol): Phase 14, lalu 31-32 (tugas baru + Cari Berkas kertas).**
+**Pasca-47 (18 Nov 2026): audit GDAS whole-game (3 bug diperbaiki, HUD 30 ms → 1 ms/frame, regression 49/0), spawn grace 30 dtk dihapus (`5d65427`), FSM terpusat + gate kegelapan dihapus (`1dd370d`), boss catch fix (`9641c56`: chase 340, wind-up 0,5 dtk, tahan 12 dtk, lost-sight 2,0 dtk), regression 48/1.**
 
-**Execution Order:**
-Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (submission) → 6 (testing).
-**Production round (Elang, 14 Nov 2026 ~11:54 WIB: "improve terus pake GSD, sampe production grade"): 11 → 12 → 13, then 5 (submission) → 6 (testing).**
-**Task minigames (Elang, 14 Nov 2026: tugas jangan cuma mencet tombol): Phase 14, then 5 (submission) → 6 (testing).**
+**Angka bos saat ini:** rumahnya di `.planning/FSM-BOSS.md` (chase 340, wind-up 0,5 dtk, tahan 12 dtk, lost-sight 2,0 dtk, teleport 14-20 dtk, pertama 25-35 dtk). Angka bos di bagian Phase 19/29/36/38/46/47 di bawah ini adalah catatan sejarah (nilai saat fase itu dikerjakan), bukan nilai sekarang.
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -817,5 +833,6 @@ Phases 1-4 are done. Improvement round runs next: 7 → 8 → 9 → 10, then 5 (
 | 45. Jeda Solo + Mug Muncul Lagi | 1/1 | Complete | 15 Nov 2026 |
 | 46. Ruang Aman Toilet + Encounter Pertama yang Aman | 1/1 | Complete | 15 Nov 2026 |
 | 47. Backstory Bos + Progres Pulang + Hening Saat Kejaran | 1/1 | Complete | 15 Nov 2026 |
-| 5. Final Submission | 2/3 | Prep done (video + screenshots + docs); submission itself pending | - |
-| 6. Testing & Verification | 1/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
+| 48. Exit-E co-op + noise expiry | 0/2 | Backlog | - |
+| 5. Final Submission | 1/3 | Prep done (video + screenshots done; docs partial, SUBMISSION-DOCS.md stale); submission itself pending | - |
+| 6. Testing & Verification | 0/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
