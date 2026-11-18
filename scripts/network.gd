@@ -187,6 +187,9 @@ func _on_peer_connected(id: int) -> void:
 	print("peer connected: ", id)
 	if multiplayer.is_server():
 		spawn_player(id)
+		var lvl := get_parent()
+		if lvl != null and lvl.has_method("send_join_snapshot"):
+			lvl.send_join_snapshot(id)
 
 func _on_peer_disconnected(id: int) -> void:
 	print("peer disconnected: ", id)
@@ -197,14 +200,21 @@ func _on_peer_disconnected(id: int) -> void:
 func _on_connected_to_server() -> void:
 	_set_status("Terhubung ke server. Menunggu spawn...")
 	print("connected to server, my id: ", multiplayer.get_unique_id())
+	var lvl := get_parent()
+	if lvl != null and lvl.has_method("mark_code_unsynced"):
+		lvl.mark_code_unsynced()
 
 func _on_connection_failed() -> void:
 	_set_status("Gagal terhubung ke server.")
 	print("connection failed")
+	if menu:
+		menu.visible = true
 
 func _on_server_disconnected() -> void:
 	_set_status("Server terputus.")
 	print("server disconnected")
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+	get_tree().call_deferred("reload_current_scene")
 
 func _set_status(text: String) -> void:
 	if status_label:
