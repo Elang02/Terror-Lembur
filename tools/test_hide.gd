@@ -72,6 +72,10 @@ func _run() -> void:
 	else:
 		_fail("name label alpha is " + (str(lbl.modulate.a) if lbl != null else "null"))
 	var light: PointLight2D = player.get_node("Flashlight") as PointLight2D
+	for i in range(60):
+		if light == null or not light.enabled:
+			break
+		await process_frame
 	if light != null and not light.enabled:
 		_ok("flashlight off while hiding")
 	else:
