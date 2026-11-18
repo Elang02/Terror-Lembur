@@ -269,7 +269,6 @@ var end_dim: ColorRect
 var end_center: CenterContainer
 var elapsed := 0.0
 var times_caught := 0
-var spawn_grace_timer := 0.0
 var _shake_trauma := 0.0
 var _shake_noise := FastNoiseLite.new()
 var _shake_noise_y := 0
@@ -280,11 +279,6 @@ var end_detail: Label
 var end_stars: Array[Label] = []
 
 func _ready() -> void:
-	# Spawn grace only in a real game (this scene is the main scene).
-	# Headless tests instantiate the level as a child and need the boss
-	# to detect the player immediately, so they keep grace at 0.
-	if get_tree().current_scene == self:
-		spawn_grace_timer = 30.0
 	var baked_wall := get_node_or_null("WallLayer") as TileMapLayer
 	if has_node("FloorLayer") and baked_wall != null and not baked_wall.get_used_cells().is_empty():
 		wall_layer_ref = baked_wall
@@ -1410,12 +1404,6 @@ func _process(delta: float) -> void:
 			_dismiss_intro()
 	if not game_over and not intro_open:
 		elapsed += delta
-		if spawn_grace_timer > 0.0:
-			spawn_grace_timer -= delta
-			if boss != null:
-				var cur_blind := float(boss.get("blind_timer"))
-				if cur_blind < 1.0:
-					boss.set("blind_timer", 1.0)
 	if warn_timer > 0.0:
 		warn_timer -= delta
 		if warn_timer <= 0.0:
