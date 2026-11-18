@@ -318,14 +318,18 @@ const MUSIC_TENSE := preload("res://assets/audio/ambient_tense.ogg")
 
 func _setup_music() -> void:
 	music_calm = AudioStreamPlayer.new()
-	music_calm.stream = MUSIC_CALM
-	music_calm.stream.loop = true
+	var calm_stream := MUSIC_CALM.duplicate() as AudioStreamOggVorbis
+	calm_stream.loop = true
+	music_calm.stream = calm_stream
+	music_calm.bus = "Music"
 	music_calm.volume_db = -18.0
 	add_child(music_calm)
 	music_calm.play()
 	music_tense = AudioStreamPlayer.new()
-	music_tense.stream = MUSIC_TENSE
-	music_tense.stream.loop = true
+	var tense_stream := MUSIC_TENSE.duplicate() as AudioStreamOggVorbis
+	tense_stream.loop = true
+	music_tense.stream = tense_stream
+	music_tense.bus = "Music"
 	music_tense.volume_db = -60.0
 	add_child(music_tense)
 	music_tense.play()
