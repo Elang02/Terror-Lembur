@@ -105,10 +105,11 @@ var music_tense_level := 0.0
 var muted := false
 var mute_fade := 1.0
 const SETTINGS_CFG := "user://settings.cfg"
-var tasks: Array = []
-var pickups: Array = []
+const SAVE_VERSION := 1
+var tasks: Array[TaskPoint] = []
+var pickups: Array[PickupItem] = []
 var desk_positions: Array[Vector2] = []
-var noise_queue: Array = []
+var noise_queue: Array[Dictionary] = []
 var lit_areas: Array[Vector2] = []
 var game_over := false
 var game_result := ""
@@ -241,7 +242,7 @@ var exit_open := false
 const EXIT_OPEN_TIME := 6.0
 var haunt_timer := 25.0
 var tick_timer := 0.0
-var task_done_sounded: Dictionary = {}
+var task_done_sounded: Dictionary[int, bool] = {}
 var end_dim: ColorRect
 var end_center: CenterContainer
 var elapsed := 0.0
@@ -260,8 +261,9 @@ func _ready() -> void:
 	# to detect the player immediately, so they keep grace at 0.
 	if get_tree().current_scene == self:
 		spawn_grace_timer = 30.0
-	if has_node("FloorLayer") and has_node("WallLayer"):
-		wall_layer_ref = $"WallLayer"
+	var baked_wall := get_node_or_null("WallLayer") as TileMapLayer
+	if has_node("FloorLayer") and baked_wall != null and not baked_wall.get_used_cells().is_empty():
+		wall_layer_ref = baked_wall
 	else:
 		_build_tilemap_layers()
 	for cells in LOCKED_DOORS:
@@ -365,7 +367,9 @@ func _update_music(delta: float) -> void:
 func _load_muted() -> void:
 	var cfg := ConfigFile.new()
 	if cfg.load(SETTINGS_CFG) == OK:
-		muted = bool(cfg.get_value("audio", "muted", false))
+		var v: Variant = cfg.get_value("audio", "muted", false)
+		if v is bool:
+			muted = v
 	mute_fade = 0.0 if muted else 1.0
 	if sfx != null:
 		sfx.set_muted(muted)
@@ -375,8 +379,11 @@ func _toggle_mute() -> void:
 	if sfx != null:
 		sfx.set_muted(muted)
 	var cfg := ConfigFile.new()
+	cfg.set_value("meta", "version", SAVE_VERSION)
 	cfg.set_value("audio", "muted", muted)
-	cfg.save(SETTINGS_CFG)
+	var err := cfg.save(SETTINGS_CFG)
+	if err != OK:
+		push_error("failed to save settings.cfg: " + str(err))
 	hud_warn_label.text = "SUARA MATI  (M buat nyalain)" if muted else "SUARA NYALA"
 	warn_timer = 1.5
 
@@ -387,11 +394,24 @@ const TUTORIAL_TEXTS := {
 	4: "4/4  Selesaikan semua tugas, lalu kabur lewat Pintu Keluar  (T: lewati)",
 }
 
+var _tutorial_done_cache := false
+var _tutorial_cfg_mtime := -1
+
 func _tutorial_is_done() -> bool:
+	if not FileAccess.file_exists(TUTORIAL_CFG):
+		_tutorial_done_cache = false
+		_tutorial_cfg_mtime = -1
+		return false
+	var mt := FileAccess.get_modified_time(TUTORIAL_CFG)
+	if mt == _tutorial_cfg_mtime:
+		return _tutorial_done_cache
+	_tutorial_cfg_mtime = mt
 	var cfg := ConfigFile.new()
 	if cfg.load(TUTORIAL_CFG) != OK:
 		return false
-	return bool(cfg.get_value("tutorial", "done", false))
+	var v: Variant = cfg.get_value("tutorial", "done", false)
+	_tutorial_done_cache = v if v is bool else false
+	return _tutorial_done_cache
 
 func _refresh_tutorial_label() -> void:
 	if hud_tutorial_panel == null:
@@ -405,15 +425,20 @@ func _refresh_tutorial_label() -> void:
 func _finish_tutorial() -> void:
 	tutorial_step = 5
 	var cfg := ConfigFile.new()
+	cfg.set_value("meta", "version", SAVE_VERSION)
 	cfg.set_value("tutorial", "done", true)
-	cfg.save(TUTORIAL_CFG)
+	var err := cfg.save(TUTORIAL_CFG)
+	if err != OK:
+		push_error("failed to save tutorial.cfg: " + str(err))
+	_tutorial_done_cache = true
+	_tutorial_cfg_mtime = FileAccess.get_modified_time(TUTORIAL_CFG)
 	if hud_tutorial_panel != null:
 		hud_tutorial_panel.visible = false
 
 func _task_done(task_id: int) -> bool:
 	for tp in tasks:
-		if int(tp.get("task_id")) == task_id:
-			return bool(tp.get("done"))
+		if tp.task_id == task_id:
+			return tp.done
 	return false
 
 func _update_tutorial() -> void:
@@ -507,24 +532,29 @@ func _end_first_encounter(msg: String) -> void:
 
 func _any_main_task_done() -> bool:
 	for tp in tasks:
-		var tid := int(tp.get("task_id"))
-		if tid != 3 and tid != 4 and bool(tp.get("done")):
+		if tp.task_id != 3 and tp.task_id != 4 and tp.done:
 			return true
 	return false
 
 func _build_tilemap_layers() -> void:
 	var tile_set := load(TILESET_PATH) as TileSet
-	var floor_layer := TileMapLayer.new()
-	floor_layer.name = "FloorLayer"
+	var floor_layer := get_node_or_null("FloorLayer") as TileMapLayer
+	if floor_layer == null:
+		floor_layer = TileMapLayer.new()
+		floor_layer.name = "FloorLayer"
+		add_child(floor_layer)
 	floor_layer.tile_set = tile_set
 	floor_layer.z_index = -2
-	add_child(floor_layer)
-	var wall_layer := TileMapLayer.new()
-	wall_layer.name = "WallLayer"
+	floor_layer.clear()
+	var wall_layer := get_node_or_null("WallLayer") as TileMapLayer
+	if wall_layer == null:
+		wall_layer = TileMapLayer.new()
+		wall_layer.name = "WallLayer"
+		add_child(wall_layer)
 	wall_layer.tile_set = tile_set
 	wall_layer.collision_enabled = true
 	wall_layer.z_index = -1
-	add_child(wall_layer)
+	wall_layer.clear()
 	for y in range(ROOM_H):
 		for x in range(ROOM_W):
 			floor_layer.set_cell(Vector2i(x, y), 0, _floor_tile_for(x, y))
@@ -583,13 +613,13 @@ func _floor_tile_for(tx: int, ty: int) -> Vector2i:
 		return Vector2i(2, 0)
 	return Vector2i(1, 0)
 
-func _wall_h(layer: TileMapLayer, x0: int, x1: int, y: int, gaps: Array = []) -> void:
+func _wall_h(layer: TileMapLayer, x0: int, x1: int, y: int, gaps: Array[int] = []) -> void:
 	for x in range(x0, x1 + 1):
 		if gaps.has(x):
 			continue
 		_set_wall(layer, x, y, Vector2i(7, 0))
 
-func _wall_v(layer: TileMapLayer, y0: int, y1: int, x: int, gaps: Array = []) -> void:
+func _wall_v(layer: TileMapLayer, y0: int, y1: int, x: int, gaps: Array[int] = []) -> void:
 	for y in range(y0, y1 + 1):
 		if gaps.has(y):
 			continue
@@ -931,10 +961,11 @@ func _build_cell() -> void:
 func _build_tasks() -> void:
 	var scene := load(TASK_SCENE) as PackedScene
 	for def in TASK_DEFS:
-		var tp := scene.instantiate() as Node2D
+		var tp := scene.instantiate() as TaskPoint
 		tp.name = "Task_" + str(def["label"]).replace(" ", "_")
-		tp.setup(def["id"], def["label"], def["need"], def["time"], def["noise"])
-		tp.position = def["pos"]
+		tp.setup(int(def["id"]), str(def["label"]), int(def["need"]), float(def["time"]), float(def["noise"]))
+		var tpos: Vector2 = def["pos"]
+		tp.position = tpos
 		add_child(tp)
 		tasks.append(tp)
 
@@ -950,7 +981,7 @@ func _build_pickups() -> void:
 	]
 	pickup_spots.assign(spots)
 	for s in spots:
-		var pk := scene.instantiate() as Node2D
+		var pk := scene.instantiate() as PickupItem
 		pk.name = _prop_name("Mug_Lempar")
 		pk.position = s
 		add_child(pk)
@@ -1480,12 +1511,12 @@ func _popup_title(task_id: int) -> String:
 	return "Tugas"
 
 func _task_ready(task_id: int) -> bool:
-	var tp: Node = null
+	var tp: TaskPoint = null
 	for t in tasks:
-		if int(t.get("task_id")) == task_id:
+		if t.task_id == task_id:
 			tp = t
 			break
-	if tp == null or bool(tp.get("done")):
+	if tp == null or tp.done:
 		return false
 	if task_id == 3 and not _main_tasks_done():
 		return false
@@ -1526,9 +1557,9 @@ func try_open_task_popup(task_id: int) -> void:
 			hud_warn_label.text = reason
 			warn_timer = 2.0
 		return
-	var tp: Node = null
+	var tp: TaskPoint = null
 	for t in tasks:
-		if int(t.get("task_id")) == task_id:
+		if t.task_id == task_id:
 			tp = t
 			break
 	if tp == null:
@@ -1559,8 +1590,8 @@ func popup_set_progress(task_id: int, progress: float) -> void:
 	if not multiplayer.is_server():
 		return
 	for tp in tasks:
-		if int(tp.get("task_id")) == task_id:
-			tp.set("progress", clampf(progress, 0.0, 1.0))
+		if tp.task_id == task_id:
+			tp.progress = clampf(progress, 0.0, 1.0)
 			return
 
 @rpc("any_peer", "call_local")
@@ -1568,12 +1599,12 @@ func popup_task_done(task_id: int) -> void:
 	if not multiplayer.is_server():
 		return
 	for tp in tasks:
-		if int(tp.get("task_id")) != task_id:
+		if tp.task_id != task_id:
 			continue
-		if bool(tp.get("done")):
+		if tp.done:
 			return
-		tp.set("progress", 1.0)
-		tp.set("done", true)
+		tp.progress = 1.0
+		tp.done = true
 		_on_task_done(tp)
 		return
 
@@ -1582,8 +1613,8 @@ func popup_task_cancel(task_id: int) -> void:
 	if not multiplayer.is_server():
 		return
 	for tp in tasks:
-		if int(tp.get("task_id")) == task_id:
-			tp.set("progress", 0.0)
+		if tp.task_id == task_id:
+			tp.progress = 0.0
 			return
 
 func _on_popup_closed() -> void:
@@ -1638,7 +1669,7 @@ func _update_self_rescue(delta: float) -> void:
 	else:
 		self_rescue_progress = maxf(0.0, self_rescue_progress - delta * 0.1)
 
-func _on_task_done(tp) -> void:
+func _on_task_done(tp: TaskPoint) -> void:
 	if tp.task_id == 4:
 		_unlock_all()
 		return
@@ -1955,18 +1986,18 @@ func _update_exit_opening(delta: float) -> void:
 	if not exit_opening or game_over:
 		return
 	exit_open_timer -= delta
-	var tp3: Node = null
+	var tp3: TaskPoint = null
 	for t in tasks:
-		if int(t.get("task_id")) == 3:
+		if t.task_id == 3:
 			tp3 = t
 			break
 	if tp3 != null:
-		tp3.set("progress", clampf(1.0 - exit_open_timer / EXIT_OPEN_TIME, 0.0, 1.0))
+		tp3.progress = clampf(1.0 - exit_open_timer / EXIT_OPEN_TIME, 0.0, 1.0)
 	if exit_open_timer <= 0.0:
 		exit_opening = false
 		exit_open = true
 		if tp3 != null:
-			tp3.set("progress", 1.0)
+			tp3.progress = 1.0
 		hud_warn_label.text = "PINTU TERBUKA! KABUR SEKARANG!"
 		warn_timer = 3.0
 		play_sfx("complete", -2.0)
@@ -2074,11 +2105,13 @@ func consume_noise() -> Vector2:
 	var best_d := 1e9
 	var best_i := -1
 	for i in range(noise_queue.size()):
-		var n = noise_queue[i]
-		var d: float = bp.distance_to(n["pos"])
-		if d <= n["radius"] and d < best_d:
+		var n: Dictionary = noise_queue[i]
+		var npos: Vector2 = n["pos"]
+		var nrad: float = n["radius"]
+		var d: float = bp.distance_to(npos)
+		if d <= nrad and d < best_d:
 			best_d = d
-			best = n["pos"]
+			best = npos
 			best_i = i
 	if best_i >= 0:
 		noise_queue.remove_at(best_i)
@@ -2148,8 +2181,9 @@ func spawn_throwable(pos: Vector2, dir: Vector2) -> void:
 	if not multiplayer.is_server():
 		return
 	var scene := load(THROWABLE_SCENE) as PackedScene
-	var th := scene.instantiate() as Node2D
+	var th := scene.instantiate() as Throwable
 	ysort.add_child(th, true)
+	th.level = self
 	th.launch(pos + dir * 24.0, dir)
 
 const PROP_BASE := "res://assets/office_assets/main/Office_Pixel_Art_Free_v1.0/Props/"

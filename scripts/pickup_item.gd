@@ -1,3 +1,4 @@
+class_name PickupItem
 extends Node2D
 
 var taken := false

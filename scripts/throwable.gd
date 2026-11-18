@@ -1,3 +1,4 @@
+class_name Throwable
 extends Node2D
 
 var direction := Vector2.RIGHT
@@ -9,9 +10,6 @@ var level: Node2D
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(1)
-
-func _ready() -> void:
-	level = get_parent().get_parent()
 
 func launch(pos: Vector2, dir: Vector2) -> void:
 	global_position = pos
