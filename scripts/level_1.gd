@@ -148,6 +148,8 @@ var popup_open := false
 var popup_task_id := -1
 var code_digits: Array[int] = [1, 2, 3, 4, 1]
 var code_found: Array[bool] = [false, false, false, false, false]
+var code_synced := true
+var code_sync_timer := 0.0
 var intro_open := false
 var intro_panel: PanelContainer = null
 var intro_timer := 0.0
@@ -284,6 +286,8 @@ func _ready() -> void:
 	_build_tasks()
 	_build_popup()
 	_generate_code()
+	if not multiplayer.is_server():
+		mark_code_unsynced()
 	if Engine.is_editor_hint():
 		return
 	sfx = SFX.new()
@@ -1354,7 +1358,7 @@ func _build_hud() -> void:
 	again_btn.text = "Main Lagi (R)"
 	again_btn.custom_minimum_size = Vector2(0, 44)
 	UITheme.apply_button(again_btn, 18)
-	again_btn.pressed.connect(func() -> void: rpc("_restart_game"))
+	again_btn.pressed.connect(func() -> void: _request_restart())
 	vb.add_child(again_btn)
 	_build_intro()
 
@@ -1363,6 +1367,11 @@ func _process(delta: float) -> void:
 		return
 	if paused:
 		return
+	if not code_synced:
+		code_sync_timer -= delta
+		if code_sync_timer <= 0.0:
+			code_sync_timer = 1.0
+			rpc_id(1, "request_code_sync")
 	if intro_open:
 		intro_timer -= delta
 		if intro_timer <= 0.0 and _is_demo():
@@ -1468,7 +1477,10 @@ func _generate_code() -> void:
 		code_digits.append(rng.randi_range(1, 4))
 		code_found.append(false)
 
+@rpc("any_peer", "call_local")
 func _reveal_code_digit(idx: int) -> void:
+	if multiplayer.get_remote_sender_id() != 0 and multiplayer.get_remote_sender_id() != 1:
+		return
 	if idx < 0 or idx >= 5:
 		return
 	if code_found[idx]:
@@ -1621,6 +1633,52 @@ func popup_task_cancel(task_id: int) -> void:
 			tp.progress = 0.0
 			return
 
+func mark_code_unsynced() -> void:
+	code_synced = false
+	code_sync_timer = 0.5
+
+func send_join_snapshot(peer_id: int) -> void:
+	rpc_id(peer_id, "sync_code", code_digits, code_found)
+	rpc_id(peer_id, "sync_exit_state", exit_opening, exit_open, exit_open_timer)
+	rpc_id(peer_id, "sync_boss_speed", boss_speed_mult)
+
+@rpc("any_peer", "call_local")
+func request_code_sync() -> void:
+	if not multiplayer.is_server():
+		return
+	var sender := multiplayer.get_remote_sender_id()
+	if sender <= 0:
+		return
+	send_join_snapshot(sender)
+
+@rpc("any_peer", "call_local")
+func sync_code(digits: Array, found: Array) -> void:
+	if multiplayer.get_remote_sender_id() != 0 and multiplayer.get_remote_sender_id() != 1:
+		return
+	code_digits.clear()
+	for d in digits:
+		code_digits.append(int(d))
+	code_found.clear()
+	for f in found:
+		code_found.append(bool(f))
+	code_synced = true
+
+@rpc("any_peer", "call_local")
+func sync_exit_state(opening: bool, is_open: bool, timer: float) -> void:
+	if multiplayer.get_remote_sender_id() != 0 and multiplayer.get_remote_sender_id() != 1:
+		return
+	exit_opening = opening
+	exit_open = is_open
+	exit_open_timer = timer
+
+@rpc("any_peer", "call_local")
+func sync_boss_speed(value: float) -> void:
+	if multiplayer.get_remote_sender_id() != 0 and multiplayer.get_remote_sender_id() != 1:
+		return
+	boss_speed_mult = value
+	if boss != null:
+		boss.speed_mult = value
+
 func _on_popup_closed() -> void:
 	popup_open = false
 	popup_task_id = -1
@@ -1679,15 +1737,15 @@ func _on_task_done(tp: TaskPoint) -> void:
 		return
 	match tp.task_id:
 		1:
-			_reveal_code_digit(0)
+			rpc("_reveal_code_digit", 0)
 		2:
-			_reveal_code_digit(1)
+			rpc("_reveal_code_digit", 1)
 		0:
-			_reveal_code_digit(2)
+			rpc("_reveal_code_digit", 2)
 		5:
-			_reveal_code_digit(3)
+			rpc("_reveal_code_digit", 3)
 		6:
-			_reveal_code_digit(4)
+			rpc("_reveal_code_digit", 4)
 	boss_speed_mult += 0.1
 	if boss != null:
 		boss.speed_mult = boss_speed_mult
@@ -1704,6 +1762,7 @@ func _on_task_done(tp: TaskPoint) -> void:
 	if tp.task_id == 3:
 		exit_opening = true
 		exit_open_timer = EXIT_OPEN_TIME
+		rpc("sync_exit_state", true, false, EXIT_OPEN_TIME)
 		hud_warn_label.text = "KODE BENAR! Pintu sedang terbuka... bertahanlah!"
 		warn_timer = 3.0
 		play_sfx("alarm", -4.0)
@@ -1711,6 +1770,7 @@ func _on_task_done(tp: TaskPoint) -> void:
 			report_noise(tp.global_position, 400.0)
 		else:
 			rpc_id(1, "report_noise", tp.global_position, 400.0)
+	rpc("sync_boss_speed", boss_speed_mult)
 
 func _enrage_boss() -> void:
 	boss_speed_mult += 0.3
@@ -1829,17 +1889,31 @@ func _unhandled_input(event: InputEvent) -> void:
 			_toggle_pause()
 			get_viewport().set_input_as_handled()
 		elif event.is_action_pressed("flashlight"):
-			rpc("_restart_game")
+			_request_restart()
 		return
 	if not game_over and event.is_action_pressed("pause") and solo_mode:
 		_toggle_pause()
 		get_viewport().set_input_as_handled()
 		return
 	if game_over and event.is_action_pressed("flashlight"):
+		_request_restart()
+
+func _request_restart() -> void:
+	if multiplayer.is_server():
 		rpc("_restart_game")
+	else:
+		rpc_id(1, "request_restart")
+
+@rpc("any_peer", "call_local")
+func request_restart() -> void:
+	if not multiplayer.is_server():
+		return
+	rpc("_restart_game")
 
 @rpc("any_peer", "call_local")
 func _restart_game() -> void:
+	if multiplayer.get_remote_sender_id() != 0 and multiplayer.get_remote_sender_id() != 1:
+		return
 	get_tree().reload_current_scene()
 
 func _update_hud() -> void:
@@ -2005,6 +2079,8 @@ func _update_exit_opening(delta: float) -> void:
 		hud_warn_label.text = "PINTU TERBUKA! KABUR SEKARANG!"
 		warn_timer = 3.0
 		play_sfx("complete", -2.0)
+		if multiplayer.is_server():
+			rpc("sync_exit_state", false, true, 0.0)
 
 func _boss_distance() -> float:
 	var me := _my_player()
@@ -2098,6 +2174,8 @@ func teleport_destination() -> Vector2:
 @rpc("any_peer", "call_local")
 func report_noise(pos: Vector2, radius: float) -> void:
 	if not multiplayer.is_server():
+		return
+	if noise_queue.size() >= 8:
 		return
 	noise_queue.append({"pos": pos, "radius": radius})
 
