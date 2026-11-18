@@ -44,7 +44,7 @@ func _run() -> void:
 	boss = lvl.get("boss")
 	if boss == null:
 		print("TEST FAIL: boss node missing")
-		quit()
+		quit(1)
 		return
 	_spawn_player()
 	await process_frame
@@ -117,4 +117,4 @@ func _run() -> void:
 			break
 	ok("boss notices a sprinting player 300px away (hearing)", noticed, "state=" + str(int(boss.get("state"))))
 	print("=== BOSSVISION TEST: " + str(passes) + " passed, " + str(fails) + " failed ===")
-	quit()
+	quit(0 if fails == 0 else 1)

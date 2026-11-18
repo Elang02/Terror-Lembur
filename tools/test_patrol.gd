@@ -2,7 +2,7 @@ extends SceneTree
 
 var lvl: Node2D
 var boss: Node2D
-var visited: Dictionary = {}
+var visited: Dictionary[int, bool] = {}
 var results: Array[String] = []
 
 func _init() -> void:
@@ -71,7 +71,7 @@ func _run() -> void:
 	_report()
 
 func _missing(loop: Array) -> Array:
-	var m: Array = []
+	var m: Array[int] = []
 	for i in range(loop.size()):
 		if not visited.has(i):
 			m.append(i)
