@@ -1,0 +1,10 @@
+# Godot: cache editor saja yang diabaikan. File .uid dan .import
+# DISIMPAN di repo/zip supaya ID resource stabil antar mesin.
+.godot/
+# OS / editor
+.DS_Store
+Thumbs.db
+*.tmp
+# Build output
+build/
+exports/
