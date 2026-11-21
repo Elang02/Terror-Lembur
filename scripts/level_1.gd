@@ -109,6 +109,7 @@ const SAVE_VERSION := 1
 var tasks: Array[TaskPoint] = []
 var pickups: Array[PickupItem] = []
 var desk_positions: Array[Vector2] = []
+const NOISE_TTL := 10.0
 var noise_queue: Array[Dictionary] = []
 var lit_areas: Array[Vector2] = []
 var game_over := false
@@ -2244,9 +2245,10 @@ func report_noise(pos: Vector2, radius: float) -> void:
 		return
 	if noise_queue.size() >= 8:
 		return
-	noise_queue.append({"pos": pos, "radius": radius})
+	noise_queue.append({"pos": pos, "radius": radius, "t": elapsed})
 
 func consume_noise() -> Vector2:
+	_prune_stale_noise()
 	if noise_queue.is_empty():
 		return Vector2.ZERO
 	var bp: Vector2 = boss.global_position if boss != null else Vector2.ZERO
@@ -2265,6 +2267,15 @@ func consume_noise() -> Vector2:
 	if best_i >= 0:
 		noise_queue.remove_at(best_i)
 	return best
+
+## Bunyi yang sudah lebih tua dari NOISE_TTL dibuang. Tanpa ini, suara
+## generator dari 30 detik lalu masih bisa memancing bos ke ruangan kosong.
+func _prune_stale_noise() -> void:
+	var i := noise_queue.size() - 1
+	while i >= 0:
+		if elapsed - float(noise_queue[i].get("t", elapsed)) > NOISE_TTL:
+			noise_queue.remove_at(i)
+		i -= 1
 
 func on_player_caught(player: Node2D) -> void:
 	ever_caught = true
