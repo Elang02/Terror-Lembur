@@ -127,6 +127,10 @@ var self_rescue_noise_timer := 0.0
 var warn_timer := 0.0
 var code_timer := 0.0
 var paused := false
+## Co-op: pintu keluar butuh tahan E, bukan satu ketukan, supaya satu
+## pemain tidak mengakhiri permainan padahal rekannya belum sampai.
+const EXIT_CONFIRM_TIME := 1.5
+var exit_confirm := 0.0
 var silence_fade := 1.0
 var exit_sign_label: Label
 const STORY_LINES := [
@@ -1428,6 +1432,7 @@ func _process(delta: float) -> void:
 				play_sfx("heartbeat", _heartbeat_volume(bd))
 		_update_haunt(delta, bd)
 	_update_exit_opening(delta)
+	_update_exit_confirm(delta)
 	if Input.is_action_just_pressed("mute"):
 		_toggle_mute()
 	_update_music(delta)
@@ -1576,7 +1581,14 @@ func _task_ready(task_id: int) -> bool:
 
 func try_open_task_popup(task_id: int) -> void:
 	if task_id == 3 and exit_open:
-		_finish_level()
+		if solo_mode:
+			_finish_level()
+			return
+		# Co-op: mulai konfirmasi; harus ditahan EXIT_CONFIRM_TIME detik.
+		exit_confirm = maxf(exit_confirm, 0.01)
+		if hud_warn_label != null:
+			hud_warn_label.text = "Tahan E untuk kabur!"
+			warn_timer = 2.0
 		return
 	if popup_open:
 		return
@@ -2061,8 +2073,12 @@ func _update_hud() -> void:
 				var tp = tasks[tid] if tid < tasks.size() else null
 				if tp != null:
 					if tp.task_id == 3 and exit_open:
-						prompt_txt = "E: KABUR LEWAT PINTU KELUAR!"
-						prompt_prog = 1.0
+						if solo_mode:
+							prompt_txt = "E: KABUR LEWAT PINTU KELUAR!"
+							prompt_prog = 1.0
+						else:
+							prompt_txt = "TAHAN E buat kabur (" + str(int(exit_confirm / EXIT_CONFIRM_TIME * 100.0)) + "%)"
+							prompt_prog = exit_confirm / EXIT_CONFIRM_TIME
 					else:
 						var need_txt := ""
 						if tp.task_id == 0:
@@ -2110,6 +2126,22 @@ func _update_haunt(delta: float, boss_dist: float) -> void:
 		warn_timer = 2.0
 		play_sfx("thud", -6.0)
 		add_shake(2.0)
+
+func _exit_confirm_step(delta: float, holding: bool) -> void:
+	if solo_mode or not exit_open or game_over:
+		exit_confirm = 0.0
+		return
+	if not holding:
+		exit_confirm = 0.0
+		return
+	exit_confirm = minf(exit_confirm + delta, EXIT_CONFIRM_TIME)
+	if exit_confirm >= EXIT_CONFIRM_TIME:
+		_finish_level()
+
+func _update_exit_confirm(delta: float) -> void:
+	var me := _my_player()
+	var holding := me != null and bool(me.get("interacting")) and int(me.get("interact_target")) == 3
+	_exit_confirm_step(delta, holding)
 
 func _update_exit_opening(delta: float) -> void:
 	if not exit_opening or game_over:

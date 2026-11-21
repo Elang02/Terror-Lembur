@@ -17,7 +17,7 @@ From a LAN-only 2-PC build to a solo-playable Gimersia submission in 15 days. Ph
 - [ ] **Phase 5: Final Submission** - Video, screenshots, description, declarations (due 29 Nov 23:59 WIB)
 - [ ] **Phase 6: Testing & Verification** - Playtest, LAN test, performance, full playthrough, push to GitHub
 - [x] **Phase 11-47: Production round** - Senter smooth, mute, build, minigames, popups, intro, kode hafalan, bos agresif, ngumpet, balance, peringatan, LOS/hearing, patroli, rescue, popup horor, Excel interaktif, balance 29, popup warning, 2 tugas baru, Cari Berkas kertas, bandingin game lain, bot kabur, kejaran adil, teleport lambat, pembukaan adil, teleport hormat ngumpet, desain Lantai 2, TEKANAN, kode tidak hilang, umpan balik jujur, jeda + mug, Toilet aman, backstory + hening (semua Complete, lihat tabel Progress)
-- [ ] **Phase 48: Exit-E co-op + noise expiry** - Backlog (hold-E konfirmasi keluar di co-op, noise kedaluwarsa ~10 dtk)
+- [x] **Phase 48: Exit-E co-op + noise expiry** - Selesai 21 Nov 2026 (hold-E 1,5 dtk di co-op, noise TTL 10 dtk, test_noise + test_exitconfirm)
 - [ ] **Phase 41: Lantai 2** - Planned, sesudah submit 29 Nov 2026
 
 ## Phase Details
@@ -774,10 +774,10 @@ Plans:
   2. Noise kedaluwarsa ~10 detik (bos tidak lagi menyelidiki titik noise yang sudah basi)
   3. test_phase48 hijau; regresi hijau
 **Plans**:
-- [ ] 48-01: Exit-E co-op hold-confirm + noise expiry + test_phase48
-- [ ] 48-02: Regresi + commit + rebuild
+- [x] 48-01: Exit-E co-op hold-confirm + noise expiry + test_phase48
+- [x] 48-02: Regresi + commit + rebuild
 
-**Status: Backlog.** Belum dimulai. Setelah Phase 48: riset berikutnya (flashlight battery, directional threat, digit/caught juice, hidden mercy) — urutkan pakai scope-freeze test: "apakah ini bikin 3 menit pertama lebih baik buat kurator pertama kali main?"
+**Status: Selesai 21 Nov 2026.** Bukti: `tools/test_noise.gd` 3/3, `tools/test_exitconfirm.gd` 5/5 (10 dan 60 fps), suite `FULL60 pass=53 fail=0`. Commit `d35da7c` (noise) dan menyusul (exit hold + audio test). Setelah Phase 48: riset berikutnya (flashlight battery, directional threat, digit/caught juice, hidden mercy) — urutkan pakai scope-freeze test: "apakah ini bikin 3 menit pertama lebih baik buat kurator pertama kali main?"
 
 ## Progress
 
