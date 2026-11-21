@@ -836,3 +836,11 @@ Phases 1-4, 7-47 done. Tersisa: 5 (submission, butuh Elang) → 6 (testing, butu
 | 48. Exit-E co-op + noise expiry | 0/2 | Backlog | - |
 | 5. Final Submission | 1/3 | Prep done (video + screenshots done; docs partial, SUBMISSION-DOCS.md stale); submission itself pending | - |
 | 6. Testing & Verification | 0/4 | Partial (win test + patrol test done; playtest/LAN/push blocked on Elang) | - |
+
+
+## Media submission (Phase 5, sebagian selesai 21 Nov 2026)
+
+Tangkapan layar dan video demo sudah ada di `docs/media/` (play1.png, play2.png,
+play3.png, intro.png, demo.mp4 42 detik 1280x720). Diambil dari build Linux di VM,
+bukan dari build Web/Windows, jadi HUD dan pencahayaan identik dengan yang dipaketkan.
+Sisa Phase 5: halaman itch.io (butuh akun Elang), deskripsi toko, dan submit ke jam.
