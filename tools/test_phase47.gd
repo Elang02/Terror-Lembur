@@ -31,8 +31,8 @@ func _mark_done(task_id: int) -> void:
 			tp.set("done", true)
 
 func _run() -> void:
-	for i in range(5):
-		await process_frame
+	var tl = preload("res://tools/tlib.gd").new()
+	await tl.wait(self, 0.5)
 	lvl.set_solo_mode(true)
 	var ysort: Node = lvl.get_node_or_null("YSort")
 	var pscene := load("res://scenes/worker_char.tscn") as PackedScene
@@ -48,8 +48,7 @@ func _run() -> void:
 	var intro_panel: Node = lvl.get("intro_panel")
 	if intro_panel != null:
 		intro_panel.visible = false
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	var boss: Node = lvl.get("boss")
 	# STORY-01: tiap digit datang dengan satu baris backstory bos.
 	lvl.call("_reveal_code_digit", 0)
@@ -71,8 +70,7 @@ func _run() -> void:
 	var sign: Label = lvl.get("exit_sign_label")
 	_mark_done(1)
 	_mark_done(2)
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	if sign != null and sign.text.contains("2/5"):
 		_ok("exit sign shows 2/5 tasks")
 	else:
@@ -80,8 +78,7 @@ func _run() -> void:
 	_mark_done(0)
 	_mark_done(5)
 	_mark_done(6)
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	if sign != null and sign.text.contains("Semua tugas selesai"):
 		_ok("exit sign flips when all tasks are done")
 	else:
@@ -99,8 +96,7 @@ func _run() -> void:
 	boss.set("state", 2)
 	lvl.set("silence_fade", 1.0)
 	var ducked := false
-	for i in range(15):
-		await process_frame
+	await tl.wait(self, 1.5)
 		if float(lvl.get("silence_fade")) < 0.5:
 			ducked = true
 			break
@@ -110,8 +106,7 @@ func _run() -> void:
 		_fail("music did not duck in chase (fade " + str(lvl.get("silence_fade")) + ")")
 	var calm: Node = lvl.get("music_calm")
 	var quiet := false
-	for i in range(15):
-		await process_frame
+	await tl.wait(self, 1.5)
 		if calm != null and float(calm.get("volume_db")) < -60.0:
 			quiet = true
 			break
@@ -124,8 +119,7 @@ func _run() -> void:
 	boss.set("state", 0)
 	boss.set("telegraph_timer", 0.0)
 	var returned := false
-	for i in range(30):
-		await process_frame
+	await tl.wait(self, 3)
 		if float(lvl.get("silence_fade")) > 0.8:
 			returned = true
 			break
@@ -136,8 +130,7 @@ func _run() -> void:
 	# Telegraph juga membungkam musik.
 	boss.set("telegraph_timer", 0.5)
 	ducked = false
-	for i in range(15):
-		await process_frame
+	await tl.wait(self, 1.5)
 		if float(lvl.get("silence_fade")) < 0.5:
 			ducked = true
 			break

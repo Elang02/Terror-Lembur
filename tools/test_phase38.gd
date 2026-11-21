@@ -27,8 +27,8 @@ func _report() -> void:
 	quit(0 if fails == 0 else 1)
 
 func _run() -> void:
-	for i in range(5):
-		await process_frame
+	var tl = preload("res://tools/tlib.gd").new()
+	await tl.wait(self, 0.5)
 	lvl.set_solo_mode(true)
 	lvl.call("_dismiss_intro")
 	var intro_dim: Node = lvl.get("intro_dim")
@@ -50,8 +50,7 @@ func _run() -> void:
 		_ok("first patrol target is far end (1328,272), was (272,448)")
 	else:
 		_fail("first patrol target is " + str(boss.get("target")))
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	# CHASE-01: kejaran punya wind-up 1 detik — bos diam dulu pas "!",
 	# pemain dapat ancang-ancang buat putus pandangan.
 	player.global_position = Vector2(700, 656)
@@ -93,8 +92,7 @@ func _run() -> void:
 	# Habis wind-up: paksa timer hampir habis biar nggak tergantung
 	# hitungan frame, lalu pastikan bos langsung lari.
 	boss.set("chase_windup_timer", 0.01)
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	var moved_after := absf(float(boss.global_position.x) - start_x)
 	if moved_after > 50.0 and not bool(player.get("locked")):
 		_ok("boss runs after wind-up (moved " + str(moved_after) + "px, player not caught yet)")
@@ -103,8 +101,7 @@ func _run() -> void:
 	# SHOUT-01: di solo, hint teriak jujur soal harganya.
 	player.set("has_throwable", false)
 	player.global_position = Vector2(400, 656)
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	var prompt_label: Label = lvl.get("hud_prompt_label")
 	if prompt_label.text.contains("bos datang ke kamu"):
 		_ok("solo shout hint warns: \"" + prompt_label.text + "\"")

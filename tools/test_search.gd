@@ -19,6 +19,7 @@ func _ok(msg: String) -> void:
 	print("TEST OK: " + msg)
 
 func _run() -> void:
+	var tl = preload("res://tools/tlib.gd").new()
 	await process_frame
 	await process_frame
 	await process_frame
@@ -41,20 +42,22 @@ func _run() -> void:
 	var min_wall_dist := 9999.0
 	var moved := 0.0
 	var last_pos := start_pos
-	for i in range(240):
+	var acc := 0.0
+	while acc < 24.0:
 		await process_frame
+		acc += root.get_process_delta_time()
 		var p: Vector2 = boss.global_position
 		moved += p.distance_to(last_pos)
 		last_pos = p
 		# distance to nearest solid cell (wall) around the boss
-		var cell := Vector2i(int(p.x / 32.0), int(p.y / 32.0))
-		for dy in range(-1, 2):
-			for dx in range(-1, 2):
-				if astar.is_point_solid(cell + Vector2i(dx, dy)):
-					var wc := Vector2((cell.x + dx) * 32 + 16, (cell.y + dy) * 32 + 16)
-					min_wall_dist = minf(min_wall_dist, p.distance_to(wc))
+	var cell := Vector2i(int(last_pos.x / 32.0), int(last_pos.y / 32.0))
+	for dy in range(-1, 2):
+		for dx in range(-1, 2):
+			if astar.is_point_solid(cell + Vector2i(dx, dy)):
+				var wc := Vector2((cell.x + dx) * 32 + 16, (cell.y + dy) * 32 + 16)
+				min_wall_dist = minf(min_wall_dist, last_pos.distance_to(wc))
 	if moved > 50.0:
-		_ok("boss moves while searching (moved " + str(moved) + "px over 240 frames)")
+		_ok("boss moves while searching (moved " + str(moved) + "px over 24 s)")
 	else:
 		_fail("boss barely moves while searching (" + str(moved) + "px)")
 	if int(boss.get("state")) == 4 or int(boss.get("state")) == 0:

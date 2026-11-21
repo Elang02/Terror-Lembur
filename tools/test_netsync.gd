@@ -18,8 +18,8 @@ func _ok(msg: String) -> void:
 	print("TEST OK: " + msg)
 
 func _run() -> void:
-	for i in range(5):
-		await process_frame
+	var tl = preload("res://tools/tlib.gd").new()
+	await tl.wait(self, 0.5)
 	if lvl == null:
 		_fail("level null")
 		_report()
@@ -98,16 +98,13 @@ func _test_exit_sync() -> void:
 		return
 	_ok("level has sync_exit_state")
 	lvl.call("sync_exit_state", true, false, 0.05)
-	await process_frame
-	await process_frame
-	await process_frame
+	await tl.wait(self, 0.3)
 	if lvl.get("exit_open") == true:
 		_ok("synced exit opening counts down to open on this peer")
 	else:
 		_fail("exit_open still false after synced opening timer")
 	lvl.call("try_open_task_popup", 3)
-	await process_frame
-	await process_frame
+	await tl.wait(self, 0.2)
 	if lvl.get("game_over") == true:
 		_ok("client can finish through the synced open door")
 	else:

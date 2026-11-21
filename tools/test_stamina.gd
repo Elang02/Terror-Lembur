@@ -27,8 +27,8 @@ func _report() -> void:
 	quit(0 if fails == 0 else 1)
 
 func _run() -> void:
-	for i in range(5):
-		await process_frame
+	var tl = preload("res://tools/tlib.gd").new()
+	await tl.wait(self, 0.5)
 	if lvl == null:
 		_fail("level null")
 		_report()
@@ -59,8 +59,7 @@ func _run() -> void:
 	player.set("stamina", 100.0)
 	Input.action_press("sprint")
 	Input.action_press("right")
-	for i in range(20):
-		await process_frame
+	await tl.wait(self, 2)
 	var after_sprint: float = float(player.get("stamina"))
 	Input.action_release("sprint")
 	Input.action_release("right")
@@ -69,8 +68,7 @@ func _run() -> void:
 	else:
 		_fail("sprint 2 detik stamina masih " + str(snappedf(after_sprint, 0.1)) + " (harus < 30)")
 	# 3. Diam 20 frame (~2 detik) -> refill cuma dikit (8/s x 2 detik = ~16)
-	for i in range(20):
-		await process_frame
+	await tl.wait(self, 2)
 	var after_regen: float = float(player.get("stamina"))
 	if after_regen > after_sprint and after_regen < 45.0:
 		_ok("refill pelan, 2 detik cuma nambah ke " + str(snappedf(after_regen, 0.1)))

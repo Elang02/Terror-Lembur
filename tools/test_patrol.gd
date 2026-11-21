@@ -20,6 +20,7 @@ func _ok(msg: String) -> void:
 	print("TEST OK: " + msg)
 
 func _run() -> void:
+	var tl = preload("res://tools/tlib.gd").new()
 	await process_frame
 	await process_frame
 	await process_frame
@@ -39,29 +40,30 @@ func _run() -> void:
 	var start_pos := boss.global_position
 	var last_pos := start_pos
 	var total_moved := 0.0
-	var stall_frames := 0
-	var frames := 0
-	while frames < 7200:
+	var stall_time := 0.0
+	var elapsed := 0.0
+	while elapsed < 720.0:
 		await process_frame
-		frames += 1
+		var dt := root.get_process_delta_time()
+		elapsed += dt
 		var p: Vector2 = boss.global_position
 		var step := p.distance_to(last_pos)
 		total_moved += step
 		if step < 0.05:
-			stall_frames += 1
+			stall_time += dt
 		else:
-			stall_frames = 0
+			stall_time = 0.0
 		last_pos = p
 		for i in range(loop.size()):
 			if p.distance_to(loop[i]) < 40.0:
 				visited[i] = true
 		if visited.size() == loop.size():
 			break
-		if stall_frames > 240:
+		if stall_time > 24.0:
 			_fail("boss stalled for 4s at " + str(last_pos))
 			break
 	if visited.size() == loop.size():
-		_ok("boss visited all " + str(loop.size()) + " patrol waypoints in " + str(frames) + " frames")
+		_ok("boss visited all " + str(loop.size()) + " patrol waypoints in " + str(int(elapsed)) + "s")
 	else:
 		_fail("boss visited only " + str(visited.size()) + "/" + str(loop.size()) + " patrol waypoints in " + str(frames) + " frames (missing " + str(_missing(loop)) + ")")
 	if total_moved > 500.0:

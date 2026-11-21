@@ -19,6 +19,7 @@ func _ok(msg: String) -> void:
 	print("TEST OK: " + msg)
 
 func _run() -> void:
+	var tl = preload("res://tools/tlib.gd").new()
 	await process_frame
 	await process_frame
 	await process_frame
@@ -107,11 +108,7 @@ func _run() -> void:
 		_fail("progress did not resume after boss leaves (%.3f -> %.3f)" % [p3, p4])
 	# Force progress to near-complete and let it finish: player unlocks.
 	lvl.set("self_rescue_progress", 0.99)
-	await process_frame
-	await process_frame
-	await process_frame
-	await process_frame
-	await process_frame
+	await tl.wait(self, 0.5)
 	if player.get("locked") == false:
 		_ok("player unlocked after rescue completes")
 	else:

@@ -27,8 +27,8 @@ func _report() -> void:
 	quit(0 if fails == 0 else 1)
 
 func _run() -> void:
-	for i in range(5):
-		await process_frame
+	var tl = preload("res://tools/tlib.gd").new()
+	await tl.wait(self, 0.5)
 	lvl.set_solo_mode(true)
 	lvl.call("_dismiss_intro")
 	var intro_dim: Node = lvl.get("intro_dim")
@@ -43,8 +43,7 @@ func _run() -> void:
 	player = pscene.instantiate() as Node2D
 	player.name = "1"
 	ysort.add_child(player, true)
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	# BAL-08 (revised 18 Nov 2026, Elang: boss must catch the player):
 	# chase 340, faster than player sprint 300, so a sprinting player
 	# can be caught; escape is by breaking line of sight, not by outrunning.
@@ -67,15 +66,14 @@ func _run() -> void:
 	boss.set("telegraph_timer", 0.0)
 	boss.set("blind_timer", 0.0)
 	boss.set("velocity", Vector2.ZERO)
+	boss.set("chase_windup_timer", 0.0)
 	var warn_label: Label = lvl.get("hud_warn_label")
 	warn_label.text = ""
 	lvl.set("warn_timer", 0.0)
 	var t0 := float(lvl.get("elapsed"))
-	for i in range(120):
+	while float(lvl.get("elapsed")) - t0 < 3.0:
 		await process_frame
 		if warn_label.text == "Dia kehilangan jejakmu!":
-			break
-		if float(lvl.get("elapsed")) - t0 > 2.0:
 			break
 	if warn_label.text == "Dia kehilangan jejakmu!":
 		_ok("LOS break shows \"Dia kehilangan jejakmu!\"")
@@ -85,8 +83,7 @@ func _run() -> void:
 	# Pindah ke koridor terbuka (400,656): jauh dari tugas + meja, bos >400px.
 	player.global_position = Vector2(400, 656)
 	player.set("has_throwable", true)
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	var prompt_label: Label = lvl.get("hud_prompt_label")
 	if prompt_label.text.contains("mancing bos"):
 		_ok("mug prompt teaches the lure: \"" + prompt_label.text + "\"")

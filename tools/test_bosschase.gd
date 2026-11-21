@@ -34,14 +34,17 @@ func _spawn_player() -> void:
 	me.name = "1"
 	lvl.get("ysort").add_child(me)
 
-func _wait_state(want: int, frames: int) -> bool:
-	for i in frames:
+func _wait_state(want: int, seconds: float) -> bool:
+	var acc := 0.0
+	while acc < seconds:
 		await process_frame
+		acc += root.get_process_delta_time()
 		if int(boss.get("state")) == want:
 			return true
 	return false
 
 func _run() -> void:
+	var tl = preload("res://tools/tlib.gd").new()
 	await process_frame
 	await process_frame
 	await process_frame
@@ -65,7 +68,7 @@ func _run() -> void:
 	me.global_position = Vector2(650, 656)
 	me.set("flashlight_on", true)
 	me.set("velocity", Vector2(0, 0))
-	var chased := await _wait_state(2, 60)
+	var chased := await _wait_state(2, 6.0)
 	ok("boss chases a visible player 250px away (flashlight on)", chased, "state=" + str(int(boss.get("state"))))
 	# Case 2: same spot, flashlight OFF, in the dark (far from any lit
 	# task point). Elang's complaint: the boss must still chase when it
@@ -78,7 +81,7 @@ func _run() -> void:
 	me.global_position = Vector2(650, 656)
 	me.set("flashlight_on", false)
 	me.set("velocity", Vector2(0, 0))
-	chased = await _wait_state(2, 60)
+	chased = await _wait_state(2, 6.0)
 	ok("boss chases a visible player 250px away (flashlight off, dark)", chased, "state=" + str(int(boss.get("state"))))
 	# Case 3: full loop. Boss chases, then the player gets far away
 	# and breaks line of sight. Boss must leave CHASE, go SEARCH, then
@@ -91,22 +94,26 @@ func _run() -> void:
 	me.global_position = Vector2(650, 656)
 	me.set("flashlight_on", true)
 	me.set("velocity", Vector2(0, 0))
-	chased = await _wait_state(2, 60)
+	chased = await _wait_state(2, 6.0)
 	ok("boss chases before the far-away leg", chased, "state=" + str(int(boss.get("state"))))
 	# Player teleports far away, behind a wall (boss room), so LOS is
 	# broken and the player is out of vision range.
 	me.global_position = Vector2(1008, 144)
 	me.set("velocity", Vector2(0, 0))
 	var left_chase := false
-	for i in 120:
+	var acc := 0.0
+	while acc < 12.0:
 		await process_frame
+		acc += root.get_process_delta_time()
 		if int(boss.get("state")) != 2:
 			left_chase = true
 			break
 	ok("boss leaves CHASE when the player is far and out of sight", left_chase, "state=" + str(int(boss.get("state"))))
 	var back_patrol := false
-	for i in 600:
+	acc = 0.0
+	while acc < 60.0:
 		await process_frame
+		acc += root.get_process_delta_time()
 		if int(boss.get("state")) == 0:
 			back_patrol = true
 			break
@@ -129,24 +136,28 @@ func _run() -> void:
 	me.set("flashlight_on", false)
 	me.set("velocity", Vector2(0, 0))
 	var stayed := true
-	for i in 60:
+	acc = 0.0
+	while acc < 6.0:
+		await process_frame
+		acc += root.get_process_delta_time()
 		me.set("hiding", true)
 		# Re-pin the boss every frame: slow_mult 0 makes it look stuck,
 		# and the stuck recovery would otherwise jump it along its path.
 		boss.global_position = Vector2(400, 656)
 		boss.set("stuck_timer", 0.0)
-		await process_frame
 		if int(boss.get("state")) == 2:
 			stayed = false
 			break
 	ok("boss does not chase a hiding player 200px away", stayed, "state=" + str(int(boss.get("state"))))
 	me.global_position = Vector2(450, 656)
 	var noticed := false
-	for i in 60:
+	acc = 0.0
+	while acc < 6.0:
+		await process_frame
+		acc += root.get_process_delta_time()
 		me.set("hiding", true)
 		boss.global_position = Vector2(400, 656)
 		boss.set("stuck_timer", 0.0)
-		await process_frame
 		if int(boss.get("state")) == 1 or int(boss.get("state")) == 2:
 			noticed = true
 			break

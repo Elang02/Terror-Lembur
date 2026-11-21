@@ -26,9 +26,9 @@ func _report() -> void:
 	quit(0 if fails == 0 else 1)
 
 func _run() -> void:
+	var tl = preload("res://tools/tlib.gd").new()
 	DirAccess.remove_absolute("user://tutorial.cfg")
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	lvl.set_solo_mode(true)
 	var ysort: Node = lvl.get_node_or_null("YSort")
 	var pscene := load("res://scenes/worker_char.tscn") as PackedScene
@@ -44,8 +44,7 @@ func _run() -> void:
 	var intro_panel: Node = lvl.get("intro_panel")
 	if intro_panel != null:
 		intro_panel.visible = false
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	var boss: Node = lvl.get("boss")
 	# SAFE-01a: teleport tidak pernah mendarat di Toilet.
 	pl.global_position = Vector2(300, 384)
@@ -73,8 +72,7 @@ func _run() -> void:
 	boss.set("state", 2)
 	lvl.set("heartbeat_timer", 5.0)
 	lvl.set("music_tense_level", 0.0)
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	if absf(float(lvl.get("heartbeat_timer")) - 5.0) < 0.01:
 		_ok("heartbeat silent inside the toilet")
 	else:
@@ -88,8 +86,7 @@ func _run() -> void:
 	boss.global_position = Vector2(500, 400)
 	boss.set("state", 2)
 	lvl.set("heartbeat_timer", 5.0)
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	if float(lvl.get("heartbeat_timer")) < 5.0:
 		_ok("heartbeat runs outside the toilet")
 	else:
@@ -102,8 +99,7 @@ func _run() -> void:
 	lvl.set("first_encounter_done", false)
 	lvl.set("first_encounter_active", false)
 	lvl.set("elapsed", 12.5)
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	if bool(lvl.get("first_encounter_active")):
 		_ok("first encounter triggers at 12s")
 	else:
@@ -121,8 +117,7 @@ func _run() -> void:
 	pl.global_position = Vector2(400, 656)
 	boss.global_position = Vector2(550, 656)
 	pl.set("hiding", true)
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	if bool(lvl.get("first_encounter_done")) and not bool(lvl.get("first_encounter_active")):
 		_ok("encounter ends when the boss passes a hiding player")
 	else:
@@ -140,8 +135,7 @@ func _run() -> void:
 	lvl.set("first_encounter_done", false)
 	lvl.set("first_encounter_active", false)
 	lvl.set("elapsed", 41.0)
-	for i in range(5):
-		await process_frame
+	await tl.wait(self, 0.5)
 	if bool(lvl.get("first_encounter_done")) and not bool(lvl.get("first_encounter_active")):
 		_ok("encounter abandoned after 40s")
 	else:
