@@ -17,11 +17,14 @@ var _disconnect_label: Label = null
 var _message_timer: float = 0.0
 var _flash_alpha: float = 0.0
 var _task_total: int = 0
+var _stamina_bar: ProgressBar = null
+var _stamina_fill: StyleBoxFlat = null
 
 
 func _ready() -> void:
 	layer = 10
 	_build_top_bar()
+	_build_stamina_bar()
 	_build_prompt_and_message()
 	_build_result_panel()
 	_build_disconnect_panel()
@@ -76,6 +79,42 @@ func show_prompt(text: String) -> void:
 	if _prompt_label != null:
 		_prompt_label.text = text
 
+func set_stamina(ratio: float) -> void:
+	if _stamina_bar == null:
+		return
+	_stamina_bar.value = clampf(ratio, 0.0, 1.0) * 100.0
+	if _stamina_fill != null:
+		_stamina_fill.bg_color = Color(0.9, 0.25, 0.2) if ratio < 0.25 else Color(0.55, 0.9, 0.35)
+
+
+func _build_stamina_bar() -> void:
+	var label := _mk_label("STAMINA", 12, Color(1, 1, 1, 0.75), Vector2.ZERO)
+	label.anchor_top = 1.0
+	label.anchor_bottom = 1.0
+	label.offset_left = 12
+	label.offset_right = 80
+	label.offset_top = -56
+	label.offset_bottom = -36
+	add_child(label)
+	_stamina_fill = StyleBoxFlat.new()
+	_stamina_fill.bg_color = Color(0.55, 0.9, 0.35)
+	var bg := StyleBoxFlat.new()
+	bg.bg_color = Color(0, 0, 0, 0.6)
+	_stamina_bar = ProgressBar.new()
+	_stamina_bar.min_value = 0.0
+	_stamina_bar.max_value = 100.0
+	_stamina_bar.value = 100.0
+	_stamina_bar.show_percentage = false
+	_stamina_bar.add_theme_stylebox_override("background", bg)
+	_stamina_bar.add_theme_stylebox_override("fill", _stamina_fill)
+	_stamina_bar.anchor_top = 1.0
+	_stamina_bar.anchor_bottom = 1.0
+	_stamina_bar.offset_left = 84
+	_stamina_bar.offset_right = 284
+	_stamina_bar.offset_top = -54
+	_stamina_bar.offset_bottom = -34
+	_stamina_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_stamina_bar)
 
 func show_message(text: String) -> void:
 	if _message_label == null:

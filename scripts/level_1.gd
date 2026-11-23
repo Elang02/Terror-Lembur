@@ -948,6 +948,9 @@ func _update_hud_frame() -> void:
 		status_lines.append("P%d: %s%s" % [p.player_index, st, " [+ITEM]" if p.carrying_revive else ""])
 	hud.update_status(status_lines)
 	hud.show_prompt(_compute_prompt())
+	var local_p: Node = _players.get(NetworkManager.local_peer_id())
+	if local_p != null:
+		hud.set_stamina(local_p.get_stamina_ratio())
 
 
 func _compute_prompt() -> String:
