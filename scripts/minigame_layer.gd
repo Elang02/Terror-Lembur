@@ -18,6 +18,10 @@ const GAME_SCRIPTS: Dictionary = {
 	&"archive": "res://scripts/minigames/mg_archive.gd",
 	&"simon": "res://scripts/minigames/mg_simon.gd",
 	&"server": "res://scripts/minigames/mg_server.gd",
+	&"keypad": "res://scripts/minigames/mg_keypad.gd",
+	&"mash": "res://scripts/minigames/mg_mash.gd",
+	&"cari": "res://scripts/minigames/mg_cari.gd",
+	&"urut": "res://scripts/minigames/mg_urut.gd",
 }
 const CLOSE_RANGE: float = 102.0
 

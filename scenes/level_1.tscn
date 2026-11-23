@@ -49,7 +49,6 @@ tile_set = ExtResource("t_set")
 z_index = 5
 tile_map_data = PackedByteArray("AAAeABcAAgABABAAAAAeABgAAgABABEAAAAeABEAAgABABAAAAAeABIAAgABABEAAAAdABYAAgAKAAwAAAA2ABYAAgABAAUAAAA2ABcAAgABAAYAAAA1ABkAAgALAAAAAAAnABkAAgABABAAAAAnABoAAgABABEAAAA=")
 tile_set = ExtResource("t_set")
-collision_visibility_mode = 1
 
 [node name="DekorKecil" type="TileMapLayer" parent="." unique_id=1202364429]
 z_index = 6
@@ -578,13 +577,13 @@ title = "PC Koridor"
 position = Vector2(498, 591)
 task_id = &"pc_barat"
 title = "PC Workspace Barat"
-game_type = &"slides"
+game_type = &"cari"
 
 [node name="Task_pc_tengah" parent="Tasks" unique_id=2035306615 instance=ExtResource("ps_task")]
 position = Vector2(816, 750)
 task_id = &"pc_tengah"
 title = "PC Workspace Tengah"
-game_type = &"email"
+game_type = &"urut"
 
 [node name="Task_pc_fotokopi" parent="Tasks" unique_id=1833058478 instance=ExtResource("ps_task")]
 position = Vector2(1467, 656)
@@ -596,7 +595,7 @@ game_type = &"copy"
 position = Vector2(176, 1104)
 task_id = &"arsip"
 title = "Arsip Dokumen"
-game_type = &"archive"
+game_type = &"mash"
 accent = Color(1, 0.6, 0.3, 1)
 
 [node name="Task_listrik" parent="Tasks" unique_id=835158841 instance=ExtResource("ps_task")]
@@ -610,7 +609,7 @@ accent = Color(0.4, 0.85, 1, 1)
 position = Vector2(896, 1200)
 task_id = &"server"
 title = "Server (Co-op)"
-game_type = &"server"
+game_type = &"keypad"
 requires_two = true
 accent = Color(0.75, 0.55, 1, 1)
 
