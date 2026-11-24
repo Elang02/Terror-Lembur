@@ -37,6 +37,7 @@ var _perception_timer: float = 0.0
 var _suspicion: float = 0.0
 var _target: Node2D = null
 var _last_known: Vector2 = Vector2.ZERO
+var _lure_active: bool = false
 var _lose_timer: float = 0.0
 var _search_timer: float = 0.0
 var _blink_timer: float = 20.0
@@ -77,10 +78,12 @@ func _physics_process(delta: float) -> void:
 	if _perception_timer <= 0.0:
 		_perception_timer = 0.15
 		_update_perception(0.15)
-	# Director: blink berkala saat tidak mengejar.
-	_blink_timer -= delta
-	if _blink_timer <= 0.0 and (state == State.PATROL or state == State.SEARCH):
-		_start_blink()
+	# Director: blink berkala saat tidak mengejar. Timer dijeda selama
+	# lure — musuh harus sampai di trap dulu sebelum bisa teleport lagi.
+	if not _lure_active:
+		_blink_timer -= delta
+		if _blink_timer <= 0.0 and (state == State.PATROL or state == State.SEARCH):
+			_start_blink()
 
 	match state:
 		State.PATROL:
@@ -175,9 +178,28 @@ func _is_ai_owner() -> bool:
 func _set_state(next: int) -> void:
 	if state == next:
 		return
+	if next != State.CHASE:
+		_lure_active = false
 	state = next
 	_path = PackedVector2Array()
 	_path_index = 0
+
+
+func investigate(pos: Vector2) -> void:
+	# Dipanggil host saat perangkap terpicu: musuh "mendengar" sesuatu
+	# di pos, lalu CHASE ke sana. Tanpa target pemain, begitu sampai ia
+	# SEARCH sebentar lalu kembali PATROL (lihat _update_perception).
+	if not _is_ai_owner():
+		return
+	if state == State.BLIND or state == State.VANISH or state == State.STUNNED:
+		return
+	_last_known = pos
+	_suspicion = 1.0
+	_target = null
+	_lose_timer = 0.0
+	_set_state(State.CHASE)
+	_lure_active = true
+	_request_path(pos)
 
 
 func _pick_next_patrol_index() -> int:
@@ -209,7 +231,16 @@ func _chase_tick(delta: float) -> void:
 		if _repath_timer <= 0.0:
 			_repath_timer = 0.25
 			_request_path(_last_known)
-	_follow_path(delta, CHASE_SPEED)
+	var speed: float = CHASE_SPEED * 1.5 if _lure_active else CHASE_SPEED
+	_follow_path(delta, speed)
+	if _lure_active:
+		if global_position.distance_to(_last_known) < 24.0:
+			# Sampai di trap: lure selesai, timer blink mulai dari awal.
+			_lure_active = false
+			_blink_timer = randf_range(BLINK_MIN, BLINK_MAX)
+		elif _path.is_empty():
+			# Tujuan tidak bisa dicapai (path buntu) — batalkan lure.
+			_lure_active = false
 
 
 func _search_tick(delta: float) -> void:
@@ -280,21 +311,23 @@ func _update_perception(step: float) -> void:
 		_suspicion = 1.0
 	if state == State.CHASE:
 		if not seen and not heard:
-			_lose_timer += step
-			if _lose_timer >= LOSE_SIGHT_TIME:
-				_target = null
-				_suspicion = 0.0
-				_search_timer = 3.0
-				_set_state(State.SEARCH)
-				_request_path(_last_known)
+			if not _lure_active:
+				_lose_timer += step
+				if _lose_timer >= LOSE_SIGHT_TIME:
+					_target = null
+					_suspicion = 0.0
+					_search_timer = 3.0
+					_set_state(State.SEARCH)
+					_request_path(_last_known)
 		else:
 			_lose_timer = 0.0
+			_lure_active = false
 			_target = best
 
 
 func _decay_suspicion(step: float) -> void:
 	_suspicion = maxf(0.0, _suspicion - step * 0.8)
-	if state == State.CHASE:
+	if state == State.CHASE and not _lure_active:
 		_lose_timer += step
 		if _lose_timer >= LOSE_SIGHT_TIME:
 			_target = null

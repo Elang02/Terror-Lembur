@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://ddu17pts7jqjy"]
 
 [ext_resource type="Script" uid="uid://bi2jw6lc07wja" path="res://scripts/key_item.gd" id="13_7gny6"]
+[ext_resource type="Script" uid="uid://bod2w4cavnnek" path="res://scripts/trap.gd" id="14_2aecg"]
 [ext_resource type="PackedScene" path="res://scenes/cage.tscn" id="ps_cage"]
 [ext_resource type="PackedScene" path="res://scenes/locked_door.tscn" id="ps_door"]
 [ext_resource type="PackedScene" uid="uid://do1jm7gsv2kvb" path="res://scenes/enemy.tscn" id="ps_enemy"]
@@ -576,7 +577,7 @@ task_id = &"pc_koridor"
 title = "PC Koridor"
 
 [node name="Task_koridor_timur" parent="Tasks" unique_id=1043020478 instance=ExtResource("ps_task")]
-position = Vector2(1995, 916)
+position = Vector2(2004, 913)
 task_id = &"pc_barat"
 title = "PC Workspace Barat"
 game_type = &"mash"
@@ -619,7 +620,6 @@ accent = Color(0.75, 0.55, 1, 1)
 position = Vector2(1796, 1217)
 task_id = &"pc_utara"
 title = "PC Koridor Utara"
-requires_two = true
 accent = Color(0.75, 0.55, 1, 1)
 
 [node name="Task_server3" parent="Tasks" unique_id=57299995 instance=ExtResource("ps_task")]
@@ -627,7 +627,6 @@ position = Vector2(1274, 77)
 task_id = &"arsip_barat"
 title = "Arsip Barat"
 game_type = &"cari"
-requires_two = true
 accent = Color(0.75, 0.55, 1, 1)
 
 [node name="Task_server4" parent="Tasks" unique_id=266437064 instance=ExtResource("ps_task")]
@@ -635,7 +634,6 @@ position = Vector2(448, 267)
 task_id = &"pc_timur_laut"
 title = "PC Timur Laut"
 game_type = &"mash"
-requires_two = true
 accent = Color(0.75, 0.55, 1, 1)
 
 [node name="HidingSpots" type="Node2D" parent="." unique_id=1861831547]
@@ -790,3 +788,104 @@ key_id = "B"
 position = Vector2(221, 625)
 script = ExtResource("13_7gny6")
 key_id = "C"
+
+[node name="Traps" type="Node2D" parent="." unique_id=2081705617]
+position = Vector2(516, 818)
+
+[node name="Trap1" type="Node2D" parent="Traps" unique_id=626994682]
+script = ExtResource("14_2aecg")
+
+[node name="Trap2" type="Node2D" parent="Traps" unique_id=1833347303]
+position = Vector2(-179, 318)
+script = ExtResource("14_2aecg")
+trap_id = "T2"
+
+[node name="Trap3" type="Node2D" parent="Traps" unique_id=1239689200]
+position = Vector2(812, -117)
+script = ExtResource("14_2aecg")
+trap_id = "T3"
+
+[node name="Trap4" type="Node2D" parent="Traps" unique_id=1365992988]
+position = Vector2(179, -613)
+script = ExtResource("14_2aecg")
+trap_id = "T4"
+
+[node name="Trap5" type="Node2D" parent="Traps" unique_id=65197119]
+position = Vector2(-373, -160)
+script = ExtResource("14_2aecg")
+trap_id = "T5"
+
+[node name="Trap6" type="Node2D" parent="Traps" unique_id=863504994]
+position = Vector2(-311, 224)
+script = ExtResource("14_2aecg")
+trap_id = "T6"
+
+[node name="Trap7" type="Node2D" parent="Traps" unique_id=1095272763]
+position = Vector2(267, 288)
+script = ExtResource("14_2aecg")
+trap_id = "T7"
+
+[node name="Trap8" type="Node2D" parent="Traps" unique_id=1579783199]
+position = Vector2(1226, 1)
+script = ExtResource("14_2aecg")
+trap_id = "T8"
+
+[node name="Trap9" type="Node2D" parent="Traps" unique_id=726191841]
+position = Vector2(1401, 254)
+script = ExtResource("14_2aecg")
+trap_id = "T9"
+
+[node name="Trap10" type="Node2D" parent="Traps" unique_id=1780266992]
+position = Vector2(1041, -526)
+script = ExtResource("14_2aecg")
+trap_id = "T10"
+
+[node name="Trap11" type="Node2D" parent="Traps" unique_id=1867997665]
+position = Vector2(618, -544)
+script = ExtResource("14_2aecg")
+trap_id = "T11"
+
+[node name="Trap12" type="Node2D" parent="Traps" unique_id=757132629]
+position = Vector2(397, -228)
+script = ExtResource("14_2aecg")
+trap_id = "T12"
+
+[node name="Trap13" type="Node2D" parent="Traps" unique_id=1066936985]
+position = Vector2(236, -128)
+script = ExtResource("14_2aecg")
+trap_id = "T13"
+
+[node name="Trap14" type="Node2D" parent="Traps" unique_id=1745908765]
+position = Vector2(-148, -313)
+script = ExtResource("14_2aecg")
+trap_id = "T14"
+
+[node name="Trap15" type="Node2D" parent="Traps" unique_id=654224855]
+position = Vector2(410, 27)
+script = ExtResource("14_2aecg")
+trap_id = "T15"
+
+[node name="Trap16" type="Node2D" parent="Traps" unique_id=675840223]
+position = Vector2(1050, -85)
+script = ExtResource("14_2aecg")
+trap_id = "T16"
+
+[node name="Trap17" type="Node2D" parent="Traps" unique_id=1869423385]
+position = Vector2(1395, -419)
+script = ExtResource("14_2aecg")
+trap_id = "T17"
+
+[node name="Trap18" type="Node2D" parent="Traps" unique_id=1723720492]
+position = Vector2(1060, 311)
+script = ExtResource("14_2aecg")
+trap_id = "T18"
+
+[node name="Trap19" type="Node2D" parent="Traps" unique_id=292615255]
+position = Vector2(-435, 38)
+script = ExtResource("14_2aecg")
+trap_id = "T19"
+
+[node name="Trap20" type="Node2D" parent="Traps" unique_id=758413084]
+position = Vector2(1452, -154)
+script = ExtResource("14_2aecg")
+trap_id = "T20"
