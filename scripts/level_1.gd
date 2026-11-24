@@ -21,7 +21,7 @@ const EXIT_RADIUS: float = 72.0
 const EXIT_HOLD: float = 1.5
 const RESCUE_TIME: float = 2.0
 const SOLO_REVIVE_DELAY: float = 12.0
-const BASE_MODULATE: Color = Color(0.198, 0.198, 0.263, 1.0)
+const BASE_MODULATE: Color = Color(0.077, 0.077, 0.112, 1.0)
 const BLACKOUT_MODULATE: Color = Color(0.032, 0.032, 0.052, 1.0)
 
 var _level_active: bool = false

@@ -246,6 +246,7 @@ text = "Lorong Timur"
 horizontal_alignment = 1
 
 [node name="Lights" type="Node2D" parent="." unique_id=1458212479]
+visible = false
 
 [node name="Light_1" type="PointLight2D" parent="Lights" unique_id=1124243850]
 position = Vector2(160, 304)
@@ -430,7 +431,7 @@ position = Vector2(144, 272)
 position = Vector2(1893, 274)
 
 [node name="EnemySpawn3" type="Marker2D" parent="Spawns" unique_id=514861691]
-position = Vector2(149, 965)
+position = Vector2(319, 943)
 
 [node name="EnemySpawn4" type="Marker2D" parent="Spawns" unique_id=1640692183]
 position = Vector2(898, 1117)
@@ -734,6 +735,11 @@ position = Vector2(1936, 704)
 door_id = "B"
 door_cells = Array[Vector2i]([Vector2i(60, 21), Vector2i(60, 22)])
 
+[node name="DoorC" parent="Doors" unique_id=1807051922 instance=ExtResource("ps_door")]
+position = Vector2(299, 1152)
+door_id = "C"
+door_cells = Array[Vector2i]([Vector2i(9, 26), Vector2i(9, 27)])
+
 [node name="ExitDoor" parent="." unique_id=1826463358 instance=ExtResource("ps_exit")]
 position = Vector2(1296, 1232)
 
@@ -779,3 +785,8 @@ script = ExtResource("13_7gny6")
 position = Vector2(1709, 334)
 script = ExtResource("13_7gny6")
 key_id = "B"
+
+[node name="KeyItemC" type="Node2D" parent="." unique_id=1481761198]
+position = Vector2(221, 625)
+script = ExtResource("13_7gny6")
+key_id = "C"
