@@ -6,7 +6,7 @@ extends CharacterBody2D
 ## (sembunyi/terkurung/bawa item) dimiliki host dan disebar via RPC reliable.
 ## Grup: "Player".
 
-const WALK_SPEED: float = 150.0
+const WALK_SPEED: float = 160.0
 const SPRINT_SPEED: float = 220.0
 const STAMINA_MAX: float = 100.0
 const STAMINA_DRAIN: float = 25.0   # habis per detik saat lari

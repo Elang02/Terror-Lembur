@@ -15,8 +15,8 @@ const HEAR_RANGE: float = 330.0
 const CATCH_RANGE: float = 27.0
 const SUSPICION_TIME: float = 0.8
 const LOSE_SIGHT_TIME: float = 4.0
-const PATROL_SPEED: float = 95.0
-const CHASE_SPEED: float = 205.0
+const PATROL_SPEED: float = 105.0
+const CHASE_SPEED: float = 190.0
 const SEARCH_SPEED: float = 130.0
 const BLIND_SPEED: float = 55.0
 const BLINK_MIN: float = 16.0
@@ -43,8 +43,9 @@ var _blink_timer: float = 20.0
 var _blind_timer: float = 0.0
 var _stun_timer: float = 0.0
 var _vanish_timer: float = 0.0
-var _stuck_timer: float = 0.0
-var _last_pos: Vector2 = Vector2.ZERO
+var _last_target_dist: float = INF
+var _progress_timer: float = 0.0
+var _last_blink_dest: Vector2 = Vector2(-9999, -9999)
 var _sync_timer: float = 0.0
 var _target_pos: Vector2 = Vector2.ZERO
 var _has_target: bool = false
@@ -61,7 +62,6 @@ var _base_tint: Color = Color(0.45, 0.42, 0.55)
 func _ready() -> void:
 	add_to_group("Enemy")
 	_target_pos = global_position
-	_last_pos = global_position
 	_blink_timer = randf_range(BLINK_MIN, BLINK_MAX)
 
 
@@ -180,6 +180,15 @@ func _set_state(next: int) -> void:
 	_path_index = 0
 
 
+func _pick_next_patrol_index() -> int:
+	if patrol_points.size() <= 1:
+		return 0
+	var next: int = _patrol_index
+	while next == _patrol_index:
+		next = randi() % patrol_points.size()
+	return next
+
+
 func _patrol_tick(delta: float) -> void:
 	if patrol_points.is_empty():
 		velocity = Vector2.ZERO
@@ -189,7 +198,7 @@ func _patrol_tick(delta: float) -> void:
 		_request_path(patrol_points[_patrol_index])
 	_follow_path(delta, PATROL_SPEED)
 	if _path_index >= _path.size() and not _path.is_empty():
-		_patrol_index = (_patrol_index + 1) % patrol_points.size()
+		_patrol_index = _pick_next_patrol_index()
 		_path = PackedVector2Array()
 
 
@@ -323,20 +332,22 @@ func _check_catch() -> void:
 
 
 func _check_stuck(delta: float) -> void:
-	if velocity.length() < 5.0:
-		_stuck_timer = 0.0
-		_last_pos = global_position
+	if _path.is_empty() or _path_index >= _path.size():
+		_progress_timer = 0.0
+		_last_target_dist = INF
 		return
-	if global_position.distance_to(_last_pos) < 3.0:
-		_stuck_timer += delta
-		if _stuck_timer > 1.0:
-			_stuck_timer = 0.0
-			if state == State.PATROL and not patrol_points.is_empty():
-				_patrol_index = (_patrol_index + 1) % patrol_points.size()
+	var target_dist: float = global_position.distance_to(_path[_path_index])
+	if velocity.length() > 5.0 and target_dist > _last_target_dist - 4.0:
+		_progress_timer += delta
+		if _progress_timer > 0.7:
+			_progress_timer = 0.0
+			_last_target_dist = INF
 			_path = PackedVector2Array()
+			if state == State.PATROL and not patrol_points.is_empty():
+				_patrol_index = _pick_next_patrol_index()
 	else:
-		_stuck_timer = 0.0
-		_last_pos = global_position
+		_progress_timer = 0.0
+		_last_target_dist = target_dist
 
 
 func _start_blink() -> void:
@@ -353,6 +364,8 @@ func _start_blink() -> void:
 func _finish_blink() -> void:
 	var dest: Vector2 = _pick_blink_destination()
 	global_position = dest
+	if pathfinder != null:
+		global_position = pathfinder.snap_to_walkable(global_position)
 	velocity = Vector2.ZERO
 	_blind_timer = BLIND_TIME
 	_set_state(State.BLIND)
@@ -376,7 +389,14 @@ func _pick_blink_destination() -> Vector2:
 		if nearest >= 350.0 and nearest <= 950.0:
 			candidates.append(sp)
 	if not candidates.is_empty():
-		return candidates[randi() % candidates.size()]
+		var pool: Array[Vector2] = []
+		for sp: Vector2 in candidates:
+			if sp != _last_blink_dest:
+				pool.append(sp)
+		if pool.is_empty():
+			pool = candidates
+		_last_blink_dest = pool[randi() % pool.size()]
+		return _last_blink_dest
 	# Fallback: spawn terjauh dari pemain terdekat.
 	var best: Vector2 = spawn_points[0]
 	var best_score: float = -1.0

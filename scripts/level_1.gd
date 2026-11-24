@@ -14,6 +14,8 @@ const PAR_TIME: float = 360.0
 const TASK_RANGE: float = 62.0
 const HIDE_RANGE: float = 50.0
 const REVIVE_RANGE: float = 52.0
+const KEY_RANGE: float = 52.0
+const DOOR_RANGE: float = 56.0
 const CAGE_RANGE: float = 68.0
 const EXIT_RADIUS: float = 72.0
 const EXIT_HOLD: float = 1.5
@@ -32,6 +34,7 @@ var _exit_progress: float = 0.0
 var _rescue_progress: float = 0.0
 var _cage_peer: int = -1
 var _revive_carrier: int = -1
+var _key_carriers: Dictionary = {"A": -1, "B": -1}
 var _revive_visible: bool = false
 var _solo_revive_timer: float = -1.0
 var _wipe_timer: float = -1.0
@@ -66,6 +69,8 @@ var minigame_layer: MinigameLayer = null
 @onready var exit_door: Node2D = get_node_or_null("ExitDoor")
 @onready var cage: Node2D = get_node_or_null("Cage")
 @onready var revive_item: Node2D = get_node_or_null("ReviveItem")
+@onready var key_item_a: Node2D = get_node_or_null("KeyItemA")
+@onready var key_item_b: Node2D = get_node_or_null("KeyItemB")
 @onready var hud: CanvasLayer = get_node_or_null("HUD")
 
 
@@ -132,10 +137,19 @@ func _setup_enemy() -> void:
 	if enemy == null:
 		return
 	enemy.pathfinder = _pathfinder
-	enemy.patrol_points = _marker_positions("Patrol", 8, [Vector2i(11, 11), Vector2i(30, 11), Vector2i(53, 11), Vector2i(53, 26), Vector2i(30, 27), Vector2i(11, 27), Vector2i(11, 18), Vector2i(53, 18)])
-	enemy.spawn_points = _marker_positions("EnemySpawn", 8, [Vector2i(4, 3), Vector2i(58, 4), Vector2i(4, 27), Vector2i(27, 36), Vector2i(59, 14), Vector2i(36, 7), Vector2i(12, 36), Vector2i(57, 34)])
-	var start: Vector2 = _marker_pos("EnemySpawn1", Vector2i(4, 3))
+	enemy.patrol_points = _marker_positions("Patrol", 27, [Vector2i(11, 14), Vector2i(35, 14), Vector2i(58, 16), Vector2i(58, 29), Vector2i(35, 29), Vector2i(11, 29), Vector2i(11, 21), Vector2i(58, 22), Vector2i(59, 7), Vector2i(62, 22), Vector2i(55, 35), Vector2i(40, 35), Vector2i(28, 36), Vector2i(15, 33), Vector2i(5, 18), Vector2i(16, 7), Vector2i(27, 7), Vector2i(39, 7), Vector2i(50, 7), Vector2i(4, 32), Vector2i(5, 8), Vector2i(18, 18), Vector2i(33, 20), Vector2i(17, 25), Vector2i(39, 23), Vector2i(47, 21), Vector2i(52, 24)])
+	enemy.spawn_points = _marker_positions("EnemySpawn", 13, [Vector2i(4, 8), Vector2i(59, 8), Vector2i(4, 30), Vector2i(28, 34), Vector2i(62, 23), Vector2i(39, 8), Vector2i(13, 37), Vector2i(54, 35), Vector2i(47, 22), Vector2i(24, 21), Vector2i(46, 14), Vector2i(1, 20), Vector2i(21, 6)])
+	var start: Vector2 = enemy.spawn_points[randi() % enemy.spawn_points.size()]
 	enemy.global_position = start
+	if _pathfinder != null:
+		for i: int in range(enemy.patrol_points.size()):
+			var c: Vector2i = _pathfinder.world_to_cell(enemy.patrol_points[i])
+			if _pathfinder.is_cell_blocked(c):
+				push_warning("Patrol%d di cell %s yang tidak bisa dilalui — geser markernya di editor." % [i + 1, str(c)])
+		for i: int in range(enemy.spawn_points.size()):
+			var c2: Vector2i = _pathfinder.world_to_cell(enemy.spawn_points[i])
+			if _pathfinder.is_cell_blocked(c2):
+				push_warning("EnemySpawn%d di cell %s yang tidak bisa dilalui — geser markernya di editor." % [i + 1, str(c2)])
 
 
 func _setup_lights() -> void:
@@ -245,6 +259,7 @@ func request_sync_rpc() -> void:
 		"revive_visible": _revive_visible,
 		"revive_pos": revive_item.global_position if revive_item != null else Vector2.ZERO,
 		"carrier": _revive_carrier,
+		"keys": _key_carriers.duplicate(),
 	}
 	rpc_id(sender, "_full_state_rpc", data)
 
@@ -270,6 +285,14 @@ func _full_state_rpc(data: Dictionary) -> void:
 	for did: String in doors_data.keys():
 		if bool(doors_data[did]) and _doors.has(did):
 			_apply_door_open(did)
+	if data.has("keys"):
+		var keys_data: Dictionary = data["keys"]
+		for kid: String in keys_data.keys():
+			_key_carriers[kid] = int(keys_data[kid])
+			if int(keys_data[kid]) != -1:
+				var kitem: Node = key_item_a if kid == "A" else key_item_b
+				if kitem != null:
+					kitem.hide_item()
 	if enemy != null:
 		enemy.global_position = data["enemy_pos"]
 		enemy.state = int(data["enemy_state"])
@@ -345,12 +368,31 @@ func _handle_press(peer_id: int) -> void:
 			rpc("_revive_taken_rpc", peer_id)
 		_show_message("Item Bangkit didapat! Selamatkan temanmu di kurungan.")
 		return
-	# 3) Kerjakan tugas (buka minigame di layar pemain itu).
+	# 3) Ambil kunci pintu.
+	for kid: String in ["A", "B"]:
+		var kitem: Node = key_item_a if kid == "A" else key_item_b
+		if kitem != null and kitem.visible and p.global_position.distance_to(kitem.global_position) <= KEY_RANGE:
+			_key_carriers[kid] = peer_id
+			kitem.hide_item()
+			if NetworkManager.is_networked():
+				rpc("_key_taken_rpc", kid, peer_id)
+			_show_message("Kunci %s didapat! Cari Pintu %s." % [kid, kid])
+			return
+	# 4) Buka pintu terkunci (butuh kunci yang cocok).
+	var door: Node = _nearest_door(p.global_position)
+	if door != null and not door.is_open:
+		if _key_carriers.get(door.door_id, -1) == peer_id:
+			_key_carriers[door.door_id] = -1
+			_open_door(door.door_id)
+		else:
+			_show_message("Pintu %s terkunci — cari Kunci %s dulu." % [door.door_id, door.door_id])
+		return
+	# 5) Kerjakan tugas (buka minigame di layar pemain itu).
 	var tid: StringName = _nearest_task(p.global_position)
 	if tid != StringName(""):
 		_try_open_minigame(peer_id, tid)
 		return
-	# 4) Sembunyi.
+	# 6) Sembunyi.
 	if _nearest_spot(p.global_position) != null:
 		_set_player_hidden(p, true)
 		return
@@ -384,6 +426,21 @@ func _nearest_spot(pos: Vector2) -> Node2D:
 		if pos.distance_to(s.global_position) <= HIDE_RANGE:
 			return s
 	return null
+
+
+func _nearest_door(pos: Vector2) -> Node:
+	for d: Node in _doors.values():
+		if pos.distance_to(d.global_position) <= DOOR_RANGE:
+			return d
+	return null
+
+
+@rpc("authority", "call_remote", "reliable")
+func _key_taken_rpc(key_id: String, peer_id: int) -> void:
+	_key_carriers[key_id] = peer_id
+	var kitem: Node = key_item_a if key_id == "A" else key_item_b
+	if kitem != null:
+		kitem.hide_item()
 
 
 # ------------------------------------------------------------ minigame ---
@@ -572,10 +629,6 @@ func _complete_task(tid: StringName) -> void:
 	if NetworkManager.is_networked():
 		rpc("_task_completed_rpc", String(tid))
 	_show_message("Tugas selesai: %s (%d/%d)" % [t["node"].title, _completed_count(), _tasks.size()])
-	if tid == &"arsip":
-		_open_door("A")
-	elif tid == &"listrik":
-		_open_door("B")
 	if _completed_count() >= _tasks.size() and not _exit_open:
 		_exit_open = true
 		if exit_door != null:
@@ -963,6 +1016,15 @@ func _compute_prompt() -> String:
 		return "[Tahan E] Selamatkan teman dari kurungan"
 	if _revive_visible and revive_item != null and local_p.global_position.distance_to(revive_item.global_position) <= REVIVE_RANGE:
 		return "[E] Ambil Item Bangkit"
+	for kid: String in ["A", "B"]:
+		var kitem: Node = key_item_a if kid == "A" else key_item_b
+		if kitem != null and kitem.visible and local_p.global_position.distance_to(kitem.global_position) <= KEY_RANGE:
+			return "[E] Ambil Kunci " + kid
+	var door: Node = _nearest_door(local_p.global_position)
+	if door != null and not door.is_open:
+		if _key_carriers.get(door.door_id, -1) == NetworkManager.local_peer_id():
+			return "[E] Buka Pintu " + door.door_id
+		return "Pintu " + door.door_id + " terkunci — cari Kunci " + door.door_id
 	var tid: StringName = _nearest_task(local_p.global_position)
 	if tid != StringName(""):
 		var t: Dictionary = _tasks[tid]

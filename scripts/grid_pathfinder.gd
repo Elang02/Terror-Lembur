@@ -71,6 +71,15 @@ func find_path_world(from_pos: Vector2, to_pos: Vector2) -> PackedVector2Array:
 	return _astar.get_point_path(from_id, to_id)
 
 
+
+func snap_to_walkable(pos: Vector2) -> Vector2:
+	if _astar.get_point_count() == 0:
+		return pos
+	var id: int = _astar.get_closest_point(pos)
+	if id == -1:
+		return pos
+	return _astar.get_point_position(id)
+
 func cell_to_world(cell: Vector2i) -> Vector2:
 	return Vector2(cell) * TILE_SIZE + Vector2(TILE_SIZE, TILE_SIZE) * 0.5
 
