@@ -54,14 +54,9 @@ func _set_status(text: String, good: bool) -> void:
 
 
 func _mk_label(text: String, font_size: int, color: Color = Color.WHITE) -> Label:
-	var l := Label.new()
-	l.text = text
-	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	l.add_theme_font_size_override("font_size", font_size)
-	l.add_theme_color_override("font_color", color)
-	l.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))
-	l.add_theme_constant_override("outline_size", 4)
-	return l
+	# Label minigame: mono sistem (UiTheme), tanpa outline. Semua label
+	# duduk di dalam panel gelap, jadi outline hitam tebal tidak perlu.
+	return UiTheme.mk_label(text, font_size, color, null, HORIZONTAL_ALIGNMENT_CENTER)
 
 
 func _num_key(event: InputEventKey, n: int) -> bool:
