@@ -36,7 +36,9 @@ var _title_label: Label = null
 var _instructions_label: Label = null
 var _game_holder: Control = null
 var _status_label: Label = null
+var _status_square: ColorRect = null
 var _progress_bar: ProgressBar = null
+var _pct_label: Label = null
 
 
 func _ready() -> void:
@@ -74,7 +76,7 @@ func open_minigame(task_id: StringName, game_type: StringName) -> bool:
 	_task_id = task_id
 	_game_holder.add_child(_game)
 	_game.setup()
-	_title_label.text = _game.game_title
+	_title_label.text = _game.game_title.to_upper()
 	_instructions_label.text = _game.instructions
 	_status_label.text = ""
 	_progress_bar.value = 0.0
@@ -141,6 +143,7 @@ func _physics_process(delta: float) -> void:
 	_game.tick(delta)
 	var prog: float = clampf(_game.get_progress(), 0.0, 1.0)
 	_progress_bar.value = prog * 100.0
+	_pct_label.text = "%d%%" % int(prog * 100.0)
 	_report_timer -= delta
 	if _report_timer <= 0.0:
 		_report_timer = 0.25
@@ -178,7 +181,9 @@ func _on_game_finished() -> void:
 
 func _on_game_status(text: String, good: bool) -> void:
 	_status_label.text = text
-	_status_label.add_theme_color_override("font_color", Color(0.5, 1, 0.55) if good else Color(1, 0.6, 0.55))
+	var c: Color = UiTheme.GREEN if good else UiTheme.RED
+	_status_label.add_theme_color_override("font_color", c)
+	_status_square.color = c
 
 
 func _level() -> Node:
@@ -192,7 +197,7 @@ func _build_ui() -> void:
 	add_child(_root)
 	var dim := ColorRect.new()
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dim.color = Color(0, 0, 0, 0.62)
+	dim.color = UiTheme.DIM
 	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_root.add_child(dim)
 	var center := CenterContainer.new()
@@ -200,6 +205,7 @@ func _build_ui() -> void:
 	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_root.add_child(center)
 	var panel := PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", UiTheme.panel_style())
 	panel.custom_minimum_size = Vector2(640, 470)
 	center.add_child(panel)
 	var margin := MarginContainer.new()
@@ -211,35 +217,50 @@ func _build_ui() -> void:
 	var vbox := VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 10)
 	margin.add_child(vbox)
-	_title_label = _mk_label("", 28, Color(1, 0.9, 0.55))
+	_title_label = UiTheme.mk_title("", 32, UiTheme.INK)
+	_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	vbox.add_child(_title_label)
-	_instructions_label = _mk_label("", 16, Color(0.9, 0.9, 0.95))
+	vbox.add_child(UiTheme.hairline())
+	_instructions_label = UiTheme.mk_label("", 15, UiTheme.SOFT)
 	_instructions_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(_instructions_label)
 	_game_holder = Control.new()
 	_game_holder.custom_minimum_size = Vector2(560, 240)
 	_game_holder.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	vbox.add_child(_game_holder)
-	_status_label = _mk_label("", 17, Color.WHITE)
+	var srow := HBoxContainer.new()
+	srow.add_theme_constant_override("separation", 8)
+	vbox.add_child(srow)
+	_status_square = ColorRect.new()
+	_status_square.custom_minimum_size = Vector2(10, 10)
+	_status_square.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_status_square.color = UiTheme.MUTED
+	srow.add_child(_status_square)
+	_status_label = UiTheme.mk_label("", 16, UiTheme.INK)
 	_status_label.custom_minimum_size = Vector2(0, 24)
-	vbox.add_child(_status_label)
+	_status_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	srow.add_child(_status_label)
+	var prow := HBoxContainer.new()
+	prow.add_theme_constant_override("separation", 10)
+	vbox.add_child(prow)
 	_progress_bar = ProgressBar.new()
 	_progress_bar.min_value = 0.0
 	_progress_bar.max_value = 100.0
 	_progress_bar.value = 0.0
-	_progress_bar.show_percentage = true
-	_progress_bar.custom_minimum_size = Vector2(0, 22)
-	vbox.add_child(_progress_bar)
-	var hint := _mk_label("Esc = batalkan tugas (progres hilang)  |  Musuh tetap bergerak selagi kamu kerja!", 13, Color(1, 1, 1, 0.6))
-	vbox.add_child(hint)
-
-
-func _mk_label(text: String, font_size: int, color: Color) -> Label:
-	var l := Label.new()
-	l.text = text
-	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	l.add_theme_font_size_override("font_size", font_size)
-	l.add_theme_color_override("font_color", color)
-	l.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))
-	l.add_theme_constant_override("outline_size", 4)
-	return l
+	_progress_bar.show_percentage = false
+	_progress_bar.custom_minimum_size = Vector2(0, 8)
+	_progress_bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_progress_bar.add_theme_stylebox_override("background", UiTheme.bar_bg_style())
+	_progress_bar.add_theme_stylebox_override("fill", UiTheme.bar_fill_style(UiTheme.AMBER))
+	prow.add_child(_progress_bar)
+	_pct_label = UiTheme.mk_label("0%", 14, UiTheme.MUTED, null, HORIZONTAL_ALIGNMENT_RIGHT)
+	_pct_label.custom_minimum_size = Vector2(48, 0)
+	prow.add_child(_pct_label)
+	var brow := HBoxContainer.new()
+	brow.add_theme_constant_override("separation", 8)
+	vbox.add_child(brow)
+	var hint_left := UiTheme.mk_label("ESC: BATALKAN TUGAS, PROGRES HILANG", 12, UiTheme.MUTED)
+	brow.add_child(hint_left)
+	var hint_right := UiTheme.mk_label("MUSUH TETAP BERGERAK", 12, UiTheme.MUTED, null, HORIZONTAL_ALIGNMENT_RIGHT)
+	hint_right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	brow.add_child(hint_right)
