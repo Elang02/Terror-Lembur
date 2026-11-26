@@ -780,7 +780,7 @@ texture_scale = 0.7
 [node name="HUD" parent="." unique_id=381254606 instance=ExtResource("ps_hud")]
 
 [node name="KeyItemA" type="Node2D" parent="." unique_id=468477838]
-position = Vector2(272, 204)
+position = Vector2(237, 862)
 script = ExtResource("13_7gny6")
 
 [node name="KeyItemB" type="Node2D" parent="." unique_id=1554563649]
@@ -789,7 +789,7 @@ script = ExtResource("13_7gny6")
 key_id = "B"
 
 [node name="KeyItemC" type="Node2D" parent="." unique_id=1481761198]
-position = Vector2(221, 625)
+position = Vector2(82, 686)
 script = ExtResource("13_7gny6")
 key_id = "C"
 
