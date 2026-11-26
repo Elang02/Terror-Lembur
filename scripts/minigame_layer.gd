@@ -25,6 +25,7 @@ const GAME_SCRIPTS: Dictionary = {
 	&"lan": "res://scripts/minigames/mg_lan.gd",
 	&"backup": "res://scripts/minigames/mg_backup.gd",
 	&"rapat": "res://scripts/minigames/mg_rapat.gd",
+	&"kabel": "res://scripts/minigames/mg_kabel.gd",
 }
 const CLOSE_RANGE: float = 102.0
 
