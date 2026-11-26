@@ -2,10 +2,14 @@ class_name GridPathfinder
 extends RefCounted
 ## Grid A* di atas TileMap Level 1 untuk AI enemy.
 ##
-## Walkable = ada tile Floor DAN tidak ada tile Walls/Props DAN bukan
-## pintu terkunci yang masih tertutup. Tetangga 4-arah (tanpa diagonal)
-## supaya enemy tidak memotong sudut dinding.
+## Walkable = ada tile Floor DAN tidak ada tile Walls/Props/Props0/Props1
+## DAN bukan pintu terkunci yang masih tertutup. Tetangga 4-arah
+## (tanpa diagonal) supaya enemy tidak memotong sudut dinding.
 ## Dipakai enemy untuk patrol & chase. Rebuild saat pintu dibuka.
+## Props0/Props1 (objek yang menimpa objek lain) ikut dihitung sebagai
+## penghalang — sebelumnya tidak dicek, jadi musuh disuruh jalan
+## menabrak objek ber-collision di kedua layer itu. DekorDinding /
+## DekorKecil sengaja TIDAK dicek: tile-nya tidak punya collision.
 
 const TILE_SIZE: int = 32
 
@@ -15,13 +19,20 @@ var _height: int = 0
 var _floor_layer: TileMapLayer = null
 var _walls_layer: TileMapLayer = null
 var _props_layer: TileMapLayer = null
+var _extra_blockers: Array[TileMapLayer] = []  # layer penghalang tambahan (Props0, Props1, ...)
 var _blocked_doors: Dictionary = {}  # Vector2i cell -> true (masih tertutup)
 
 
-func setup(floor_layer: TileMapLayer, walls_layer: TileMapLayer, props_layer: TileMapLayer, blocked_doors: Dictionary) -> void:
+# extra_blocker_layers: layer tambahan yang tiap tile-nya menghalangi jalan
+# (mis. Props0/Props1). Opsional — panggilan lama 4 argumen tetap jalan.
+func setup(floor_layer: TileMapLayer, walls_layer: TileMapLayer, props_layer: TileMapLayer, blocked_doors: Dictionary, extra_blocker_layers: Array = []) -> void:
 	_floor_layer = floor_layer
 	_walls_layer = walls_layer
 	_props_layer = props_layer
+	_extra_blockers.clear()
+	for layer: TileMapLayer in extra_blocker_layers:
+		if layer != null:
+			_extra_blockers.append(layer)
 	_blocked_doors = blocked_doors.duplicate()
 	var rect: Rect2i = floor_layer.get_used_rect()
 	_width = rect.size.x
@@ -105,6 +116,9 @@ func _is_walkable_cell(cell: Vector2i) -> bool:
 		return false
 	if _props_layer != null and _props_layer.get_cell_source_id(cell) != -1:
 		return false
+	for layer: TileMapLayer in _extra_blockers:
+		if layer.get_cell_source_id(cell) != -1:
+			return false
 	return true
 
 
