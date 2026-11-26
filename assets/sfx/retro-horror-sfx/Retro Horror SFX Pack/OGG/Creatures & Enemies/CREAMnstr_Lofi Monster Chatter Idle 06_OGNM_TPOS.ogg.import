@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bh5a2lbj2adsn"
+path="res://.godot/imported/CREAMnstr_Lofi Monster Chatter Idle 06_OGNM_TPOS.ogg-d393a814949c8635e0b43614edba3746.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Creatures & Enemies/CREAMnstr_Lofi Monster Chatter Idle 06_OGNM_TPOS.ogg"
+dest_files=["res://.godot/imported/CREAMnstr_Lofi Monster Chatter Idle 06_OGNM_TPOS.ogg-d393a814949c8635e0b43614edba3746.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

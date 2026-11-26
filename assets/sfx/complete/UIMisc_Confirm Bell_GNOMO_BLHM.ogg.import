@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cr6oug44t538d"
+path="res://.godot/imported/UIMisc_Confirm Bell_GNOMO_BLHM.ogg-a39a0e05c938f6ac89f3baa9b42da3d0.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/complete/UIMisc_Confirm Bell_GNOMO_BLHM.ogg"
+dest_files=["res://.godot/imported/UIMisc_Confirm Bell_GNOMO_BLHM.ogg-a39a0e05c938f6ac89f3baa9b42da3d0.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

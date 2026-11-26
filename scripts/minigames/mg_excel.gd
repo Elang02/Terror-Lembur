@@ -217,5 +217,6 @@ func _submit() -> void:
 		_next_question()
 	else:
 		_set_status("Salah! Coba lagi.", false)
+		_report_mistake()
 		_input = ""
 		_refresh_input()

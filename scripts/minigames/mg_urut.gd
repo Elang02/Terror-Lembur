@@ -65,6 +65,7 @@ func handle_key(event: InputEventKey) -> void:
 			_refresh_status()
 	else:
 		_set_status("Urutan salah! Mulai dari awal.", false)
+		_report_mistake()
 		_next = 0
 		_reset_marks()
 		_refresh_status()
@@ -85,11 +86,16 @@ func debug_hint() -> Dictionary:
 func _gen_dates() -> void:
 	var start: int = randi_range(3, 9)
 	_dates.clear()
+	# Naik kumulatif: tiap tanggal = tanggal sebelumnya + 2..4 hari,
+	# jadi urutannya SELALU menaik (dulu randi_range baru per indeks
+	# bisa membuat tanggal turun dan jawaban benar dinilai salah).
+	var d: int = start
 	for i in range(TOTAL):
-		_dates.append(start + i * randi_range(2, 4))
+		_dates.append(d)
+		d += randi_range(2, 4)
 	_display.clear()
-	for d in _dates:
-		_display.append(d)
+	for v in _dates:
+		_display.append(v)
 	_display.shuffle()
 
 

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://erebf8p7qsro"
+path="res://.godot/imported/CREAEthr_Lofi Ghost Death 01_OGNM_TPOS.ogg-b283fc152d8c58ede3c21ed4cbc8d0ea.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Creatures & Enemies/CREAEthr_Lofi Ghost Death 01_OGNM_TPOS.ogg"
+dest_files=["res://.godot/imported/CREAEthr_Lofi Ghost Death 01_OGNM_TPOS.ogg-b283fc152d8c58ede3c21ed4cbc8d0ea.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

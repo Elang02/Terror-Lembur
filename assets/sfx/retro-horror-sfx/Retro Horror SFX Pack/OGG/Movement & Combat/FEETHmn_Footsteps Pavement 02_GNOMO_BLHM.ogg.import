@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ble8xsc5cf4gy"
+path="res://.godot/imported/FEETHmn_Footsteps Pavement 02_GNOMO_BLHM.ogg-548164b638736e8afd5534980069140a.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Movement & Combat/FEETHmn_Footsteps Pavement 02_GNOMO_BLHM.ogg"
+dest_files=["res://.godot/imported/FEETHmn_Footsteps Pavement 02_GNOMO_BLHM.ogg-548164b638736e8afd5534980069140a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://7g5idbck2p0h"
+path="res://.godot/imported/VOXMisc_Sinister Shopkeeper Laugh_GNOMO_BLHM.ogg-0f9d9135b3699743cbbfc7b9da8007b9.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Speech & Voices/VOXMisc_Sinister Shopkeeper Laugh_GNOMO_BLHM.ogg"
+dest_files=["res://.godot/imported/VOXMisc_Sinister Shopkeeper Laugh_GNOMO_BLHM.ogg-0f9d9135b3699743cbbfc7b9da8007b9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

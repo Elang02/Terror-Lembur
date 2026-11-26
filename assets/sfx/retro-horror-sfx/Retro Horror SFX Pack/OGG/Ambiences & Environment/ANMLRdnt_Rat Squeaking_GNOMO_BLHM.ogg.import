@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bc35x0lrtyhgq"
+path="res://.godot/imported/ANMLRdnt_Rat Squeaking_GNOMO_BLHM.ogg-6e249303fa6e02c0a983fbc953eb8a6c.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Ambiences & Environment/ANMLRdnt_Rat Squeaking_GNOMO_BLHM.ogg"
+dest_files=["res://.godot/imported/ANMLRdnt_Rat Squeaking_GNOMO_BLHM.ogg-6e249303fa6e02c0a983fbc953eb8a6c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

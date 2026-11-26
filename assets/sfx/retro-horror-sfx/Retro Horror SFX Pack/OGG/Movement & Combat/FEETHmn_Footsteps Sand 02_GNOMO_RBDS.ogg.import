@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dmdnn6chfa7q1"
+path="res://.godot/imported/FEETHmn_Footsteps Sand 02_GNOMO_RBDS.ogg-fe05adc4e42404bef1d6b47bbe8e5f3a.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Movement & Combat/FEETHmn_Footsteps Sand 02_GNOMO_RBDS.ogg"
+dest_files=["res://.godot/imported/FEETHmn_Footsteps Sand 02_GNOMO_RBDS.ogg-fe05adc4e42404bef1d6b47bbe8e5f3a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

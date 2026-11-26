@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dklfjddca5fl7"
+path="res://.godot/imported/UIBeep_Back Cancel 01_GNOMO_CCRS.ogg-500644de825067e4e6d147141bb473b8.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/keypad-beep/UIBeep_Back Cancel 01_GNOMO_CCRS.ogg"
+dest_files=["res://.godot/imported/UIBeep_Back Cancel 01_GNOMO_CCRS.ogg-500644de825067e4e6d147141bb473b8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

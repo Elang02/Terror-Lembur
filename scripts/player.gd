@@ -6,8 +6,13 @@ extends CharacterBody2D
 ## (sembunyi/terkurung/bawa item) dimiliki host dan disebar via RPC reliable.
 ## Grup: "Player".
 
-const WALK_SPEED: float = 170.0
-const SPRINT_SPEED: float = 235.0
+const WALK_SPEED: float = 150.0
+const SPRINT_SPEED: float = 210.0
+const STAMINA_MAX: float = 100.0
+const STAMINA_DRAIN: float = 25.0   # habis per detik saat lari
+const STAMINA_REGEN: float = 18.0   # terisi per detik saat tidak lari
+const STAMINA_REGEN_DELAY: float = 0.8  # jeda sebelum stamina mulai terisi lagi
+const STAMINA_MIN_TO_SPRINT: float = 25.0  # stamina minimal untuk bisa lari lagi setelah habis
 const SYNC_INTERVAL: float = 0.05
 
 @export var player_index: int = 1
@@ -20,6 +25,9 @@ var is_sprinting: bool = false
 var iframes_left: float = 0.0
 var interact_held: bool = false
 var minigame_open: bool = false
+var stamina: float = STAMINA_MAX
+var _sprint_locked: bool = false
+var _regen_delay: float = 0.0
 
 var _sync_timer: float = 0.0
 var _target_pos: Vector2 = Vector2.ZERO
@@ -63,16 +71,6 @@ func _physics_process(delta: float) -> void:
 		return
 	var level: Node = get_tree().get_first_node_in_group("LevelManager")
 	var level_running: bool = level == null or level.is_level_running()
-	if is_downed or is_hidden or minigame_open or not level_running:
-		velocity = Vector2.ZERO
-		move_and_slide()
-		_sync_tick(delta)
-		return
-	var dir: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	is_sprinting = Input.is_action_pressed("sprint") and dir.length() > 0.1
-	var speed: float = SPRINT_SPEED if is_sprinting else WALK_SPEED
-	velocity = dir.normalized() * speed if dir.length() > 0.1 else Vector2.ZERO
-	move_and_slide()
 	# Interact: tekan/lepas diteruskan ke Level (host yang memutuskan efeknya).
 	if Input.is_action_just_pressed("interact"):
 		interact_held = true
@@ -82,6 +80,31 @@ func _physics_process(delta: float) -> void:
 		interact_held = false
 		if level != null:
 			level.notify_interact_released(peer_id)
+	if is_downed or is_hidden or minigame_open or not level_running:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		_sync_tick(delta)
+		return
+	var dir: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	 # Stamina: lari menguras, diam/jalan mengisi lagi (setelah jeda singkat).
+	var want_sprint: bool = Input.is_action_pressed("sprint") and dir.length() > 0.1
+	if want_sprint and not _sprint_locked:
+		is_sprinting = true
+		stamina = maxf(0.0, stamina - STAMINA_DRAIN * delta)
+		_regen_delay = STAMINA_REGEN_DELAY
+		if stamina <= 0.0:
+			_sprint_locked = true
+	else:
+		is_sprinting = false
+		if _regen_delay > 0.0:
+			_regen_delay -= delta
+		elif stamina < STAMINA_MAX:
+			stamina = minf(STAMINA_MAX, stamina + STAMINA_REGEN * delta)
+			if _sprint_locked and stamina >= STAMINA_MIN_TO_SPRINT:
+				_sprint_locked = false
+	var speed: float = SPRINT_SPEED if is_sprinting else WALK_SPEED
+	velocity = dir.normalized() * speed if dir.length() > 0.1 else Vector2.ZERO
+	move_and_slide()
 	_sync_tick(delta)
 
 
@@ -140,6 +163,8 @@ func add_trauma(amount: float) -> void:
 func grant_iframes(seconds: float) -> void:
 	iframes_left = maxf(iframes_left, seconds)
 
+func get_stamina_ratio() -> float:
+	return clampf(stamina / STAMINA_MAX, 0.0, 1.0)
 
 # --- Dipanggil host (lokal) lalu disebar ke peer lain via apply_net_state. ---
 func apply_local_state(downed: bool, hidden: bool, carrying: bool) -> void:

@@ -83,6 +83,7 @@ func handle_key(event: InputEventKey) -> void:
 			_set_status("Lanjut...", true)
 	else:
 		_set_status("Salah urutan! Ulangi rondenya.", false)
+		_report_mistake()
 		_start_round()
 
 

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dcbly5ddq1174"
+path="res://.godot/imported/MECHLvr_Lever With Chain 02_GNOMO_HELL.ogg-08b87110566cab5fb3b516a58775a1a9.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Ambiences & Environment/MECHLvr_Lever With Chain 02_GNOMO_HELL.ogg"
+dest_files=["res://.godot/imported/MECHLvr_Lever With Chain 02_GNOMO_HELL.ogg-08b87110566cab5fb3b516a58775a1a9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

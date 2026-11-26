@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://3t13q6sunrah"
+path="res://.godot/imported/CREAHmn_Lofi Ogre Attack 01_OGNM_TPOS.wav-f87a183e73803802ef5f2d224d409a5e.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/Creatures & Enemies/CREAHmn_Lofi Ogre Attack 01_OGNM_TPOS.wav"
+dest_files=["res://.godot/imported/CREAHmn_Lofi Ogre Attack 01_OGNM_TPOS.wav-f87a183e73803802ef5f2d224d409a5e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

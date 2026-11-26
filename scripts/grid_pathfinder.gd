@@ -62,14 +62,22 @@ func is_cell_blocked(cell: Vector2i) -> bool:
 func find_path_world(from_pos: Vector2, to_pos: Vector2) -> PackedVector2Array:
 	if _astar.get_point_count() == 0:
 		return PackedVector2Array()
-	var from_id: int = _astar.get_closest_point(from_pos)
-	var to_id: int = _astar.get_closest_point(to_pos)
-	if from_id == -1 or to_id == -1:
+	# Kedua ujung dijepit ke sel lantai terdekat lewat grid (BFS),
+	# jadi A* tidak pernah diminta ke sel di seberang tembok.
+	var from_id: int = _cell_id(nearest_walkable_cell(world_to_cell(from_pos)))
+	var to_id: int = _cell_id(nearest_walkable_cell(world_to_cell(to_pos)))
+	if not _astar.has_point(from_id) or not _astar.has_point(to_id):
 		return PackedVector2Array()
 	if from_id == to_id:
 		return PackedVector2Array([_astar.get_point_position(to_id)])
 	return _astar.get_point_path(from_id, to_id)
 
+
+
+func snap_to_walkable(pos: Vector2) -> Vector2:
+	if _astar.get_point_count() == 0:
+		return pos
+	return cell_to_world(nearest_walkable_cell(world_to_cell(pos)))
 
 func cell_to_world(cell: Vector2i) -> Vector2:
 	return Vector2(cell) * TILE_SIZE + Vector2(TILE_SIZE, TILE_SIZE) * 0.5
@@ -98,3 +106,27 @@ func _is_walkable_cell(cell: Vector2i) -> bool:
 	if _props_layer != null and _props_layer.get_cell_source_id(cell) != -1:
 		return false
 	return true
+
+
+func nearest_walkable_cell(cell: Vector2i) -> Vector2i:
+	# Sel terdekat yang bisa dilewati, dicari per langkah grid (BFS)
+	# menyusuri lantai — BUKAN jarak lurus, supaya tujuan tidak
+	# "melompat" ke sel di seberang sudut tembok.
+	if _is_walkable_cell(cell):
+		return cell
+	var seen: Dictionary = {cell: true}
+	var queue: Array[Vector2i] = [cell]
+	var head: int = 0
+	while head < queue.size():
+		var cur: Vector2i = queue[head]
+		head += 1
+		for nb: Vector2i in [cur + Vector2i(1, 0), cur + Vector2i(-1, 0), cur + Vector2i(0, 1), cur + Vector2i(0, -1)]:
+			if seen.has(nb):
+				continue
+			seen[nb] = true
+			if _is_walkable_cell(nb):
+				return nb
+			queue.append(nb)
+		if queue.size() > 4096:
+			break
+	return cell

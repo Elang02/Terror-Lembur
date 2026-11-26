@@ -1,7 +1,9 @@
 extends CanvasLayer
 ## HUD Level 1 — dibangun dari kode supaya mudah diubah tanpa mengotak-atik
 ## file .tscn. Menampilkan tugas, waktu, status pemain, prompt interaksi,
-## pesan tengah layar, panel hasil (ending + bintang), dan panel putus koneksi.
+## pesan tengah layar, panel hasil (ending + penilaian), dan panel putus koneksi.
+## Gaya visual: UiTheme (kantor lembur: gelap hangat, garis rambut, mono,
+## satu aksen amber).
 
 var _tasks_label: Label = null
 var _timer_label: Label = null
@@ -10,18 +12,27 @@ var _prompt_label: Label = null
 var _message_label: Label = null
 var _flash_rect: ColorRect = null
 var _result_panel: CenterContainer = null
+var _result_dim: ColorRect = null
 var _result_title: Label = null
-var _result_detail: Label = null
+var _result_stats: VBoxContainer = null
+var _stat_time: Label = null
+var _stat_deaths: Label = null
+var _stat_tasks: Label = null
+var _result_star_boxes: Array[UiTheme.StarIcon] = []
+var _result_star_count: Label = null
 var _disconnect_panel: CenterContainer = null
 var _disconnect_label: Label = null
 var _message_timer: float = 0.0
 var _flash_alpha: float = 0.0
 var _task_total: int = 0
+var _stamina_bar: ProgressBar = null
+var _stamina_fill: StyleBoxFlat = null
 
 
 func _ready() -> void:
 	layer = 10
 	_build_top_bar()
+	_build_stamina_bar()
 	_build_prompt_and_message()
 	_build_result_panel()
 	_build_disconnect_panel()
@@ -54,8 +65,9 @@ func set_task_total(total: int) -> void:
 func update_tasks(done: int, total: int, exit_open: bool) -> void:
 	if _tasks_label == null:
 		return
-	var extra: String = " — PINTU TERBUKA!" if exit_open else ""
+	var extra: String = " | PINTU TERBUKA!" if exit_open else ""
 	_tasks_label.text = "Tugas: %d/%d%s" % [done, total, extra]
+	_tasks_label.add_theme_color_override("font_color", UiTheme.AMBER if exit_open else UiTheme.INK)
 
 
 func update_timer(time_sec: float) -> void:
@@ -76,6 +88,40 @@ func show_prompt(text: String) -> void:
 	if _prompt_label != null:
 		_prompt_label.text = text
 
+func set_stamina(ratio: float) -> void:
+	if _stamina_bar == null:
+		return
+	_stamina_bar.value = clampf(ratio, 0.0, 1.0) * 100.0
+	if _stamina_fill != null:
+		_stamina_fill.bg_color = UiTheme.RED if ratio < 0.25 else UiTheme.GREEN
+
+
+func _build_stamina_bar() -> void:
+	var label := _mk_label("STAMINA", 12, UiTheme.MUTED, Vector2.ZERO)
+	label.anchor_top = 1.0
+	label.anchor_bottom = 1.0
+	label.offset_left = 12
+	label.offset_right = 80
+	label.offset_top = -56
+	label.offset_bottom = -36
+	add_child(label)
+	_stamina_fill = UiTheme.bar_fill_style(UiTheme.GREEN)
+	var bg := UiTheme.bar_bg_style()
+	_stamina_bar = ProgressBar.new()
+	_stamina_bar.min_value = 0.0
+	_stamina_bar.max_value = 100.0
+	_stamina_bar.value = 100.0
+	_stamina_bar.show_percentage = false
+	_stamina_bar.add_theme_stylebox_override("background", bg)
+	_stamina_bar.add_theme_stylebox_override("fill", _stamina_fill)
+	_stamina_bar.anchor_top = 1.0
+	_stamina_bar.anchor_bottom = 1.0
+	_stamina_bar.offset_left = 84
+	_stamina_bar.offset_right = 284
+	_stamina_bar.offset_top = -54
+	_stamina_bar.offset_bottom = -34
+	_stamina_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_stamina_bar)
 
 func show_message(text: String) -> void:
 	if _message_label == null:
@@ -93,12 +139,16 @@ func show_result(success: bool, stars: int, ending: String, time_sec: float, dea
 		return
 	var m: int = int(time_sec) / 60
 	var s: int = int(time_sec) % 60
-	_result_title.text = ending if success else "GAGAL — KEDUA PEMAIN TERTANGKAP"
-	_result_title.add_theme_color_override("font_color", Color(0.6, 1, 0.65) if success and ending == "Happy Ending" else (Color(1, 0.8, 0.4) if success else Color(1, 0.45, 0.4)))
-	var star_text: String = ""
-	for i: int in range(3):
-		star_text += "★" if i < stars else "☆"
-	_result_detail.text = "Bintang: %s (%d/3)\nWaktu: %02d:%02d | Tertangkap: %d | Tugas: %d/%d" % [star_text, stars, m, s, deaths, done, total]
+	var title_color: Color = UiTheme.GREEN if success and ending == "Happy Ending" else (UiTheme.AMBER if success else UiTheme.RED)
+	_result_title.text = (ending if success else "GAGAL: KEDUA PEMAIN TERTANGKAP").to_upper()
+	_result_title.add_theme_color_override("font_color", title_color)
+	_stat_time.text = "%02d:%02d" % [m, s]
+	_stat_deaths.text = str(deaths)
+	_stat_tasks.text = "%d/%d" % [done, total]
+	for i in range(3):
+		_set_star_box(_result_star_boxes[i], i < stars)
+	_result_star_count.text = "%d/3" % stars
+	_result_dim.visible = true
 	_result_panel.visible = true
 
 
@@ -109,19 +159,35 @@ func show_disconnect(text: String) -> void:
 	_disconnect_panel.visible = true
 
 
+func hide_disconnect() -> void:
+	# Dipanggil saat partner yang sempat terputus bergabung lagi,
+	# supaya pesan "Partner terputus" hilang bersamaan dengan
+	# game yang dilanjutkan (lihat _on_peer_joined di level_1.gd).
+	if _disconnect_panel == null:
+		return
+	_disconnect_panel.visible = false
+
+
 func _build_top_bar() -> void:
-	var bg := ColorRect.new()
-	bg.color = Color(0, 0, 0, 0.55)
-	bg.position = Vector2(10, 10)
-	bg.size = Vector2(320, 62)
-	add_child(bg)
-	_tasks_label = _mk_label("Tugas: 0/0", 16, Color.WHITE, Vector2(18, 16))
-	_tasks_label.size = Vector2(304, 22)
-	add_child(_tasks_label)
-	_timer_label = _mk_label("Waktu: 00:00", 16, Color(1, 0.9, 0.6), Vector2(18, 42))
-	_timer_label.size = Vector2(304, 22)
-	add_child(_timer_label)
-	_status_label = _mk_label("", 14, Color.WHITE, Vector2.ZERO)
+	var panel := PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", UiTheme.panel_style())
+	panel.position = Vector2(10, 10)
+	panel.size = Vector2(320, 62)
+	add_child(panel)
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 10)
+	margin.add_theme_constant_override("margin_right", 10)
+	margin.add_theme_constant_override("margin_top", 6)
+	margin.add_theme_constant_override("margin_bottom", 6)
+	panel.add_child(margin)
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 2)
+	margin.add_child(vbox)
+	_tasks_label = _mk_label("Tugas: 0/0", 16, UiTheme.INK, Vector2.ZERO)
+	vbox.add_child(_tasks_label)
+	_timer_label = _mk_label("Waktu: 00:00", 16, UiTheme.AMBER, Vector2.ZERO)
+	vbox.add_child(_timer_label)
+	_status_label = _mk_label("", 14, UiTheme.INK, Vector2.ZERO)
 	_status_label.anchor_left = 1.0
 	_status_label.anchor_right = 1.0
 	_status_label.offset_left = -320
@@ -130,7 +196,7 @@ func _build_top_bar() -> void:
 	_status_label.offset_bottom = 60
 	_status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(_status_label)
-	var hint := _mk_label("WASD/Panah: Gerak  |  Shift: Lari (berisik!)  |  E: Interaksi  |  Esc: Batalkan tugas", 12, Color(1, 1, 1, 0.6), Vector2.ZERO)
+	var hint := _mk_label("WASD/Panah: Gerak  |  Shift: Lari (berisik!)  |  E: Interaksi  |  Esc: Batalkan tugas", 12, UiTheme.MUTED, Vector2.ZERO)
 	hint.anchor_top = 1.0
 	hint.anchor_bottom = 1.0
 	hint.offset_left = 12
@@ -141,29 +207,24 @@ func _build_top_bar() -> void:
 
 
 func _build_prompt_and_message() -> void:
-	var prompt_bg := ColorRect.new()
-	prompt_bg.color = Color(0, 0, 0, 0.55)
-	prompt_bg.anchor_left = 0.5
-	prompt_bg.anchor_right = 0.5
-	prompt_bg.anchor_top = 1.0
-	prompt_bg.anchor_bottom = 1.0
-	prompt_bg.offset_left = -320
-	prompt_bg.offset_right = 320
-	prompt_bg.offset_top = -58
-	prompt_bg.offset_bottom = -30
-	add_child(prompt_bg)
-	_prompt_label = _mk_label("", 16, Color(1, 1, 0.7), Vector2.ZERO)
-	_prompt_label.anchor_left = 0.5
-	_prompt_label.anchor_right = 0.5
-	_prompt_label.anchor_top = 1.0
-	_prompt_label.anchor_bottom = 1.0
-	_prompt_label.offset_left = -320
-	_prompt_label.offset_right = 320
-	_prompt_label.offset_top = -56
-	_prompt_label.offset_bottom = -32
+	var prompt_panel := PanelContainer.new()
+	prompt_panel.add_theme_stylebox_override("panel", UiTheme.panel_style())
+	prompt_panel.anchor_left = 0.5
+	prompt_panel.anchor_right = 0.5
+	prompt_panel.anchor_top = 1.0
+	prompt_panel.anchor_bottom = 1.0
+	prompt_panel.offset_left = -320
+	prompt_panel.offset_right = 320
+	prompt_panel.offset_top = -58
+	prompt_panel.offset_bottom = -30
+	add_child(prompt_panel)
+	var prompt_center := CenterContainer.new()
+	prompt_panel.add_child(prompt_center)
+	_prompt_label = _mk_label("", 16, UiTheme.INK, Vector2.ZERO)
 	_prompt_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(_prompt_label)
-	_message_label = _mk_label("", 17, Color(1, 0.85, 0.5), Vector2.ZERO)
+	_prompt_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	prompt_center.add_child(_prompt_label)
+	_message_label = _mk_label("", 17, UiTheme.AMBER, Vector2.ZERO)
 	_message_label.anchor_left = 0.5
 	_message_label.anchor_right = 0.5
 	_message_label.offset_left = -400
@@ -175,33 +236,74 @@ func _build_prompt_and_message() -> void:
 
 
 func _build_result_panel() -> void:
+	_result_dim = ColorRect.new()
+	_result_dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_result_dim.color = UiTheme.DIM
+	_result_dim.visible = false
+	_result_dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_result_dim)
 	_result_panel = CenterContainer.new()
 	_result_panel.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_result_panel.visible = false
 	add_child(_result_panel)
 	var panel := PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", UiTheme.panel_style())
+	panel.custom_minimum_size = Vector2(640, 0)
 	_result_panel.add_child(panel)
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 32)
+	margin.add_theme_constant_override("margin_right", 32)
+	margin.add_theme_constant_override("margin_top", 26)
+	margin.add_theme_constant_override("margin_bottom", 26)
+	panel.add_child(margin)
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 10)
-	panel.add_child(vbox)
-	_result_title = _mk_label("", 30, Color.WHITE, Vector2.ZERO)
-	_result_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_theme_constant_override("separation", 0)
+	margin.add_child(vbox)
+	_result_title = UiTheme.mk_title("", 40, UiTheme.INK)
 	vbox.add_child(_result_title)
-	_result_detail = _mk_label("", 16, Color.WHITE, Vector2.ZERO)
-	_result_detail.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(_result_detail)
+	vbox.add_child(_spacer(14))
+	vbox.add_child(UiTheme.hairline())
+	vbox.add_child(_spacer(12))
+	_result_stats = VBoxContainer.new()
+	_result_stats.add_theme_constant_override("separation", 8)
+	vbox.add_child(_result_stats)
+	_stat_time = _stat_row("WAKTU")
+	_stat_deaths = _stat_row("TERTANGKAP")
+	_stat_tasks = _stat_row("TUGAS")
+	vbox.add_child(_spacer(12))
+	vbox.add_child(UiTheme.hairline())
+	vbox.add_child(_spacer(12))
+	var rate_row := HBoxContainer.new()
+	rate_row.add_theme_constant_override("separation", 10)
+	vbox.add_child(rate_row)
+	var rate_label := UiTheme.mk_label("PENILAIAN", 14, UiTheme.MUTED)
+	rate_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	rate_row.add_child(rate_label)
+	_result_star_boxes.clear()
+	for i in range(3):
+		var star := UiTheme.StarIcon.new()
+		star.custom_minimum_size = Vector2(20, 20)
+		star.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		rate_row.add_child(star)
+		_result_star_boxes.append(star)
+	_result_star_count = UiTheme.mk_label("0/3", 16, UiTheme.INK)
+	_result_star_count.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	rate_row.add_child(_result_star_count)
+	vbox.add_child(_spacer(22))
 	var hbox := HBoxContainer.new()
 	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	hbox.add_theme_constant_override("separation", 12)
 	vbox.add_child(hbox)
 	var retry := Button.new()
-	retry.text = "Main Lagi"
-	retry.custom_minimum_size = Vector2(140, 40)
+	retry.text = "MAIN LAGI"
+	retry.custom_minimum_size = Vector2(160, 44)
+	UiTheme.style_button(retry)
 	retry.pressed.connect(_on_retry_pressed)
 	hbox.add_child(retry)
 	var menu := Button.new()
-	menu.text = "Menu Utama"
-	menu.custom_minimum_size = Vector2(140, 40)
+	menu.text = "MENU UTAMA"
+	menu.custom_minimum_size = Vector2(160, 44)
+	UiTheme.style_button(menu)
 	menu.pressed.connect(_on_menu_pressed)
 	hbox.add_child(menu)
 
@@ -212,28 +314,63 @@ func _build_disconnect_panel() -> void:
 	_disconnect_panel.visible = false
 	add_child(_disconnect_panel)
 	var panel := PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", UiTheme.panel_style())
+	panel.custom_minimum_size = Vector2(480, 0)
 	_disconnect_panel.add_child(panel)
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 28)
+	margin.add_theme_constant_override("margin_right", 28)
+	margin.add_theme_constant_override("margin_top", 22)
+	margin.add_theme_constant_override("margin_bottom", 22)
+	panel.add_child(margin)
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 10)
-	panel.add_child(vbox)
-	_disconnect_label = _mk_label("", 16, Color.WHITE, Vector2.ZERO)
-	_disconnect_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_theme_constant_override("separation", 16)
+	margin.add_child(vbox)
+	_disconnect_label = UiTheme.mk_label("", 16, UiTheme.INK, null, HORIZONTAL_ALIGNMENT_CENTER)
+	_disconnect_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(_disconnect_label)
+	var hbox := HBoxContainer.new()
+	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_child(hbox)
 	var menu := Button.new()
-	menu.text = "Menu Utama"
-	menu.custom_minimum_size = Vector2(140, 40)
+	menu.text = "MENU UTAMA"
+	menu.custom_minimum_size = Vector2(160, 44)
+	UiTheme.style_button(menu)
 	menu.pressed.connect(_on_menu_pressed)
-	vbox.add_child(menu)
+	hbox.add_child(menu)
+
+
+func _spacer(h: int) -> Control:
+	var c := Control.new()
+	c.custom_minimum_size = Vector2(0, h)
+	c.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return c
+
+
+func _stat_row(label_text: String) -> Label:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	var lab := UiTheme.mk_label(label_text, 14, UiTheme.MUTED)
+	lab.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(lab)
+	var val := UiTheme.mk_label("", 16, UiTheme.INK, null, HORIZONTAL_ALIGNMENT_RIGHT)
+	val.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(val)
+	_result_stats.add_child(row)
+	return val
+
+
+func _set_star_box(box: UiTheme.StarIcon, filled: bool) -> void:
+	box.filled = filled
 
 
 func _mk_label(text: String, font_size: int, color: Color, pos: Vector2) -> Label:
-	var l := Label.new()
-	l.text = text
+	# Label HUD: mono sistem. Outline tipis dipertahankan karena label
+	# duduk langsung di atas scene game, bukan di dalam panel.
+	var l := UiTheme.mk_label(text, font_size, color)
 	l.position = pos
-	l.add_theme_font_size_override("font_size", font_size)
-	l.add_theme_color_override("font_color", color)
-	l.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))
-	l.add_theme_constant_override("outline_size", 4)
+	l.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
+	l.add_theme_constant_override("outline_size", 3)
 	return l
 
 

@@ -62,6 +62,7 @@ func handle_key(event: InputEventKey) -> void:
 			_next_round()
 	else:
 		_set_status("Bukan itu! Cari lagi.", false)
+		_report_mistake()
 
 
 func tick(_delta: float) -> void:

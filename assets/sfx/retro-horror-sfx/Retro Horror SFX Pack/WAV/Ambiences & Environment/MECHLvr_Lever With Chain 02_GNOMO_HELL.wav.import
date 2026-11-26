@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b5lw5yrq8vo1q"
+path="res://.godot/imported/MECHLvr_Lever With Chain 02_GNOMO_HELL.wav-c978ce1eb3791db137a3098802cf5e71.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/Ambiences & Environment/MECHLvr_Lever With Chain 02_GNOMO_HELL.wav"
+dest_files=["res://.godot/imported/MECHLvr_Lever With Chain 02_GNOMO_HELL.wav-c978ce1eb3791db137a3098802cf5e71.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

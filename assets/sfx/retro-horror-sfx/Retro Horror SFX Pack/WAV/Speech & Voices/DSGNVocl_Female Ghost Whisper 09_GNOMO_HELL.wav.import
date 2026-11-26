@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cb6617ebd2qq0"
+path="res://.godot/imported/DSGNVocl_Female Ghost Whisper 09_GNOMO_HELL.wav-07b4dd887e253c80f1a298dcf44386db.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/Speech & Voices/DSGNVocl_Female Ghost Whisper 09_GNOMO_HELL.wav"
+dest_files=["res://.godot/imported/DSGNVocl_Female Ghost Whisper 09_GNOMO_HELL.wav-07b4dd887e253c80f1a298dcf44386db.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

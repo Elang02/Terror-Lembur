@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c5hu4x18352tg"
+path="res://.godot/imported/DSGNVocl_Female Ghost Whisper 09_GNOMO_HELL.ogg-1b06ef08494973d7243e467d604b9f31.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Speech & Voices/DSGNVocl_Female Ghost Whisper 09_GNOMO_HELL.ogg"
+dest_files=["res://.godot/imported/DSGNVocl_Female Ghost Whisper 09_GNOMO_HELL.ogg-1b06ef08494973d7243e467d604b9f31.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

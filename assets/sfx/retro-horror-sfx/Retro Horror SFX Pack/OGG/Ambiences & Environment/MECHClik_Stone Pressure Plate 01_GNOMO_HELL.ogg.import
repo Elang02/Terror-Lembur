@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bo24bhktj6rfj"
+path="res://.godot/imported/MECHClik_Stone Pressure Plate 01_GNOMO_HELL.ogg-2fa212ec17b603189102f71247d82a06.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Ambiences & Environment/MECHClik_Stone Pressure Plate 01_GNOMO_HELL.ogg"
+dest_files=["res://.godot/imported/MECHClik_Stone Pressure Plate 01_GNOMO_HELL.ogg-2fa212ec17b603189102f71247d82a06.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

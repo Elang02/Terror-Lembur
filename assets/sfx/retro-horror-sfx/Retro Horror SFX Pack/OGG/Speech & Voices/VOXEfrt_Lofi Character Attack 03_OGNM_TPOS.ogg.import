@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b53lhs2c6n5bo"
+path="res://.godot/imported/VOXEfrt_Lofi Character Attack 03_OGNM_TPOS.ogg-dfa31a3c49c7de74db599fbbfa049981.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Speech & Voices/VOXEfrt_Lofi Character Attack 03_OGNM_TPOS.ogg"
+dest_files=["res://.godot/imported/VOXEfrt_Lofi Character Attack 03_OGNM_TPOS.ogg-dfa31a3c49c7de74db599fbbfa049981.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

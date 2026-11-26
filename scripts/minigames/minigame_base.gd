@@ -11,11 +11,18 @@ extends Control
 
 signal finished
 signal status_changed(text: String, good: bool)
+signal mistake_made
 
 var game_title: String = "Tugas"
 var instructions: String = ""
 
 var _done: bool = false
+var is_mirror: bool = false  # true = hanya menampilkan state dari server (task co-op bersama)
+
+# Status terakhir (dipakai snapshot co-op supaya pemain lain ikut melihat
+# pesan benar/salah dari otoritas server).
+var _last_status: String = ""
+var _last_status_good: bool = true
 
 
 func setup() -> void:
@@ -49,19 +56,39 @@ func _finish() -> void:
 	finished.emit()
 
 
+func _report_mistake() -> void:
+	# Kesalahan pemain (jawaban salah, dsb.) — layer meneruskannya ke
+	# level supaya musuh mendengar dan mendekat.
+	mistake_made.emit()
+
+
+func supports_shared() -> bool:
+	# Task co-op bersama (satu puzzle dikerjakan berdua)? Hanya
+	# mg_lan/mg_backup/mg_rapat yang meng-override ini jadi true.
+	return false
+
+
+func get_shared_state() -> Dictionary:
+	# Snapshot state untuk dikirim dari otoritas server ke mirror pemain.
+	return {}
+
+
+func apply_shared_state(_state: Dictionary) -> void:
+	# Terapkan snapshot dari server ke tampilan mirror. Hanya dipakai
+	# game yang supports_shared().
+	pass
+
+
 func _set_status(text: String, good: bool) -> void:
+	_last_status = text
+	_last_status_good = good
 	status_changed.emit(text, good)
 
 
 func _mk_label(text: String, font_size: int, color: Color = Color.WHITE) -> Label:
-	var l := Label.new()
-	l.text = text
-	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	l.add_theme_font_size_override("font_size", font_size)
-	l.add_theme_color_override("font_color", color)
-	l.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))
-	l.add_theme_constant_override("outline_size", 4)
-	return l
+	# Label minigame: mono sistem (UiTheme), tanpa outline. Semua label
+	# duduk di dalam panel gelap, jadi outline hitam tebal tidak perlu.
+	return UiTheme.mk_label(text, font_size, color, null, HORIZONTAL_ALIGNMENT_CENTER)
 
 
 func _num_key(event: InputEventKey, n: int) -> bool:

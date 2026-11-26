@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bagj383jn8viv"
+path="res://.godot/imported/UIClick_Click Hover 01_GNOMO_CCRS.ogg-93f7ed31f03dc95bc4bbf9c6beba80dc.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/tick/UIClick_Click Hover 01_GNOMO_CCRS.ogg"
+dest_files=["res://.godot/imported/UIClick_Click Hover 01_GNOMO_CCRS.ogg-93f7ed31f03dc95bc4bbf9c6beba80dc.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

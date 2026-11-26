@@ -10,16 +10,23 @@ extends Node2D
 
 const PLAYER_SCENE: PackedScene = preload("res://scenes/player.tscn")
 const LEVEL_ID: String = "level_1"
-const PAR_TIME: float = 360.0
+const PAR_TIME: float = 480.0
 const TASK_RANGE: float = 62.0
 const HIDE_RANGE: float = 50.0
 const REVIVE_RANGE: float = 52.0
+const KEY_RANGE: float = 52.0
+const DOOR_RANGE: float = 56.0
+const TRAP_STEP_RADIUS: float = 20.0
+const TRAP_USE_RANGE: float = 64.0
+const VISION_RADIUS: float = 150.0
+const LAMP_RADIUS: float = 192.0
 const CAGE_RANGE: float = 68.0
 const EXIT_RADIUS: float = 72.0
 const EXIT_HOLD: float = 1.5
 const RESCUE_TIME: float = 2.0
 const SOLO_REVIVE_DELAY: float = 12.0
-const BASE_MODULATE: Color = Color(0.198, 0.198, 0.263, 1.0)
+const SHARED_COOP_TYPES: Array[StringName] = [&"lan", &"backup", &"rapat"]
+const BASE_MODULATE: Color = Color(0.077, 0.077, 0.112, 1.0)
 const BLACKOUT_MODULATE: Color = Color(0.032, 0.032, 0.052, 1.0)
 
 var _level_active: bool = false
@@ -32,6 +39,7 @@ var _exit_progress: float = 0.0
 var _rescue_progress: float = 0.0
 var _cage_peer: int = -1
 var _revive_carrier: int = -1
+var _key_carriers: Dictionary = {"A": -1, "B": -1, "C": -1}
 var _revive_visible: bool = false
 var _solo_revive_timer: float = -1.0
 var _wipe_timer: float = -1.0
@@ -49,7 +57,18 @@ var _lights: Array[PointLight2D] = []
 var _light_base: Array[float] = []
 var _light_phase: Array[float] = []
 var _pathfinder: GridPathfinder = null
-var _server_parts: Dictionary = {}  # peer_id -> true (bagian server selesai)
+var _server_parts: Dictionary = {}  # tid -> {peer_id -> true} (bagian co-op, per tugas)
+var _task_busy: Dictionary = {}  # tid -> peer_id (tugas SOLO sedang dikerjakan siapa)
+var _local_task: StringName = StringName("")  # tugas yang sedang dibuka pemain lokal
+var _sync_received: bool = false  # klien sudah menerima state penuh dari host?
+var _sync_retry: float = 0.0  # timer ulang request_sync (klien saja)
+var _coop_sessions: Dictionary = {}  # tid -> {"game": MinigameBase, "players": Array[int]} (task co-op bersama)
+var _coop_last_key_peer: int = -1  # pemain terakhir yang menekan tombol di puzzle bersama
+var _coop_broadcast_timer: float = 0.0
+var _wait_overlay: CanvasLayer = null  # overlay "MENUNGGU HOST" untuk klien yang masuk duluan
+var _traps: Array[Node] = []
+var _trap_by_id: Dictionary = {}  # trap_id -> Trap
+var _vision_timer: float = 0.0
 var minigame_layer: MinigameLayer = null
 
 @onready var floor_layer: TileMapLayer = get_node_or_null("Floor")
@@ -60,16 +79,23 @@ var minigame_layer: MinigameLayer = null
 @onready var tasks_container: Node2D = get_node_or_null("Tasks")
 @onready var spots_container: Node2D = get_node_or_null("HidingSpots")
 @onready var doors_container: Node2D = get_node_or_null("Doors")
+@onready var traps_container: Node2D = get_node_or_null("Traps")
 @onready var spawns_container: Node2D = get_node_or_null("Spawns")
 @onready var lights_container: Node2D = get_node_or_null("Lights")
 @onready var enemy: CharacterBody2D = get_node_or_null("Enemy")
 @onready var exit_door: Node2D = get_node_or_null("ExitDoor")
 @onready var cage: Node2D = get_node_or_null("Cage")
 @onready var revive_item: Node2D = get_node_or_null("ReviveItem")
+@onready var key_item_a: Node2D = get_node_or_null("KeyItemA")
+@onready var key_item_b: Node2D = get_node_or_null("KeyItemB")
+@onready var key_item_c: Node2D = get_node_or_null("KeyItemC")
 @onready var hud: CanvasLayer = get_node_or_null("HUD")
 
 
 func _ready() -> void:
+	# Backsound Level 1 (The Leaves) — crossfade dari lagu menu /
+	# cerita ke lagu level, lalu loop crossfade sendiri di MusicManager.
+	MusicManager.play_level()
 	add_to_group("LevelManager")
 	randomize()
 	_collect_level_nodes()
@@ -91,6 +117,8 @@ func _ready() -> void:
 	minigame_layer = MinigameLayer.new()
 	minigame_layer.name = "MinigameLayer"
 	add_child(minigame_layer)
+	if NetworkManager.mode == NetworkManager.Mode.CLIENT:
+		_build_join_wait_overlay()
 	_update_hud_static()
 
 
@@ -111,6 +139,10 @@ func _collect_level_nodes() -> void:
 	if doors_container != null:
 		for d: Node in doors_container.get_children():
 			_doors[d.door_id] = d
+	if traps_container != null:
+		for tr: Node in traps_container.get_children():
+			_traps.append(tr)
+			_trap_by_id[tr.trap_id] = tr
 	if spots_container != null:
 		for s: Node in spots_container.get_children():
 			_spots.append(s)
@@ -132,10 +164,19 @@ func _setup_enemy() -> void:
 	if enemy == null:
 		return
 	enemy.pathfinder = _pathfinder
-	enemy.patrol_points = _marker_positions("Patrol", 8, [Vector2i(11, 11), Vector2i(30, 11), Vector2i(53, 11), Vector2i(53, 26), Vector2i(30, 27), Vector2i(11, 27), Vector2i(11, 18), Vector2i(53, 18)])
-	enemy.spawn_points = _marker_positions("EnemySpawn", 8, [Vector2i(4, 3), Vector2i(58, 4), Vector2i(4, 27), Vector2i(27, 36), Vector2i(59, 14), Vector2i(36, 7), Vector2i(12, 36), Vector2i(57, 34)])
-	var start: Vector2 = _marker_pos("EnemySpawn1", Vector2i(4, 3))
+	enemy.patrol_points = _marker_positions("Patrol", 27, [Vector2i(11, 14), Vector2i(35, 14), Vector2i(58, 16), Vector2i(58, 29), Vector2i(35, 29), Vector2i(11, 29), Vector2i(11, 21), Vector2i(58, 22), Vector2i(59, 7), Vector2i(62, 22), Vector2i(55, 35), Vector2i(40, 35), Vector2i(28, 36), Vector2i(15, 33), Vector2i(5, 18), Vector2i(16, 7), Vector2i(27, 7), Vector2i(39, 7), Vector2i(50, 7), Vector2i(4, 32), Vector2i(5, 8), Vector2i(18, 18), Vector2i(33, 20), Vector2i(17, 25), Vector2i(39, 23), Vector2i(47, 21), Vector2i(52, 24)])
+	enemy.spawn_points = _marker_positions("EnemySpawn", 13, [Vector2i(4, 8), Vector2i(59, 8), Vector2i(4, 30), Vector2i(28, 34), Vector2i(62, 23), Vector2i(39, 8), Vector2i(13, 37), Vector2i(54, 35), Vector2i(47, 22), Vector2i(24, 21), Vector2i(46, 14), Vector2i(1, 20), Vector2i(21, 6)])
+	var start: Vector2 = enemy.spawn_points[randi() % enemy.spawn_points.size()]
 	enemy.global_position = start
+	if _pathfinder != null:
+		for i: int in range(enemy.patrol_points.size()):
+			var c: Vector2i = _pathfinder.world_to_cell(enemy.patrol_points[i])
+			if _pathfinder.is_cell_blocked(c):
+				push_warning("Patrol%d di cell %s yang tidak bisa dilalui — geser markernya di editor." % [i + 1, str(c)])
+		for i: int in range(enemy.spawn_points.size()):
+			var c2: Vector2i = _pathfinder.world_to_cell(enemy.spawn_points[i])
+			if _pathfinder.is_cell_blocked(c2):
+				push_warning("EnemySpawn%d di cell %s yang tidak bisa dilalui — geser markernya di editor." % [i + 1, str(c2)])
 
 
 func _setup_lights() -> void:
@@ -188,11 +229,30 @@ func _spawn_player(peer_id: int, index: int, broadcast: bool) -> void:
 @rpc("authority", "call_remote", "reliable")
 func _spawn_player_rpc(peer_id: int, index: int) -> void:
 	_spawn_player(peer_id, index, false)
+	if peer_id == NetworkManager.local_peer_id():
+		# Host sudah spawn pemain lokal -> kamera sudah ada. Overlay
+		# boleh hilang di sini (pengaman kalau _full_state_rpc
+		# terlambat); state penuh menyusul lewat _full_state_rpc.
+		_hide_join_wait_overlay()
 
 
 func _on_peer_joined(peer_id: int) -> void:
 	if not NetworkManager.is_server_authority() or _level_ended:
 		return
+	# Kalau ada yang kembali bergabung setelah sempat terputus,
+	# LANJUTKAN game. BUG LAMA: _paused_for_disconnect tidak pernah
+	# dibersihkan — sekali P2 terputus (walau cuma sebentar, lalu join
+	# lagi), is_level_running() jadi false SELAMANYA di host: musuh
+	# membeku di satu tempat (physics_process-nya return duluan),
+	# trap & mistake tidak memanggil musuh, dan P1 pun tidak bisa
+	# jalan. Sementara P2 yang join lagi tetap bisa jalan-jalan dan
+	# melihat musuh diam di situ terus. _spawn_player di bawah
+	# return duluan kalau pemain lama masih ada (itu benar), tapi
+	# jeda-nya harus tetap dibersihkan di sini.
+	if _paused_for_disconnect:
+		_paused_for_disconnect = false
+		if hud != null:
+			hud.hide_disconnect()
 	var index: int = 1 if _players.size() >= 1 else 0
 	_spawn_player(peer_id, index, true)
 
@@ -208,15 +268,71 @@ func _on_peer_left(_peer_id: int) -> void:
 func _on_host_disconnected() -> void:
 	if _level_ended:
 		return
+	_hide_join_wait_overlay()
 	_paused_for_disconnect = true
 	_disconnect_timer = 4.0
 	if hud != null:
 		hud.show_disconnect("Host terputus. Kembali ke menu...")
 
 
+# ------------------------------------------------------- overlay tunggu ---
+func _build_join_wait_overlay() -> void:
+	# Klien yang masuk duluan belum punya kamera pemain sampai host
+	# men-spawn dia (host masih menonton cerita) — tanpa overlay,
+	# layarnya menampilkan seluruh map mentah. Overlay gelap ini
+	# menutupi map sampai state penuh pertama diterima dari host.
+	_wait_overlay = CanvasLayer.new()
+	_wait_overlay.layer = 100
+	_wait_overlay.name = "JoinWaitOverlay"
+	add_child(_wait_overlay)
+	var bg := ColorRect.new()
+	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	bg.color = Color(0, 0, 0, 1)
+	_wait_overlay.add_child(bg)
+	var center := CenterContainer.new()
+	center.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_wait_overlay.add_child(center)
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 12)
+	center.add_child(vbox)
+	var title := Label.new()
+	title.text = "MENUNGGU HOST..."
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 36)
+	title.add_theme_color_override("font_color", Color.WHITE)
+	vbox.add_child(title)
+	var sub := Label.new()
+	sub.text = "Host masih menonton cerita.\nGame dimulai begitu host selesai."
+	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sub.add_theme_font_size_override("font_size", 18)
+	sub.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
+	vbox.add_child(sub)
+
+
+func _hide_join_wait_overlay() -> void:
+	if _wait_overlay != null:
+		_wait_overlay.queue_free()
+		_wait_overlay = null
+
+
 # ------------------------------------------------------------- sync RPC ---
 @rpc("any_peer", "call_remote", "reliable")
+func _trap_states() -> Dictionary:
+	var out: Dictionary = {}
+	for tr: Node in _traps:
+		out[tr.trap_id] = bool(tr.armed)
+	return out
+
+
+@rpc("any_peer", "call_remote", "reliable")
 func request_sync_rpc() -> void:
+	# NOTE: fungsi ini WAJIB punya @rpc di atas — tanpa itu, panggilan
+	# rpc_id(1, "request_sync_rpc") dari klien dibuang Godot diam-diam,
+	# _full_state_rpc tidak pernah dikirim, dan overlay "MENUNGGU HOST"
+	# tidak pernah hilang. (Itulah bug yang terjadi 26 Nov: anotasi ini
+	# memang tidak pernah ada sejak awal, tapi sebelum ada overlay,
+	# rusaknya sync awal tidak kelihatan karena game baru mulai dari
+	# state default semua.)
 	if not NetworkManager.is_server_authority():
 		return
 	var sender: int = multiplayer.get_remote_sender_id()
@@ -245,12 +361,16 @@ func request_sync_rpc() -> void:
 		"revive_visible": _revive_visible,
 		"revive_pos": revive_item.global_position if revive_item != null else Vector2.ZERO,
 		"carrier": _revive_carrier,
+		"keys": _key_carriers.duplicate(),
+		"traps": _trap_states(),
 	}
 	rpc_id(sender, "_full_state_rpc", data)
 
 
 @rpc("authority", "call_remote", "reliable")
 func _full_state_rpc(data: Dictionary) -> void:
+	_sync_received = true
+	_hide_join_wait_overlay()
 	for row: Array in data["players"]:
 		_spawn_player(int(row[0]), int(row[1]), false)
 		var p: Node = _players.get(int(row[0]))
@@ -270,6 +390,20 @@ func _full_state_rpc(data: Dictionary) -> void:
 	for did: String in doors_data.keys():
 		if bool(doors_data[did]) and _doors.has(did):
 			_apply_door_open(did)
+	if data.has("keys"):
+		var keys_data: Dictionary = data["keys"]
+		for kid: String in keys_data.keys():
+			_key_carriers[kid] = int(keys_data[kid])
+			if int(keys_data[kid]) != -1:
+				var kitem: Node = _key_item_node(kid)
+				if kitem != null:
+					kitem.hide_item()
+	if data.has("traps"):
+		var traps_data: Dictionary = data["traps"]
+		for tid: String in traps_data.keys():
+			var tr: Node = _trap_by_id.get(tid)
+			if tr != null and not bool(traps_data[tid]):
+				tr.set_spent()
 	if enemy != null:
 		enemy.global_position = data["enemy_pos"]
 		enemy.state = int(data["enemy_state"])
@@ -343,14 +477,40 @@ func _handle_press(peer_id: int) -> void:
 		p.broadcast_state()
 		if NetworkManager.is_networked():
 			rpc("_revive_taken_rpc", peer_id)
+		SfxManager.play_for(peer_id, &"pick")
 		_show_message("Item Bangkit didapat! Selamatkan temanmu di kurungan.")
 		return
-	# 3) Kerjakan tugas (buka minigame di layar pemain itu).
+	# 3) Ambil kunci pintu.
+	for kid: String in ["A", "B", "C"]:
+		var kitem: Node = _key_item_node(kid)
+		if kitem != null and int(_key_carriers.get(kid, -1)) == -1 and p.global_position.distance_to(kitem.global_position) <= KEY_RANGE:
+			_key_carriers[kid] = peer_id
+			kitem.hide_item()
+			if NetworkManager.is_networked():
+				rpc("_key_taken_rpc", kid, peer_id)
+			SfxManager.play_for(peer_id, &"pick")
+			_show_message("Kunci %s didapat! Cari Pintu %s." % [kid, kid])
+			return
+	# 4) Buka pintu terkunci (butuh kunci yang cocok).
+	var door: Node = _nearest_door(p.global_position)
+	if door != null and not door.is_open:
+		if _key_carriers.get(door.door_id, -1) == peer_id:
+			_key_carriers[door.door_id] = -1
+			_open_door(door.door_id)
+		else:
+			_show_message("Pintu %s terkunci — cari Kunci %s dulu." % [door.door_id, door.door_id])
+		return
+	# 5) Kerjakan tugas (buka minigame di layar pemain itu).
 	var tid: StringName = _nearest_task(p.global_position)
 	if tid != StringName(""):
 		_try_open_minigame(peer_id, tid)
 		return
-	# 4) Sembunyi.
+	# 6) Aktifkan perangkap (sengaja) — musuh dipancing ke posisi trap.
+	var trap: Node = _nearest_trap(p.global_position, TRAP_USE_RANGE)
+	if trap != null and _can_see_from(p.global_position, trap.global_position):
+		_trigger_trap(trap.trap_id, peer_id, true)
+		return
+	# 7) Sembunyi.
 	if _nearest_spot(p.global_position) != null:
 		_set_player_hidden(p, true)
 		return
@@ -365,6 +525,8 @@ func _revive_taken_rpc(peer_id: int) -> void:
 
 
 func _set_player_hidden(p: Node, hidden: bool) -> void:
+	if hidden:
+		SfxManager.play_for(p.peer_id, &"hide")
 	p.apply_local_state(p.is_downed, hidden, p.carrying_revive)
 	p.broadcast_state()
 
@@ -384,6 +546,128 @@ func _nearest_spot(pos: Vector2) -> Node2D:
 		if pos.distance_to(s.global_position) <= HIDE_RANGE:
 			return s
 	return null
+
+
+func _nearest_door(pos: Vector2) -> Node:
+	for d: Node in _doors.values():
+		if pos.distance_to(d.global_position) <= DOOR_RANGE:
+			return d
+	return null
+
+
+func _key_item_node(kid: String) -> Node:
+	match kid:
+		"A":
+			return key_item_a
+		"B":
+			return key_item_b
+		"C":
+			return key_item_c
+	return null
+
+
+@rpc("authority", "call_remote", "reliable")
+func _key_taken_rpc(key_id: String, peer_id: int) -> void:
+	_key_carriers[key_id] = peer_id
+	var kitem: Node = _key_item_node(key_id)
+	if kitem != null:
+		kitem.hide_item()
+
+
+# ------------------------------------------------------------ visibilitas ---
+func _can_see_from(from_pos: Vector2, target_pos: Vector2) -> bool:
+	# Garis pandang: ada tembok/pintu tertutup di antara = tidak kelihatan.
+	var space: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
+	var query := PhysicsRayQueryParameters2D.create(from_pos, target_pos, 1)
+	if not space.intersect_ray(query).is_empty():
+		return false
+	# Cahaya: kena cahaya pemain, atau kena lampu ruangan.
+	if from_pos.distance_to(target_pos) <= VISION_RADIUS:
+		return true
+	for lamp: PointLight2D in _lights:
+		if target_pos.distance_to(lamp.global_position) <= LAMP_RADIUS:
+			return true
+	return false
+
+
+func _can_see(target_pos: Vector2) -> bool:
+	var lp: Node = _players.get(NetworkManager.local_peer_id())
+	if lp == null:
+		return true
+	return _can_see_from(lp.global_position, target_pos)
+
+
+func _update_vision() -> void:
+	var lp: Node = _players.get(NetworkManager.local_peer_id())
+	if lp == null:
+		return
+	var from_pos: Vector2 = lp.global_position
+	for kid: String in _key_carriers.keys():
+		var kitem: Node = _key_item_node(kid)
+		if kitem != null:
+			kitem.visible = int(_key_carriers[kid]) == -1 and _can_see_from(from_pos, kitem.global_position)
+	if revive_item != null:
+		# Revive adalah suar penyelamat: selalu terlihat saat muncul,
+		# supaya partner bisa menemukannya dari mana pun (bukan disembunyikan vision).
+		revive_item.visible = _revive_visible
+	for tr: Node in _traps:
+		tr.visible = _can_see_from(from_pos, tr.global_position)
+
+
+# ------------------------------------------------------------ perangkap ---
+func _nearest_trap(pos: Vector2, max_dist: float) -> Node:
+	var best: Node = null
+	var best_d: float = max_dist
+	for tr: Node in _traps:
+		if not bool(tr.armed):
+			continue
+		var d: float = pos.distance_to(tr.global_position)
+		if d <= best_d:
+			best_d = d
+			best = tr
+	return best
+
+
+func _trap_message(peer_id: int, deliberate: bool) -> String:
+	if deliberate:
+		return "Perangkap diaktifkan! Sesuatu mendekat ke sana..."
+	if peer_id == NetworkManager.local_peer_id():
+		return "Kamu menginjak perangkap! Sesuatu mendekat..."
+	return "Ada yang menginjak perangkap! Sesuatu mendekat..."
+
+
+func _trigger_trap(trap_id: String, peer_id: int, deliberate: bool) -> void:
+	var tr: Node = _trap_by_id.get(trap_id)
+	if tr == null or not bool(tr.armed):
+		return
+	tr.set_spent()
+	SfxManager.play_shared(&"alarm")
+	if enemy != null:
+		enemy.investigate(tr.global_position)
+	_show_message(_trap_message(peer_id, deliberate))
+	if NetworkManager.is_networked():
+		rpc("_trap_triggered_rpc", trap_id, peer_id, deliberate)
+
+
+@rpc("authority", "call_remote", "reliable")
+func _trap_triggered_rpc(trap_id: String, peer_id: int, deliberate: bool) -> void:
+	var tr: Node = _trap_by_id.get(trap_id)
+	if tr != null:
+		tr.set_spent()
+	_show_message(_trap_message(peer_id, deliberate))
+
+
+func _tick_traps() -> void:
+	for tr: Node in _traps:
+		if not bool(tr.armed):
+			continue
+		for pid: int in _players.keys():
+			var p: Node = _players[pid]
+			if p.is_downed or p.is_hidden:
+				continue
+			if p.global_position.distance_to(tr.global_position) <= TRAP_STEP_RADIUS:
+				_trigger_trap(tr.trap_id, pid, false)
+				break
 
 
 # ------------------------------------------------------------ minigame ---
@@ -409,16 +693,47 @@ func set_local_minigame_open(open: bool) -> void:
 	if open:
 		p.velocity = Vector2.ZERO
 		p.interact_held = false
+	elif _local_task != StringName(""):
+		# Minigame ditutup -> lepas kunci tugas solo milik pemain lokal.
+		_release_task_lock(_local_task)
+		_local_task = StringName("")
+
+
+func _release_task_lock(tid: StringName) -> void:
+	if NetworkManager.is_server_authority():
+		if _task_busy.has(tid) and int(_task_busy[tid]) == NetworkManager.local_peer_id():
+			_task_busy.erase(tid)
+	elif NetworkManager.is_networked():
+		rpc_id(1, "request_release_task_rpc", NetworkManager.local_peer_id(), String(tid))
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func request_release_task_rpc(peer_id: int, tid: String) -> void:
+	# Klien melepas kunci tugas solo-nya saat minigame ditutup.
+	if not NetworkManager.is_server_authority():
+		return
+	if multiplayer.get_remote_sender_id() != peer_id:
+		return
+	var key := StringName(tid)
+	if _task_busy.has(key) and int(_task_busy[key]) == peer_id:
+		_task_busy.erase(key)
 
 
 func open_minigame_for_local(tid: StringName) -> void:
 	if minigame_layer == null or not _tasks.has(tid):
 		return
+	_local_task = tid
 	minigame_layer.open_minigame(tid, _tasks[tid]["game_type"])
 
 
 func _try_open_minigame(peer_id: int, tid: StringName) -> void:
 	var t: Dictionary = _tasks[tid]
+	# Tugas solo dikunci untuk 1 pemain; tugas co-op bebas dibuka berdua.
+	if not bool(t["requires_two"]):
+		if _task_busy.has(tid) and int(_task_busy[tid]) != peer_id:
+			_notice_to(peer_id, "Tugas ini sedang dikerjakan pemain lain!")
+			return
+		_task_busy[tid] = peer_id
 	if t["requires_two"] and _server_needed() > 1:
 		var in_range: int = 0
 		for pid: int in _players.keys():
@@ -430,6 +745,15 @@ func _try_open_minigame(peer_id: int, tid: StringName) -> void:
 		if in_range < 2:
 			_notice_to(peer_id, "Butuh 2 pemain di dekat server untuk mulai!")
 			return
+	# Task co-op bersama: satu puzzle di server, kedua pemain mirror.
+	if _is_shared_coop(tid):
+		_ensure_coop_session(tid)
+		if peer_id == NetworkManager.local_peer_id():
+			_open_shared_for_local(tid)
+		elif NetworkManager.is_networked():
+			_add_coop_player(tid, peer_id)
+			rpc_id(peer_id, "_open_shared_minigame_rpc", String(tid), _coop_snapshot(tid))
+		return
 	if peer_id == NetworkManager.local_peer_id():
 		open_minigame_for_local(tid)
 	elif NetworkManager.is_networked():
@@ -460,6 +784,10 @@ func request_minigame_result_rpc(peer_id: int, tid: String) -> void:
 func _handle_minigame_result(peer_id: int, tid: StringName) -> void:
 	if not _tasks.has(tid) or bool(_tasks[tid]["completed"]):
 		return
+	# Task co-op bersama TIDAK lewat jalur ini — otoritas server
+	# menyelesaikannya langsung saat puzzle bersama selesai.
+	if _is_shared_coop(tid):
+		return
 	var p: Node = _players.get(peer_id)
 	if p == null or p.is_downed or p.is_hidden:
 		return
@@ -470,7 +798,9 @@ func _handle_minigame_result(peer_id: int, tid: StringName) -> void:
 		return
 	# Tugas co-op: bank bagian pemain ini, selesaikan kalau semua
 	# bagian terkumpul DAN semua pemain berada di dekat stasiun.
-	_server_parts[peer_id] = true
+	if not _server_parts.has(tid):
+		_server_parts[tid] = {}
+	_server_parts[tid][peer_id] = true
 	if _server_parts_ready(tid):
 		_complete_task(tid)
 	else:
@@ -483,7 +813,8 @@ func _server_needed() -> int:
 
 
 func _server_parts_ready(tid: StringName) -> bool:
-	if _server_parts.size() < _server_needed():
+	var parts: Dictionary = _server_parts.get(tid, {})
+	if parts.size() < _server_needed():
 		return false
 	var station_pos: Vector2 = (_tasks[tid]["node"] as Node2D).global_position
 	for pid: int in _players.keys():
@@ -493,6 +824,233 @@ func _server_parts_ready(tid: StringName) -> bool:
 		if p.global_position.distance_to(station_pos) > TASK_RANGE + 30.0:
 			return false
 	return true
+
+
+# --------------------------------------------------- task co-op bersama ---
+# Tiga task co-op (lan/backup/rapat) dikerjakan BERDUA dalam SATU puzzle:
+# otoritas (game tersembunyi di server) yang menjalankan logika; kedua
+# pemain membuka "mirror" yang hanya menampilkan state server dan
+# meneruskan tombol ke server. Solo tetap pakai jalur lama (paralel),
+# begitu juga task "server" (keypad) yang tidak masuk SHARED_COOP_TYPES.
+func _is_shared_coop(tid: StringName) -> bool:
+	if not _tasks.has(tid):
+		return false
+	var t: Dictionary = _tasks[tid]
+	return bool(t["requires_two"]) and _server_needed() > 1 and SHARED_COOP_TYPES.has(t["game_type"])
+
+
+func _ensure_coop_session(tid: StringName) -> void:
+	if _coop_sessions.has(tid):
+		return
+	var t: Dictionary = _tasks[tid]
+	var script: GDScript = load(MinigameLayer.GAME_SCRIPTS[t["game_type"]])
+	var game: MinigameBase = script.new() as MinigameBase
+	if game == null:
+		return
+	add_child(game)
+	game.visible = false  # otoritas tersembunyi; pemain melihat mirror-nya
+	game.setup()
+	game.finished.connect(_on_coop_authority_finished.bind(tid))
+	game.mistake_made.connect(_on_coop_authority_mistake.bind(tid))
+	_coop_sessions[tid] = {"game": game, "players": []}
+	_coop_last_key_peer = -1
+
+
+func _coop_snapshot(tid: StringName) -> Dictionary:
+	if not _coop_sessions.has(tid):
+		return {}
+	var game: MinigameBase = _coop_sessions[tid]["game"]
+	if game == null:
+		return {}
+	return game.get_shared_state()
+
+
+func _open_shared_for_local(tid: StringName) -> void:
+	if minigame_layer == null or not _tasks.has(tid):
+		return
+	if minigame_layer.open_minigame(tid, _tasks[tid]["game_type"], true, _coop_snapshot(tid)):
+		_local_task = tid
+		_add_coop_player(tid, NetworkManager.local_peer_id())
+
+
+@rpc("authority", "call_remote", "reliable")
+func _open_shared_minigame_rpc(tid: String, snapshot: Dictionary) -> void:
+	var key := StringName(tid)
+	if minigame_layer == null or not _tasks.has(key):
+		return
+	if minigame_layer.open_minigame(key, _tasks[key]["game_type"], true, snapshot):
+		_local_task = key
+	else:
+		# Gagal buka (mis. minigame lain sedang terbuka): keluar dari sesi
+		# supaya otoritas tidak jalan sendiri tanpa pemain.
+		leave_coop_session(key)
+
+
+func _add_coop_player(tid: StringName, peer_id: int) -> void:
+	if not _coop_sessions.has(tid):
+		return
+	var players: Array = _coop_sessions[tid]["players"]
+	if not players.has(peer_id):
+		players.append(peer_id)
+
+
+func leave_coop_session(tid: StringName) -> void:
+	# Dipanggil layer saat mirror ditutup (ESC / selesai / tertangkap).
+	if NetworkManager.is_server_authority():
+		_remove_coop_player(tid, NetworkManager.local_peer_id())
+	elif NetworkManager.is_networked():
+		rpc_id(1, "leave_coop_session_rpc", NetworkManager.local_peer_id(), String(tid))
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func leave_coop_session_rpc(peer_id: int, tid: String) -> void:
+	if not NetworkManager.is_server_authority():
+		return
+	if multiplayer.get_remote_sender_id() != peer_id:
+		return
+	_remove_coop_player(StringName(tid), peer_id)
+
+
+func _remove_coop_player(tid: StringName, peer_id: int) -> void:
+	if not _coop_sessions.has(tid):
+		return
+	var players: Array = _coop_sessions[tid]["players"]
+	players.erase(peer_id)
+	if players.is_empty():
+		_cleanup_coop_session(tid)
+
+
+func submit_coop_key(tid: StringName, keycode: int) -> void:
+	# Dipanggil layer saat pemain menekan tombol di mirror co-op.
+	if NetworkManager.is_server_authority():
+		_apply_coop_key(NetworkManager.local_peer_id(), tid, keycode)
+	elif NetworkManager.is_networked():
+		rpc_id(1, "submit_coop_key_rpc", NetworkManager.local_peer_id(), String(tid), keycode)
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func submit_coop_key_rpc(peer_id: int, tid: String, keycode: int) -> void:
+	if not NetworkManager.is_server_authority():
+		return
+	if multiplayer.get_remote_sender_id() != peer_id:
+		return
+	_apply_coop_key(peer_id, StringName(tid), keycode)
+
+
+func _apply_coop_key(peer_id: int, tid: StringName, keycode: int) -> void:
+	if not _coop_sessions.has(tid):
+		return
+	var players: Array = _coop_sessions[tid]["players"]
+	if not players.has(peer_id):
+		return
+	var game: MinigameBase = _coop_sessions[tid]["game"]
+	if game == null:
+		return
+	_coop_last_key_peer = peer_id
+	var ev := InputEventKey.new()
+	ev.pressed = true
+	ev.keycode = keycode
+	game.handle_key(ev)
+	# Kirim snapshot segar ke semua pemain di sesi supaya tampilan
+	# langsung sinkron (tanpa menunggu tick 0,1 dtk).
+	if _coop_sessions.has(tid):
+		_broadcast_coop_snapshot(tid)
+
+
+func _tick_coop_sessions(delta: float) -> void:
+	_coop_broadcast_timer += delta
+	var do_broadcast: bool = _coop_broadcast_timer >= 0.1
+	if do_broadcast:
+		_coop_broadcast_timer = 0.0
+	for tid: StringName in _coop_sessions.keys():
+		var session: Dictionary = _coop_sessions[tid]
+		var game: MinigameBase = session["game"]
+		if game == null:
+			continue
+		var players: Array = session["players"]
+		if players.is_empty():
+			continue
+		game.tick(delta)
+		# tick() bisa menyelesaikan game (Backup 100%) — _finish()
+		# memanggil _on_coop_authority_finished -> _complete_task ->
+		# _cleanup_coop_session di tengah loop; cek ulang sebelum lanjut.
+		if not _coop_sessions.has(tid):
+			continue
+		_apply_task_progress(tid, game.get_progress())
+		if do_broadcast:
+			_broadcast_coop_snapshot(tid)
+
+
+func _broadcast_coop_snapshot(tid: StringName) -> void:
+	if not _coop_sessions.has(tid):
+		return
+	var snap: Dictionary = _coop_snapshot(tid)
+	if snap.is_empty():
+		return
+	if NetworkManager.is_networked():
+		rpc("_coop_state_rpc", String(tid), snap)
+	# Pemain lokal (host) juga mirror: terapkan langsung.
+	if minigame_layer != null:
+		minigame_layer.apply_coop_snapshot(tid, snap)
+
+
+@rpc("authority", "call_remote", "unreliable")
+func _coop_state_rpc(tid: String, snapshot: Dictionary) -> void:
+	if minigame_layer != null:
+		minigame_layer.apply_coop_snapshot(StringName(tid), snapshot)
+
+
+func _on_coop_authority_finished(tid: StringName) -> void:
+	_complete_task(tid)
+
+
+func _on_coop_authority_mistake(tid: StringName) -> void:
+	# Kesalahan di puzzle bersama: musuh mendengar dari posisi pemain
+	# yang terakhir menekan tombol (atau pemain pertama di sesi kalau
+	# kesalahannya dari timer, mis. sektor backup terlewat).
+	var pid: int = _coop_last_key_peer
+	if (pid == -1 or not _players.has(pid)) and _coop_sessions.has(tid):
+		var players: Array = _coop_sessions[tid]["players"]
+		if not players.is_empty():
+			pid = int(players[0])
+	if pid != -1 and _players.has(pid):
+		_noise_at_player(pid)
+
+
+func _cleanup_coop_session(tid: StringName) -> void:
+	if not _coop_sessions.has(tid):
+		return
+	var game: MinigameBase = _coop_sessions[tid]["game"]
+	_coop_sessions.erase(tid)
+	if game != null:
+		game.queue_free()
+
+
+# -------------------------------------------------- suara kesalahan task ---
+func report_mistake_noise() -> void:
+	# Kesalahan di minigame lokal: musuh mendengar suara dari posisi
+	# pemain lokal. Server memproses langsung; klien kirim ke host.
+	if NetworkManager.is_server_authority():
+		_noise_at_player(NetworkManager.local_peer_id())
+	elif NetworkManager.is_networked():
+		rpc_id(1, "report_mistake_rpc", NetworkManager.local_peer_id())
+
+
+@rpc("any_peer", "call_remote", "unreliable")
+func report_mistake_rpc(peer_id: int) -> void:
+	if not NetworkManager.is_server_authority():
+		return
+	if multiplayer.get_remote_sender_id() != peer_id:
+		return
+	_noise_at_player(peer_id)
+
+
+func _noise_at_player(peer_id: int) -> void:
+	var p: Node = _players.get(peer_id)
+	if p == null or enemy == null:
+		return
+	if enemy.hear_noise(p.global_position):
+		_show_message("Berisik! Musuh mendekat...")
 
 
 func report_minigame_progress(tid: StringName, progress: float) -> void:
@@ -543,6 +1101,8 @@ func _physics_process(delta: float) -> void:
 	if not is_level_running():
 		return
 	_tick_tasks(delta)
+	_tick_coop_sessions(delta)
+	_tick_traps()
 	_tick_rescue(delta)
 	_tick_exit(delta)
 	_tick_revive_timers(delta)
@@ -560,22 +1120,23 @@ func _tick_tasks(_delta: float) -> void:
 		var t: Dictionary = _tasks[tid]
 		if t["completed"] or not bool(t["requires_two"]):
 			continue
+		if _is_shared_coop(tid):
+			continue
 		if _server_parts_ready(tid):
 			_complete_task(tid)
 
 
 func _complete_task(tid: StringName) -> void:
 	var t: Dictionary = _tasks[tid]
+	_task_busy.erase(tid)
+	_cleanup_coop_session(tid)
 	t["completed"] = true
 	t["progress"] = 1.0
 	t["node"].set_completed()
+	SfxManager.play_shared(&"complete")
 	if NetworkManager.is_networked():
 		rpc("_task_completed_rpc", String(tid))
 	_show_message("Tugas selesai: %s (%d/%d)" % [t["node"].title, _completed_count(), _tasks.size()])
-	if tid == &"arsip":
-		_open_door("A")
-	elif tid == &"listrik":
-		_open_door("B")
 	if _completed_count() >= _tasks.size() and not _exit_open:
 		_exit_open = true
 		if exit_door != null:
@@ -687,6 +1248,7 @@ func _open_door(door_id: String) -> void:
 	if not _doors.has(door_id) or _doors[door_id].is_open:
 		return
 	_apply_door_open(door_id)
+	SfxManager.play_shared(&"door")
 	if NetworkManager.is_networked():
 		rpc("_door_opened_rpc", door_id)
 	_show_message("Pintu %s terbuka!" % door_id)
@@ -898,6 +1460,13 @@ func _go_to_menu() -> void:
 
 # ---------------------------------------------------------------- visuals ---
 func _process(delta: float) -> void:
+	# Klien mengulang request_sync sampai state penuh pertama tiba
+	# (host bisa saja masih menonton cerita saat request pertama dikirim).
+	if NetworkManager.mode == NetworkManager.Mode.CLIENT and not _sync_received:
+		_sync_retry -= delta
+		if _sync_retry <= 0.0:
+			_sync_retry = 1.0
+			rpc_id(1, "request_sync_rpc")
 	_flicker_time += delta
 	if _blackout_timer > 0.0:
 		_blackout_timer -= delta
@@ -919,6 +1488,10 @@ func _process(delta: float) -> void:
 				occ = true
 				break
 		s.set_occupied(occ)
+	_vision_timer -= delta
+	if _vision_timer <= 0.0:
+		_vision_timer = 0.12
+		_update_vision()
 	_update_hud_frame()
 
 
@@ -948,6 +1521,9 @@ func _update_hud_frame() -> void:
 		status_lines.append("P%d: %s%s" % [p.player_index, st, " [+ITEM]" if p.carrying_revive else ""])
 	hud.update_status(status_lines)
 	hud.show_prompt(_compute_prompt())
+	var local_p: Node = _players.get(NetworkManager.local_peer_id())
+	if local_p != null:
+		hud.set_stamina(local_p.get_stamina_ratio())
 
 
 func _compute_prompt() -> String:
@@ -960,12 +1536,24 @@ func _compute_prompt() -> String:
 		return "[Tahan E] Selamatkan teman dari kurungan"
 	if _revive_visible and revive_item != null and local_p.global_position.distance_to(revive_item.global_position) <= REVIVE_RANGE:
 		return "[E] Ambil Item Bangkit"
+	for kid: String in ["A", "B", "C"]:
+		var kitem: Node = _key_item_node(kid)
+		if kitem != null and int(_key_carriers.get(kid, -1)) == -1 and local_p.global_position.distance_to(kitem.global_position) <= KEY_RANGE:
+			return "[E] Ambil Kunci " + kid
+	var door: Node = _nearest_door(local_p.global_position)
+	if door != null and not door.is_open:
+		if _key_carriers.get(door.door_id, -1) == NetworkManager.local_peer_id():
+			return "[E] Buka Pintu " + door.door_id
+		return "Pintu " + door.door_id + " terkunci — cari Kunci " + door.door_id
 	var tid: StringName = _nearest_task(local_p.global_position)
 	if tid != StringName(""):
 		var t: Dictionary = _tasks[tid]
 		if t["requires_two"] and _server_needed() > 1:
 			return "[E] %s — BUTUH 2 PEMAIN!" % t["node"].title
 		return "[E] Kerjakan: %s" % t["node"].title
+	var trap: Node = _nearest_trap(local_p.global_position, TRAP_USE_RANGE)
+	if trap != null and _can_see(trap.global_position):
+		return "[E] Aktifkan Perangkap"
 	if _nearest_spot(local_p.global_position) != null:
 		return "[E] Sembunyi"
 	if _exit_open and exit_door != null and local_p.global_position.distance_to(exit_door.global_position) <= EXIT_RADIUS + 40.0:

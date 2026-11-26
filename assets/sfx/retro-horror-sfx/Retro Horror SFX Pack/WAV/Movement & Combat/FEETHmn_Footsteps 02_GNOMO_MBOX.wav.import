@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dsmy658dxsgae"
+path="res://.godot/imported/FEETHmn_Footsteps 02_GNOMO_MBOX.wav-d258dd97b0dead6542fce843e81bab93.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/Movement & Combat/FEETHmn_Footsteps 02_GNOMO_MBOX.wav"
+dest_files=["res://.godot/imported/FEETHmn_Footsteps 02_GNOMO_MBOX.wav-d258dd97b0dead6542fce843e81bab93.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

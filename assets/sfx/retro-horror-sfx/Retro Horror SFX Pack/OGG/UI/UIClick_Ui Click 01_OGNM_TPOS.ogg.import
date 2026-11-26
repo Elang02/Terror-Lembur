@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bkbh801k511hv"
+path="res://.godot/imported/UIClick_Ui Click 01_OGNM_TPOS.ogg-d3227a724425f93466d77afbc6f032a4.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/UI/UIClick_Ui Click 01_OGNM_TPOS.ogg"
+dest_files=["res://.godot/imported/UIClick_Ui Click 01_OGNM_TPOS.ogg-d3227a724425f93466d77afbc6f032a4.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

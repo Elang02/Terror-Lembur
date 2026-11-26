@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dbdpofmwp36wt"
+path="res://.godot/imported/FEETHmn_Footsteps 02_GNOMO_MBOX.ogg-95c34939f042f9754da1270cfbaf0856.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Movement & Combat/FEETHmn_Footsteps 02_GNOMO_MBOX.ogg"
+dest_files=["res://.godot/imported/FEETHmn_Footsteps 02_GNOMO_MBOX.ogg-95c34939f042f9754da1270cfbaf0856.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

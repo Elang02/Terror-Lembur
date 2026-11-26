@@ -1,0 +1,150 @@
+extends Node
+## MusicManager (Autoload) — backsound game dengan loop crossfade yang halus.
+##
+## Main menu: Ghost Story. Level 1: The Leaves. Lagu diputar ulang BUKAN
+## dengan "putar dari 0" (itu menimbulkan jeda hening / bunyi klik di
+## ujung MP3), tapi dengan crossfade: sesaat sebelum lagu habis, salinan
+## kedua lagu itu mulai diputar dari awal dengan volume pelan, lalu
+## volume keduanya disilangkan (yang lama meredup, yang baru mengeras).
+## Hasilnya lagu berulang tanpa jeda dan tanpa klik. Pindah lagu
+## (menu -> level, level -> menu) juga crossfade, bukan putus lalu mulai.
+##
+## Musik itu lokal — tiap PC memutar sendiri, tidak lewat network,
+## jadi tidak ada RPC di sini. Dipanggil dari main_menu.gd (_ready)
+## dan level_1.gd (_ready); saat kembali ke menu, lagunya ikut
+## crossfade kembali ke lagu menu.
+
+const MENU_STREAM: AudioStreamMP3 = preload("res://assets/backsound/main_menu/Ghost20Story.mp3")
+const LEVEL_STREAM: AudioStreamMP3 = preload("res://assets/backsound/level_1/The20of20Leaves.mp3")
+
+## Volume musik. Ubah kalau terlalu pelan / keras (0 = paling keras).
+const MUSIC_VOLUME_DB: float = -12.0
+## Lamanya crossfade (detik). Dipakai untuk loop maupun pindah lagu.
+const FADE_TIME: float = 2.5
+const SILENT_DB: float = -80.0
+
+var _player_a: AudioStreamPlayer
+var _player_b: AudioStreamPlayer
+var _active: AudioStreamPlayer
+var _idle: AudioStreamPlayer
+var _current: AudioStreamMP3 = null
+var _crossfading: bool = false
+var _fade_tween: Tween = null
+
+
+func _ready() -> void:
+	_player_a = AudioStreamPlayer.new()
+	_player_a.name = "MusicA"
+	_player_a.volume_db = SILENT_DB
+	add_child(_player_a)
+	_player_b = AudioStreamPlayer.new()
+	_player_b.name = "MusicB"
+	_player_b.volume_db = SILENT_DB
+	add_child(_player_b)
+	_active = _player_a
+	_idle = _player_b
+
+
+func _process(_delta: float) -> void:
+	# Loop: sesaat sebelum lagu habis, mulai crossfade ke salinan
+	# yang sama dari awal. Dijaga supaya tidak dobel saat crossfade
+	# sedang jalan.
+	if _current == null or _crossfading:
+		return
+	if not _active.playing:
+		return
+	var length: float = _current.get_length()
+	if length <= FADE_TIME + 1.0:
+		return
+	if _active.get_playback_position() >= length - FADE_TIME:
+		_crossfade_to(_current)
+
+
+## Putar backsound main menu (Ghost Story).
+func play_menu() -> void:
+	_play_track(MENU_STREAM)
+
+
+## Putar backsound Level 1 (The Leaves).
+func play_level() -> void:
+	_play_track(LEVEL_STREAM)
+
+
+## Berhentikan semua musik (fade-out). Saat ini tidak dipanggil dari
+## mana pun; disediakan kalau nanti ada layar yang mau hening.
+func stop_music() -> void:
+	_settle_crossfade()
+	_kill_fade_tween()
+	_current = null
+	for p: AudioStreamPlayer in [_active, _idle]:
+		if p.playing:
+			var t: Tween = create_tween()
+			t.tween_property(p, "volume_db", SILENT_DB, FADE_TIME)
+			t.tween_callback(p.stop)
+
+
+func _play_track(stream: AudioStreamMP3) -> void:
+	# Lagu yang sama sudah jalan: jangan mulai dari awal lagi.
+	if stream == _current and _active.playing:
+		return
+	_settle_crossfade()
+	if not _active.playing and not _idle.playing:
+		# Belum ada lagu: putar langsung dengan fade-in.
+		_current = stream
+		_active.stream = stream
+		_active.volume_db = SILENT_DB
+		_active.play()
+		_fade_to(_active, MUSIC_VOLUME_DB)
+		return
+	_crossfade_to(stream)
+
+
+func _crossfade_to(stream: AudioStreamMP3) -> void:
+	_settle_crossfade()
+	_kill_fade_tween()
+	_crossfading = true
+	_current = stream
+	_idle.stream = stream
+	_idle.volume_db = SILENT_DB
+	_idle.play()
+	_fade_tween = create_tween().set_parallel(true)
+	_fade_tween.tween_property(_active, "volume_db", SILENT_DB, FADE_TIME)
+	_fade_tween.tween_property(_idle, "volume_db", MUSIC_VOLUME_DB, FADE_TIME)
+	_fade_tween.chain().tween_callback(_finish_crossfade)
+
+
+func _finish_crossfade() -> void:
+	_active.stop()
+	var tmp: AudioStreamPlayer = _active
+	_active = _idle
+	_idle = tmp
+	_crossfading = false
+	_fade_tween = null
+
+
+func _settle_crossfade() -> void:
+	# Kalau ada crossfade yang sedang jalan lalu diminta lagu lain,
+	# selesaikan dulu crossfade itu seketika: yang lama berhenti,
+	# yang baru jadi aktif. Tanpa ini, dua player bisa jalan
+	# bersamaan dan _crossfading nyangkut true.
+	if not _crossfading:
+		return
+	_kill_fade_tween()
+	_active.stop()
+	_idle.volume_db = MUSIC_VOLUME_DB
+	var tmp: AudioStreamPlayer = _active
+	_active = _idle
+	_idle = tmp
+	_crossfading = false
+
+
+func _fade_to(player: AudioStreamPlayer, target_db: float) -> void:
+	_kill_fade_tween()
+	_fade_tween = create_tween()
+	_fade_tween.tween_property(player, "volume_db", target_db, FADE_TIME)
+
+
+func _kill_fade_tween() -> void:
+	if _fade_tween != null and _fade_tween.is_valid():
+		_fade_tween.kill()
+	_fade_tween = null

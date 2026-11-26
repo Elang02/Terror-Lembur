@@ -9,6 +9,9 @@ var _join_timer: float = -1.0
 
 
 func _ready() -> void:
+	# Backsound main menu (Ghost Story) — mulai dengan fade-in,
+	# lalu loop crossfade sendiri di MusicManager.
+	MusicManager.play_menu()
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	NetworkManager.connected_to_host.connect(_on_connected_to_host)
 	NetworkManager.connection_failed.connect(_on_connection_failed)
@@ -107,7 +110,7 @@ func _on_host_pressed() -> void:
 	if err != OK:
 		_status_label.text = "Gagal membuat game (port 7777 mungkin dipakai). Coba tutup game lain / jalankan ulang."
 		return
-	get_tree().change_scene_to_file("res://scenes/level_1.tscn")
+	get_tree().change_scene_to_file("res://scenes/story_intro.tscn")
 
 
 func _on_join_pressed() -> void:
@@ -122,14 +125,14 @@ func _on_join_pressed() -> void:
 
 func _on_solo_pressed() -> void:
 	NetworkManager.start_solo()
-	get_tree().change_scene_to_file("res://scenes/level_1.tscn")
+	get_tree().change_scene_to_file("res://scenes/story_intro.tscn")
 
 
 func _on_connected_to_host() -> void:
 	if not _joining:
 		return
 	_joining = false
-	get_tree().change_scene_to_file("res://scenes/level_1.tscn")
+	get_tree().change_scene_to_file("res://scenes/story_intro.tscn")
 
 
 func _on_connection_failed() -> void:

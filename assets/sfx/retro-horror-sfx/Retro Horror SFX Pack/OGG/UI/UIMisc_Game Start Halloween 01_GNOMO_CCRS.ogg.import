@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://yy3uftmuw230"
+path="res://.godot/imported/UIMisc_Game Start Halloween 01_GNOMO_CCRS.ogg-ba9a121423d6f7b32928e13a5a423256.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/UI/UIMisc_Game Start Halloween 01_GNOMO_CCRS.ogg"
+dest_files=["res://.godot/imported/UIMisc_Game Start Halloween 01_GNOMO_CCRS.ogg-ba9a121423d6f7b32928e13a5a423256.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

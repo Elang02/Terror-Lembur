@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c7dt62ohd5jdr"
+path="res://.godot/imported/FEETHmn_Footsteps Sand 02_GNOMO_RBDS.wav-96498df51c3a3ad81160ed407539eae0.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/Movement & Combat/FEETHmn_Footsteps Sand 02_GNOMO_RBDS.wav"
+dest_files=["res://.godot/imported/FEETHmn_Footsteps Sand 02_GNOMO_RBDS.wav-96498df51c3a3ad81160ed407539eae0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

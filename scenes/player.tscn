@@ -4,7 +4,9 @@
 [ext_resource type="SpriteFrames" uid="uid://d0nytfq8sft64" path="res://assets/characters/office_worker/office_worker.tres" id="2"]
 [ext_resource type="Texture2D" uid="uid://bhiuqieli5a3t" path="res://assets/sprites/light_soft.png" id="3"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_go7sj"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2aecg"]
+radius = 5.71
+height = 18.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1408698278]
 z_index = 10
@@ -12,7 +14,9 @@ collision_layer = 2
 script = ExtResource("1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1940846897]
-shape = SubResource("CircleShape2D_go7sj")
+position = Vector2(0, 3.29)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_2aecg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1828077420]
 position = Vector2(0, -4)
@@ -35,6 +39,6 @@ texture = ExtResource("3")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1538186566]
 enabled = false
-zoom = Vector2(2.175, 2.175)
+zoom = Vector2(5.55, 5.55)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0

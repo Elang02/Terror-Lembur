@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bh4xrmw1sm2j8"
+path="res://.godot/imported/FOODEat_Fruit Chomp_GNOMO_BLHM.ogg-ae139794d5d3976f9b91fce90043e81a.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Movement & Combat/FOODEat_Fruit Chomp_GNOMO_BLHM.ogg"
+dest_files=["res://.godot/imported/FOODEat_Fruit Chomp_GNOMO_BLHM.ogg-ae139794d5d3976f9b91fce90043e81a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
