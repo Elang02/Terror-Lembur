@@ -159,6 +159,15 @@ func show_disconnect(text: String) -> void:
 	_disconnect_panel.visible = true
 
 
+func hide_disconnect() -> void:
+	# Dipanggil saat partner yang sempat terputus bergabung lagi,
+	# supaya pesan "Partner terputus" hilang bersamaan dengan
+	# game yang dilanjutkan (lihat _on_peer_joined di level_1.gd).
+	if _disconnect_panel == null:
+		return
+	_disconnect_panel.visible = false
+
+
 func _build_top_bar() -> void:
 	var panel := PanelContainer.new()
 	panel.add_theme_stylebox_override("panel", UiTheme.panel_style())

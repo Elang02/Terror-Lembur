@@ -226,11 +226,30 @@ func _spawn_player(peer_id: int, index: int, broadcast: bool) -> void:
 @rpc("authority", "call_remote", "reliable")
 func _spawn_player_rpc(peer_id: int, index: int) -> void:
 	_spawn_player(peer_id, index, false)
+	if peer_id == NetworkManager.local_peer_id():
+		# Host sudah spawn pemain lokal -> kamera sudah ada. Overlay
+		# boleh hilang di sini (pengaman kalau _full_state_rpc
+		# terlambat); state penuh menyusul lewat _full_state_rpc.
+		_hide_join_wait_overlay()
 
 
 func _on_peer_joined(peer_id: int) -> void:
 	if not NetworkManager.is_server_authority() or _level_ended:
 		return
+	# Kalau ada yang kembali bergabung setelah sempat terputus,
+	# LANJUTKAN game. BUG LAMA: _paused_for_disconnect tidak pernah
+	# dibersihkan — sekali P2 terputus (walau cuma sebentar, lalu join
+	# lagi), is_level_running() jadi false SELAMANYA di host: musuh
+	# membeku di satu tempat (physics_process-nya return duluan),
+	# trap & mistake tidak memanggil musuh, dan P1 pun tidak bisa
+	# jalan. Sementara P2 yang join lagi tetap bisa jalan-jalan dan
+	# melihat musuh diam di situ terus. _spawn_player di bawah
+	# return duluan kalau pemain lama masih ada (itu benar), tapi
+	# jeda-nya harus tetap dibersihkan di sini.
+	if _paused_for_disconnect:
+		_paused_for_disconnect = false
+		if hud != null:
+			hud.hide_disconnect()
 	var index: int = 1 if _players.size() >= 1 else 0
 	_spawn_player(peer_id, index, true)
 
@@ -302,7 +321,15 @@ func _trap_states() -> Dictionary:
 	return out
 
 
+@rpc("any_peer", "call_remote", "reliable")
 func request_sync_rpc() -> void:
+	# NOTE: fungsi ini WAJIB punya @rpc di atas — tanpa itu, panggilan
+	# rpc_id(1, "request_sync_rpc") dari klien dibuang Godot diam-diam,
+	# _full_state_rpc tidak pernah dikirim, dan overlay "MENUNGGU HOST"
+	# tidak pernah hilang. (Itulah bug yang terjadi 26 Nov: anotasi ini
+	# memang tidak pernah ada sejak awal, tapi sebelum ada overlay,
+	# rusaknya sync awal tidak kelihatan karena game baru mulai dari
+	# state default semua.)
 	if not NetworkManager.is_server_authority():
 		return
 	var sender: int = multiplayer.get_remote_sender_id()
