@@ -12,13 +12,12 @@ enum State { PATROL, CHASE, SEARCH, BLIND, VANISH, STUNNED }
 
 const SIGHT_RANGE: float = 430.0
 const HEAR_RANGE: float = 330.0
-const MISTAKE_HEAR_RANGE: float = 400.0
 const CATCH_RANGE: float = 27.0
 const SUSPICION_TIME: float = 0.8
 const LOSE_SIGHT_TIME: float = 4.0
-const PATROL_SPEED: float = 105.0
-const CHASE_SPEED: float = 190.0
-const SEARCH_SPEED: float = 130.0
+const PATROL_SPEED: float = 120.0
+const CHASE_SPEED: float = 200.0
+const SEARCH_SPEED: float = 140.0
 const BLIND_SPEED: float = 55.0
 const BLINK_MIN: float = 16.0
 const BLINK_MAX: float = 26.0
@@ -205,13 +204,18 @@ func investigate(pos: Vector2) -> void:
 
 func hear_noise(pos: Vector2) -> bool:
 	# Dipanggil host saat ada kesalahan di minigame: suara keras
-	# menarik musuh mendekat (radius 400). Bukan lure — timer blink
-	# tetap jalan, dan musuh hanya mengejar posisi suara itu.
+	# memanggil musuh mendekat. SENGAJA tanpa batas jarak — dulu ada
+	# radius 400, tapi itu bikin noise cuma ke-trigger sekali: habis
+	# ngejar pertama, musuh blink menjauh (350–950px) / patrol jauh,
+	# jadi kesalahan berikutnya hampir selalu di luar 400px dan musuh
+	# tidak pernah datang lagi. Sekarang kesalahan SELALU memanggil
+	# musuh (kecuali musuh sedang tidak bisa merespons, lihat bawah);
+	# kalau musuh jauh, dia tetap datang, cuma butuh waktu jalan ke sana.
+	# Bukan lure — timer blink tetap jalan, dan musuh hanya mengejar
+	# posisi suara itu.
 	if not _is_ai_owner():
 		return false
 	if state == State.BLIND or state == State.VANISH or state == State.STUNNED:
-		return false
-	if global_position.distance_to(pos) > MISTAKE_HEAR_RANGE:
 		return false
 	_last_known = pos
 	_suspicion = 1.0
@@ -314,10 +318,17 @@ func _update_perception(step: float) -> void:
 			continue
 		if p.is_downed:
 			continue
-		var dist: float = global_position.distance_to(p.global_position)
-		# Sembunyi = tidak terlihat kecuali sangat dekat.
-		if p.is_hidden and dist > 42.0:
+		# Sembunyi = tidak terdeteksi SAMA SEKALI. Dulu ada pengecualian
+		# 42px (musuh yang sudah sangat dekat bisa "menemukan" pemain
+		# yang ngumpet), tapi karena pemain ngumpet tidak bisa ditangkap
+		# (_check_catch melewatkan mereka), musuh malah nungguin tempat
+		# sembunyi itu selamanya: tiap 0,15 dtk dia "melihat" lagi
+		# pemain ngumpet itu dan lose timer selalu di-reset. Sekarang
+		# ngumpet itu aman penuh — musuh terus ngejar pemain lain atau
+		# patrol, dan tidak akan camp di tempat sembunyi.
+		if p.is_hidden:
 			continue
+		var dist: float = global_position.distance_to(p.global_position)
 		var seen: bool = dist <= SIGHT_RANGE and _has_line_of_sight(p)
 		var heard: bool = p.is_sprinting and dist <= HEAR_RANGE
 		if not seen and not heard:
