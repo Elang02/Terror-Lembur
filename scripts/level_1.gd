@@ -477,6 +477,7 @@ func _handle_press(peer_id: int) -> void:
 		p.broadcast_state()
 		if NetworkManager.is_networked():
 			rpc("_revive_taken_rpc", peer_id)
+		SfxManager.play_for(peer_id, &"pick")
 		_show_message("Item Bangkit didapat! Selamatkan temanmu di kurungan.")
 		return
 	# 3) Ambil kunci pintu.
@@ -487,6 +488,7 @@ func _handle_press(peer_id: int) -> void:
 			kitem.hide_item()
 			if NetworkManager.is_networked():
 				rpc("_key_taken_rpc", kid, peer_id)
+			SfxManager.play_for(peer_id, &"pick")
 			_show_message("Kunci %s didapat! Cari Pintu %s." % [kid, kid])
 			return
 	# 4) Buka pintu terkunci (butuh kunci yang cocok).
@@ -523,6 +525,8 @@ func _revive_taken_rpc(peer_id: int) -> void:
 
 
 func _set_player_hidden(p: Node, hidden: bool) -> void:
+	if hidden:
+		SfxManager.play_for(p.peer_id, &"hide")
 	p.apply_local_state(p.is_downed, hidden, p.carrying_revive)
 	p.broadcast_state()
 
@@ -637,6 +641,7 @@ func _trigger_trap(trap_id: String, peer_id: int, deliberate: bool) -> void:
 	if tr == null or not bool(tr.armed):
 		return
 	tr.set_spent()
+	SfxManager.play_shared(&"alarm")
 	if enemy != null:
 		enemy.investigate(tr.global_position)
 	_show_message(_trap_message(peer_id, deliberate))
@@ -1128,6 +1133,7 @@ func _complete_task(tid: StringName) -> void:
 	t["completed"] = true
 	t["progress"] = 1.0
 	t["node"].set_completed()
+	SfxManager.play_shared(&"complete")
 	if NetworkManager.is_networked():
 		rpc("_task_completed_rpc", String(tid))
 	_show_message("Tugas selesai: %s (%d/%d)" % [t["node"].title, _completed_count(), _tasks.size()])
@@ -1242,6 +1248,7 @@ func _open_door(door_id: String) -> void:
 	if not _doors.has(door_id) or _doors[door_id].is_open:
 		return
 	_apply_door_open(door_id)
+	SfxManager.play_shared(&"door")
 	if NetworkManager.is_networked():
 		rpc("_door_opened_rpc", door_id)
 	_show_message("Pintu %s terbuka!" % door_id)

@@ -73,6 +73,7 @@ func handle_key(event: InputEventKey) -> void:
 	if n < 1 or n > 4:
 		return
 	_entered.append(n)
+	SfxManager.play_local(&"keypad_click")
 	_refresh_lcd()
 	if _entered.size() >= CODE_LEN:
 		var ok: bool = true
@@ -80,6 +81,7 @@ func handle_key(event: InputEventKey) -> void:
 			if _entered[i] != _code[i]:
 				ok = false
 		if ok:
+			SfxManager.play_local(&"keypad_beep")
 			_set_status("Kode benar! Pintu terbuka.", true)
 			_finish()
 		else:

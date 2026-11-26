@@ -183,6 +183,10 @@ func _set_state(next: int) -> void:
 	state = next
 	_path = PackedVector2Array()
 	_path_index = 0
+	# Musuh mulai mengejar: bunyi serangan (hanya di host — _set_state
+	# tidak dipanggil client saat sinkronisasi, lihat _sync_enemy).
+	if next == State.CHASE:
+		SfxManager.play_shared(&"ghost_attack")
 
 
 func investigate(pos: Vector2) -> void:
@@ -444,6 +448,8 @@ func _finish_blink() -> void:
 	velocity = Vector2.ZERO
 	_blind_timer = BLIND_TIME
 	_set_state(State.BLIND)
+	# Teleport selesai (muncul di tempat baru): bunyi pindahan.
+	SfxManager.play_shared(&"ghost_tp")
 	_suspicion = 0.0
 	_target = null
 	if not patrol_points.is_empty():
