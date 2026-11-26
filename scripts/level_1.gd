@@ -15,6 +15,7 @@ const TASK_RANGE: float = 62.0
 const HIDE_RANGE: float = 50.0
 const REVIVE_RANGE: float = 52.0
 const KEY_RANGE: float = 52.0
+const KEY_CONSUMED: int = -2  # kunci sudah dipakai untuk membuka pintunya
 const DOOR_RANGE: float = 56.0
 const TRAP_STEP_RADIUS: float = 20.0
 const TRAP_USE_RANGE: float = 64.0
@@ -495,7 +496,10 @@ func _handle_press(peer_id: int) -> void:
 	var door: Node = _nearest_door(p.global_position)
 	if door != null and not door.is_open:
 		if _key_carriers.get(door.door_id, -1) == peer_id:
-			_key_carriers[door.door_id] = -1
+			_key_carriers[door.door_id] = KEY_CONSUMED
+			var kitem: Node = _key_item_node(door.door_id)
+			if kitem != null:
+				kitem.hide_item()
 			_open_door(door.door_id)
 		else:
 			_show_message("Pintu %s terkunci — cari Kunci %s dulu." % [door.door_id, door.door_id])
@@ -1257,6 +1261,14 @@ func _open_door(door_id: String) -> void:
 func _apply_door_open(door_id: String) -> void:
 	var d: Node = _doors[door_id]
 	d.open_door()
+	# Kunci pintu ini sudah terpakai: tandai supaya tidak muncul lagi
+	# di _update_vision dan tidak bisa diambil ulang. Dijalankan di host
+	# (via _open_door), di klien (via _door_opened_rpc), dan saat load
+	# state untuk pintu yang sudah terbuka.
+	_key_carriers[door_id] = KEY_CONSUMED
+	var kitem: Node = _key_item_node(door_id)
+	if kitem != null:
+		kitem.hide_item()
 	if _pathfinder != null:
 		for cell: Vector2i in d.door_cells:
 			_pathfinder.set_door_blocked(cell, false)
