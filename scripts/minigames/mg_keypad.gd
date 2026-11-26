@@ -4,7 +4,8 @@ extends MinigameBase
 ## dari tugas lain) — Terror Lembur tidak punya mekanik itu. Di sini kode
 ## 5 digit (angka 1-4) diacak di setup(), DITAMPILKAN besar-besar selama
 ## 4 detik untuk dihafal, lalu disembunyikan dan pemain mengetiknya.
-## Salah -> seluruh input dihapus, ketik ulang dari awal.
+## Salah -> input dihapus, kode DITAMPILKAN LAGI 4 detik (tiap jawaban salah
+## tetap memancing musuh lewat _report_mistake, jadi tidak gratis).
 
 const CODE_LEN: int = 5
 const SHOW_TIME: float = 4.0
@@ -59,7 +60,7 @@ func setup() -> void:
 		bl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		b.add_child(bl)
 		btns.add_child(b)
-	_hint_label = _mk_label("Kode itu cuma ditampilkan sebentar. Jangan sampai lupa.", 15, Color(1, 1, 1, 0.6))
+	_hint_label = _mk_label("Kode salah? Kodenya ditampilkan lagi sebentar. Tiap salah memancing musuh.", 15, Color(1, 1, 1, 0.6))
 	vbox.add_child(_hint_label)
 	_phase = "show"
 	_show_t = SHOW_TIME
@@ -85,9 +86,12 @@ func handle_key(event: InputEventKey) -> void:
 			_set_status("Kode benar! Pintu terbuka.", true)
 			_finish()
 		else:
-			_set_status("Kode salah! Coba lagi, ingat kodenya.", false)
 			_report_mistake()
 			_entered.clear()
+			# Kode ditampilkan lagi 4 detik supaya pemain yang lupa tidak buntu.
+			# Tiap jawaban salah tetap memancing musuh lewat _report_mistake().
+			_phase = "show"
+			_show_t = SHOW_TIME
 			_refresh_lcd()
 
 
