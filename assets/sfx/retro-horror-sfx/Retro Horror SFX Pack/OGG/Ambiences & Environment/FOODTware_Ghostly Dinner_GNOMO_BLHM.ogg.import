@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://boke7hcx0kxpy"
+path="res://.godot/imported/FOODTware_Ghostly Dinner_GNOMO_BLHM.ogg-c93cc3ddb11c7ad18b065785fb5dc13f.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Ambiences & Environment/FOODTware_Ghostly Dinner_GNOMO_BLHM.ogg"
+dest_files=["res://.godot/imported/FOODTware_Ghostly Dinner_GNOMO_BLHM.ogg-c93cc3ddb11c7ad18b065785fb5dc13f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

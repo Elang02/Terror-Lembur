@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bcrksvico2s5p"
+path="res://.godot/imported/FEETHmn_Footsteps Stone 01_OGNM_TPOS.ogg-94b0855704e6b9a6664cf44ef49bb4ee.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/step/FEETHmn_Footsteps Stone 01_OGNM_TPOS.ogg"
+dest_files=["res://.godot/imported/FEETHmn_Footsteps Stone 01_OGNM_TPOS.ogg-94b0855704e6b9a6664cf44ef49bb4ee.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

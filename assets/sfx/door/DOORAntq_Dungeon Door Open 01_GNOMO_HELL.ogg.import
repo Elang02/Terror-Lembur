@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d32n4gnlflrcs"
+path="res://.godot/imported/DOORAntq_Dungeon Door Open 01_GNOMO_HELL.ogg-e8503e59b0a15c2566e8316e827f19a6.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/door/DOORAntq_Dungeon Door Open 01_GNOMO_HELL.ogg"
+dest_files=["res://.godot/imported/DOORAntq_Dungeon Door Open 01_GNOMO_HELL.ogg-e8503e59b0a15c2566e8316e827f19a6.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

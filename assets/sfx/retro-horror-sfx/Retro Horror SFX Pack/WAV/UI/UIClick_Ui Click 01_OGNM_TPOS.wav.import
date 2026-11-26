@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://drrflm65rvmcm"
+path="res://.godot/imported/UIClick_Ui Click 01_OGNM_TPOS.wav-41dcb9192010cd3767c6de27b61c35ba.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/UI/UIClick_Ui Click 01_OGNM_TPOS.wav"
+dest_files=["res://.godot/imported/UIClick_Ui Click 01_OGNM_TPOS.wav-41dcb9192010cd3767c6de27b61c35ba.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

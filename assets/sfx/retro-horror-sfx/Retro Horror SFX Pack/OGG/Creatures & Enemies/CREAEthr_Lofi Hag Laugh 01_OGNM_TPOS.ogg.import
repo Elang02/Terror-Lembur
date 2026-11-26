@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://k8jfp4xcmrt5"
+path="res://.godot/imported/CREAEthr_Lofi Hag Laugh 01_OGNM_TPOS.ogg-7919d8ecb8751dab03da1092eeee442a.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Creatures & Enemies/CREAEthr_Lofi Hag Laugh 01_OGNM_TPOS.ogg"
+dest_files=["res://.godot/imported/CREAEthr_Lofi Hag Laugh 01_OGNM_TPOS.ogg-7919d8ecb8751dab03da1092eeee442a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://qtx8f61lfxh3"
+path="res://.godot/imported/DSGNImpt_Light Woosh 02_GNOMO_BLHM.ogg-bba13544e5cf524c358273e1f9dfa1a1.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/hide/DSGNImpt_Light Woosh 02_GNOMO_BLHM.ogg"
+dest_files=["res://.godot/imported/DSGNImpt_Light Woosh 02_GNOMO_BLHM.ogg-bba13544e5cf524c358273e1f9dfa1a1.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

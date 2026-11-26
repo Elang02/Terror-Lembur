@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b4oy0170qnj4h"
+path="res://.godot/imported/ANMLRdnt_Rat Squeaking_GNOMO_BLHM.wav-4957e821e12697daa79968bd253b70d2.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/Ambiences & Environment/ANMLRdnt_Rat Squeaking_GNOMO_BLHM.wav"
+dest_files=["res://.godot/imported/ANMLRdnt_Rat Squeaking_GNOMO_BLHM.wav-4957e821e12697daa79968bd253b70d2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

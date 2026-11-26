@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b5psequvejxwr"
+path="res://.godot/imported/WATRSplsh_Designed Water Splash 02_GNOMO_RBDS.ogg-86081800f31084ab4c344bb77eb8dc7d.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Ambiences & Environment/WATRSplsh_Designed Water Splash 02_GNOMO_RBDS.ogg"
+dest_files=["res://.godot/imported/WATRSplsh_Designed Water Splash 02_GNOMO_RBDS.ogg-86081800f31084ab4c344bb77eb8dc7d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

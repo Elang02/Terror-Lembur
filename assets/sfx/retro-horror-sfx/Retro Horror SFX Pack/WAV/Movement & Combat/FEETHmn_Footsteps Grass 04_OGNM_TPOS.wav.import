@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bdrvxcjend0ev"
+path="res://.godot/imported/FEETHmn_Footsteps Grass 04_OGNM_TPOS.wav-3639f73f8a91e9e1ed4013c8cf855483.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/Movement & Combat/FEETHmn_Footsteps Grass 04_OGNM_TPOS.wav"
+dest_files=["res://.godot/imported/FEETHmn_Footsteps Grass 04_OGNM_TPOS.wav-3639f73f8a91e9e1ed4013c8cf855483.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

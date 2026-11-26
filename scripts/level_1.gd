@@ -93,6 +93,9 @@ var minigame_layer: MinigameLayer = null
 
 
 func _ready() -> void:
+	# Backsound Level 1 (The Leaves) — crossfade dari lagu menu /
+	# cerita ke lagu level, lalu loop crossfade sendiri di MusicManager.
+	MusicManager.play_level()
 	add_to_group("LevelManager")
 	randomize()
 	_collect_level_nodes()

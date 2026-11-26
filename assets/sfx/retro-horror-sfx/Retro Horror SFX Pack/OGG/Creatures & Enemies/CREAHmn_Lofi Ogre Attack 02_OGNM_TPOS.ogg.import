@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cbjbrkwlaxjcq"
+path="res://.godot/imported/CREAHmn_Lofi Ogre Attack 02_OGNM_TPOS.ogg-fb687e42653a09efad05ca9297395925.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Creatures & Enemies/CREAHmn_Lofi Ogre Attack 02_OGNM_TPOS.ogg"
+dest_files=["res://.godot/imported/CREAHmn_Lofi Ogre Attack 02_OGNM_TPOS.ogg-fb687e42653a09efad05ca9297395925.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

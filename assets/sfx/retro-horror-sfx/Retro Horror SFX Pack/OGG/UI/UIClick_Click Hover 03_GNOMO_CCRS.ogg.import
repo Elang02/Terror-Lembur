@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ddpdwqtbv7iqk"
+path="res://.godot/imported/UIClick_Click Hover 03_GNOMO_CCRS.ogg-375d2ff60601c94809bf963bd68f1c74.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/UI/UIClick_Click Hover 03_GNOMO_CCRS.ogg"
+dest_files=["res://.godot/imported/UIClick_Click Hover 03_GNOMO_CCRS.ogg-375d2ff60601c94809bf963bd68f1c74.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

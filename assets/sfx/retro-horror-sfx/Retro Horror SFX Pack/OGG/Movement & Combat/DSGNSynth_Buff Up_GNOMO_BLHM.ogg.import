@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c8wlbs5y0e8ud"
+path="res://.godot/imported/DSGNSynth_Buff Up_GNOMO_BLHM.ogg-70d8eaddcf3a0a19c7e732596444a340.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Movement & Combat/DSGNSynth_Buff Up_GNOMO_BLHM.ogg"
+dest_files=["res://.godot/imported/DSGNSynth_Buff Up_GNOMO_BLHM.ogg-70d8eaddcf3a0a19c7e732596444a340.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ou7du56twv8s"
+path="res://.godot/imported/DSGNImpt_Ghostly Impact 04_GNOMO_CCRS.wav-a2f1ab3c49f8400d556aed3d97c5aab6.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/Movement & Combat/DSGNImpt_Ghostly Impact 04_GNOMO_CCRS.wav"
+dest_files=["res://.godot/imported/DSGNImpt_Ghostly Impact 04_GNOMO_CCRS.wav-a2f1ab3c49f8400d556aed3d97c5aab6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

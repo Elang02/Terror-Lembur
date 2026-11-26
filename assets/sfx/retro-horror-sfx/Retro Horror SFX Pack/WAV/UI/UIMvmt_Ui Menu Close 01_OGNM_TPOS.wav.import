@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dxp05x4lwckip"
+path="res://.godot/imported/UIMvmt_Ui Menu Close 01_OGNM_TPOS.wav-e7d45f4fca41bf07d08c350afc3345e8.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/UI/UIMvmt_Ui Menu Close 01_OGNM_TPOS.wav"
+dest_files=["res://.godot/imported/UIMvmt_Ui Menu Close 01_OGNM_TPOS.wav-e7d45f4fca41bf07d08c350afc3345e8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

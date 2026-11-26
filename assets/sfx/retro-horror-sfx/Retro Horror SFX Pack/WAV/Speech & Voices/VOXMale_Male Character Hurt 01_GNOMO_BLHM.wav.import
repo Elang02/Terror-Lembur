@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://r6i1pgd41m4n"
+path="res://.godot/imported/VOXMale_Male Character Hurt 01_GNOMO_BLHM.wav-b4999e1fbc67ed84398bc85987ee9727.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/Speech & Voices/VOXMale_Male Character Hurt 01_GNOMO_BLHM.wav"
+dest_files=["res://.godot/imported/VOXMale_Male Character Hurt 01_GNOMO_BLHM.wav-b4999e1fbc67ed84398bc85987ee9727.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

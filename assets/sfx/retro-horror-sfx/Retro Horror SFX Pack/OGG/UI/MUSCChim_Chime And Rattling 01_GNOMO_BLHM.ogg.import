@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c77oqnwbtxv1y"
+path="res://.godot/imported/MUSCChim_Chime And Rattling 01_GNOMO_BLHM.ogg-610506c8137ac82bbcf5eb6e0511d4db.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/UI/MUSCChim_Chime And Rattling 01_GNOMO_BLHM.ogg"
+dest_files=["res://.godot/imported/MUSCChim_Chime And Rattling 01_GNOMO_BLHM.ogg-610506c8137ac82bbcf5eb6e0511d4db.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cwfu4l4yxb8p6"
+path="res://.godot/imported/FEETHmn_Footsteps Wooden Floor 03_GNOMO_BLHM.ogg-064a1ae1a4d39dc28087db914aa8cf91.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Movement & Combat/FEETHmn_Footsteps Wooden Floor 03_GNOMO_BLHM.ogg"
+dest_files=["res://.godot/imported/FEETHmn_Footsteps Wooden Floor 03_GNOMO_BLHM.ogg-064a1ae1a4d39dc28087db914aa8cf91.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

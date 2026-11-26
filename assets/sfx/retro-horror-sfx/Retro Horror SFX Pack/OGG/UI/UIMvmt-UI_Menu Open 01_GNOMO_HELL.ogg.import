@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cw7lks3polxu6"
+path="res://.godot/imported/UIMvmt-UI_Menu Open 01_GNOMO_HELL.ogg-3730393b9b4ae9fe1f85b248ef950f1f.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/UI/UIMvmt-UI_Menu Open 01_GNOMO_HELL.ogg"
+dest_files=["res://.godot/imported/UIMvmt-UI_Menu Open 01_GNOMO_HELL.ogg-3730393b9b4ae9fe1f85b248ef950f1f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

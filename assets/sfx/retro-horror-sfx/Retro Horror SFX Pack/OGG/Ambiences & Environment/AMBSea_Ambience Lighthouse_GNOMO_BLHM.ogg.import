@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b1shrqesb0k4n"
+path="res://.godot/imported/AMBSea_Ambience Lighthouse_GNOMO_BLHM.ogg-1bfffa0b375923f04734101a8220dfae.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/OGG/Ambiences & Environment/AMBSea_Ambience Lighthouse_GNOMO_BLHM.ogg"
+dest_files=["res://.godot/imported/AMBSea_Ambience Lighthouse_GNOMO_BLHM.ogg-1bfffa0b375923f04734101a8220dfae.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

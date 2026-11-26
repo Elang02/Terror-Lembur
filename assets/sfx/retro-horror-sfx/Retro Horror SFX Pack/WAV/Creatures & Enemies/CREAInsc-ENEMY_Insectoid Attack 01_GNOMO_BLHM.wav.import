@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bohv44p2qw5bl"
+path="res://.godot/imported/CREAInsc-ENEMY_Insectoid Attack 01_GNOMO_BLHM.wav-8855309a56c96d912d1fac8e93c62a45.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/Creatures & Enemies/CREAInsc-ENEMY_Insectoid Attack 01_GNOMO_BLHM.wav"
+dest_files=["res://.godot/imported/CREAInsc-ENEMY_Insectoid Attack 01_GNOMO_BLHM.wav-8855309a56c96d912d1fac8e93c62a45.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

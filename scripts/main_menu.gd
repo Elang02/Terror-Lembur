@@ -9,6 +9,9 @@ var _join_timer: float = -1.0
 
 
 func _ready() -> void:
+	# Backsound main menu (Ghost Story) — mulai dengan fade-in,
+	# lalu loop crossfade sendiri di MusicManager.
+	MusicManager.play_menu()
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	NetworkManager.connected_to_host.connect(_on_connected_to_host)
 	NetworkManager.connection_failed.connect(_on_connection_failed)

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cpj6m7yfp426h"
+path="res://.godot/imported/UIMisc_Cancel_GNOMO_BLHM.wav-925beee7fb805116b266ea8d47818d7a.sample"
+
+[deps]
+
+source_file="res://assets/sfx/retro-horror-sfx/Retro Horror SFX Pack/WAV/UI/UIMisc_Cancel_GNOMO_BLHM.wav"
+dest_files=["res://.godot/imported/UIMisc_Cancel_GNOMO_BLHM.wav-925beee7fb805116b266ea8d47818d7a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
