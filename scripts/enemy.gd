@@ -12,6 +12,7 @@ enum State { PATROL, CHASE, SEARCH, BLIND, VANISH, STUNNED }
 
 const SIGHT_RANGE: float = 430.0
 const HEAR_RANGE: float = 330.0
+const MISTAKE_HEAR_RANGE: float = 400.0
 const CATCH_RANGE: float = 27.0
 const SUSPICION_TIME: float = 0.8
 const LOSE_SIGHT_TIME: float = 4.0
@@ -202,6 +203,25 @@ func investigate(pos: Vector2) -> void:
 	_request_path(pos)
 
 
+func hear_noise(pos: Vector2) -> bool:
+	# Dipanggil host saat ada kesalahan di minigame: suara keras
+	# menarik musuh mendekat (radius 400). Bukan lure — timer blink
+	# tetap jalan, dan musuh hanya mengejar posisi suara itu.
+	if not _is_ai_owner():
+		return false
+	if state == State.BLIND or state == State.VANISH or state == State.STUNNED:
+		return false
+	if global_position.distance_to(pos) > MISTAKE_HEAR_RANGE:
+		return false
+	_last_known = pos
+	_suspicion = 1.0
+	_target = null
+	_lose_timer = 0.0
+	_set_state(State.CHASE)
+	_request_path(pos)
+	return true
+
+
 func _pick_next_patrol_index() -> int:
 	if patrol_points.size() <= 1:
 		return 0
@@ -227,7 +247,8 @@ func _patrol_tick(delta: float) -> void:
 func _chase_tick(delta: float) -> void:
 	_repath_timer -= delta
 	if _target != null and is_instance_valid(_target):
-		_last_known = _target.global_position
+		# Sengaja TIDAK menulis _last_known dari posisi live pemain:
+		# musuh hanya boleh mengejar posisi terakhir yang TERLIHAT.
 		if _repath_timer <= 0.0:
 			_repath_timer = 0.25
 			_request_path(_last_known)
@@ -257,7 +278,7 @@ func _follow_path(delta: float, speed: float) -> void:
 		return
 	var target: Vector2 = _path[_path_index]
 	var to_target: Vector2 = target - global_position
-	if to_target.length() < 9.0:
+	if to_target.length() < 6.0:
 		_path_index += 1
 		velocity = Vector2.ZERO
 		move_and_slide()
@@ -276,8 +297,18 @@ func _request_path(dest: Vector2) -> void:
 func _update_perception(step: float) -> void:
 	if state == State.BLIND or state == State.VANISH or state == State.STUNNED:
 		return
+	# Begitu pemain sembunyi/terkurung, musuh langsung "kehilangan" dia:
+	# jangan terus mengejar tempat sembunyinya sampai lose timer habis.
+	if _target != null and (not is_instance_valid(_target) or _target.is_hidden or _target.is_downed):
+		_target = null
+	# Periksa SEMUA pemain satu per satu — bukan cuma yang terdekat.
+	# (Bug lama: "best" = pemain terdekat, tapi seen/heard cuma dihitung
+	# untuk dia; kalau dia di balik tembok sementara pemain lain kelihatan,
+	# musuh malah menyerah dan tidak ganti target.)
 	var best: Node2D = null
 	var best_dist: float = INF
+	var best_seen: bool = false
+	var best_heard: bool = false
 	for p: Node in get_tree().get_nodes_in_group("Player"):
 		if not (p is Node2D):
 			continue
@@ -287,42 +318,36 @@ func _update_perception(step: float) -> void:
 		# Sembunyi = tidak terlihat kecuali sangat dekat.
 		if p.is_hidden and dist > 42.0:
 			continue
+		var seen: bool = dist <= SIGHT_RANGE and _has_line_of_sight(p)
+		var heard: bool = p.is_sprinting and dist <= HEAR_RANGE
+		if not seen and not heard:
+			continue
 		if dist < best_dist:
 			best_dist = dist
 			best = p
+			best_seen = seen
+			best_heard = heard
 	if best == null:
 		_decay_suspicion(step)
 		return
-	var seen: bool = best_dist <= SIGHT_RANGE and _has_line_of_sight(best)
-	var heard: bool = best.is_sprinting and best_dist <= HEAR_RANGE
-	if seen:
+	if best_seen:
 		_suspicion += step / SUSPICION_TIME
 		_last_known = best.global_position
 		_lose_timer = 0.0
-	elif heard:
+	elif best_heard:
 		_suspicion += step / (SUSPICION_TIME * 2.5)
 		_last_known = best.global_position
-	else:
-		_decay_suspicion(step)
 	if _suspicion >= 1.0 and state != State.CHASE:
 		_target = best
 		_set_state(State.CHASE)
 		_repath_timer = 0.0
 		_suspicion = 1.0
 	if state == State.CHASE:
-		if not seen and not heard:
-			if not _lure_active:
-				_lose_timer += step
-				if _lose_timer >= LOSE_SIGHT_TIME:
-					_target = null
-					_suspicion = 0.0
-					_search_timer = 3.0
-					_set_state(State.SEARCH)
-					_request_path(_last_known)
-		else:
-			_lose_timer = 0.0
-			_lure_active = false
-			_target = best
+		# Pemain terdeteksi = langsung kejar dia; target bisa BERGANTI
+		# ke pemain lain yang lebih dekat dan terdeteksi.
+		_lose_timer = 0.0
+		_lure_active = false
+		_target = best
 
 
 func _decay_suspicion(step: float) -> void:
@@ -378,6 +403,12 @@ func _check_stuck(delta: float) -> void:
 			_path = PackedVector2Array()
 			if state == State.PATROL and not patrol_points.is_empty():
 				_patrol_index = _pick_next_patrol_index()
+			elif state == State.CHASE or state == State.SEARCH:
+				# Coba rute baru ke tujuan terakhir (penting saat lure:
+				# _target null, jadi tanpa repath di sini musuh diam saja).
+				_request_path(_last_known)
+			elif state == State.BLIND and not patrol_points.is_empty():
+				_request_path(_nearest_patrol_point())
 	else:
 		_progress_timer = 0.0
 		_last_target_dist = target_dist

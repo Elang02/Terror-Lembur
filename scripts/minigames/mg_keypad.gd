@@ -84,6 +84,7 @@ func handle_key(event: InputEventKey) -> void:
 			_finish()
 		else:
 			_set_status("Kode salah! Coba lagi, ingat kodenya.", false)
+			_report_mistake()
 			_entered.clear()
 			_refresh_lcd()
 

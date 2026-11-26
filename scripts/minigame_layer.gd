@@ -22,12 +22,16 @@ const GAME_SCRIPTS: Dictionary = {
 	&"mash": "res://scripts/minigames/mg_mash.gd",
 	&"cari": "res://scripts/minigames/mg_cari.gd",
 	&"urut": "res://scripts/minigames/mg_urut.gd",
+	&"lan": "res://scripts/minigames/mg_lan.gd",
+	&"backup": "res://scripts/minigames/mg_backup.gd",
+	&"rapat": "res://scripts/minigames/mg_rapat.gd",
 }
 const CLOSE_RANGE: float = 102.0
 
 var _open: bool = false
 var _task_id: StringName = StringName("")
 var _game: MinigameBase = null
+var _is_mirror: bool = false  # true = mirror task co-op bersama (state dari server)
 var _report_timer: float = 0.0
 var _last_reported: float = -1.0
 
@@ -60,7 +64,7 @@ func current_game() -> MinigameBase:
 	return _game
 
 
-func open_minigame(task_id: StringName, game_type: StringName) -> bool:
+func open_minigame(task_id: StringName, game_type: StringName, shared: bool = false, snapshot: Dictionary = {}) -> bool:
 	if _open:
 		return false
 	if not GAME_SCRIPTS.has(game_type):
@@ -74,7 +78,9 @@ func open_minigame(task_id: StringName, game_type: StringName) -> bool:
 	if _game == null:
 		return false
 	_task_id = task_id
+	_is_mirror = shared
 	_game_holder.add_child(_game)
+	_game.is_mirror = shared
 	_game.setup()
 	_title_label.text = _game.game_title.to_upper()
 	_instructions_label.text = _game.instructions
@@ -82,7 +88,13 @@ func open_minigame(task_id: StringName, game_type: StringName) -> bool:
 	_progress_bar.value = 0.0
 	_game.finished.connect(_on_game_finished)
 	_game.status_changed.connect(_on_game_status)
+	_game.mistake_made.connect(_on_game_mistake)
 	_open = true
+	if shared and not snapshot.is_empty():
+		# _open harus true dulu: apply_coop_snapshot menolak kalau
+		# layer belum terbuka (snapshot awal langsung sinkron, tanpa
+		# menunggu broadcast 0,1 dtk berikutnya).
+		apply_coop_snapshot(task_id, snapshot)
 	_report_timer = 0.0
 	_last_reported = -1.0
 	_root.visible = true
@@ -90,11 +102,25 @@ func open_minigame(task_id: StringName, game_type: StringName) -> bool:
 	return true
 
 
+func apply_coop_snapshot(tid: StringName, snapshot: Dictionary) -> void:
+	# Snapshot state dari otoritas server untuk mirror co-op bersama.
+	if not _open or not _is_mirror or _task_id != tid or _game == null:
+		return
+	_game.apply_shared_state(snapshot)
+	if snapshot.has("status"):
+		_on_game_status(String(snapshot["status"]), bool(snapshot.get("status_good", true)))
+	var prog: float = clampf(_game.get_progress(), 0.0, 1.0)
+	_progress_bar.value = prog * 100.0
+	_pct_label.text = "%d%%" % int(prog * 100.0)
+
+
 func close_minigame(cancelled: bool) -> void:
 	if not _open:
 		return
 	var tid: StringName = _task_id
+	var was_mirror: bool = _is_mirror
 	_open = false
+	_is_mirror = false
 	_task_id = StringName("")
 	if _game != null:
 		_game.queue_free()
@@ -103,6 +129,8 @@ func close_minigame(cancelled: bool) -> void:
 	var level: Node = _level()
 	if level != null:
 		level.set_local_minigame_open(false)
+		if was_mirror:
+			level.leave_coop_session(tid)
 	if cancelled:
 		minigame_cancelled.emit(tid)
 	else:
@@ -132,7 +160,13 @@ func _input(event: InputEvent) -> void:
 			close_minigame(true)
 			get_viewport().set_input_as_handled()
 			return
-		if _game != null:
+		if _is_mirror:
+			# Mirror co-op bersama: tombol dikirim ke otoritas server,
+			# game lokal tidak mengolah input sendiri.
+			var level: Node = _level()
+			if level != null:
+				level.submit_coop_key(_task_id, event.keycode)
+		elif _game != null:
 			_game.handle_key(event)
 		get_viewport().set_input_as_handled()
 
@@ -140,7 +174,14 @@ func _input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if not _open or _game == null:
 		return
-	_game.tick(delta)
+	if not _is_mirror:
+		_game.tick(delta)
+		# tick() bisa menyelesaikan game (mis. Backup mencapai 100%) —
+		# _finish() langsung menutup layer dan mengosongkan _game di tengah
+		# frame ini; cek ulang sebelum membaca progres supaya tidak
+		# memanggil method di _game yang sudah null.
+		if not _open or _game == null:
+			return
 	var prog: float = clampf(_game.get_progress(), 0.0, 1.0)
 	_progress_bar.value = prog * 100.0
 	_pct_label.text = "%d%%" % int(prog * 100.0)
@@ -184,6 +225,13 @@ func _on_game_status(text: String, good: bool) -> void:
 	var c: Color = UiTheme.GREEN if good else UiTheme.RED
 	_status_label.add_theme_color_override("font_color", c)
 	_status_square.color = c
+
+
+func _on_game_mistake() -> void:
+	# Kesalahan di minigame: beri tahu level supaya musuh mendengar.
+	var level: Node = _level()
+	if level != null:
+		level.report_mistake_noise()
 
 
 func _level() -> Node:
