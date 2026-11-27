@@ -1294,6 +1294,13 @@ func on_player_caught(peer_id: int) -> void:
 	_rescue_progress = 0.0
 	if cage != null:
 		cage.show_at(p.global_position)
+	# Kalau yang tertangkap adalah pembawa Item Bangkit, kembalikan itemnya
+	# supaya teman yang masih bebas bisa mengambil dan menyelamatkan korban.
+	# Tanpa ini, korban di cage tidak pernah bisa diselamatkan (softlock co-op):
+	# _tick_rescue tidak jalan karena carrier-nya downed, dan item baru tidak
+	# spawn karena _revive_carrier masih menunjuk pemain yang tertangkap.
+	if peer_id == _revive_carrier:
+		_revive_carrier = -1
 	var revive_pos: Vector2 = Vector2.ZERO
 	if not _revive_visible and _revive_carrier == -1 and revive_item != null:
 		var pts: Array[Vector2] = _revive_points()
