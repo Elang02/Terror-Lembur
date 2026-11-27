@@ -78,6 +78,18 @@ func update_timer(time_sec: float) -> void:
 	_timer_label.text = "Waktu: %02d:%02d" % [m, s]
 
 
+# Dipakai Level 2: jam game ("21.00") dan teks laporan sudah diformat
+# oleh level, jadi HUD hanya menampilkan string-nya apa adanya.
+func set_timer_text(text: String) -> void:
+	if _timer_label != null:
+		_timer_label.text = text
+
+
+func set_tasks_text(text: String) -> void:
+	if _tasks_label != null:
+		_tasks_label.text = text
+
+
 func update_status(lines: Array[String]) -> void:
 	if _status_label == null:
 		return
